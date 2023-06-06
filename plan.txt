@@ -1,0 +1,113 @@
+GAME NAME: 
+
+To do:
+Finish outline lol
+
+Story:
+
+Trapped on an island where no one knows that a bad guy exists except for the old man, and npcs help you, and
+
+
+
+Characters:
+Main Character:
+NPCS: One or two for each location and more for important rooms
+Names?
+Bosses/Monsters
+Cutscenes (idk):
+
+
+Script:
+Introduction
+
+
+
+Main Goal:
+Map:
+Different terrains/locations
+Gameplay:
+Controls:
+WASD - move
+Enter - open chests & grab item
+Click - hit / use item
+Shift - Open / close map
+Right click - Use item (unless it's a weapon, then you use the hit key)
+Space to Jump (?)
+
+Items/Terrain:
+4+ main landscapes
+Solving puzzles is required to move on to the next landscapes
+The player can travel between previously completed landscapes
+Clues from previous landscapes could be used in future ones
+
+Save data:
+LocalStorage variable probably, but this is low priority
+
+Coding stuffymuff:
+We can use objects so that each square of the map has its own properties, like grass which can be walked over through or chests which can be opened, however they still behave similarly in some ways, like they can connect with other blocks or they can detect when a player goes on it
+Different scenes for when the area that the player can explore without leaving changes, for example when you enter a house. Once you enter, you can’t walk directly out of the house scene into the main landscape, you have to change scenes again
+Music/Sound effects? Compositions
+
+
+
+SPECIFIC STORY:
+
+*** INTRODUCTION ***
+
+The player starts in the old man's house.
+
+The old man is standing there
+
+When you talk to the old man: "..., Huh? Who is there?, Sorry. I can't see you very well. Old age has ruined my vision, Actually, could you do me a favor?, Fetch me my glasses, will you? One of the children near the big lake has taken them. Please go now."
+
+When the kid (Mike) by the big lake mentions his mom and stranger danger, the player goes to Mike's house, where his mom is.
+
+Once you talk to the mom, she figures out who you are, so now the kid by the lake doesn't say stranger danger or any of that stuff.
+
+When you complete Mike's new dialogue, you get the glasses
+
+Then, with the glases, you go back to the old man. He thanks you for the glasses
+
+Once you give the glasses to the old man, he will see you realize who you truly are
+
+He will talk about how you weren't able to defeat the bad guy (name tbd) and how he left you stranded on this island
+
+He says this island is infamous for not letting people leave, however the old man doesn't agree with that
+
+After the old man finishes the story, he knows you are worthy enough to get off this island and stop him. He then gives you the key to the next area area.
+
+If you talk to Wayne (near the small lake near the big one) he'll let you know the location of the next map area.
+
+(Talking to Wayne before the Old Man won't give you the following information.)
+
+Wayne says that he was instructed to give you a key
+
+This key is used to unlock the map to the right of the original area
+
+He says you will meet The Blacksmith in "Steel Field"
+
+*** END OF INTRODUCTION ***
+
+*** START OF STEEL FIELD ***
+
+The puzzle is switching orbs on and off, this will toggle walls so you can either go through them or not
+
+Once you switch all of the orbs on, it will let you pass through the wall
+
+* Imran you can add this since idk the full story *
+
+Meeting the cartographer:
+
+There will be some sort of key to get into the cartographer's house. Once you get in, he will give you a map.
+
+The map will give you access to view the island, but territories you haven't discovered yet are blank.
+
+He will then give you a key to the next place, a plaza (it will be quite small). The old man will be there.
+
+Once he realizes you are worthy enough for this adventure since you have weapons, he will tell you the story of the island
+
+He will tell you that there are 4 distant villages, each with a golden key. You need all 4 keys to unlock the portal to the final boss.
+
+***
+
+
