@@ -1049,7 +1049,7 @@ var shopkeeperMuhammad = new NPC(58 * 75, 33 * 75 + 37.5, "Shopkeeper Muhammad",
   "Would you like to purchase some auras?\nWe use all-natural ingredients."
 ], function() {
   ShopMenu.open([
-    {item: items.auraOfWarmth, cost: 0, amount: 2,
+    {item: items.auraOfWarmth, cost: 0, amount: 2},
   ])
 }, "after")
 
