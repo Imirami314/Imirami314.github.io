@@ -41,7 +41,7 @@ var items = {
   spearOfTheDarkened: new Item("Spear of the Darkened", 15, function(x, y) {
     ctx.drawImage(images.spearOfTheDarkened, x - 15, y - 15, 50, 15)
   }, function(p) {
-    
+    p.spearAttack()
   }),
   oldMansGlasses: new Item("Old Man's Glasses", 0, function(x, y) {
       ctx.drawImage(images.oldMansGlasses, x - 15, y - 15, 35, 15)
@@ -158,7 +158,7 @@ var items = {
       ]
 
       // Name should change lol
-      p.inventory.push(new Item("Searing Sword", 5, function(x, y) {
+      p.inventory.push(new Item("Steel Sword", 5, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
       }, function(p) {
         
@@ -175,17 +175,47 @@ var items = {
       }
     }
   }),
-  searingSword: new Item("Searing Sword", 5, function(x, y) {
+  steelSword: new Item("Steel Sword", 5, function(x, y) {
     ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
   }, function(p) {
     
   }),
-  auraOfWarmth: new Item("Aura of Warmth", 0,
+  
+	auraOfWarmth: new Item("Aura of Warmth", 0,
   function(x, y) {
     ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
   },
   function(p) {
     p.speedMultiplier = 0.75
     p.resistances.cold = 1
-  }, "A mysterious item that channels the power of the island's elements.\nWhen used, it minorly drains the user's speed to grant a moderate resistance to low temperatures.")
+  }, "A mysterious item that channels the power of the island's elements.\nWhen used, it minorly drains the user's speed to grant a moderate resistance to low temperatures."),
+	
+	speedySnowPath: new Item("Speedy Snow Path", 0,
+  function(x, y) {
+    ctx.drawImage(images.speedySnowPath, x - 100, y - 56.3, 200, 112.6)
+  },
+  function(p) {
+		
+   //p.buildMode = true
+		//p.bb = 'z'
+  }, ""),
+
+	decipherer: new Item("Decipherer", 0, 
+	function(x, y) {
+		ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
+	}, function(p) {
+		
+	}, ""),
+	chardTownBeam: new Item("Chard Town Beam", 0, 
+	function(x, y) {
+		ellipse(x, y, 10, 10, "rgb(0, 0, 0")
+	}, function(p) {
+		// var theWanderer = npcs.searchByName("The Wanderer")
+		// var theWandererDist = Math.hypot(p.x - theWanderer.x, p.y - theWanderer.y)
+		if (p.cords.x == 26 && p.cords.y == 55 && curMap == mainMap) {
+			scene = "BEAM UNLOCKED"
+			cutsceneFrame = 0
+		}
+	}, "Search for the place with no beginnings and no ends...")
+	
 } // Puzzle Keys are not included as they vary depending on where they came from

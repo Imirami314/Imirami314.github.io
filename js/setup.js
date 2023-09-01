@@ -1,3 +1,14 @@
+var tabIsActive = true
+var readyStateConfirmed = false
+
+document.addEventListener("visibilitychange", (event) => {
+  if (document.visibilityState == "visible") {
+    tabIsActive = true
+  } else {
+    tabIsActive = false
+  }
+})
+
 const canvas = document.querySelector('.myCanvas');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -25,6 +36,8 @@ var keys = {
   e: false,
 	q: false,
   b: false,
+	n: false,
+	x: false,
   space: false,
   shift: false,
   slash: false,
@@ -35,6 +48,14 @@ var mouseIsDown = false
 var holding = false
 var mouseX
 var mouseY
+
+function stopAtZero(num) {
+  if (num < 0) {
+    return 0
+  } else {
+    return num
+  }
+}
 
 String.prototype.replaceAt = function(index, replacement) {
     return this.substring(0, index) + replacement + this.substring(index + replacement.length);
@@ -47,6 +68,42 @@ function fillTextMultiLine(text, x, y) {
     ctx.fillText(lines[i], x, y);
     y += lineHeight;
   }
+}
+
+function splitEveryN(str, n) { // https://bobbyhadz.com/blog/javascript-split-string-substrings-n-characters
+  const arr = [];
+
+  for (let index = 0; index < str.length; index += n) {
+    arr.push(str.slice(index, index + n));
+  }
+
+  return arr;
+}
+
+var MANUAL_DIALOGUE = 0
+var MANUAL_DIALOGUE_NUM = 0
+
+function manualDialogue(lines) { // WIP
+  ctx.fillStyle = "rgba(255, 255, 255, 0.60)"
+  ctx.roundRect(width / 4, height * 3 / 4 - 10, width / 2, height / 4, 10)
+  ctx.fill()
+  ctx.fillStyle = "rgb(0, 0, 0)"
+  ctx.font = "15px serif"
+  ctx.textBaseline = 'middle'
+  ctx.font = "20px serif"
+  ctx.textAlign = 'center'
+  fillTextMultiLine(lines[MANUAL_DIALOGUE_NUM], width / 2, (height * 3 / 4) + 60)
+  if (this.nextIndicator == true) {
+    triangle(width / 2 - 10, height - 60 + this.nextIndicatorY, width/2 + 10, height - 60 + this.nextIndicatorY, width/2, height - 40 + this.nextIndicatorY, "rgb(0, 0, 0)")	
+  }
+}
+
+manualDialogue.start = function(lines) {
+  MANUAL_DIALOGUE = lines
+}
+
+manualDialogue.stop = function() {
+  MANUAL_DIALOGUE = 0
 }
 
 function ellipse(x, y, w, h, color) {
@@ -141,6 +198,12 @@ function onKeyDown(event) {
     case 27:
       keys.esc = true
       break
+		case 78:
+			keys.n = true
+			break
+		case 88:
+			keys.x = true
+			break
   }
 }
 
@@ -180,6 +243,12 @@ function onKeyUp(event) {
     case 27:
       keys.esc = false
       break
+		case 78:
+			keys.n = false
+			break
+		case 88:
+			keys.x = false
+			break
   }
 }
 
@@ -199,9 +268,9 @@ window.addEventListener('mousedown', function() {
   setTimeout(function() {
     if(mouseIsDown) {
       holding = true
-      // mouse was held down for > 1 second
+      // mouse was held down for > 0.45 second
     }
-  }, 1000);
+  }, 450);
 });
 
 window.addEventListener('mouseup', function() {
@@ -315,7 +384,8 @@ var music = [
     audio: new Howl({
       src: [
       'audio/gale_cave_dark.mp3'
-      ]
+      ],
+      loop: true
     })
   },
 	{
@@ -323,7 +393,8 @@ var music = [
     audio: new Howl({
       src: [
       'audio/gale_cave.mp3'
-      ]
+      ],
+      loop: true
     })
   },
 	{
@@ -341,6 +412,15 @@ var music = [
         'audio/new_location.mp3'
       ],
       loop: false
+    })
+  },
+  {
+    name: "Cryo Underground",
+    audio: new Howl({
+      src: [
+        'audio/cryo_underground.mp3'
+      ],
+      loop: true
     })
   }
 ]
@@ -362,6 +442,10 @@ var sounds = [
 		name: "Speedy Snow Walking",
 		audio: new Audio('audio/speedysnow-walking.mp3')
 	},
+	{
+		name: "Spear",
+		audio: new Audio('audio/spear.mp3')
+	}
 ]
 
 
@@ -391,6 +475,7 @@ function playMusic(name) {
   var m = getMusic(name)
   if (!!m && !m.audio.playing()) {
     m.audio.play()
+    console.log("Playing started")
     //alert(m.audio.volume(0.3))
     curMusic = m
   }
@@ -406,12 +491,12 @@ function getMusic(name) {
   return
 }
 
-function playSound(name) {
+function playSound(name, loop) {
   for (var i in sounds) {
     var sound = sounds[i]
     if (sound.name == name) {
       sound.audio.play()
-      sound.audio.loop = true
+      sound.audio.loop = loop
       curSound = sound
     }
   }

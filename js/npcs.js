@@ -1,4 +1,4 @@
-function NPC(x, y, name, map, dir, lines, action, actionLine, shopMenu) {
+function NPC(x, y, name, map, dir, lines, desc, action, actionLine, shopMenu) {
   this.x = x
   this.y = y
 	
@@ -7,7 +7,10 @@ function NPC(x, y, name, map, dir, lines, action, actionLine, shopMenu) {
 	this.dir = dir
 	this.name = name
   this.map = map
+	
   this.lines = lines
+	this.desc = desc
+	
   this.lineNum = -1
   this.textCooldown = 1
 	this.nextIndicator = false // To indicate you can move on to next line in speech
@@ -22,12 +25,15 @@ function NPC(x, y, name, map, dir, lines, action, actionLine, shopMenu) {
   this.action = action
   this.actionLine = actionLine
   this.actionFinished = false
-	this.talkedTo = false
+	this.talkedTo = true // Default false
 
   this.pathPoint = 0
   this.pathPointReached = false
   this.curPath = 0
 
+	this.firstInteraction = true
+
+	this.cameraOn = false
   if (!!save) {
     for (var i in save.npcs) {
       var n = save.npcs[i]
@@ -65,7 +71,18 @@ function NPC(x, y, name, map, dir, lines, action, actionLine, shopMenu) {
 
 NPC.prototype.draw = function() {
 	
-  this.textCooldown -= 1 / (66 + (2 / 3))
+	if (scene == "CAMERA") {
+		this.cameraOn = true
+	}
+
+	if (!dev) {
+		if (!cameraMoving) {
+			this.textCooldown -= 1 / (66 + (2 / 3))
+		}
+  	
+	} else {
+		this.textCooldown -= 1 / 20	
+	}
   this.cords.x = Math.floor(this.x / 75) // This regulates it, because you don't start at x-cord 0, you start at x-cord 10
   this.cords.y = Math.floor(this.y / 75) // Same thing as x-cord, but height / 2 is about half of width / 2, so it's 5 instead of 10
   
@@ -191,9 +208,6 @@ NPC.prototype.talk = function(p, npcs) {
 	}
 
 	if (this.lineNum >= 0 && playerDist <= 100) {
-		
-		//p.canMove = false
-		//console.log(p.canMove)
 
 		// Change player dir depending on which way you're facing
 		if (p.cords.y == this.cords.y) {
@@ -210,18 +224,8 @@ NPC.prototype.talk = function(p, npcs) {
 			p.dir = "D"
 		}
 		
-	} else {
-		//p.canMove = true
-		
 	}
 	
-	
-
-	
-	if (playerDist > 100) {
-		
-		//p.canMove = true
-	}
 	
   if (this.lineNum >= 0) {
 		
@@ -231,7 +235,7 @@ NPC.prototype.talk = function(p, npcs) {
         this.action(p)
         this.actionFinished = true
       }
-      
+
       if (this.textCooldown <= 0) {
 				this.nextIndicator = true
 				if (this.nextIndicatorDir == "D") {
@@ -253,15 +257,15 @@ NPC.prototype.talk = function(p, npcs) {
             if (this.actionLine == "after") {
               this.action(p)
             }
+						this.firstInteraction = false
 	          this.lineNum = -1
             this.actionFinished = false
 						this.talkedTo = true
-						// p.canMove = true
 	        } else {
 	          this.lineNum ++
 						this.nextIndicatorY = 0
             if (curMap == mainMap) {
-              saveGame()
+              // saveGame()
               // alert('game saved')
             }
 	        }
@@ -279,9 +283,18 @@ NPC.prototype.talk = function(p, npcs) {
         ctx.textAlign = 'left'
         ctx.fillText(this.name, width / 4 + 10, height * 3 / 4 + 5)
   			ctx.textBaseline = 'middle'
-        ctx.font = "20px serif"
-  			ctx.textAlign = 'center'
-        fillTextMultiLine(this.lines[this.lineNum], width / 2, (height * 3 / 4) + 60)
+
+				// Small or big text
+				ctx.textAlign = 'center'
+				if (this.lines[this.lineNum].charAt(0) == "`") {
+        	ctx.font = "15px serif"
+					fillTextMultiLine(this.lines[this.lineNum].substring(1,(this.lines[this.lineNum]).length), width / 2, (height * 3 / 4) + 60)
+				} else {
+					ctx.font = "20px serif"
+					fillTextMultiLine(this.lines[this.lineNum], width / 2, (height * 3 / 4) + 60)
+				}
+  			
+        
   			if (this.nextIndicator) {
   				if (this.nextIndicator) {
   					triangle(width / 2 - 10, height - 60 + this.nextIndicatorY, width/2 + 10, height - 60 + this.nextIndicatorY, width/2, height - 40 + this.nextIndicatorY, "rgb(0, 0, 0)")
@@ -300,14 +313,13 @@ NPC.prototype.talk = function(p, npcs) {
     this.runPath(this.curPath)
   }
 
-	if (this.lineNum == -1) {
-		p.canMove = true
-		
-	} else {
-		p.canMove = false
-		
-		//alert("hi")
-		
+	if (playerDist <= 100) {
+		if (this.lineNum == -1) {
+			p.canMove = true
+			
+		} else {
+			p.canMove = false
+		}
 	}
 
 	
@@ -317,9 +329,11 @@ NPC.prototype.move = function(pos) {
 	
 	
 	var finished = false
-	// for (var i = 0; i < pos.length; i ++) {
+  
+  console.log(pos)
   var moveX = pos[0]
   var moveY = pos[1]
+  
   
   if (this.cords.x < moveX) {
     this.dir = "R"
@@ -345,25 +359,38 @@ NPC.prototype.move = function(pos) {
 }
 
 NPC.prototype.runPath = function(path) {
-  this.move(path[this.pathPoint])
   if (typeof path[this.pathPoint] == "object") {
     if (this.cords.x == path[this.pathPoint][0] && this.cords.y == path[this.pathPoint][1]) { // Checks to make sure npc is on the right block
       // if ((this.x % 75) - 37.5 <= 5 && (this.x % 75) - 37.5 <= 5)
-      this.pathPoint ++
-      
-      // Centers the NPC on their block before moving on to the next point
-      this.x = this.cords.x * 75 + 37.5
-      this.y = this.cords.y * 75 + 37.5
-      
-      if (this.pathPoint == path.length) {
+      if (!!!path[this.pathPoint + 1]) {
         this.curPath = 0
         return
       } else {
         this.runPath(path)
       }
+      
+      this.pathPoint ++
+      
+      // Centers the NPC on their block before moving on to the next point
+      this.x = this.cords.x * 75 + 37.5
+      this.y = this.cords.y * 75 + 37.5
     }
+
+    this.move(path[this.pathPoint])
+    console.log("Path point: " + path[this.pathPoint])
   } else if (typeof path[this.pathPoint] == "function") {
-    path[this.pathPoint]()
+    try {
+      path[this.pathPoint]()
+    } catch (e) {
+      console.log(e)
+    }
     return
   }
+}
+
+NPC.prototype.drawFace = function(faceX, faceY) {
+	//alert("uh yeah")
+	ellipse(faceX, faceY, 50, 50, this.properties.skinColor)
+	ellipse(faceX - 10, faceY - 10, 10, 10, this.properties.eyeColor)
+  ellipse(faceX + 10, faceY - 10, 10, 10, this.properties.eyeColor)
 }
