@@ -364,42 +364,23 @@ Stormed.prototype.draw = function() {
     ctx.translate(-1 * this.x, -1 * this.y)
 
     // Body
-		if (this.beingHit) {
-			ctx.save()
+    
+    if (this.phase == 1) {
+      if (this.beingHit) {
+        ctx.save()
+        ctx.drawImage(images.stormedPhase2, this.x - 75, this.y - 75, 150, 150)
+        //ctx.translate(Math.random() * 20, Math.random() * 20)
+        ctx.restore()
+      } else {
+        ctx.drawImage(images.stormedPhase1, this.x - 75, this.y - 75, 150, 150)
+      }
+    } else if (this.phase == 2) {
       ctx.drawImage(images.stormedPhase2, this.x - 75, this.y - 75, 150, 150)
-      ctx.translate(Math.random() * 20, Math.random() * 20)
-			ctx.restore()
-		} else {
-    	ctx.drawImage(images.stormedPhase1, this.x - 75, this.y - 75, 150, 150)
-		}
+    }
 		
     if (this.phase == 1 || this.beingHit) {
-			// if (this.playerDist >= 100 && this.playerDist <= 600) {
-	  //     if (p.x > this.x) {
-			// 		this.absorbX = -3 
-			// 	} else {
-			// 		this.absorbX = 3
-			// 	}
-	
-			// 	if (p.y > this.y) {
-			// 		this.absorbY = -3 
-			// 	} else {
-			// 		this.absorbY = 3
-			// 	}
-
-			// 	if (getBlockById(curMap.getBlock(Math.floor((this.x + weather.wind.x) / 75), Math.floor((this.y) / 75))).through) {
-			// 		p.x += this.absorbX
-			// 	}
-
-   //      if (getBlockById(curMap.getBlock(Math.floor((this.x) / 75), Math.floor((this.y + weather.wind.y) / 75))).through) {
-			// 		p.y += this.absorbY
-   //      }
-			// }
-			
       // Arms and sword
       if (this.hitting) {
-				
-				
         ctx.save()
         ctx.translate(this.x, this.y)
 				ctx.translate(Math.random() * 5, Math.random() * 5)
@@ -421,6 +402,7 @@ Stormed.prototype.draw = function() {
     } else if (this.phase == 2) {
       ellipse(this.x + 75, this.y, 40, 40, "rgb(60, 245, 245)")
       ellipse(this.x - 75, this.y, 40, 40, "rgb(60, 245, 245)")
+      
     }
     
     ctx.restore()
@@ -546,17 +528,15 @@ Stormed.prototype.update = function() {
     }
   } else if (this.phase == 2) {
     if (!this.phase2MapChanged) {
-			cutsceneFrame ++
-			
+      var newMap = []
+
       // Changes all speedy snow into water on the battlefield
       for (var i in curMap.arr) {
         for (var j in curMap.arr[i]) {
-					if (cutsceneFrame % 5 == 0) {
-	          if (curMap.arr[i].charAt(j) == 'z') {
-							
-	            curMap.changeBlock(j, i, '~');
-	          }
-					}
+          //if (curMap.arr[i].charAt(j) == 'z') {
+            
+          curMap.changeBlock(j, i, '~');
+          //}
         }
       }
     }
