@@ -3,7 +3,7 @@
 curMap = galeCave
 
 var saveLoaded = false
-
+// hello
 var alerts = [
   new BlockAlert(9, 53, ["Confounded Cave\nKEEP OUT!"], mainMap, "SIGN"),
   new BlockAlert(1, 44, ["pranked"], mainMap, "SIGN"),
