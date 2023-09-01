@@ -1,0 +1,21 @@
+One Time
+
+- Fix event delay algorithm to make monsters turn red for 0.5 sec when hit
+- Add player attack animation
+- Add currency and shop menus
+- Add flowers (extra detail)
+- Fix speedy snow image to make the block consistent
+- Make it so darkened doesn't keep shooting you after you beat him lol
+- Increase local storage space so it doesn't fill up
+- Fix softlocks in cryo underground
+
+Continuous
+- 
+- Add sound effects for all blocks
+- Create region variables for all regions of the main map
+- Make text fonts/sizes consistent
+
+
+
+Completed
+- Fix player movement when speaking to NPCs

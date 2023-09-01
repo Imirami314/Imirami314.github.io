@@ -1,0 +1,22 @@
+oldMan - "" 
+john - ""
+ron - ""
+mike - "Resident - Chard Town\nA curious child whos favorite spot is the Big Lake "
+mikesMom - "Resident - Chard Town\nMike's Mother. She loves meeting new people and making new friends."
+ley - "Resident - Chard Town\nA coward at times, but loves both the outdoors and spending time at home."
+wayne - "Resident - Chard Town\nHe is always outdoors, and loves to raft and swim whenever he gets the chance."
+smith - "Resident - Steel Field\nEveryones go to blacksmith. Go to him if you want a weapon made quick for a low price."
+rocky _ "bru who is this guy"
+kori - "Resident - Glacia Village"
+isa - "Resident - Glacia Village"
+lonzo
+guardAlfred
+queenAlaska
+fee
+fi
+fo
+mum - poopoo!
+fum
+shopkeeperMuhammad
+mildred
+the wanderer - "A mysterious man who's traveled the lands in hopes of something special..."
