@@ -9,6 +9,8 @@ function Mission(name, type, nodes, num, solve) {
 	
 	this.newMission = true
 	this.newMissionFrame = 0
+
+	this.complete = false
 }
 
 Mission.prototype.drawDesc = function () {
@@ -19,17 +21,11 @@ Mission.prototype.drawDesc = function () {
 	ctx.fillText(this.type + "mission - " + this.name, 50, this.num * 20, width / 2, height / 2)
 }
 
-Mission.prototype.solve = function () {
-	this.solve()
-}
-
 Mission.prototype.alert = function(t) {
 	this.newMissionFrame ++
 	if (this.newMission && t == "NEW") {
-		
-		
 		ctx.fillStyle = "rgba(200, 200, 200, 0.5)"
-    ctx.fillRect(0, height / 8 - 75, width, 150)
+   		ctx.fillRect(0, height / 8 - 75, width, 150)
 		ctx.fillStyle = "rgb(0, 0, 0)"
 		ctx.font = "75px serif"
 		ctx.textAlign = 'center'
