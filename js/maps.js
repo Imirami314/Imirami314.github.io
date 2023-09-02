@@ -1286,7 +1286,7 @@ var chardTown = new Region([
 ], function() {
   
 }, function() {
-  playMusic("Chard")
+  //playMusic("Chard")
 })
 
 var steelField = new Region([

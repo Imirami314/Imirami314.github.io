@@ -445,7 +445,11 @@ var sounds = [
 	{
 		name: "Spear",
 		audio: new Audio('audio/spear.mp3')
-	}
+	},
+  {
+    name: "New Mission",
+    audio: new Audio('audio/newMission.mp3')
+  }
 ]
 
 

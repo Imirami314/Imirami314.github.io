@@ -2126,8 +2126,9 @@ var gameInterval = setInterval(function() {
       // Music
       if (playing) {
         if (curMap == mainMap) {
+         
           if (p.area == "Chard Town") {
-            // playMusic("Chard")
+            //playMusic("Chard")
           } else if (p.area == "Steel Field") {
             // playMusic("Steel Field")
           } else if (p.area == "Glacia Village") {

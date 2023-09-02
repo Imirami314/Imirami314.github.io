@@ -24,6 +24,7 @@ Mission.prototype.drawDesc = function () {
 Mission.prototype.alert = function(t) {
 	this.newMissionFrame ++
 	if (this.newMission && t == "NEW") {
+		playSound("New Mission", false)
 		ctx.fillStyle = "rgba(200, 200, 200, 0.5)"
    		ctx.fillRect(0, height / 8 - 75, width, 150)
 		ctx.fillStyle = "rgb(0, 0, 0)"
