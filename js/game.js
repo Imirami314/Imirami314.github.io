@@ -1469,10 +1469,13 @@ var theWanderer = new NPC (60 * 75, 41 * 75, "The Wanderer", mainMap, "D",  [
 	"Find the location, then return here.\nGood luck!",
 	
 ], "hi", function () {
-		theWanderer.action = function (p) {
-			
-			
-		}
+  if (theWanderer.firstInteraction) {
+    missions.push(theWanderersRiddles)
+  }
+  theWanderer.action = function (p) {
+    
+    
+  }
 		
 	
 }, "after")
@@ -2318,6 +2321,7 @@ var gameInterval = setInterval(function() {
 
 			for (var i in missions) {
 				missions[i].alert("NEW")
+        missions[i].solve()
 			}
 			
       if (p.health <= 0) {

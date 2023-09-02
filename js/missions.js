@@ -47,3 +47,55 @@ var aStrangeWorld = new Mission("A Strange World", "Main", null, 0)
 aStrangeWorld.solve = function () {
 	
 }
+
+var theWanderersRiddles = new Mission("The Wanderer's Riddles", "Ability", null, 0)
+
+theWanderersRiddles.solve = function () {
+	if (getBlockAlertInfoByCords(10, 7, mainMap).playerRead) {	// makes sure message is correct			
+		secrets[0][0] = true
+	}
+	
+	if (secrets[0][3] == true) {
+		theWanderer.x = 28 * 75 + 37.5
+		theWanderer.y = 55 * 75 + 37.5
+		theWanderer.lines = ["`...", "You probably didn't expect me to be here already.", "Congratulations on finding such a rare and mysterious item.\nI've only seen these items in ancient scrolls.", "You are now on the final step of teleporation.", "Sit in the center of the magical ring,\nPlace the beam and the water will spring."]
+	} else if (secrets[0][2] == true) {
+		theWanderer.lines = ["I sense that you've almost completed Chard Town's secret..."]
+	} else if (secrets[0][1] == true) {
+		theWanderer.action = function() {} //resets action to nothing
+		theWanderer.lines = ["Go back to the first location.\nThe second riddle awaits you!"]	
+
+		if (p.cords.x == 63 && p.cords.y == 20 && keys.x) {
+			if (mainMap.getBlock(63, 20) != "@") {
+				mainMap.changeBlock(63, 20, "@")
+				if (getBlockAlertInfoByCords(63, 20, mainMap) == null) {
+					alerts.push(new BlockAlert(63, 20, ["Chard Town's Secret\nPART 3", "From this exact point, travel north and west.\nInside do the opposite, to reach the final chest."], mainMap, "EXAMINE"))
+				} else {
+					alert("naye!")
+				}
+				
+				secrets[0][2] = true
+				saveGame()
+			}
+		}
+	} else if (secrets[0][0] == true) {
+		
+		theWanderer.lines = [
+			"...",
+			"What? You found it already?",
+			"Impressive.", "Now, you might be wondering why all of the words\nwere jumbled up.", 
+			"Ancient texts like these require a very special item.\nA decipherer...",
+			"When the decipherer is held in your hand, you can read indecipherable texts!",
+			"I've given you 3 decipherers,\nwhich from my research should be enough to complete Chard Town's riddle",
+			"Now quick, go back to the first location.\nThe second riddle will be waiting for you."
+	
+		]
+		theWanderer.action = function(p) {
+			
+			p.inventory.push(items.decipherer)
+			secrets[0][1] = true
+		}
+		theWanderer.actionLine = "after"
+		
+	}
+}
