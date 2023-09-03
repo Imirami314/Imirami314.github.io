@@ -1154,6 +1154,11 @@ var mike = new NPC(28 * 75, 44 * 75, "Mike", mainMap, "L", [
   }
 }, "after")
 
+var lyra = new NPC(6 * 75 + 37.5, 1 * 75 + 37.5, "Lyra", lyraHouse, "D", [
+  "`What happened to all of the cool weapons?\nAll the weapons nowadays are the same.",
+  "`It sure would be nice to see something new for a change..."
+]) 
+
 var ley = new NPC(17 * 75 + 37.5, 29 * 75 + 37.5, "Ley", mainMap, "D", [
   "...",
 	"AHHH!",
@@ -1480,7 +1485,7 @@ var theWanderer = new NPC (60 * 75, 41 * 75, "The Wanderer", mainMap, "D",  [
 	
 }, "after")
 
-var npcs = [oldMan, john, ron, mike, mikesMom, ley, wayne, smith, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer]
+var npcs = [oldMan, john, ron, mike, mikesMom, lyra, ley, wayne, smith, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer]
 
 npcs.searchByName = function(name) {
   for (var i in this) {
