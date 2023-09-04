@@ -301,145 +301,65 @@ var curSound;
 
 var music = [
   {
-    name: "Puzzle",
-    audio: new Howl({
-      src: [
-      'audio/puzzle2.mp3'
-      ],
-      loop: true,
-    })
-  },
-  {
-    name: "Chard",
-    audio: new Howl({
-      src: [
-      'audio/chard.mp3'
-      ],
-      loop: true,
-    })
-  },
-  {
-    name: "Steel Field",
-    audio: new Howl({
-      src: [
-      'audio/steelField.mp3'
-      ],
-      loop: true,
-    })
-  },
-  {
-    name: "Boss Cutscene",
-    audio: new Howl({
-      src: [
-      'audio/boss_cutscene.mp3'
-      ],
-      loop: false,
-    })
-  },
-	{
-		name: "Darkened Battle",
-		audio: new Howl({
-      src: [
-      'audio/darkened_battle.mp3'
-      ],
-      loop: true,
-    })
+		name: "Puzzle",
+    audio: new Audio('audio/puzzle2.mp3')
 	},
   {
-    name: "Darkened Battle Phase 2",
-    audio: new Howl({
-      src: [
-      'audio/darkened_battle_phase_2.mp3'
-      ],
-      loop: true,
-    })
-  },
+		name: "Chard",
+    audio: new Audio('audio/chard.mp3')
+	},
   {
-    name: "Sacred Star Cutscene",
-    audio: new Howl({
-      src: [
-      'audio/sacred_star_cutscene.mp3'
-      ],
-      loop: true,
-    })
-  },
+		name: "Steel Field",
+    audio: new Audio('audio/steelField.mp3')
+	},
   {
-    name: "Glacia Village",
-    audio: new Howl({
-      src: [
-      'audio/glaciaVillage.mp3'
-      ],
-      loop: true,
-    })
-  },
-  {
-    name: "Adventure",
-    audio: new Howl({
-      src: [
-      'audio/adventure.mp3'
-      ]
-    })
-  },
-  {
-    name: "Dramatic Music",
-    audio: new Howl({
-      src: [
-      'audio/dramatic_music.mp3'
-      ]
-    })
-  },
+		name: "Boss Cutscene",
+    audio: new Audio('audio/boss_cutscene.mp3')
+	},
 	{
-    name: "Queen's Castle",
-    audio: new Howl({
-      src: [
-      'audio/queens_castle.mp3'
-      ]
-    })
-  },
+		name: "Darkened Battle",
+    audio: new Audio('audio/darkened_battle.mp3')
+	},
   {
-    name: "Gale Cave Dark",
-    audio: new Howl({
-      src: [
-      'audio/gale_cave_dark.mp3'
-      ],
-      loop: true
-    })
-  },
+		name: "Darkened Battle Phase 2",
+    audio: new Audio('audio/darkened_battle_phase_2.mp3')
+	},
+  {
+		name: "Sacred Star Cutscene",
+    audio: new Audio('audio/sacredStarCutscene.mp3')
+	},
+  {
+		name: "Glacia Village",
+    audio: new Audio('audio/glaciaVillage.mp3')
+	},
+  {
+		name: "Adventure",
+    audio: new Audio('audio/adventure.mp3')
+	},
+  {
+		name: "Cryo Underground",
+    audio: new Audio('audio/cryo_underground.mp3')
+	},
 	{
-    name: "Gale Cave Light",
-    audio: new Howl({
-      src: [
-      'audio/gale_cave.mp3'
-      ],
-      loop: true
-    })
-  },
+		name: "Queen's Castle",
+    audio: new Audio('audio/queens_castle.mp3')
+	},
+  {
+		name: "Gale Cave Dark",
+    audio: new Audio('audio/gale_cave_dark.mp3')
+	},
 	{
-    name: "Windy Wastelands",
-    audio: new Howl({
-      src: [
-      'audio/windy_wastelands.mp3'
-      ]
-    })
-  },
+		name: "Gale Cave Light",
+    audio: new Audio('audio/gale_cave.mp3')
+	},
+	{
+		name: "Windy Wastelands",
+    audio: new Audio('audio/windy_wastelands.mp3')
+	},
   {
-    name: "New Location",
-    audio: new Howl({
-      src: [
-        'audio/new_location.mp3'
-      ],
-      loop: false
-    })
-  },
-  {
-    name: "Cryo Underground",
-    audio: new Howl({
-      src: [
-        'audio/cryo_underground.mp3'
-      ],
-      loop: true
-    })
-  }
+		name: "New Location",
+    audio: new Audio('audio/new_location.mp3')
+	},
 ]
 
 var sounds = [
@@ -473,33 +393,33 @@ var sounds = [
 var musicFading = false
 
 function playMusic(name) {
-  // for (var i in music) {
-  //   var msc = music[i]
-  //   if (msc.name == name) {
-  //     msc.audio.play()
-  //     msc.audio.volume = 0.2
-  //     msc.audio.isPlaying = true
-  //     curMusic = msc[i]
-  //   } else {
-  //     msc.audio.pause()
-  //     msc.audio.isPlaying = false
-  //   }
-  // }
-  
   for (var i in music) {
-    var M = music[i]
-    if (M.name != name) {
-      M.audio.pause()
+    var msc = music[i]
+    if (msc.name == name) {
+      msc.audio.play()
+      msc.audio.volume = 0.2
+      msc.audio.isPlaying = true
+      curMusic = msc[i]
+    } else {
+      msc.audio.pause()
+      msc.audio.isPlaying = false
     }
   }
+  
+  // for (var i in music) {
+  //   var M = music[i]
+  //   if (M.name != name) {
+  //     M.audio.pause()
+  //   }
+  // }
 
-  var m = getMusic(name)
-  if (!!m && !m.audio.playing()) {
-    m.audio.play()
-    console.log("Playing started")
-    //alert(m.audio.volume(0.3))
-    curMusic = m
-  }
+  // var m = getMusic(name)
+  // if (!!m && !m.audio.playing()) {
+  //   m.audio.play()
+  //   console.log("Playing started")
+  //   //alert(m.audio.volume(0.3))
+  //   curMusic = m
+  // }
   
 }
 

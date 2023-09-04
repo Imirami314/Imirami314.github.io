@@ -2118,7 +2118,7 @@ var gameInterval = setInterval(function() {
   					// playSound("Speedy Snow Walking", true)
             // playMusic("Windy Wastelands")
   				} else if (p.area == "NONE") {
-            playMusic("Adventure")
+            //playMusic("Adventure") // DEFAULT ON
           }
         } else if (curMap == confoundedCave) {
           playMusic("Puzzle")
