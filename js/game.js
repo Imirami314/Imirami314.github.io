@@ -348,9 +348,6 @@ Player.prototype.draw = function() {
     ctx.fillText(this.blockOn.useDesc, width / 2, height / 2 + 75)
   }
   
-  
-  ctx.fillStyle = "rgb(0, 255, 0)"
-  
   if (mouseIsDown && !keys.e) {
     try {
       this.weapon.use(this)
@@ -1998,10 +1995,7 @@ function saveGame() {
     npcs: [],
     npcActions: [],
     maps: [],
-    // toggles: [], // DOES NOT INCLUDE MULTI-TOGGLES
-    // rafts: [],
     interactives: [],
-		//alerts: [],
     lighting: lighting
   }
 
@@ -2034,30 +2028,20 @@ function saveGame() {
   for (var i in interactives) {
     var inter = interactives[i]
     SAVING.interactives.push(inter)
-    // switch (inter.constructor.name) {
-    //   case "Toggle":
-    //     SAVING.toggles.push(inter)
-    //     break
-    //   case "MultiToggle":
-    //     SAVING.toggles.push(inter)
-    //     break
-    //   case "Raft":
-    //     SAVING.rafts.push(inter)
-    //     break
-    // }
   }
 
-	// for (var i in alerts) {
-	// 	var a = alerts[i]
-	// 	SAVING.alerts.push(a)
-	// }
-  
-  localStorage.setItem('save', JSON.stringify(SAVING))
+  lset("player", JSON.stringify(SAVING.player))
+  lset("npcs", JSON.stringify(SAVING.npcs))
+  lset("npcActions", JSON.stringify(SAVING.npcActions))
+  lset("maps", JSON.stringify(SAVING.maps))
+  lset("interactives", JSON.stringify(SAVING.interactives))
+  lset("lighting", JSON.stringify(SAVING.lighting))
+
   console.log("Saved game!")
 }
 
 function clearSave() {
-  localStorage.setItem('save', null)
+  localStorage.clear()
 }
 
 // Turns off saves
@@ -2095,7 +2079,6 @@ var gameInterval = setInterval(function() {
     }
 
 		if (document.readyState == "complete" && !readyStateConfirmed) {
-			//scene = "GAME" default idek man
       readyStateConfirmed = true
 		}
     
@@ -2106,13 +2089,6 @@ var gameInterval = setInterval(function() {
       ctx.font = "200px serif"
       ctx.fillText("Loading", width / 3, height / 2)
 		} else if (scene == "GAME") {
-      // if (mouseIsDown && curMap != darkenedRoom) {
-      //   scene = "DARKENED BOSS CUTSCENE"
-      //   curMap = darkenedRoom
-      // }
-  
-      //alert(getBlockAlertInfoByCords(9, 53, mainMap).lines[0])
-      
       ctx.save()
       ctx.translate((-1 * p.x) + (width / 2), (-1 * p.y) + (height / 2))
       curMap.draw(p, "Player View")

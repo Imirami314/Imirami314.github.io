@@ -9,6 +9,14 @@ document.addEventListener("visibilitychange", (event) => {
   }
 })
 
+function lset(key, value) {
+  localStorage.setItem(key, value)
+}
+
+function lget(key) {
+  return localStorage.getItem(key)
+}
+
 const canvas = document.querySelector('.myCanvas');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -19,14 +27,23 @@ ctx.scale(window.innerWidth / 1440, window.innerHeight / 675)
 
 var save;
 
+if (!!lget("player")) {
+  save = {
+    player: JSON.parse(lget("player")),
+    npcs: JSON.parse(lget("npcs")),
+    npcActions: JSON.parse(lget("npcActions")),
+    interactives: JSON.parse(lget("interactives")),
+    lighting: JSON.parse(lget("lighting")),
+  }
+}
+
 var elapsed = 0
 // alert(typeof localStorage.getItem('save'))
 
 // localStorage.setItem('save', null) // DEFAULT GONE
-if (!!localStorage.getItem('save')) {
-  save = JSON.parse(localStorage.getItem('save'))
-}
-// alert(save.player.x)  
+// if (!!localStorage.getItem('save')) {
+//   save = JSON.parse(localStorage.getItem('save'))
+// }
 
 var keys = {
   w: false,
