@@ -1791,6 +1791,13 @@ var l48_22 = new LockToggle(cryoUnderground, 48, 22, function() {
 	//curMap.changeBlock(34, 22, '.')
 })
 
+// Stormed Room
+
+var rd6_2 = new RaftDispenser(stormedRoom, 6 * 75, 2 * 75, 6 * 75 + 37.5, 3 * 75 + 37.5)
+var rd13_9 = new RaftDispenser(stormedRoom, 13 * 75, 9 * 75, 14 * 75 + 37.5, 9 * 75 + 37.5)
+var rd20_10 = new RaftDispenser(stormedRoom, 20 * 75, 10 * 75, 20 * 75 + 37.5, 11 * 75 + 37.5)
+var rd12_20 = new RaftDispenser(stormedRoom, 12 * 75, 20 * 75, 12 * 75 + 37.5, 21 * 75 + 37.5)
+
 
 /*
 t - Toggle
@@ -1839,7 +1846,11 @@ var interactives = [
 	t28_22,
 	t34_21,
 	m42_22,
-	l48_22
+	l48_22,
+  rd6_2,
+  rd13_9,
+  rd20_10,
+  rd12_20,
 ]
 
 
@@ -1906,7 +1917,8 @@ if (!!save) {
 
 var models = {
   bosses: {
-    darkened: new Darkened(darkenedRoom, width / 2, height / 2)
+    darkened: new Darkened(darkenedRoom, width / 2, height / 2),
+    stormed: new Stormed(stormedRoom, width / 2, height / 2)
   },
   npcs: {
     oldMan: new NPC(0, 0, "Old Man", null, null, null, null),
@@ -1980,6 +1992,9 @@ var spearSize = 0 // changes triangle into circle
 var shootTriangle = 0
 var fade = 0
 
+// Stormed phase 2 cutscene variables
+var stormedRoomChanged = false
+
 // beam cutscene variables
 
 function saveGame() {
@@ -1996,7 +2011,8 @@ function saveGame() {
     npcActions: [],
     maps: [],
     interactives: [],
-    lighting: lighting
+    lighting: lighting,
+    dev: dev,
   }
 
   SAVING.maps.push({
@@ -2035,7 +2051,8 @@ function saveGame() {
   lset("npcActions", JSON.stringify(SAVING.npcActions))
   lset("maps", JSON.stringify(SAVING.maps))
   lset("interactives", JSON.stringify(SAVING.interactives))
-  lset("lighting", JSON.stringify(SAVING.lighting))
+  lset("lighting", SAVING.lighting)
+  lset("dev", dev)
 
   console.log("Saved game!")
 }
@@ -2048,6 +2065,9 @@ function clearSave() {
 // clearSave() // DEFAULT GONE
 
 var dev = false // Allows player to fly around through objects without getting hurt, purely for development purposes
+if (!!save.dev) {
+  dev = save.dev
+}
 // ONLY TURN THIS ON USING CONSOLE
 // TO TURN DEV OFF, RELOAD
 
@@ -2674,7 +2694,7 @@ var gameInterval = setInterval(function() {
         ctx.save()
         ctx.scale(0.5, 0.5)
         ctx.translate(0 * 75 - (cutsceneFrame - 700) * 2, -10 * 75)
-        confoundedCave.draw(p, "Cutscene Viewf", 0 * 75 + (cutsceneFrame - 700) * 2, 10 * 75, 0.5)
+        confoundedCave.draw(p, "Cutscene View", 0 * 75 + (cutsceneFrame - 700) * 2, 10 * 75, 0.5)
         ctx.restore()
         if (cutsceneFrame < 1150) {
           cutsceneText = "Darkened is the Master of Night. However, the Darkened you battled is not the real one!"
@@ -2807,7 +2827,50 @@ var gameInterval = setInterval(function() {
         cutsceneFrame = 0
         darkenedScale = 1
       }
-		} else if (scene == "BEAM UNLOCKED") {
+		} else if (scene == "STORMED BOSS CUTSCENE PHASE 2") {
+      cutsceneFrame ++
+      
+      // ctx.fillStyle = "rgb(255, 50, 100)"
+      ctx.save()
+      ctx.translate(width / 2, height / 2)
+      ctx.scale(0.75, 0.75)
+      ctx.translate(width / -2, height / -2)
+      stormedRoom.draw(p, "Cutscene View", 0, 0, 0.25)
+      models.bosses.stormed.draw()
+      ctx.restore()
+
+      if (lighting > 750) { // Make the room darker
+        lighting -= 2;
+      }
+      
+      // Makes stormed pulse as the phase 2 image
+      if (cutsceneFrame > 100 && cutsceneFrame <= 500) {
+        models.bosses.stormed.bodyAngle += 0.25
+        if (cutsceneFrame % 30 > 0 && cutsceneFrame % 30 <= 10) {
+          models.bosses.stormed.phase = 2
+        } else {
+          models.bosses.stormed.phase = 1
+        }
+      } else if (cutsceneFrame > 500 && cutsceneFrame <= 600) {
+        models.bosses.stormed.bodyAngle = 0
+        models.bosses.stormed.phase = 2
+      } else if (cutsceneFrame > 600) {
+        scene = "GAME"
+      }
+
+      if (cutsceneFrame > 300) {
+        if (!stormedRoomChanged) {
+          // Covers all of stormedRoom in water
+          for (var i in curMap.arr) {
+            for (var j in curMap.arr[i]) {
+              curMap.changeBlock(j, i, '~');
+            }
+          }
+
+          stormedRoomChanged = true
+        }
+      }
+    } else if (scene == "BEAM UNLOCKED") {
 			 ctx.fillStyle = "rgb(255, 255, 255)"
       ctx.fillRect(0, 0, width, height)
 

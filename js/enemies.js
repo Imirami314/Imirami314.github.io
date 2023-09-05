@@ -326,7 +326,7 @@ function Stormed(map, spawnX, spawnY) {
   this.speed = 2
   this.moving = false
   
-  this.playerDist = 100000 // idk man
+  this.playerDist = 69420 // Direct distance from player (I set it to 69420 because it gets updated anyway)
   this.playerAngle = 0
   this.bodyAngle = 0
   this.scaleFactor = 1
@@ -335,13 +335,13 @@ function Stormed(map, spawnX, spawnY) {
 
   this.phase = 1 // Default 1
   this.windMode = false // Default false
-  this.windModeTimer = 20
+  this.windModeTimer = 20 // Countdown until windMode begins
   this.windPull = 0.1 // How fast the wind pulls the player towards the boss
 
   this.hitCooldown = 1
   this.hitting = false
-  this.hittable = true
-  this.beingHit = false
+  this.hittable = true // Can boss be hite
+  this.beingHit = false // Is boss being hit
   this.hitRegistered = false // Keeps track of whether damage has already been dealth
 
 	this.phase2Played = false // Check if phase 2 cutscene has played
@@ -527,18 +527,11 @@ Stormed.prototype.update = function() {
       this.phase = 2
     }
   } else if (this.phase == 2) {
-    if (!this.phase2MapChanged) {
-      var newMap = []
-
-      // Changes all speedy snow into water on the battlefield
-      for (var i in curMap.arr) {
-        for (var j in curMap.arr[i]) {
-          //if (curMap.arr[i].charAt(j) == 'z') {
-            
-          curMap.changeBlock(j, i, '~');
-          //}
-        }
-      }
+    if (this.phase2Played) {
+      
+    } else {
+      scene = "STORMED BOSS CUTSCENE PHASE 2"
+      this.phase2Played = true
     }
   }
 }

@@ -129,7 +129,7 @@ function Raft(map, x /* Pixels */, y /* Pixels */) {
   this.x = x // X and Y are the position of the center of the raft
   this.y = y
   this.hasPlayer = false
-  this.speedCap = 5 // Default 5
+  this.speedCap = 5.5 // Default 5.5
   this.velocity = {
     x: 0,
     y: 0

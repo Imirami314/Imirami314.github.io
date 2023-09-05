@@ -33,7 +33,8 @@ if (!!lget("player")) {
     npcs: JSON.parse(lget("npcs")),
     npcActions: JSON.parse(lget("npcActions")),
     interactives: JSON.parse(lget("interactives")),
-    lighting: JSON.parse(lget("lighting")),
+    lighting: lget("lighting"),
+    dev: lget("dev")
   }
 }
 
