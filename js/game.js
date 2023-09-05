@@ -2065,7 +2065,7 @@ function clearSave() {
 // clearSave() // DEFAULT GONE
 
 var dev = false // Allows player to fly around through objects without getting hurt, purely for development purposes
-if (!!save.dev) {
+if (!!save) {
   dev = save.dev
 }
 // ONLY TURN THIS ON USING CONSOLE
@@ -2079,7 +2079,6 @@ var gameInterval = setInterval(function() {
         blocks[i].through = true
         blocks[i].speed = 15
         blocks[i].dps = 0
-        
       }
     }
     
