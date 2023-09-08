@@ -1,4 +1,5 @@
 var tabIsActive = true
+var pauseGameLoop = false
 var readyStateConfirmed = false
 
 document.addEventListener("visibilitychange", (event) => {

@@ -2108,253 +2108,253 @@ var gameInterval = setInterval(function() {
       ctx.font = "200px serif"
       ctx.fillText("Loading", width / 3, height / 2)
 		} else if (scene == "GAME") {
-      ctx.save()
-      ctx.translate((-1 * p.x) + (width / 2), (-1 * p.y) + (height / 2))
-      curMap.draw(p, "Player View")
-      if (!!curMap.solve) {
-        curMap.solve()
-      }
-      ctx.fillStyle = "rgb(0, 0, 0)"
-      ctx.font = "20px serif"
-      ctx.fillText(p.cords.x + " , " + p.cords.y + " , " + p.canMove, p.x, p.y - 50)
-      
-    
-      if (mouseIsDown) {
-        playing = true
-      }
-  		
-      // Music
-      if (playing) {
-        if (curMap == mainMap) {
-         
-          if (p.area == "Chard Town") {
-            //playMusic("Chard")
-          } else if (p.area == "Steel Field") {
-            // playMusic("Steel Field")
-          } else if (p.area == "Glacia Village") {
-            // playMusic("Glacia Village")
-          } else if (p.area == "Windy Wastelands") {
-  					// playSound("Speedy Snow Walking", true)
-            // playMusic("Windy Wastelands")
-  				} else if (p.area == "NONE") {
-            //playMusic("Adventure") // DEFAULT ON
-          }
-        } else if (curMap == confoundedCave) {
-          playMusic("Puzzle")
-        } else if (curMap == queensCastle) {
-  				playMusic("Queen's Castle")
-  			} else if (curMap == galeCave) {
-          if (lighting < 1000) {
-            playMusic("Gale Cave Dark")
-          } else {
-            playMusic("Gale Cave Light")
-          }
-        } else if (curMap == cryoUnderground) {
-          playMusic("Cryo Underground")
-        } else if (curMap == stormedRoom) {
-          playMusic("Darkened Battle") // Default ??? Need to make music for Stormed
+        ctx.save()
+        ctx.translate((-1 * p.x) + (width / 2), (-1 * p.y) + (height / 2))
+        curMap.draw(p, "Player View")
+        if (!!curMap.solve) {
+          curMap.solve()
         }
-      }
-      
-      for (var i in npcs) {
-        if (!!npcs[i].map) {
-          if (curMap.name == npcs[i].map.name) {
-            
-            npcs[i].draw()
-          }
-        }
-      }
-    
-      for (var i in chests) {
-        if (curMap == chests[i].map) {
-          chests[i].draw()
-        }
-      }
-    
-      for (var i in interactives) {
-        if (curMap == interactives[i].map) {
-          interactives[i].draw()
-          if (!!interactives[i].update) {
-            interactives[i].update()
-          }
-        }
-      }
-  
-      for (var i in bossDoors) {
-        var b = bossDoors[i]
-        if (keys.space && p.cords.x == b.x && p.cords.y == b.y) {
-          b.enterFunction(p)
-        }
-      }
-    
-      for (var i in monsters) {
-        if (curMap == monsters[i].map && !monsters[i].dead) {
-          monsters[i].draw(p)
-        }
-      }
-    
-      for (var i in bosses) {
-        if (curMap == bosses[i].map) {
-          curBoss = bosses[i]
-          curBoss.update()
-        }
-      }
-  
-  		
-      
-      ctx.restore()
-  
-  		
-
-			for (var i in cameras) {
-				cameras[i].draw()
-			}
-
-			
-      if (curBoss.health <= 0 && curMap == darkenedRoom) {
-        ctx.fillStyle = "rgb(0, 0, 0, " + fade + ")"
-        ctx.fillRect(0, 0, width, height)
-        cutsceneFrame = 0
-        fade += 0.005
-        if (fade >= 1) {
-          scene = "DARKENED BOSS CUTSCENE DEFEATED"
-          fade = 0
-        }
-      }
-    
-      
-    
-      for (var i in bosses) {
-        if (curMap == bosses[i].map) {
-          // bosses[i].update()
-          bosses[i].healthBar()
-        }
-      }
-  
-      // if (curBoss != 0) {
-      //   curBoss.update()
-      //   curBoss.healthBar()
-      // }
-      
-      p.draw()
-  
-  		
-  		
-      ctx.save()
-      ctx.translate((-1 * p.x) + (width / 2), (-1 * p.y) + (height / 2))
-      curMap.drawNextLayer(p)
-      ctx.restore()
-  
-      // Play toggle cutscenes
-      for (var i in interactives) {
-        if (interactives[i].constructor.name == "Toggle") {
-          var inter = interactives[i]
-          if (inter.cutscene != null) {
-            inter.toggleCutscene(inter.cutscene.x, inter.cutscene.y)
-          }
-        }
-      }
-  
-      // Display lighting pixels
-      if (lighting < 2500) {
-        for (var i = 0; i < (width / lightingSize) + 1; i ++) {
-          for (var j = 0; j < (height / lightingSize) + 1; j ++) {
-            var lightingCalc = Math.hypot((i * lightingSize - lightingSize / 2) - width / 2, (j * lightingSize - lightingSize / 2) - height / 2) / lighting
-            ctx.fillStyle = "rgba(0, 0, 0, " + lightingCalc + ")"
-            ctx.fillRect((i - 1) * lightingSize, (j - 1) * lightingSize, lightingSize * 2, lightingSize * 2)
-          }
-        }
-      }
-  
-  		
-      if (keys.e) {
-        p.displayInventory()
-      }
-  		
-  		if (keys.n) {
-  			p.displayNPCList()	
-  		}
-      
-      p.move()
-      p.collide()
-      p.HUD()
-      p.displayMap()
-      p.hitEnemies()
-  
-      // DEFAULT ON
-      for (var i in regions) {
-        regions[i].update()
-      }
-  
-      if (keys.slash) {
-        if (!bossfight) {
-          saveGame()
-          SAVE_MENU = true
-        }
-      }
-  
-      if (SAVE_MENU) {
         ctx.fillStyle = "rgb(0, 0, 0)"
-        ctx.fillRect(width - 200, 0, 200, 100)
-        ctx.fillStyle = "rgb(255, 255, 255)"
-        ctx.fillText("Game saved.", width - 100, 50)
-        var SAVE_MENU_TIMER = setTimeout(function() {
-          SAVE_MENU = false
-        }, 1500)
-      }
-  
-  		
-  		// NPCS speech bubbles
-  		
-  		for (var i in npcs) {
-        if (!!npcs[i].map) {
-          if (curMap.name == npcs[i].map.name) {
-  					
-            	npcs[i].talk(p, npcs)
+        ctx.font = "20px serif"
+        ctx.fillText(p.cords.x + " , " + p.cords.y + " , " + p.canMove, p.x, p.y - 50)
+        
+      
+        if (mouseIsDown) {
+          playing = true
+        }
+        
+        // Music
+        if (playing) {
+          if (curMap == mainMap) {
+          
+            if (p.area == "Chard Town") {
+              //playMusic("Chard")
+            } else if (p.area == "Steel Field") {
+              // playMusic("Steel Field")
+            } else if (p.area == "Glacia Village") {
+              // playMusic("Glacia Village")
+            } else if (p.area == "Windy Wastelands") {
+              // playSound("Speedy Snow Walking", true)
+              // playMusic("Windy Wastelands")
+            } else if (p.area == "NONE") {
+              //playMusic("Adventure") // DEFAULT ON
+            }
+          } else if (curMap == confoundedCave) {
+            playMusic("Puzzle")
+          } else if (curMap == queensCastle) {
+            playMusic("Queen's Castle")
+          } else if (curMap == galeCave) {
+            if (lighting < 1000) {
+              playMusic("Gale Cave Dark")
+            } else {
+              playMusic("Gale Cave Light")
+            }
+          } else if (curMap == cryoUnderground) {
+            playMusic("Cryo Underground")
+          } else if (curMap == stormedRoom) {
+            playMusic("Darkened Battle") // Default ??? Need to make music for Stormed
           }
         }
-      }
-			
-			// Block Alert bubbles
-			for (var i = 0; i < alerts.length; i ++) {
-        alerts[i].draw()
-      }
+        
+        for (var i in npcs) {
+          if (!!npcs[i].map) {
+            if (curMap.name == npcs[i].map.name) {
+              
+              npcs[i].draw()
+            }
+          }
+        }
+      
+        for (var i in chests) {
+          if (curMap == chests[i].map) {
+            chests[i].draw()
+          }
+        }
+      
+        for (var i in interactives) {
+          if (curMap == interactives[i].map) {
+            interactives[i].draw()
+            if (!!interactives[i].update) {
+              interactives[i].update()
+            }
+          }
+        }
+    
+        for (var i in bossDoors) {
+          var b = bossDoors[i]
+          if (keys.space && p.cords.x == b.x && p.cords.y == b.y) {
+            b.enterFunction(p)
+          }
+        }
+      
+        for (var i in monsters) {
+          if (curMap == monsters[i].map && !monsters[i].dead) {
+            monsters[i].draw(p)
+          }
+        }
+      
+        for (var i in bosses) {
+          if (curMap == bosses[i].map) {
+            curBoss = bosses[i]
+            curBoss.update()
+          }
+        }
+    
+        
+        
+        ctx.restore()
+    
+        
 
-			for (var i in missions) {
-				missions[i].alert("NEW")
-        missions[i].solve()
-			}
-			
-      if (p.health <= 0) {
-        ctx.fillStyle = "rgba(0, 0, 0, " + fade + ")"
-        ctx.fillRect(0, 0, width, height)
-        fade += 0.01
-        if (fade >= 1) {
-          fade = 0
-          scene = "DEATH"
+        for (var i in cameras) {
+          cameras[i].draw()
         }
-      }
-  
-      
-      
-      
-      if (keys.shift) {
-        // Screen.fadeOut(255, 255, 255, 0.01)
-        p.mapPan.x = (- p.x + width / 2)
-        p.mapPan.y = (- p.y + height / 2)
-        if (p.mapSwitchTimer <= 0) {
-          if (!p.mapOn) {
-            p.mapOn = true
-          } else {
-            p.mapOn = false
+
+        
+        if (curBoss.health <= 0 && curMap == darkenedRoom) {
+          ctx.fillStyle = "rgb(0, 0, 0, " + fade + ")"
+          ctx.fillRect(0, 0, width, height)
+          cutsceneFrame = 0
+          fade += 0.005
+          if (fade >= 1) {
+            scene = "DARKENED BOSS CUTSCENE DEFEATED"
+            fade = 0
           }
-          p.mapSwitchTimer = 0.3
         }
-      }
-  
-      if (CUR_SHOP_MENU != 0) {
-        ShopMenu(CUR_SHOP_MENU)
-      }
+      
+        
+      
+        for (var i in bosses) {
+          if (curMap == bosses[i].map) {
+            // bosses[i].update()
+            bosses[i].healthBar()
+          }
+        }
+    
+        // if (curBoss != 0) {
+        //   curBoss.update()
+        //   curBoss.healthBar()
+        // }
+        
+        p.draw()
+    
+        
+        
+        ctx.save()
+        ctx.translate((-1 * p.x) + (width / 2), (-1 * p.y) + (height / 2))
+        curMap.drawNextLayer(p)
+        ctx.restore()
+    
+        // Play toggle cutscenes
+        for (var i in interactives) {
+          if (interactives[i].constructor.name == "Toggle") {
+            var inter = interactives[i]
+            if (inter.cutscene != null) {
+              inter.toggleCutscene(inter.cutscene.x, inter.cutscene.y)
+            }
+          }
+        }
+    
+        // Display lighting pixels
+        if (lighting < 2500) {
+          for (var i = 0; i < (width / lightingSize) + 1; i ++) {
+            for (var j = 0; j < (height / lightingSize) + 1; j ++) {
+              var lightingCalc = Math.hypot((i * lightingSize - lightingSize / 2) - width / 2, (j * lightingSize - lightingSize / 2) - height / 2) / lighting
+              ctx.fillStyle = "rgba(0, 0, 0, " + lightingCalc + ")"
+              ctx.fillRect((i - 1) * lightingSize, (j - 1) * lightingSize, lightingSize * 2, lightingSize * 2)
+            }
+          }
+        }
+    
+        
+        if (keys.e) {
+          p.displayInventory()
+        }
+        
+        if (keys.n) {
+          p.displayNPCList()	
+        }
+        
+        p.move()
+        p.collide()
+        p.HUD()
+        p.displayMap()
+        p.hitEnemies()
+    
+        // DEFAULT ON
+        for (var i in regions) {
+          regions[i].update()
+        }
+    
+        if (keys.slash) {
+          if (!bossfight) {
+            saveGame()
+            SAVE_MENU = true
+          }
+        }
+    
+        if (SAVE_MENU) {
+          ctx.fillStyle = "rgb(0, 0, 0)"
+          ctx.fillRect(width - 200, 0, 200, 100)
+          ctx.fillStyle = "rgb(255, 255, 255)"
+          ctx.fillText("Game saved.", width - 100, 50)
+          var SAVE_MENU_TIMER = setTimeout(function() {
+            SAVE_MENU = false
+          }, 1500)
+        }
+    
+        
+        // NPCS speech bubbles
+        
+        for (var i in npcs) {
+          if (!!npcs[i].map) {
+            if (curMap.name == npcs[i].map.name) {
+              
+                npcs[i].talk(p, npcs)
+            }
+          }
+        }
+        
+        // Block Alert bubbles
+        for (var i = 0; i < alerts.length; i ++) {
+          alerts[i].draw()
+        }
+
+        for (var i in missions) {
+          missions[i].alert("NEW")
+          missions[i].solve()
+        }
+        
+        if (p.health <= 0) {
+          ctx.fillStyle = "rgba(0, 0, 0, " + fade + ")"
+          ctx.fillRect(0, 0, width, height)
+          fade += 0.01
+          if (fade >= 1) {
+            fade = 0
+            scene = "DEATH"
+          }
+        }
+    
+        
+        
+        
+        if (keys.shift) {
+          // Screen.fadeOut(255, 255, 255, 0.01)
+          p.mapPan.x = (- p.x + width / 2)
+          p.mapPan.y = (- p.y + height / 2)
+          if (p.mapSwitchTimer <= 0) {
+            if (!p.mapOn) {
+              p.mapOn = true
+            } else {
+              p.mapOn = false
+            }
+            p.mapSwitchTimer = 0.3
+          }
+        }
+    
+        if (CUR_SHOP_MENU != 0) {
+          ShopMenu(CUR_SHOP_MENU)
+        }
       
     } else if (scene == "DARKENED BOSS CUTSCENE") {
       playMusic("Boss Cutscene")
