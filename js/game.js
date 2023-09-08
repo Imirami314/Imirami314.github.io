@@ -1257,7 +1257,14 @@ var smith = new NPC(4 * 75, 1 * 75, "Smith the Blacksmith", smithHouse, "D", [
   "I normally give a little somethin' to people who\ncome here, but I'm gonna need you to get me somethin' too.",
   "Could you fetch me a Heat Handle? I need it if you want me to help you.",
   "See ya!"
-], "Resident - Steel Field\nEveryones go to blacksmith. Go to him if you want a weapon made quick for a low price.")
+], "Resident - Steel Field\nEveryone's go to blacksmith. Go to him if you want a weapon made quick for a low price.")
+
+var rick = new NPC(9 * 75, 2 * 75, "Rick Ashley", rickHouse, "L", [
+  "I'm feeling lonely.",
+  "Everyone I've ever met has either given me up...",
+  "...or let me down.",
+  "constipated shrub"
+], "Resident - Steel Field\nHe, uh, doesn't really do anything.")
 
 var rocky = new NPC(119 * 75, 17 * 75, "Rocky", mainMap, "R", [
   "Hi.",
@@ -1482,7 +1489,7 @@ var theWanderer = new NPC (60 * 75, 41 * 75, "The Wanderer", mainMap, "D",  [
 	
 }, "after")
 
-var npcs = [oldMan, john, ron, mike, mikesMom, lyra, ley, wayne, smith, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer]
+var npcs = [oldMan, john, ron, mike, mikesMom, lyra, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer]
 
 npcs.searchByName = function(name) {
   for (var i in this) {

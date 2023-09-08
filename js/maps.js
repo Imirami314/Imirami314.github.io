@@ -841,6 +841,14 @@ var smithHouse = new Landscape([
   '____|__S!',
 ], 337.5, 412.5, 130, 37, "Smith's House")
 
+var rickHouse = new Landscape([
+  '!S___OOOOO',
+  'SS___OO___',
+  '__________',
+  'SS___OO___',
+  '~S___OOOOO'
+], 2 * 75 + 37.5, 4 * 75 + 37.5, 136, 23, "Rick's House")
+
 var confoundedCave = new Landscape([
   '_____SSSSS___S______)_S____________________________S',
   '_____S_|_S___S__SSSSS_S_SSSSSSSSSSSSSSSSSSSSSSSSSS_S',
@@ -1181,6 +1189,7 @@ var areas = [
   leyHouse,
 	lyraHouse,
   smithHouse,
+  rickHouse,
   confoundedCave,
   darkenedRoom,
   glaciaCenter,
