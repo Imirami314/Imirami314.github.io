@@ -842,11 +842,11 @@ var smithHouse = new Landscape([
 ], 337.5, 412.5, 130, 37, "Smith's House")
 
 var rickHouse = new Landscape([
-  '!S___OOOOO',
-  'SS___OO___',
+  '!S___SSSSS',
+  'SS___SS___',
   '__________',
-  'SS___OO___',
-  '~S___OOOOO'
+  'SS___SS___',
+  '~S|__SSSSS'
 ], 2 * 75 + 37.5, 4 * 75 + 37.5, 136, 23, "Rick's House")
 
 var confoundedCave = new Landscape([
