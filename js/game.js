@@ -2084,7 +2084,7 @@ var gameInterval = setInterval(function() {
       p.health = 100 // Constantly resets player health to 100
       for (var i in blocks) { 
         blocks[i].through = true
-        blocks[i].speed = 15
+        blocks[i].speed = 25
         blocks[i].dps = 0
       }
     }
