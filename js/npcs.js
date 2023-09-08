@@ -366,14 +366,14 @@ NPC.prototype.runPath = function(path) {
         this.curPath = 0
         return
       } else {
+        this.pathPoint ++
+      
+        // Centers the NPC on their block before moving on to the next point
+        this.x = this.cords.x * 75 + 37.5
+        this.y = this.cords.y * 75 + 37.5
         this.runPath(path)
       }
-      
-      this.pathPoint ++
-      
-      // Centers the NPC on their block before moving on to the next point
-      this.x = this.cords.x * 75 + 37.5
-      this.y = this.cords.y * 75 + 37.5
+    
     }
 
     this.move(path[this.pathPoint])
