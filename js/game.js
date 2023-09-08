@@ -646,6 +646,8 @@ Player.prototype.displayMap = function() {
       models.npcs.oldMan.draw()
       // ellipse(t.x, t.y, 75, 75, "rgb(0, 0, 0)"
     }
+
+    // eiufhdglksdfjhg
     
     if (!!this.questPoint) {
       var questPointParticles = new ParticleSystem(this.questPoint.x * 75 + 37.5, this.questPoint.y * 75 + 37.5, 10, 35 / mapScale, 0, 255, 0)
@@ -663,8 +665,6 @@ Player.prototype.displayMap = function() {
     ctx.roundRect(width / 2 - 60, height - 100, 50, 50, 5)
     ctx.fill()
     ctx.roundRect(width / 2 + 10, height - 100, 50, 50, 5)
-    ctx.fill()
-    ctx.roundRect(width / 2 - 50, height - 175, 100, 50, 5)
     ctx.fill()
     ctx.fillStyle = "rgb(255, 255, 255)"
     ctx.font = "50px serif"
