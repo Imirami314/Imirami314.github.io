@@ -2224,6 +2224,7 @@ var gameInterval = setInterval(function() {
           cutsceneFrame = 0
           fade += 0.005
           if (fade >= 1) {
+            darkenedScale = 1
             scene = "DARKENED BOSS CUTSCENE DEFEATED"
             fade = 0
           }
