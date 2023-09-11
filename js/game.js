@@ -1168,6 +1168,12 @@ var ley = new NPC(17 * 75 + 37.5, 29 * 75 + 37.5, "Ley", mainMap, "D", [
   "Thank you! Let me know once you're done\nso I can go over there again!"
 ], "Resident - Chard Town\nA coward at times, but loves both the outdoors and spending time at home.", function(p) {
   cameras.push(new Camera(44 * 75, 19 * 75, 15, "NPC", 6))	
+  ley.action = function(p) {
+    if (ley.firstInteraction) {
+      missions.push(leysGreatFear)
+    }
+  }
+  ley.actionLine = "after"
 }, 5)
 
 var mikesMom = new NPC(300, 300, "Mike's Mom", mikeHouse, "R", [
