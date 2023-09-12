@@ -887,9 +887,11 @@ BlockAlert.prototype.draw = function () {
       ctx.fillStyle = "rgb(102, 74, 50)"
       ctx.fillRect(this.x * 75 - p.x + width / 2 + 5, this.y * 75 - p.y + height / 2 + 5, 65, 35)
     }
+  } 
+}
 
-		
-    
+BlockAlert.prototype.drawMessage = function () {
+  if (curMap == this.map) { 
     if (this.lineNum == 0 && !this.showLines) {
       this.finishCooldown -= 1 / (66 + 2/3)
     }
@@ -2246,7 +2248,9 @@ var gameInterval = setInterval(function() {
         
         ctx.restore()
     
-        
+        for (var i = 0; i < alerts.length; i ++) {
+          alerts[i].draw()
+        }
 
         for (var i in cameras) {
           cameras[i].draw()
@@ -2360,7 +2364,7 @@ var gameInterval = setInterval(function() {
         
         // Block Alert bubbles
         for (var i = 0; i < alerts.length; i ++) {
-          alerts[i].draw()
+          alerts[i].drawMessage()
         }
 
         for (var i in missions) {
