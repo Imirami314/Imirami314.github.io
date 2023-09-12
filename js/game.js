@@ -2084,6 +2084,15 @@ if (!!save) {
 // ONLY TURN THIS ON USING CONSOLE
 // TO TURN DEV OFF, RELOAD
 
+var chung = finder.findPath(153, 45, 185, 48, mainMap.grid)
+
+for (var i in chung) {
+  var ch = chung[i]
+  mainMap.changeBlock(ch[0], ch[1], ",")
+}
+
+console.log(chung)
+
 var gameInterval = setInterval(function() {
   if (tabIsActive) {
     if (dev) {

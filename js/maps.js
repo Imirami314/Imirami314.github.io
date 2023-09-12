@@ -297,6 +297,9 @@ var getBlockAlertInfoByCords = function (x, y, map) {
 
 function Landscape(arr, enterX, enterY, doorX, doorY, name, solve) {
   this.arr = arr;
+  this.grid = new PF.Grid(this.getDimensions().x, this.getDimensions().y)
+  this.loadGrid()
+  
   this.blockSize = 75 // Default 75
   this.enterX = enterX
   this.enterY = enterY
@@ -324,6 +327,17 @@ function Landscape(arr, enterX, enterY, doorX, doorY, name, solve) {
           var cm = m.changes[j]
           this.changeBlock(cm.x, cm.y, cm.block)
         }
+      }
+    }
+  }
+}
+
+Landscape.prototype.loadGrid = function() {
+  for (var i = 0; i < this.arr.length; i ++) {
+    for (var j = 0; j < this.arr[i].length; j ++) {
+      var c = this.arr[i].charAt(j)
+      if (!getBlockById(c).through || getBlockById(c).dps > 0) {
+        this.grid.setWalkableAt(j, i, false)
       }
     }
   }
