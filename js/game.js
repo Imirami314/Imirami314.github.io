@@ -2062,11 +2062,28 @@ function saveGame() {
   lset("player", JSON.stringify(SAVING.player))
   for (var i in npcs) {
     var n = npcs[i]
-    lset(n.name, JSON.stringify(n))
+    if (!!n.map) {
+      n.map = n.map.name // Change npcs map attribute to the map name
+    }
+    lset(n.name, JSON.stringify(n)) // Saves map name to save storage
+    n.map = areaSearchByName(n.map) // Reverts npcs map attribute to the actual map
   }
+  
+  
   lset("npcActions", JSON.stringify(SAVING.npcActions))
   lset("maps", JSON.stringify(SAVING.maps))
-  lset("interactives", JSON.stringify(SAVING.interactives))
+
+  for (var i in interactives) {
+    var intr = interactives[i]
+    if (!!intr.map) {
+      intr.map = intr.map.name // Change npcs map attribute to the map name
+    }
+  }
+  lset("interactives", JSON.stringify(SAVING.interactives)) // Saves map name to save storage
+  for (var i in interactives) {
+    interactives[i].map = areaSearchByName(interactives[i].map) // Reverts npcs map attribute to the actual map
+  }
+  
   lset("lighting", SAVING.lighting)
   lset("dev", dev)
 

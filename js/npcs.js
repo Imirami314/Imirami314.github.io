@@ -40,7 +40,7 @@ function NPC(x, y, name, map, dir, lines, desc, action, actionLine, shopMenu) {
     this.lineNum = n.lineNum
     this.textCooldown = n.textCooldown
     this.speed = n.speed
-    this.map = n.map
+    this.map = areaSearchByCords(n.map)
     this.x = n.x
     this.y = n.y
     this.actionLine = n.actionLine
