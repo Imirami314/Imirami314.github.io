@@ -1233,7 +1233,17 @@ function areaSearchByCords(x, y) {
       return r
     }
   }
-  return 0
+  return false
+}
+
+function areaSearchByName(name) {
+  for (var i in areas) {
+    var r = areas[i]
+    if (r.name == name) {
+      return r
+    }
+  }
+  return false
 }
 
 var Region = function(bounds, active, passive) {

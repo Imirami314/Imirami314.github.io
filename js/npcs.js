@@ -35,35 +35,24 @@ function NPC(x, y, name, map, dir, lines, desc, action, actionLine, shopMenu) {
 
 	this.cameraOn = false
   if (!!save) {
-    for (var i in save.npcs) {
-      var n = save.npcs[i]
-      if (!!n && n.name == this.name) {
-        this.lines = n.lines
-        this.lineNum = n.lineNum
-        this.textCooldown = n.textCooldown
-        this.speed = n.speed
-        this.map = n.map
-        this.x = n.x
-        this.y = n.y
-        this.actionLine = n.actionLine
-        this.dir = n.dir
-        this.talkedTo = n.talkedTo
-  
-        this.properties = n.properties
-        this.showName = n.showName
-  
-        this.pathPoint = n.pathPoint
-        this.pathPointReached = n.pathPointReached
-        this.curPath = n.curPath
-      }
-    }
+    var n = lget(this.name)
+    this.lines = n.lines
+    this.lineNum = n.lineNum
+    this.textCooldown = n.textCooldown
+    this.speed = n.speed
+    this.map = n.map
+    this.x = n.x
+    this.y = n.y
+    this.actionLine = n.actionLine
+    this.dir = n.dir
+    this.talkedTo = n.talkedTo
 
-  //   for (var i in save.npcActions) {
-  //     var a = save.npcActions[i]
-  //     if (a.name == this.name) {
-  //       this.action = a.action
-  //     }
-  //   }
+    this.properties = n.properties
+    this.showName = n.showName
+
+    this.pathPoint = n.pathPoint
+    this.pathPointReached = n.pathPointReached
+    this.curPath = n.curPath
   }
 
   this.shopMenu = shopMenu

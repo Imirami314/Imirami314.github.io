@@ -2046,13 +2046,13 @@ function saveGame() {
     SAVING.player.inventory.push(i)
   }
 
-  for (var i in npcs) {
-    var n = npcs[i]
-    SAVING.npcs.push(npcs[i])
-    if (!!npcs[i].action) {
-      SAVING.npcActions.push({name: npcs[i].name, action: npcs[i].action.toString()})
-    }//
-  }
+  // for (var i in npcs) {
+  //   var n = npcs[i]
+  //   SAVING.npcs.push(npcs[i])
+  //   if (!!npcs[i].action) {
+  //     SAVING.npcActions.push({name: npcs[i].name, action: npcs[i].action.toString()})
+  //   }//
+  // }
 
   for (var i in interactives) {
     var inter = interactives[i]
@@ -2060,7 +2060,10 @@ function saveGame() {
   }
 
   lset("player", JSON.stringify(SAVING.player))
-  lset("npcs", JSON.stringify(SAVING.npcs))
+  for (var i in npcs) {
+    var n = npcs[i]
+    lset(n.name, JSON.stringify(n))
+  }
   lset("npcActions", JSON.stringify(SAVING.npcActions))
   lset("maps", JSON.stringify(SAVING.maps))
   lset("interactives", JSON.stringify(SAVING.interactives))
