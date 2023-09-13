@@ -41,7 +41,11 @@ function NPC(x, y, name, map, dir, lines, desc, action, actionLine, shopMenu) {
       this.lineNum = n.lineNum
       this.textCooldown = n.textCooldown
       this.speed = n.speed
-      this.map = areaSearchByName(n.map)
+      if (map != "Main Map") {
+        this.map = areaSearchByName(n.map)
+      } else {
+        this.map = mainMap
+      }
       this.x = n.x
       this.y = n.y
       this.actionLine = n.actionLine
