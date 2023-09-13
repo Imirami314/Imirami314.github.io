@@ -417,8 +417,9 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
 						
             break
           case '@': // Bush
+          var pulsation = Math.sin(elapsed / 10)
             ctx.drawImage(images.grass, j * this.blockSize, i * this.blockSize, 75, 75)
-            ctx.drawImage(images.bush, j * this.blockSize, i * this.blockSize, 75, 75)
+            ctx.drawImage(images.bush, j * this.blockSize - pulsation / 2, i * this.blockSize + pulsation, 75 + pulsation, 75) + pulsation
             break
   				case '/': // Sand
   					// ctx.fillStyle = 'rgb(242, 209, 107)'
@@ -559,7 +560,8 @@ Landscape.prototype.drawNextLayer = function(p) {
       var c = this.arr[i].charAt(j)
       if (c == "T") { // Tree
         // if (p.y < i * this.blockSize) {
-          ctx.drawImage(images.tree, j * this.blockSize - 10, i * this.blockSize - 50, 95, 100 + Math.sin(elapsed / 10))
+          var treePulsation = Math.sin(elapsed / 10) * (2 + Math.random() * 1.5)
+          ctx.drawImage(images.tree, j * this.blockSize - 10, i * this.blockSize - 50 - treePulsation, 95, 100 + treePulsation)
         // }
       }
     }
