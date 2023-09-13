@@ -417,7 +417,7 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
 						
             break
           case '@': // Bush
-          var pulsation = Math.sin(elapsed / 10)
+          var pulsation = Math.sin(elapsed / 12)
             ctx.drawImage(images.grass, j * this.blockSize, i * this.blockSize, 75, 75)
             ctx.drawImage(images.bush, j * this.blockSize - pulsation / 2, i * this.blockSize + pulsation, 75 + pulsation, 75) + pulsation
             break
@@ -560,7 +560,7 @@ Landscape.prototype.drawNextLayer = function(p) {
       var c = this.arr[i].charAt(j)
       if (c == "T") { // Tree
         // if (p.y < i * this.blockSize) {
-          var treePulsation = Math.sin(elapsed / 10) * (2 + Math.random() * 1.5)
+          var treePulsation = Math.sin(elapsed / 15) * 2
           ctx.drawImage(images.tree, j * this.blockSize - 10, i * this.blockSize - 50 - treePulsation, 95, 100 + treePulsation)
         // }
       }
