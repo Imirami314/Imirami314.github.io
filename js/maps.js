@@ -665,17 +665,17 @@ var mainMap = new Landscape([
   'S,,,,,T~~~~T,BBBBB@,TTT@,,,T~~~~~~T,,T--T,,,,,,BBBBBBBBB,,,,,,,,TT@______S_________S___S__S______!S____________S_____S____________________SSSS!!!!!!!!!!!!!!!!!!S~~~~~~~~~~~~~~~~~~~~S*****************zz****************************************************SS***************',
   'S,,,,,TTTTTT,BB|BBTTT,,TTTTTTTTTTTT,,T--TT@@@@@BBBB|BBBB@@@@@,,,TT@___!!_S_________SS_______S_____SSSSSSSSSSS__SS____S____________________SSSS!!!!!!!!!!!!!!!!!!S~~~~~~~~~~~~~~~~~~~~S*****************zz******************************************SS********SS********SS*****',
   'S,,,,,,@--------------------------------------------------------TTS___!!_S___________SSSSSSSSSS_S_S_________S!__S__!_S_______!____________SSSS!!!!!!!!!!!!!!!!!!S~~~~~~~~~~~~~~~~~~~~S*******WWW*******zz*****************************************SSSS**SS**SSSS**SS**SSSS****',
-  'S,,,,,@@----------------------------------------------------------:S_____________!!S__________S!SSSSSSSSSSS_____SS___S________________!!!!SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS******WWWWW******zz****************WWWWWWWWWWWWWWWWW**zzzzSSSSSSSSSSSSSSSSSSSSSSSSSSSSzz',
-  'S,,,,,@--@,,@,,,,,,,,,--,,,,,,,,,,,,S,,_______________,,,,--,,,,TTS______SSSSSSSS!!SSSSS__________!_______S__!__!S___S_______________!!!!!S___******************zz**WWW*************zz****WWW...WWW****zz*****W**********W*****WzzzzzzzzzW**zzzzzzzSSSS__S__SSSS__S__SSSSzzzzz',
-  'S,,,,@@--@,,@,,,,,,,,,--,,@@,,,,,,,SSS,,,,,,,,,@@@,,,,,,,,--,,,,TT@@@@@@@@@@@@@@@@@@@@@@@@@@SSSSSSS___S___S__S!__S!__S_______________!!!!!S___******************zz*WW.WW***.........zz**WWW.......WWW**zz****W.W*********W*****Wz!!SSS!!zW**zzzzzzzSSSS__S__SSSS__S__SSSSzzzzz',
-  '@,,,,@---@,,@,,,,,,,,,--,,@@,,,,,,SSSSS,,,,,,,,@@@,,,,,,,,--,,,,TTTTTTTTTTTTTTTTTTTTTTTTTTTT______S___S___S__S___SSSSS____!!_________!!!!!S___****..........****zzWW...WW**.~~.,TT,.zzWWWWWWWWWWWWWWWWWzz***W...W********WWWWWWWz!SSSSS!zW**zzzzzzzSSSSSSSSSSSSSSSSSSSSSSzzzzz',
-  '@,,,,@--@@,,@,,,,,,,,,--,,,,,,,,@@SS|SS@@,,,,,,,,,,,,,,,,,--,,,@TTTTTTTTTTTTTTTTTTTTTTTTTTTTSSS___S___S___S__S_______S____!!_________!!!!!S*******.TT.~~~~~.****zzW..W..W**.~~.,TT,.zzW...............Wzz**W.....W*******WW!!!!!z!SSSSS!zW**zzzzzzzSSSS__S__SSSS__S__SSSSzzzzz',
-  'T@TTT@--@TT,,@,,,,,TTT--------------------------------------,,,@@@,,,,,,,,,,,________,,,,,TT!!_S__S___S___S__SSSSSSSSSS_______________!!!!S*******.,,.~~~~~.****zzW.WWW.W**.........zzW......WWW......Wzz**W.WWW.W*******WW!~~~zz!SSSSS!zW**zzzzzzzSSSS__S__SSSS__S__SSSSzzzzz',
-  '@@,,,@--@@T~~~~~~~~~~W--------------------------------------,,,,,,,,,,,,,,,,_~~~~~~~~_,,,,TT!!_S______!!__S___________S___________________S*******..........****zzWWW|WWW***********zzWWWWWWWW|WWWWWWWWzz**WWW|WWW*******WW!z!!!z!SS|SS!zW**zzzzzzzSSSSSSSSSSSSSSSSSSSSSSzzzzz',
-  '@T,,,@---@T~~~~~~~~~~W--W~~~~~~~TTTTTTTTTTTTTTTTTTTT~TTTTTT,@~~~~~@,,,,,,,,,_~~~~~~~~_,,,,TTSS___SS___!!__S___________S___________________SzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzW!!z!W!z!!!z!!!zW**zzzzzzzSSSS__S__SSSS__S__SSSSzzzzz',
-  ',,,,,@@--@@T~~~~~~~~~W--W~~~~~~~T~~~~~~~~~~~~~~~~~~T~T,,,,T,,@~~~@,,,,,,,,,,_~~~~~~~~_,,,,TT!!SSSSS___S___S__SSSSSSS__S_____S__!!____SSSSSSzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz~!W!z!!!~!zzzW**zzzzzzzSSSS__S__SSSS__S__SSSSzzzzz',
-  'T,,,,,@---@T~~~~~~~~~W--W~~~~~~~T~~~~~~~~~~~~~~~~~~T~T,,,,TT,,@~@,,,,,,,,,,,_~~~~~~~~_,,,,TT__________S___S__S_____S__S____SSS_!!____SSSSSS*******************zz*TTTTTTTT*******zzTzzTTTTTTTTTTTTTTTTTTTTTTTTTT**********W!!!!W!~~zzz!WWWW**zzzzzzzSSSS__S__SSSS__S__SSSSzzzzz',
-  'T,,,,,@@--@TTTTTTTTTTW--W@~~~~~~T~~~~~~~~~~~~~TTTT~T~TT,,,,T,,,,,,,,,,,,,,,,_~~~~~~~~_,,,,TT__________S___S__S___!!SSSS___SSSSS______SSSSSS*******************zzT~~~~~~~~T******zzTz,,,,,,T,,,,,,,,,,,,,,,,,,,T**********WWWWWW!!!!WW!W**W**zzTTSSSSSSSSSSSSSddSSSSSSSSSSSSSTT',
+  'S,,,,,@@----------------------------------------------------------:S_____________!!S__________S!SSSSSSSSSSS_____SS___S________________!!!!SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS******WWWWW******zz****************WWWWWWWWWWWWWWWWW******SSSSSSSSSSSSSSSSSSSSSSSSSSSS**',
+  'S,,,,,@--@,,@,,,,,,,,,--,,,,,,,,,,,,S,,_______________,,,,--,,,,TTS______SSSSSSSS!!SSSSS__________!_______S__!__!S___S_______________!!!!!S___******************zz**WWW*************zz****WWW...WWW****zz*****W**********W*****WzzzzzzzzzW*********SSSS__S__SSSS__S__SSSS*****',
+  'S,,,,@@--@,,@,,,,,,,,,--,,@@,,,,,,,SSS,,,,,,,,,@@@,,,,,,,,--,,,,TT@@@@@@@@@@@@@@@@@@@@@@@@@@SSSSSSS___S___S__S!__S!__S_______________!!!!!S___******************zz*WW.WW***.........zz**WWW.......WWW**zz****W.W*********W*****Wz!!SSS!!zW*********SSSS__S__SSSS__S__SSSS*****',
+  '@,,,,@---@,,@,,,,,,,,,--,,@@,,,,,,SSSSS,,,,,,,,@@@,,,,,,,,--,,,,TTTTTTTTTTTTTTTTTTTTTTTTTTTT______S___S___S__S___SSSSS____!!_________!!!!!S___****..........****zzWW...WW**.~~.,TT,.zzWWWWWWWWWWWWWWWWWzz***W...W********WWWWWWWz!SSSSS!zW*********SSSSSSSSSSSSSSSSSSSSSS*****',
+  '@,,,,@--@@,,@,,,,,,,,,--,,,,,,,,@@SS|SS@@,,,,,,,,,,,,,,,,,--,,,@TTTTTTTTTTTTTTTTTTTTTTTTTTTTSSS___S___S___S__S_______S____!!_________!!!!!S*******.TT.~~~~~.****zzW..W..W**.~~.,TT,.zzW...............Wzz**W.....W*******WW!!!!!z!SSSSS!zW*********SSSS__S__SSSS__S__SSSS*****',
+  'T@TTT@--@TT,,@,,,,,TTT--------------------------------------,,,@@@,,,,,,,,,,,________,,,,,TT!!_S__S___S___S__SSSSSSSSSS_______________!!!!S*******.,,.~~~~~.****zzW.WWW.W**.........zzW......WWW......Wzz**W.WWW.W*******WW!~~~zz!SSSSS!zW*********SSSS__S__SSSS__S__SSSS*****',
+  '@@,,,@--@@T~~~~~~~~~~W--------------------------------------,,,,,,,,,,,,,,,,_~~~~~~~~_,,,,TT!!_S______!!__S___________S___________________S*******..........****zzWWW|WWW***********zzWWWWWWWW|WWWWWWWWzz**WWW|WWW*******WW!z!!!z!SS|SS!zW*********SSSSSSSSSSSSSSSSSSSSSS*****',
+  '@T,,,@---@T~~~~~~~~~~W--W~~~~~~~TTTTTTTTTTTTTTTTTTTT~TTTTTT,@~~~~~@,,,,,,,,,_~~~~~~~~_,,,,TTSS___SS___!!__S___________S___________________SzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzW!!z!W!z!!!z!!!zW*********SSSS__S__SSSS__S__SSSS*****',
+  ',,,,,@@--@@T~~~~~~~~~W--W~~~~~~~T~~~~~~~~~~~~~~~~~~T~T,,,,T,,@~~~@,,,,,,,,,,_~~~~~~~~_,,,,TT!!SSSSS___S___S__SSSSSSS__S_____S__!!____SSSSSSzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz~!W!z!!!~!zzzW*********SSSS__S__SSSS__S__SSSS*****',
+  'T,,,,,@---@T~~~~~~~~~W--W~~~~~~~T~~~~~~~~~~~~~~~~~~T~T,,,,TT,,@~@,,,,,,,,,,,_~~~~~~~~_,,,,TT__________S___S__S_____S__S____SSS_!!____SSSSSS*******************zz*TTTTTTTT*******zzTzzTTTTTTTTTTTTTTTTTTTTTTTTTT**********W!!!!W!~~zzz!WWWW*********SSSS__S__SSSS__S__SSSS*****',
+  'T,,,,,@@--@TTTTTTTTTTW--W@~~~~~~T~~~~~~~~~~~~~TTTT~T~TT,,,,T,,,,,,,,,,,,,,,,_~~~~~~~~_,,,,TT__________S___S__S___!!SSSS___SSSSS______SSSSSS*******************zzT~~~~~~~~T******zzTz,,,,,,T,,,,,,,,,,,,,,,,,,,T**********WWWWWW!!!!WW!W**W****TTSSSSSSSSSSSSSddSSSSSSSSSSSSSTT',
   'T,,,,,,,T--,,,,,,,,,@W--W@~~~~~~TTTTTTTTTTTTTTT~~~~~~~TTTTT,,,@~@,,,,,,,,,,,_~~~~~~~~_,,,,TTSSSSSSSSSSSSSSS__S___!!S______SSSSS_____SSSSSSS*******zzzzz*******zzT~~~~~~~~T******zzT,,,T~,,~,,,~T,,,,~,T~,,,,,,T**********WWWWWWWWWWWWWWWWW************************************',
   'T,,,,,,,T--,,,,,,,,,,,--TTTTTTTTT-------------TTTTTTT~~~~~~,,@~~~@,,,,,,,,,,_~~~~~~~~_,,,,TT____!!___S_______S_____S______SS|SS_____SSSSSSS******zzzzzzz******zzT~~~~~~~~T******zzT,,,,,,,,,,,,,,,,,T,,,,,,,,,T***************************************************************',
   'T,,,,,,,T-------------------------------------------TTTTTTT,@~~~~~@,,,,,,,,,_~~~~~~~~_,,,,TT____!!___S_____________S________________S!SS|SS*****zzzzzzzzz*****zzT~~~~~~~~T******zzTTTTTTTTTTTT,,,,,,,,,,,,T,,,T***************************************************************',
@@ -786,7 +786,7 @@ mainMap.solve = function() {
 }
 
 var imperilledPrison = new Landscape([
-  '______________________________________________________',
+  'O_____________________________________________________',
   '______________________________________________________',
   '______________________________________________________',
   '______________________________________________________',
@@ -807,7 +807,7 @@ var imperilledPrison = new Landscape([
   '______________________________________________________',
   '______________________________________________________',
   '______________________________________________________'
-], 75, 75, 1, 1, "Imperilled Prison")
+], 37.5, 37.5, 1, 1, "Imperilled Prison")
 
 var johnHouse = new Landscape([
   '=======',
