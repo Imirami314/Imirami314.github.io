@@ -4,9 +4,15 @@ function Enemy(map, spawnX, spawnY) {
   this.spawnY = spawnY
   this.x = spawnX
   this.y = spawnY
+  this.cords = {
+    x: this.x,
+    y: this.y
+  }
 }
 
 Enemy.prototype.move = function(dx, dy) {
+  this.cords.x = Math.floor(this.x / 75)
+  this.cords.y = Math.floor(this.y / 75)
   if (getBlockById(curMap.getBlock(Math.floor((this.x) / 75), Math.floor((this.y + dy) / 75))).through) {
     this.y += dy
   }
@@ -16,11 +22,30 @@ Enemy.prototype.move = function(dx, dy) {
   }
 }
 
+Enemy.prototype.movePathToPlayer = function() {
+  var nextPoint = {
+    x: this.pathToPlayer()[0][0],
+    y: this.pathToPlayer()[0][1]
+  }
+
+  // this.move(nextPoint.x - this.cords.x, nextPoint.y - this.cords.y)
+
+  // if (this.cords.x != nextPoint.x || this.cords.y != nextPoint.y) {
+    
+  // } else {
+
+  // }
+}
+
 Enemy.prototype.isStuck = function(dx, dy) {
   if (!getBlockById(curMap.getBlock(Math.floor((this.x) / 75), Math.floor((this.y + dy) / 75))).through ||
   !getBlockById(curMap.getBlock(Math.floor((this.x + dx) / 75), Math.floor((this.y) / 75))).through) {
     return true
   }
+}
+
+Enemy.prototype.pathToPlayer = function() {
+  return finder.findPath(this.cords.x, this.cords.y, p.cords.x, p.cords.y, areaSearchByName(this.map))
 }
 
 // Bosses
@@ -103,7 +128,7 @@ Darkened.prototype.draw = function() {
   // this.move(0, this.speed * (p.y - this.y) / Math.abs(p.y - this.y))
   
   
-  if (this.map == curMap) {
+  if (this.map == curMap.name) {
     ctx.save()
     ctx.translate(this.x, this.y)
     ctx.rotate(this.playerAngle)
@@ -356,7 +381,7 @@ Stormed.prototype = Object.create(Enemy.prototype)
 Stormed.prototype.draw = function() {
 	
 	this.playerDist = Math.hypot((this.x - p.x), (this.y - p.y))
-  if (this.map == curMap) {
+  if (this.map == curMap.name) {
     ctx.save()
     ctx.translate(this.x, this.y)
     ctx.rotate(this.bodyAngle) // DEFAULT ON
@@ -600,6 +625,7 @@ Splint.prototype.draw = function(p) {
   if (this.playerDist <= 350 && this.playerDist >= 75 && !this.hitting) {
     this.move(Math.cos(this.playerAngle) * 2, Math.sin(this.playerAngle) * 2)
   }
+  // this.movePathToPlayer()
 
   if (this.playerDist < 100 && this.hitCooldown <= 0) {
     this.hit()
@@ -611,7 +637,7 @@ Splint.prototype.draw = function(p) {
     this.hit()
   }
   
-  if (this.map == curMap) {
+  if (this.map == curMap.name) {
     ctx.save()
     ctx.translate(this.x, this.y)
     if (this.playerDist <= 350) {
@@ -662,14 +688,14 @@ Splint.prototype.hit = function() {
 
 
 var monsters = [
-  new Splint(mainMap, 4 * 75, 4 * 75),
-  new Splint(mainMap, 46 * 75, 18 * 75),
-  new Splint(mainMap, 47 * 75, 18 * 75),
-  new Splint(mainMap, 48 * 75, 18 * 75),
-  new Splint(galeCave, 50 * 75, 33 * 75)
+  new Splint("Main Map", 4 * 75, 4 * 75),
+  new Splint("Main Map", 46 * 75, 18 * 75),
+  new Splint("Main Map", 47 * 75, 18 * 75),
+  new Splint("Main Map", 48 * 75, 18 * 75),
+  new Splint("Gale Cave", 50 * 75, 33 * 75)
 ]
 
 var bosses = [
-  new Darkened(darkenedRoom, 712.5, 100),
-  new Stormed(stormedRoom, 13 * 75 + 37.5, 19 * 75 + 37.5)
+  new Darkened("Darkened Room", 712.5, 100),
+  new Stormed("Stormed Room", 13 * 75 + 37.5, 19 * 75 + 37.5)
 ]

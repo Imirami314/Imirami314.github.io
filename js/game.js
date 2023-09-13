@@ -2102,7 +2102,7 @@ function clearSave() {
 
 var dev = false // Allows player to fly around through objects without getting hurt, purely for development purposes
 if (!!save) {
-  dev = save.dev
+  dev = JSON.parse(save.dev)
 }
 // ONLY TURN THIS ON USING CONSOLE
 // TO TURN DEV OFF, RELOAD
@@ -2233,13 +2233,13 @@ var gameInterval = setInterval(function() {
         }
       
         for (var i in monsters) {
-          if (curMap == monsters[i].map && !monsters[i].dead) {
+          if (curMap.name == monsters[i].map && !monsters[i].dead) {
             monsters[i].draw(p)
           }
         }
       
         for (var i in bosses) {
-          if (curMap == bosses[i].map) {
+          if (curMap.name == bosses[i].map) {
             curBoss = bosses[i]
             curBoss.update()
           }
@@ -2273,7 +2273,7 @@ var gameInterval = setInterval(function() {
         
       
         for (var i in bosses) {
-          if (curMap == bosses[i].map) {
+          if (curMap.name == bosses[i].map) {
             // bosses[i].update()
             bosses[i].healthBar()
           }
@@ -3014,7 +3014,7 @@ var gameInterval = setInterval(function() {
 			} 
 
 			for (var i in monsters) {
-        if (curMap == monsters[i].map && !monsters[i].dead) {
+        if (curMap.name == monsters[i].map && !monsters[i].dead) {
           monsters[i].draw(p)
         }
       }
