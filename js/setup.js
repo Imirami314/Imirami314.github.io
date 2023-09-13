@@ -441,6 +441,7 @@ function playSound(name, loop) {
     var sound = sounds[i]
     if (sound.name == name) {
       sound.audio.play()
+      sound.audio.volume = 0.2
       sound.audio.loop = loop
       curSound = sound
     }
