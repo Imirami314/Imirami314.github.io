@@ -35,24 +35,26 @@ function NPC(x, y, name, map, dir, lines, desc, action, actionLine, shopMenu) {
 
 	this.cameraOn = false
   if (!!save) {
-    var n = lget(this.name)
-    this.lines = n.lines
-    this.lineNum = n.lineNum
-    this.textCooldown = n.textCooldown
-    this.speed = n.speed
-    this.map = areaSearchByCords(n.map)
-    this.x = n.x
-    this.y = n.y
-    this.actionLine = n.actionLine
-    this.dir = n.dir
-    this.talkedTo = n.talkedTo
+    if (!!this.name) {
+      var n = JSON.parse(lget(this.name))
+      this.lines = n.lines
+      this.lineNum = n.lineNum
+      this.textCooldown = n.textCooldown
+      this.speed = n.speed
+      this.map = areaSearchByName(n.map)
+      this.x = n.x
+      this.y = n.y
+      this.actionLine = n.actionLine
+      this.dir = n.dir
+      this.talkedTo = n.talkedTo
 
-    this.properties = n.properties
-    this.showName = n.showName
+      this.properties = n.properties
+      this.showName = n.showName
 
-    this.pathPoint = n.pathPoint
-    this.pathPointReached = n.pathPointReached
-    this.curPath = n.curPath
+      this.pathPoint = n.pathPoint
+      this.pathPointReached = n.pathPointReached
+      this.curPath = n.curPath
+    }
   }
 
   this.shopMenu = shopMenu
