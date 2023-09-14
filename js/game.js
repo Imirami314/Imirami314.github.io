@@ -154,6 +154,7 @@ function Player(x, y, npcs) {
   this.windParticles = new ParticleSystem(width / 2, height / 2, 1, 50, 100, 200, 200, 200)
 	this.suspensiaParticles = new ParticleSystem(width / 2, height / 2, 1, 100, 103, 52, 235)
 	this.teleportParticles = new ParticleSystem(width / 2, height / 2, 5, 50, 144, 238, 200)
+  this.stunParticles = new ParticleSystem(width / 2, height / 2, 5, 50, 255, 0, 0)
 	// x, y, vx, vy, size, r, g, b
   this.area = ""
   
@@ -248,7 +249,10 @@ Player.prototype.draw = function() {
 	} else if (this.blockOn.name == "teleport") {
 		this.teleportParticles.create()
 		this.teleportParticles.draw()
-	}
+	} else if (this.blockOn.name == "stun") {
+    this.stunParticles.create()
+    this.stunParticles.draw()
+  }
 
 	// Path making
 	 if (this.weapon.name == "Speedy Snow Path") {
