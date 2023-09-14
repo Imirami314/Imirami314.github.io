@@ -39,7 +39,9 @@ if (!!lget("player")) {
   }
 }
 
-var finder = new PF.AStarFinder()
+var finder = new PF.AStarFinder({
+  allowDiagonal: true
+})
 
 var elapsed = 0
 // alert(typeof localStorage.getItem('save'))

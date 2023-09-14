@@ -38,18 +38,18 @@ Enemy.prototype.pathToPlayer = function() {
 }
 
 Enemy.prototype.movePathToPlayer = function() {
-  // this.nextPoint = {
-  //   x: this.pathToPlayer()[0][0],
-  //   y: this.pathToPlayer()[0][1]
-  // }
-
-  // this.move(this.nextPoint.x - this.cords.x, this.nextPoint.y - this.cords.y)
+  if (this.pathToPlayer().length > 0) {
+    this.nextPoint = {
+      x: this.pathToPlayer()[1][0],
+      y: this.pathToPlayer()[1][1]
+    }
+    console.log(this.cords.x)
+    this.move((this.nextPoint.x - this.cords.x) * 3, (this.nextPoint.y - this.cords.y) * 3)
+  }
   // console.log(this.nextPoint.x - this.cords.x)
 
-  // if (this.cords.x != nextPoint.x || this.cords.y != nextPoint.y) {
-    
-  // } else {
-
+  // if (this.cords.x == this.nextPoint.x && this.cords.y == this.nextPoint.y) {
+  //   this.movePathToPlayer()
   // }
 }
 
@@ -628,9 +628,9 @@ Splint.prototype.draw = function(p) {
     }
   }
 
-  if (this.playerDist <= 350 && this.playerDist >= 75 && !this.hitting) {
-    this.move(Math.cos(this.playerAngle) * 2, Math.sin(this.playerAngle) * 2)
-    // this.movePathToPlayer()
+  if (this.playerDist <= 1000 && this.playerDist >= 75 && !this.hitting) {
+    // this.move(Math.cos(this.playerAngle) * 2, Math.sin(this.playerAngle) * 2)
+    this.movePathToPlayer()
   }
 
   if (this.playerDist < 100 && this.hitCooldown <= 0) {
