@@ -8,6 +8,9 @@ function Enemy(map, spawnX, spawnY) {
     x: this.x,
     y: this.y
   }
+
+  this.foundPath = false
+  this.lastPath = []
 }
 
 Enemy.prototype.move = function(dx, dy) {
@@ -22,21 +25,6 @@ Enemy.prototype.move = function(dx, dy) {
   }
 }
 
-Enemy.prototype.movePathToPlayer = function() {
-  var nextPoint = {
-    x: this.pathToPlayer()[0][0],
-    y: this.pathToPlayer()[0][1]
-  }
-
-  // this.move(nextPoint.x - this.cords.x, nextPoint.y - this.cords.y)
-
-  // if (this.cords.x != nextPoint.x || this.cords.y != nextPoint.y) {
-    
-  // } else {
-
-  // }
-}
-
 Enemy.prototype.isStuck = function(dx, dy) {
   if (!getBlockById(curMap.getBlock(Math.floor((this.x) / 75), Math.floor((this.y + dy) / 75))).through ||
   !getBlockById(curMap.getBlock(Math.floor((this.x + dx) / 75), Math.floor((this.y) / 75))).through) {
@@ -45,7 +33,24 @@ Enemy.prototype.isStuck = function(dx, dy) {
 }
 
 Enemy.prototype.pathToPlayer = function() {
-  return finder.findPath(this.cords.x, this.cords.y, p.cords.x, p.cords.y, areaSearchByName(this.map))
+  var curMapGrid = mainMap.grid.clone() // You need to clone before using findPath
+  return finder.findPath(this.cords.x, this.cords.y, p.cords.x, p.cords.y, curMapGrid)
+}
+
+Enemy.prototype.movePathToPlayer = function() {
+  // this.nextPoint = {
+  //   x: this.pathToPlayer()[0][0],
+  //   y: this.pathToPlayer()[0][1]
+  // }
+
+  // this.move(this.nextPoint.x - this.cords.x, this.nextPoint.y - this.cords.y)
+  // console.log(this.nextPoint.x - this.cords.x)
+
+  // if (this.cords.x != nextPoint.x || this.cords.y != nextPoint.y) {
+    
+  // } else {
+
+  // }
 }
 
 // Bosses
@@ -598,6 +603,7 @@ function Splint(map, spawnX, spawnY) { // Idk what to call it man
   }
   this.speed = 1
   this.playerDist = 10000 // Gets updated by the draw method
+  // this.pathToPlayer = null;
   
   this.weaponPos = 0
   this.hitting = false
@@ -624,8 +630,8 @@ Splint.prototype.draw = function(p) {
 
   if (this.playerDist <= 350 && this.playerDist >= 75 && !this.hitting) {
     this.move(Math.cos(this.playerAngle) * 2, Math.sin(this.playerAngle) * 2)
+    // this.movePathToPlayer()
   }
-  // this.movePathToPlayer()
 
   if (this.playerDist < 100 && this.hitCooldown <= 0) {
     this.hit()
