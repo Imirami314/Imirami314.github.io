@@ -55,7 +55,11 @@ theWanderersRiddles.solve = function () {
 	if (secrets[0][3] == true) {
 		theWanderer.x = 28 * 75 + 37.5
 		theWanderer.y = 55 * 75 + 37.5
-		theWanderer.lines = ["`...", "You probably didn't expect me to be here already.", "Congratulations on finding such a rare and mysterious item.\nI've only seen these items in ancient scrolls.", "You are now on the final step of teleporation.", "Sit in the center of the magical ring,\nPlace the beam and the water will spring."]
+		theWanderer.lines = [
+			"`...", "You probably didn't expect me to be here already.",
+			"Congratulations on finding such a rare and mysterious item.\nI've only seen these items in ancient scrolls.",
+			"You are now on the final step of teleporation.", "Sit in the center of the magical ring,\nPlace the beam and the water will spring."
+		]
 	} else if (secrets[0][2] == true) {
 		theWanderer.lines = ["I sense that you've almost completed Chard Town's secret..."]
 	} else if (secrets[0][1] == true) {
@@ -101,4 +105,5 @@ var leysGreatFear = new Mission("Ley's Great Fear", "Reward", null, 0)
 
 leysGreatFear.solve = function () {
 	console.log("ley mann")
+	ley.lines = ["Are they gone yet?!"]
 }

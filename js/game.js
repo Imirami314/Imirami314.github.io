@@ -1176,7 +1176,7 @@ var ley = new NPC(17 * 75 + 37.5, 29 * 75 + 37.5, "Ley", mainMap, "D", [
   cameras.push(new Camera(44 * 75, 19 * 75, 15, "NPC", 7))	
   ley.action = function(p) {
     if (ley.firstInteraction) {
-      missions.push(leysGreatFear)
+      missions.push(leysGreatFear)  
     }
   }
   ley.actionLine = "after"
