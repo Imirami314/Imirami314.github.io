@@ -143,7 +143,7 @@ function Player(x, y, npcs) {
 
   this.moving = false
 
-  this.hitCooldown = 0.25
+  this.hitCooldown = 0.35
 
   this.inventoryDisplay = false
 
@@ -475,7 +475,7 @@ Player.prototype.move = function() {
       } else {
         b.health -= 1
       }
-      this.hitCooldown = 0.25
+      this.hitCooldown = 0.35
       
       switch (b.name) {
         case "Darkened":
@@ -563,7 +563,7 @@ Player.prototype.collide = function() {
       var mDist = entityDistance(this, m)
       this.mAngle = Math.atan2((m.y - this.y), (m.x - this.x))
       if (mDist <= 150 && mouseIsDown && this.hitCooldown <= 0) {
-        this.hitCooldown = 0.25
+        this.hitCooldown = 0.35
         if (!!this.weapon.damage) {
           m.health -= this.weapon.damage
         } else {
