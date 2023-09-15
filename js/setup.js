@@ -32,6 +32,7 @@ if (!!lget("player")) {
   save = {
     player: JSON.parse(lget("player")),
     npcs: JSON.parse(lget("npcs")),
+    maps: JSON.parse(lget("maps")),
     npcActions: JSON.parse(lget("npcActions")),
     interactives: JSON.parse(lget("interactives")),
     lighting: lget("lighting"),
