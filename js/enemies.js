@@ -604,6 +604,8 @@ function Splint(map, spawnX, spawnY) { // Idk what to call it man
   this.speed = 1
   this.playerDist = 10000 // Gets updated by the draw method
   this.agroDist = 500
+  this.deAgroDist = 3500
+  this.agro = false
   // this.pathToPlayer = null;
   
   this.weaponPos = 0
@@ -629,7 +631,7 @@ Splint.prototype.draw = function(p) {
     }
   }
 
-  if (this.playerDist <= this.agroDist && this.playerDist >= 90 && !this.hitting) {
+  if (this.agro && this.playerDist >= 90 && !this.hitting) {
     // this.move(Math.cos(this.playerAngle) * 2, Math.sin(this.playerAngle) * 2)
     this.movePathToPlayer()
   }
@@ -645,9 +647,16 @@ Splint.prototype.draw = function(p) {
   }
   
   if (this.map == curMap.name) {
+    if (this.playerDist <= this.agroDist) {
+      this.agro = true
+    }
+
+    if (this.playerDist >= this.deAgroDist) {
+      this.agro = false
+    }
     ctx.save()
     ctx.translate(this.x, this.y)
-    if (this.playerDist <= this.agroDist) {
+    if (this.agro) {
       ctx.rotate(this.playerAngle - Math.PI / 2)
     }
     ctx.translate(- (this.x), - (this.y))
@@ -657,7 +666,7 @@ Splint.prototype.draw = function(p) {
       ctx.drawImage(images.splintHurt, this.x - 37.5, this.y - 37.5, 75, 75)
     }
     ctx.translate(this.x, this.y)
-    if (this.playerDist <= this.agroDist) {
+    if (this.agro) {
       ctx.rotate(this.weaponPos)
     }
     ctx.translate(- (this.x), - (this.y))

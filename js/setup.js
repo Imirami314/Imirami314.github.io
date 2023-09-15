@@ -40,7 +40,8 @@ if (!!lget("player")) {
 }
 
 var finder = new PF.AStarFinder({
-  allowDiagonal: true
+  allowDiagonal: true,
+  dontCrossCorners: true
 })
 
 var elapsed = 0
