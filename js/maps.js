@@ -386,6 +386,18 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
         switch (c) {
           case ',': // Grass
             ctx.drawImage(images.grass, j * this.blockSize, i * this.blockSize, 75, 75)
+            // if (i == 0 && j == 0 && flowers.length > 1) {
+            //   flowersFinished = true
+            // } 
+            // var hasFlower = (Math.random() <= 0.1)
+            // if (hasFlower && !flowersFinished) {
+            //   flowers.push({
+            //     cordX: j,
+            //     cordY: i,
+            //     x: Math.random() * 75,
+            //     y: Math.random() * 75
+            //   })
+            // }
             break
           case '~': // Water
             ctx.fillStyle = 'rgb(0, 0, 255)'
