@@ -1925,8 +1925,12 @@ if (!!save) {
           }
         }
         
-        interactives.push(new Raft(inter.map, inter.x, inter.y))
+        if (inter.map != "Main Map") {
+          interactives.push(new Raft(areaSearchByName(inter.map), inter.x, inter.y))
         // interactives[i].map = inter.map
+        } else {
+          interactives.push(new Raft(mainMap, inter.x, inter.y))
+        }
       }
     }
   }
