@@ -11,6 +11,7 @@ function Enemy(map, spawnX, spawnY) {
 
   this.foundPath = false
   this.lastPath = []
+  this.moveAngle = 0
 }
 
 Enemy.prototype.move = function(dx, dy) {
@@ -43,14 +44,21 @@ Enemy.prototype.movePathToPlayer = function() {
       x: this.pathToPlayer()[1][0],
       y: this.pathToPlayer()[1][1]
     }
-    console.log(this.cords.x)
-    this.move((this.nextPoint.x - this.cords.x) * 3, (this.nextPoint.y - this.cords.y) * 3)
-  }
-  // console.log(this.nextPoint.x - this.cords.x)
 
-  // if (this.cords.x == this.nextPoint.x && this.cords.y == this.nextPoint.y) {
-  //   this.movePathToPlayer()
-  // }
+    var dx = this.nextPoint.x - this.cords.x
+    var dy = this.nextPoint.y - this.cords.y
+    
+    this.moveAngle = Math.atan2(dy, dx)
+    // if (dx != 0) {
+      
+    // } else {
+    //   this.moveAngle = Math.PI / 2
+    // }
+    console.log(Math.atan2(dy / dx))
+
+    console.log(this.moveAngle)
+    this.move(dx * 3, dy * 3)
+  }
 }
 
 // Bosses
@@ -657,7 +665,11 @@ Splint.prototype.draw = function(p) {
     ctx.save()
     ctx.translate(this.x, this.y)
     if (this.agro) {
-      ctx.rotate(this.playerAngle - Math.PI / 2)
+      if (this.playerDist <= 100) {
+        ctx.rotate(this.playerAngle - Math.PI / 2)
+      } else {
+        ctx.rotate(this.moveAngle - Math.PI / 2)
+      }
     }
     ctx.translate(- (this.x), - (this.y))
     if (!this.isHit) {
