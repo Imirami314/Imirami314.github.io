@@ -1405,27 +1405,28 @@ var queenAlaska = new NPC(42 * 75 + 37.5, 3 * 75 + 37.5, "Queen Alaska", queensC
 var fee = new NPC(46 * 75 + 37.5, 16 * 75 + 37.5, "Fee", galeCave, "D", [
   "Lemme guess, you came to talk to me for a word of advice.",
   "I always just go with the flow...",
-  "Also, have you seen Fi and Fo? They're in this\ncave somewhere..."
+  "Also, have you seen three other people that look like me?\nThey're in this cave somewhere..."
 ], "hi")
 
 var fi = new NPC(4 * 75 + 37.5, 16 * 75 + 37.5, "Fi", galeCave, "D", [
   "Hey pal, want a word of advice?",
   "If you ever hit rock bottom, the only way is up.",
-  "By the way, where'd fee and fo go?"
+  "By the way, where'd fee, fo, and fum go?"
 ], "hi")
 
 var fo = new NPC(5 * 75 + 37.5, 9 * 75 + 37.5, "Fo", galeCave, "D", [
-  "This cave has been dark for years...",
+  "This cave has been dark for so long...",
   "In the meantime, I've made up a song.",
-  "♪ Red Orange Yellow Blue, Indigo and Violet Too! ♪",
+  "Red, Orange, Yellow then Blue, Indigo and Violet Too!",
   "Am I forgetting something?",
   "...",
-  "Anyway, I've been looking for Fee and Fi, but I can't see\nanything!"
+  "Anyway, I've been looking for my brothers, but I can't see\nanything!"
 ], "hi")
 
 var fum = new NPC(37 * 75 + 37.5, 2 * 75 + 37.5, "Fum", galeCave, "D", [
   "HEY YOU! WHAT ARE YOU DOING?",
-  "Hah, I'm just messin' with you.", "When things get heated, always stay calm."
+  "Hah, I'm just messin' with you.", "When things get heated, always stay calm.",
+  "You have any idea why the cave is so dark?"
 ], "hi")
 
 var shopkeeperMuhammad = new NPC(58 * 75, 33 * 75 + 37.5, "Shopkeeper Muhammad", galeCave, "L", [
