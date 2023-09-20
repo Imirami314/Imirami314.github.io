@@ -12,6 +12,7 @@ function Enemy(map, spawnX, spawnY) {
   this.foundPath = false
   this.lastPath = []
   this.moveAngle = 0
+  this.curAngle = 0
 }
 
 Enemy.prototype.move = function(dx, dy) {
@@ -49,14 +50,21 @@ Enemy.prototype.movePathToPlayer = function() {
     var dy = this.nextPoint.y - this.cords.y
     
     this.moveAngle = Math.atan2(dy, dx)
+    if (Math.abs(this.moveAngle - this.curAngle) > 0.1) {
+      if (this.curAngle < this.moveAngle) {
+        this.curAngle += 0.05
+      } else {
+        this.curAngle -= 0.05
+      }
+    }
     // if (dx != 0) {
       
     // } else {
     //   this.moveAngle = Math.PI / 2
     // }
-    console.log(Math.atan2(dy / dx))
-
-    console.log(this.moveAngle)
+   // console.log(Math.atan2(dy / dx))
+    console.log(this.curAngle)
+    //console.log(this.moveAngle)
     this.move(dx * 3, dy * 3)
   }
 }
@@ -668,7 +676,7 @@ Splint.prototype.draw = function(p) {
       if (this.playerDist <= 100) {
         ctx.rotate(this.playerAngle - Math.PI / 2)
       } else {
-        ctx.rotate(this.moveAngle - Math.PI / 2)
+        ctx.rotate(this.curAngle - Math.PI / 2)
       }
     }
     ctx.translate(- (this.x), - (this.y))
