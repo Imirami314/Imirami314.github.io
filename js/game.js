@@ -384,8 +384,21 @@ Player.prototype.HUD = function() {
   ctx.translate(1365 - 100, 640 - 100)
   ctx.scale(0.1, 0.1)
   ctx.translate(-1 * p.x, -1 * p.y)
+
+  // tried adding a border but looks goofy fix
+  // ctx.fillStyle = 'rgb(0, 0, 0)'
+  // ctx.fillRect(this.x - 900, this.y - 900, 1800, 1800)
   curMap.draw(p, "Snippet View")
+  
+  
   ellipse(this.x, this.y, 50, 50, "rgb(255, 0, 0)")
+  for (var i = 0; i < monsters.length; i ++) {
+    if (curMap.name == monsters[i].map && !monsters[i].dead) {
+      if (monsters[i].playerDist < 750 && monsters[i].agro) {
+        ellipse(monsters[i].x, monsters[i].y, 50, 50, "rgb(0, 0, 0)")
+      }
+    }
+  }
   ctx.restore()
 }
 
