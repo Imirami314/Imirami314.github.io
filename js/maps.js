@@ -293,7 +293,7 @@ var getBlockInfoByCords = function(x /* Pixels */, y /* Pixels */) {
   return getBlockById(curMap.getBlock(Math.floor(x / 75), Math.floor(y / 75)))
 }
 
-var getBlockAlertInfoByCords = function (x, y, map) {
+var getGameAlertInfoByCords = function (x, y, map) {
 	for (var i in alerts) {
 		if (alerts[i].x == x && alerts[i].y == y && alerts[i].map == map) {
 			return alerts[i]
@@ -624,6 +624,7 @@ Camera.prototype.draw = function() {
 		scene = "CAMERA"
 		p.canMove = true
 		this.showCamera = false
+    cutsceneFrame = 0
 		//this.cameraMoving = false
 			
 	}
@@ -824,14 +825,30 @@ var imperilledPrison = new Landscape([
   '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$'
 ], 75 + 37.5, 75 + 37.5, 1, 1, "Imperilled Prison")
 
+var prisonCameraActivated = false
+
 imperilledPrison.solve = function () {
   if (curMap == imperilledPrison) {
     lighting = 1500
     if (!(p.cords.x == 25 && p.cords.y == 10)) {
+      
       playSound("Alarm", true)
+      if (!prisonCameraActivated) {
+        cutsceneFrame ++
+        console.log(cutsceneFrame)
+        p.canMove = false
+        if (cutsceneFrame > 50) {
+          alerts.push(new GameAlert(165, 17, ["uh yeah", "ChuB!"], imperilledPrison, "MESSAGE"))
+          curCamera = new Camera(19 * 75, 2 * 75, 10, "AUTO")
+          prisonCameraActivated = true
+        }
+        
+        
+      }
 
     }
   }
+  
 }
 
 var johnHouse = new Landscape([
