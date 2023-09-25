@@ -52,9 +52,9 @@ Enemy.prototype.movePathToPlayer = function() {
     this.moveAngle = Math.atan2(dy, dx)
     if (Math.abs(this.moveAngle - this.curAngle) > 0.1) {
       if (this.curAngle < this.moveAngle) {
-        this.curAngle += 0.05
+        this.curAngle += 0.2
       } else {
-        this.curAngle -= 0.05
+        this.curAngle -= 0.2
       }
     }
     // if (dx != 0) {

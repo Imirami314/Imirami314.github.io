@@ -424,7 +424,7 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
 						
             break
           case '@': // Bush
-          var pulsation = Math.sin(elapsed / 12)
+          var pulsation = Math.sin(elapsed / 12) * 2
             ctx.drawImage(images.grass, j * this.blockSize, i * this.blockSize, 75, 75)
             ctx.drawImage(images.bush, j * this.blockSize - pulsation / 2, i * this.blockSize + pulsation, 75 + pulsation, 75) + pulsation
             break
