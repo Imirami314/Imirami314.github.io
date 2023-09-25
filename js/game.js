@@ -5,24 +5,23 @@ curMap = stormedRoom
 var saveLoaded = false
 
 var alerts = [
-  new BlockAlert(9, 53, ["Confounded Cave\nKEEP OUT!"], mainMap, "SIGN"),
-  new BlockAlert(1, 44, ["Got you! - Mike"], mainMap, "SIGN"),
-  new BlockAlert(182, 3, ["Glacia Village  ---------->\n<---------- Steel Field\nIf text on the signs confuse and confound, it all becomes clearer if you flip it around."], mainMap, "SIGN"),
-  new BlockAlert(66, 10, ["Huh? It's locked.\nYou need the 'Steel Field Key'."], mainMap, "KEY", "Map Key"),
-  new BlockAlert(6, 53, ["Huh? It's locked.\nYou need the 'Confounded Cave Key'."], mainMap, "KEY", "Confounded Cave Key"),
-  new BlockAlert(6, 21, ["The buttons above will alter the walls,\nPress them correctly to open both halls..."], confoundedCave, "SIGN"),
-  new BlockAlert(28, 11, ["Huh? It's locked.\nYou need the 'Puzzle Key'."], confoundedCave, "KEY", "Puzzle Key"),
-  new BlockAlert(253, 21, ["The queen does not wish to speak with commoners at this time.", "If you must enter the castle, this riddle you must use,\nthe entrance is at the entrance, between red and blue."], mainMap, "SIGN"),
-  new BlockAlert(230, 18, ["If you've found the secret, but do not know how to go through,\ndo not be afraid to simply press 'q'."], mainMap, "SIGN"),
-  new BlockAlert(23, 5, ["The castle exit can be found at the bottom of the lowest floor."], queensCastle, "SIGN"),
-  new BlockAlert(176, 30, ["DO NOT ENTER\nWIND IS INCREDIBLY STRONG"], mainMap, "SIGN"),
-  new BlockAlert(183, 39, ["Shot from a bow, on the map you'll see,\nthe land forms a symbol to point where you should be."], mainMap, "SIGN"),
-  new BlockAlert(28, 23, ["Find the four brothers, have no fears,\nAs the light shines through, the answer appears.", "When a button is found, a brother is near.\nOnce you're finished, come back here."], galeCave, "SIGN"),
-  new BlockAlert(35, 11, ["Press space at the center, prepare for a fight,\nFor you're about to meet the Master of Night."], confoundedCave, "SIGN"),
-  new BlockAlert(44, 33, ["Warning: very cold past this point!", "Auras are recommended."], galeCave, "SIGN"),
-	new BlockAlert(10, 7, ["BOW??20! hSHDs1@???:\n?fdkj2!","SDHG9 dahf!!01 fdhk!@8 d,\nhjfdj sh>9 /rhd9:f hfu???jfnvjejdj..??."], mainMap, "DECIPHER", null, ["Chard Town's Secret:\nPART 2","Chard Town possesses an unfinished letter,\nPress the right key to make everything better..."]),
-	new BlockAlert(24, 8, ["This mysterious substance wiall come with a curse,\nThe player will perish, the raft alone may traverse."], cryoUnderground, "SIGN")
-	//new BlockAlert(165, 17, ["uh yeah", "ChuB!"], mainMap, "MESSAGE")
+  new GameAlert(9, 53, ["Confounded Cave\nKEEP OUT!"], mainMap, "SIGN"),
+  new GameAlert(1, 44, ["Got you! - Mike"], mainMap, "SIGN"),
+  new GameAlert(182, 3, ["Glacia Village  ---------->\n<---------- Steel Field\nIf text on the signs confuse and confound, it all becomes clearer if you flip it around."], mainMap, "SIGN"),
+  new GameAlert(66, 10, ["Huh? It's locked.\nYou need the 'Steel Field Key'."], mainMap, "KEY", "Map Key"),
+  new GameAlert(6, 53, ["Huh? It's locked.\nYou need the 'Confounded Cave Key'."], mainMap, "KEY", "Confounded Cave Key"),
+  new GameAlert(6, 21, ["The buttons above will alter the walls,\nPress them correctly to open both halls..."], confoundedCave, "SIGN"),
+  new GameAlert(28, 11, ["Huh? It's locked.\nYou need the 'Puzzle Key'."], confoundedCave, "KEY", "Puzzle Key"),
+  new GameAlert(253, 21, ["The queen does not wish to speak with commoners at this time.", "If you must enter the castle, this riddle you must use,\nthe entrance is at the entrance, between red and blue."], mainMap, "SIGN"),
+  new GameAlert(230, 18, ["If you've found the secret, but do not know how to go through,\ndo not be afraid to simply press 'q'."], mainMap, "SIGN"),
+  new GameAlert(23, 5, ["The castle exit can be found at the bottom of the lowest floor."], queensCastle, "SIGN"),
+  new GameAlert(176, 30, ["DO NOT ENTER\nWIND IS INCREDIBLY STRONG"], mainMap, "SIGN"),
+  new GameAlert(183, 39, ["Shot from a bow, on the map you'll see,\nthe land forms a symbol to point where you should be."], mainMap, "SIGN"),
+  new GameAlert(28, 23, ["Find the four brothers, have no fears,\nAs the light shines through, the answer appears.", "When a button is found, a brother is near.\nOnce you're finished, come back here."], galeCave, "SIGN"),
+  new GameAlert(35, 11, ["Press space at the center, prepare for a fight,\nFor you're about to meet the Master of Night."], confoundedCave, "SIGN"),
+  new GameAlert(44, 33, ["Warning: very cold past this point!", "Auras are recommended."], galeCave, "SIGN"),
+	new GameAlert(10, 7, ["BOW??20! hSHDs1@???:\n?fdkj2!","SDHG9 dahf!!01 fdhk!@8 d,\nhjfdj sh>9 /rhd9:f hfu???jfnvjejdj..??."], mainMap, "DECIPHER", null, ["Chard Town's Secret:\nPART 2","Chard Town possesses an unfinished letter,\nPress the right key to make everything better..."]),
+	new GameAlert(24, 8, ["This mysterious substance wiall come with a curse,\nThe player will perish, the raft alone may traverse."], cryoUnderground, "SIGN")
 ]
 
 var teleports = [
@@ -872,7 +871,7 @@ function Block(id, x, y, through) {
   this.playerOn = false
 }
 
-function BlockAlert(x, y, lines, map, type, item, decipherLines) {
+function GameAlert(x, y, lines, map, type, item, decipherLines) {
   this.x = x
   this.y = y
   this.lines = lines
@@ -896,7 +895,7 @@ function BlockAlert(x, y, lines, map, type, item, decipherLines) {
   
 }
 
-BlockAlert.prototype.draw = function () {
+GameAlert.prototype.draw = function () {
   if (curMap == this.map) {
     if (this.type == "SIGN") {
       ctx.fillStyle = "rgb(51, 37, 25)"
@@ -907,7 +906,7 @@ BlockAlert.prototype.draw = function () {
   } 
 }
 
-BlockAlert.prototype.drawMessage = function () {
+GameAlert.prototype.drawMessage = function () {
   if (curMap == this.map) { 
     if (this.lineNum == 0 && !this.showLines) {
       this.finishCooldown -= 1 / (66 + 2/3)
@@ -1097,7 +1096,7 @@ Teleport.prototype.draw = function () {
 		}
 	
 }
-// BlockAlert.prototype.changeAlert = function(signX, signY, signMap, newLines) {
+// GameAlert.prototype.changeAlert = function(signX, signY, signMap, newLines) {
 // 	if (this.x == signX && this.y == signY && this.map == signMap) {
 // 		lines = newLines;
 // 	}
@@ -1963,7 +1962,7 @@ var models = {
   }
 }
 
-var p = new Player(5 * 75, 4 * 75, npcs) // default x = width / 2, y = height / 2 helloooh
+var p = new Player(25 * 75, 10 * 75, npcs) // default x = width / 2, y = height / 2 helloooh
 
 var c121_31 = new Chest(mainMap, 121, 31, [
   items.heatHandle
@@ -2838,7 +2837,7 @@ var gameInterval = setInterval(function() {
         ]
   
         // 137, 4
-        alerts.push(new BlockAlert(137, 4, ["SEGREME THGIN FO RETSAM WEN A SA SNEPO REDROB EHT"], mainMap, "SIGN"))
+        alerts.push(new GameAlert(137, 4, ["SEGREME THGIN FO RETSAM WEN A SA SNEPO REDROB EHT"], mainMap, "SIGN"))
         
         wayne.action = function(p) {
           // Location of Glacia Village entry
@@ -3044,9 +3043,19 @@ var gameInterval = setInterval(function() {
           monsters[i].draw(p)
         }
       }
-
+   
 			ctx.translate((-1 * curCX) + (width / 2), (-1 * curCY) + (height / 2))
 			ctx.restore()
+
+      if (lighting < 2500) {
+        for (var i = 0; i < (width / lightingSize) + 1; i ++) {
+          for (var j = 0; j < (height / lightingSize) + 1; j ++) {
+            var lightingCalc = Math.hypot((i * lightingSize - lightingSize / 2) - width / 2, (j * lightingSize - lightingSize / 2) - height / 2) / lighting
+            ctx.fillStyle = "rgba(0, 0, 0, " + lightingCalc + ")"
+            ctx.fillRect((i - 1) * lightingSize, (j - 1) * lightingSize, lightingSize * 2, lightingSize * 2)
+          }
+        }
+      }
 
 			for (var i in npcs) {
         if (!!npcs[i].map) {
@@ -3056,7 +3065,10 @@ var gameInterval = setInterval(function() {
           }
         }
       }
-		
+      
+      for (var i in alerts) {
+        alerts[i].drawMessage()
+      }
 		
 			if (curCX < camera.cx) {
 				curCX += camera.cspeed
@@ -3077,8 +3089,13 @@ var gameInterval = setInterval(function() {
 			if (Math.hypot((curCX - camera.cx), (curCY - camera.cy)) < 75) { // round to the nearest hundreth
 				cameraMoving = false
 			}
-
-			if (camera.type == "NPC") {
+      if (camera.type == "AUTO") {
+        if (cutsceneFrame < 500) {
+          cutsceneFrame ++
+        } else {
+          scene = "GAME"
+        }
+      } if (camera.type == "NPC") {
 				for (i in npcs) {
 					if (npcs[i].lineNum == camera.lineStop) {
 						if (keys.space) {

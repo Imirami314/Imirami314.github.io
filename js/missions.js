@@ -48,7 +48,7 @@ aStrangeWorld.solve = function () {
 var theWanderersRiddles = new Mission("The Wanderer's Riddles", "Ability", null, 0)
 
 theWanderersRiddles.solve = function () {
-	if (getBlockAlertInfoByCords(10, 7, mainMap).playerRead) {	// makes sure message is correct			
+	if (getGameAlertInfoByCords(10, 7, mainMap).playerRead) {	// makes sure message is correct			
 		secrets[0][0] = true
 	}
 	
@@ -69,8 +69,8 @@ theWanderersRiddles.solve = function () {
 		if (p.cords.x == 63 && p.cords.y == 20 && keys.x) {
 			if (mainMap.getBlock(63, 20) != "@") {
 				mainMap.changeBlock(63, 20, "@")
-				if (getBlockAlertInfoByCords(63, 20, mainMap) == null) {
-					alerts.push(new BlockAlert(63, 20, ["Chard Town's Secret\nPART 3", "From this exact point, travel north and west.\nInside do the opposite, to reach the final chest."], mainMap, "EXAMINE"))
+				if (getGameAlertInfoByCords(63, 20, mainMap) == null) {
+					alerts.push(new GameAlert(63, 20, ["Chard Town's Secret\nPART 3", "From this exact point, travel north and west.\nInside do the opposite, to reach the final chest."], mainMap, "EXAMINE"))
 				} else {
 					alert("naye!")
 				}
