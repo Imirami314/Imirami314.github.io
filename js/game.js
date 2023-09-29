@@ -1,10 +1,11 @@
 // Function wrapping prevents console from altering game variables
 // (function() {
-curMap = stormedRoom
+curMap = imperilledPrison
 
 var saveLoaded = false
 
 var alerts = [
+  new GameAlert(0, 0, ["WASD To Move\n[Space] To Continue"], imperilledPrison, "MESSAGE"),
   new GameAlert(9, 53, ["Confounded Cave\nKEEP OUT!"], mainMap, "SIGN"),
   new GameAlert(1, 44, ["Got you! - Mike"], mainMap, "SIGN"),
   new GameAlert(182, 3, ["Glacia Village  ---------->\n<---------- Steel Field\nIf text on the signs confuse and confound, it all becomes clearer if you flip it around."], mainMap, "SIGN"),
@@ -908,6 +909,7 @@ GameAlert.prototype.draw = function () {
 
 GameAlert.prototype.drawMessage = function () {
   if (curMap == this.map) { 
+
     if (this.lineNum == 0 && !this.showLines) {
       this.finishCooldown -= 1 / (66 + 2/3)
     }
@@ -947,12 +949,25 @@ GameAlert.prototype.drawMessage = function () {
       ctx.font = "20px serif"
       ctx.textAlign = 'center'
 			
-			if (this.type != "DECIPHER" && this.type != "MESSAGE") {
+			if (this.type != "DECIPHER" && this.type != "MESSAGE" && this.type.substring(0, 3) != "NPC") {
       	fillTextMultiLine(this.lines[this.lineNum], width / 2, (height * 3 / 4) + 60)
 			} else if (this.type == "MESSAGE") {
 				ctx.fillStyle = "rgb(255, 255, 255)"
 				fillTextMultiLine(this.lines[this.lineNum], width / 2, (height * 3 / 4) + 60)
-			} else if (this.type == "DECIPHER" && p.weapon.name != "Decipherer") {
+      } else if (this.type.substring(0, 3) == "NPC") { // sort of confusing, but if this.type starts with "NPC"
+        ctx.fillStyle = "rgb(0, 0, 0)"
+				fillTextMultiLine(this.lines[this.lineNum], width / 2, (height * 3 / 4) + 60)
+        ctx.font = "15px serif"
+        ctx.textAlign = 'left'
+        ctx.fillStyle = "rgb(0, 0, 0)"
+        ctx.fillText(this.type.substring(3, this.type.length), width / 4 + 10, height * 3 / 4 + 5)
+  			ctx.textBaseline = 'middle'
+
+				// Small or big text
+        ctx.font = "20px serif"
+        ctx.textAlign = 'center'
+			
+      } else if (this.type == "DECIPHER" && p.weapon.name != "Decipherer") {
 				ctx.fillStyle = "rgb(250, 0, 0)"
 				fillTextMultiLine(this.lines[this.lineNum], width / 2, (height * 3 / 4) + 60)
 			} else {
@@ -961,7 +976,12 @@ GameAlert.prototype.drawMessage = function () {
 			}
 		
       if (this.nextIndicator == true) {
-        triangle(width / 2 - 10, height - 60 + this.nextIndicatorY, width/2 + 10, height - 60 + this.nextIndicatorY, width/2, height - 40 + this.nextIndicatorY, "rgb(0, 0, 0)")	
+        if (this.type == "MESSAGE") {
+          triangle(width / 2 - 10, height - 60 + this.nextIndicatorY, width/2 + 10, height - 60 + this.nextIndicatorY, width/2, height - 40 + this.nextIndicatorY, "rgb(255, 255, 255)")	
+        } else {
+          triangle(width / 2 - 10, height - 60 + this.nextIndicatorY, width/2 + 10, height - 60 + this.nextIndicatorY, width/2, height - 40 + this.nextIndicatorY, "rgb(0, 0, 0)")	
+        }
+        
       }
   
       if (this.textCooldown <= 0 && keys.space) {
@@ -971,7 +991,7 @@ GameAlert.prototype.drawMessage = function () {
 				
       }
   		
-      if (this.type != "MESSAGE" && this.lineNum == this.lines.length && keys.space) {
+      if (this.type != "MESSAGE" && this.type.substring(0,3) != "NPC" && this.lineNum == this.lines.length && keys.space) {
         this.showLines = false
         this.lineNum = 0
 				this.playerRead  = true
@@ -980,7 +1000,7 @@ GameAlert.prototype.drawMessage = function () {
       }
     }
 
-		if (this.type == "MESSAGE") {
+		if (this.type == "MESSAGE" || this.type.substring(0, 3) == "NPC") {
 			if (this.lineNum < this.lines.length) {
 				this.showLines = true
 				p.canMove = false
@@ -1104,6 +1124,7 @@ Teleport.prototype.draw = function () {
 
 //
 
+var prisonGuard = new NPC(19 * 75 + 37.5, 2 * 75 + 37.5, "Prison Guard", imperilledPrison, "R", [""], "uh yeah")
 
 var oldMan = new NPC(5*75, 1*75, "Old Man", johnHouse, "D", [
   "Huh? Who is there?",
@@ -1514,7 +1535,7 @@ var theWanderer = new NPC (60 * 75, 41 * 75, "The Wanderer", mainMap, "D",  [
 	
 }, "after")
 
-var npcs = [oldMan, john, ron, mike, mikesMom, lyra, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer]
+var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, lyra, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer]
 
 npcs.searchByName = function(name) {
   for (var i in this) {

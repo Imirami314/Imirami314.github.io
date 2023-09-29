@@ -838,12 +838,10 @@ imperilledPrison.solve = function () {
         console.log(cutsceneFrame)
         p.canMove = false
         if (cutsceneFrame > 50) {
-          alerts.push(new GameAlert(165, 17, ["uh yeah", "ChuB!"], imperilledPrison, "MESSAGE"))
+          alerts.push(new GameAlert(165, 17, ["WHAT? The alarm turned on?", "I better take a look..."], imperilledPrison, "NPC Prison Guard"))
           curCamera = new Camera(19 * 75, 2 * 75, 10, "AUTO")
           prisonCameraActivated = true
         }
-        
-        
       }
 
     }
