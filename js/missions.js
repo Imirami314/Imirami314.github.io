@@ -71,8 +71,6 @@ theWanderersRiddles.solve = function () {
 				mainMap.changeBlock(63, 20, "@")
 				if (getGameAlertInfoByCords(63, 20, mainMap) == null) {
 					alerts.push(new GameAlert(63, 20, ["Chard Town's Secret\nPART 3", "From this exact point, travel north and west.\nInside do the opposite, to reach the final chest."], mainMap, "EXAMINE"))
-				} else {
-					alert("naye!")
 				}
 				
 				secrets[0][2] = true

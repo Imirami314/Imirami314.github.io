@@ -189,6 +189,10 @@ function Player(x, y, npcs) {
 	this.inRaft = false
 
 	this.decipher = false
+
+  this.alertOpacity = 0
+  this.curAlert = ""
+  
 }
 
 Player.prototype.draw = function() {
@@ -343,15 +347,8 @@ Player.prototype.draw = function() {
 
       // No eyes are shown in the up position
   }
-  if (!!this.blockOn.useDesc) {
-    ctx.roundRect(width / 2 - 100, height / 2 + 50, 200, 50, 10)
-    ctx.fill()
-    ctx.fillStyle = "rgb(0, 0, 0)"
-    ctx.font = "15px serif"
-    ctx.textAlign = "center"
-    ctx.fillText(this.blockOn.useDesc, width / 2, height / 2 + 75)
-  }
   
+
   if (mouseIsDown && !keys.e) {
     try {
       this.weapon.use(this)
@@ -428,7 +425,7 @@ Player.prototype.move = function() {
   } else if ((this.cords.x >= 138 && this.cords.x < 270 && this.cords.y >= 11 && this.cords.y < 31) ||
             (this.cords.x >= 182 && this.cords.x < 270 && this.cords.y >= 1 && this.cords.y < 11)) {
     this.area = "Glacia Village"
-  } else if (this.cords.x >= 158 && this.cords.y >= 32 && this.cords.x <= 269 && this.cords.y <= 50) {
+  } else if (this.cords.x >= 158 && this.cords.y >= 32 && this.cords.x <= 234 && this.cords.y <= 50) {
     this.area = "Windy Wastelands"
 		
     weather.wind.time += (1 / (66 + (2 / 3)))
@@ -847,6 +844,33 @@ Player.prototype.displayNPCInfo = function(n) {
 	ctx.textAlign = 'center'
 }
 
+Player.prototype.nearNPC = function () {
+  
+}
+
+Player.prototype.drawAlert = function () {
+  for (var i in npcs) {
+    
+  }
+
+  if (!!this.blockOn.useDesc) {
+    // ctx.roundRect(width / 2 - 100, height / 2 + 50, 200, 50, 10)
+    // ctx.fill()
+    this.curAlert = this.blockOn.useDesc
+    if (this.alertOpacity <= 1) {
+      this.alertOpacity += 0.1
+    }
+  } else {
+    if (this.alertOpacity > 0) {
+      this.alertOpacity -= 0.1
+    }
+  }
+  
+  ctx.fillStyle = "rgba(255, 255, 255, " + this.alertOpacity + ")"
+  ctx.font = "30px serif"
+  ctx.textAlign = "center"
+  ctx.fillText(this.curAlert, width / 2, height - 75)
+}
 // Player.prototype.throw = function() {
 //   if (this.throwState == 1) { // Drawing back the item
 //     this.weaponShift.x -= 10 / 66.667
@@ -2331,9 +2355,7 @@ var gameInterval = setInterval(function() {
         // }
         
         p.draw()
-    
-        
-        
+
         ctx.save()
         ctx.translate((-1 * p.x) + (width / 2), (-1 * p.y) + (height / 2))
         curMap.drawNextLayer(p)
@@ -2397,7 +2419,9 @@ var gameInterval = setInterval(function() {
           }, 1500)
         }
     
-        
+        // Alert to open door, talk to NPC, etc
+        p.drawAlert()
+
         // NPCS speech bubbles
         
         for (var i in npcs) {
