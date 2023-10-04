@@ -302,6 +302,17 @@ var getGameAlertInfoByCords = function (x, y, map) {
 	return null
 } 
 
+
+/**
+ * Landscape constructor
+ * @param {*} arr Array of strings with block characters
+ * @param {*} enterX The x-coordinate that the player will be standing at upon entry
+ * @param {*} enterY The x-coordinate that the player will be standing at upon entry
+ * @param {*} doorX The block x-coordinate that the door to enter is at
+ * @param {*} doorY The block y-coordinate that the door to enter is at
+ * @param {*} name The name of the map (should use spaces and capitalization)
+ * @param {*} solve A function that constantly runs while the player is on the map (used for special map actions unique to this map)
+ */
 function Landscape(arr, enterX, enterY, doorX, doorY, name, solve) {
   this.arr = arr;
   this.grid = new PF.Grid(this.getDimensions().x, this.getDimensions().y)
@@ -350,6 +361,15 @@ Landscape.prototype.loadGrid = function() {
   }
 }
 
+
+/**
+ * Display the map
+ * @param {*} p Player object (just put p)
+ * @param {*} mode Map display type (options: "Player View", "Map View", "Cutscene View", "Snippet View", "Camera View")
+ * @param {*} cx X-coordinate to translate map display (only use for "Cutscene View")
+ * @param {*} cy Y-coordinate to translate map display (only use for "Cutscene View")
+ * @param {*} cscale Amount to scale map display (only use for "Cutscene View")
+ */
 Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
   for (var i = 0; i < this.arr.length; i ++) {
     for (var j = 0; j < this.arr[i].length; j ++) {
@@ -600,6 +620,7 @@ Landscape.prototype.getDimensions = function() {
     y: this.arr.length
   }
 }
+
 
 function Camera(cx, cy, cspeed, type, lineStop) {
 	this.cx = cx

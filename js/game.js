@@ -36,7 +36,27 @@ var secrets = [ // (Last bool is the beam, meaning the secret is solved)
 
 var missions = []
 
-var curCamera = null; 
+var curCamera = null;
+
+
+/**
+ * Starts camera motion
+ * @param {*} cx X-coordinate to move camera to
+ * @param {*} cy Y-coordinate to move camera to
+ * @param {*} cspeed Speed to move camera to location
+ * @param {*} type Type of camera being used (Options: "NPC")
+ * @param {*} lineStop Dialogue line to terminate camera
+ */
+function cameraStart(cx, cy, cspeed, type, lineStop) {
+  curCamera = new Camera(cx, cy, cspeed, type, lineStop)
+}
+
+/**
+ * Ends the camera motion
+ */
+function cameraEnd() {
+
+}
 
 var lighting = 2500 // Between 0 and 2500
 var lightingSize = 45
@@ -399,6 +419,12 @@ Player.prototype.HUD = function() {
   ctx.restore()
 }
 
+
+/**
+ * Check if player is on a block at certain coordinates
+ * @param {number} x The x coordinate to check
+ * @param {number} y The y coordinate to check
+ */
 Player.prototype.on = function(x, y) {
   if (this.cords.x == x && this.cords.y == y) {
     return true
@@ -3159,6 +3185,7 @@ var gameInterval = setInterval(function() {
 					if (npcs[i].lineNum == camera.lineStop) {
 						if (keys.space) {
 							scene = "GAME"
+              cameraEnd()
 						}
 					}
 				}
