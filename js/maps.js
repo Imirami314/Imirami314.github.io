@@ -789,9 +789,16 @@ var mainMap = new Landscape([
 
 var c = new Camera(200 * 75, 15 * 75, 15)
 mainMap.solve = function() {
+  var randNPCDir = ["U", "R", "D", "L"]
+  var randDir = ["North", "East", "South", "West"]
+  var correctDir = ""
   if (p.x > 250 * 75 && p.x < 254 * 75) {
     if (p.y < 37 * 75){
       p.y = 59 * 75
+      lostTraveler.dir = randNPCDir[Math.floor(Math.random() * 4)]
+      lostTraveler.lines = [randDir[Math.floor(Math.random() * 4)]]
+      
+    
     }
 
     if (p.y > 59 * 75) {

@@ -845,18 +845,26 @@ Player.prototype.displayNPCInfo = function(n) {
 }
 
 Player.prototype.nearNPC = function () {
-  
+  for (var i in npcs) {
+    if (npcs[i].showName && npcs[i].lineNum == -1) {
+      return true
+    }
+  }
+  return false
 }
 
 Player.prototype.drawAlert = function () {
-  for (var i in npcs) {
-    
-  }
+  
 
   if (!!this.blockOn.useDesc) {
     // ctx.roundRect(width / 2 - 100, height / 2 + 50, 200, 50, 10)
     // ctx.fill()
     this.curAlert = this.blockOn.useDesc
+    if (this.alertOpacity <= 1) {
+      this.alertOpacity += 0.1
+    }
+  } else if (this.nearNPC()) {
+    this.curAlert = "Press space to speak"
     if (this.alertOpacity <= 1) {
       this.alertOpacity += 0.1
     }
@@ -1559,7 +1567,12 @@ var theWanderer = new NPC (60 * 75, 41 * 75, "The Wanderer", mainMap, "D",  [
 	
 }, "after")
 
-var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, lyra, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer]
+var lostTraveler = new NPC (252 * 75 + 37.5, 48 * 75 + 37.5, "Lost Traveler", mainMap, "D", [
+  "Oh yeahhhh",
+  "oh yeahh"
+])
+
+var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, lyra, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler]
 
 npcs.searchByName = function(name) {
   for (var i in this) {
@@ -2185,6 +2198,7 @@ if (!!save) {
 //   var ch = chung[i]
 //   mainMap.changeBlock(ch[0], ch[1], ",")
 // }
+
 
 var gameInterval = setInterval(function() {
   if (tabIsActive) {
