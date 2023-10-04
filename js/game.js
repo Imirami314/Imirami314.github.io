@@ -451,7 +451,7 @@ Player.prototype.move = function() {
   } else if ((this.cords.x >= 138 && this.cords.x < 270 && this.cords.y >= 11 && this.cords.y < 31) ||
             (this.cords.x >= 182 && this.cords.x < 270 && this.cords.y >= 1 && this.cords.y < 11)) {
     this.area = "Glacia Village"
-  } else if (this.cords.x >= 158 && this.cords.y >= 32 && this.cords.x <= 234 && this.cords.y <= 50) {
+  } else if (this.cords.x >= 158 && this.cords.y >= 32 && this.cords.x <= 224 && this.cords.y <= 50) {
     this.area = "Windy Wastelands"
 		
     weather.wind.time += (1 / (66 + (2 / 3)))
@@ -463,8 +463,11 @@ Player.prototype.move = function() {
     if (getBlockById(curMap.getBlock(Math.floor((this.x) / 75), Math.floor((this.y + weather.wind.y) / 75))).through) {
       this.y += weather.wind.y
     }
+  } else if (this.cords.x >= 225 && this.cords.y >= 31 && this.cords.x <= 279 && this.cords.y <= 65) {
+    this.area = "Encompassed Forest"
   } else {
     this.area = "NONE"
+
   }
   
   if (!this.mapOn && this.canMove && !mouseIsDown) {

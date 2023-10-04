@@ -812,34 +812,35 @@ mainMap.solve = function() {
   var randNPCDir = ["U", "R", "D", "L"]
   var randDir = ["North", "East", "South", "West"]
   var correctDir = ""
-  if (p.x > 250 * 75 && p.x < 254 * 75) {
-    if (p.y < 37 * 75){
-      p.y = 59 * 75
-      lostTraveler.dir = randNPCDir[Math.floor(Math.random() * 4)]
-      lostTraveler.lines = [randDir[Math.floor(Math.random() * 4)]]
+  if (p.area == "Encompassed Forest") {
+    if (p.x > 250 * 75 && p.x < 254 * 75) {
+      if (p.y < 37 * 75){
+        p.y = 59 * 75
+        lostTraveler.dir = randNPCDir[Math.floor(Math.random() * 4)]
+        lostTraveler.lines = [randDir[Math.floor(Math.random() * 4)]]
+        
       
-    
+      }
+
+      if (p.y > 59 * 75) {
+        p.y = 37 * 75
+      }
     }
 
-    if (p.y > 59 * 75) {
-      p.y = 37 * 75
+    if (p.y > 46 * 75 && p.y < 50 * 75) {
+      if (p.x < 236 * 75) {
+        p.x = 268 * 75
+      }
+
+      if (p.x > 268 * 75) {
+        p.x = 236 * 75
+      }
     }
+    // mike.action = function (p) {
+    // 	cameras.push(new Camera(10 * 75, 10 * 75, 15, "NPC", 6))
+    // }
+    // mike.actionLine = 3       
   }
-
-  if (p.y > 46 * 75 && p.y < 50 * 75) {
-    if (p.x < 236 * 75) {
-      p.x = 268 * 75
-    }
-
-    if (p.x > 268 * 75) {
-      p.x = 236 * 75
-    }
-  }
-	// mike.action = function (p) {
-	// 	cameras.push(new Camera(10 * 75, 10 * 75, 15, "NPC", 6))
-	// }
-	// mike.actionLine = 3
-  
 	
 
 
