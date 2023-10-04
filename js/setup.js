@@ -10,10 +10,21 @@ document.addEventListener("visibilitychange", (event) => {
   }
 })
 
+
+/**
+ * Sets localStorage property
+ * @param {*} key Key to get data by
+ * @param {*} value The actual data (JSON.parse this stuff if it doens't work, it sometimes fixes things)
+ */
 function lset(key, value) {
   localStorage.setItem(key, value)
 }
 
+/**
+ * Gets localStorage data
+ * @param {*} key Key to get data by
+ * @returns 
+ */
 function lget(key) {
   return localStorage.getItem(key)
 }

@@ -65,7 +65,6 @@ function NPC(x, y, name, map, dir, lines, desc, action, actionLine, shopMenu) {
 }
 
 NPC.prototype.draw = function() {
-	
 	if (scene == "CAMERA") {
 		this.cameraOn = true
 	}
