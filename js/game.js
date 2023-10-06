@@ -451,7 +451,7 @@ Player.prototype.move = function() {
   } else if ((this.cords.x >= 138 && this.cords.x < 270 && this.cords.y >= 11 && this.cords.y < 31) ||
             (this.cords.x >= 182 && this.cords.x < 270 && this.cords.y >= 1 && this.cords.y < 11)) {
     this.area = "Glacia Village"
-  } else if (this.cords.x >= 158 && this.cords.y >= 32 && this.cords.x <= 224 && this.cords.y <= 50) {
+  } else if (this.cords.x >= 138 && this.cords.y >= 32 && this.cords.x <= 224 && this.cords.y <= 50) {
     this.area = "Windy Wastelands"
 		
     weather.wind.time += (1 / (66 + (2 / 3)))

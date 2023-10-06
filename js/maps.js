@@ -810,30 +810,42 @@ var mainMap = new Landscape([
 var c = new Camera(200 * 75, 15 * 75, 15)
 mainMap.solve = function() {
   var randNPCDir = ["U", "R", "D", "L"]
-  var randDir = ["North", "East", "South", "West"]
-  var correctDir = ""
+  var randDir = ["Up", "Right", "Down", "Left"]
+  var pDir = ""
+  function correctDir() {
+    switch (lostTraveler.dir){
+      case "U":
+        return lostTraveler.lines
+    }
+  }
+
+  function changeDir () {
+    lostTraveler.dir = randNPCDir[Math.floor(Math.random() * 4)]
+    lostTraveler.lines = [randDir[Math.floor(Math.random() * 4)]]
+  }
+
   if (p.area == "Encompassed Forest") {
     if (p.x > 250 * 75 && p.x < 254 * 75) {
       if (p.y < 37 * 75){
         p.y = 59 * 75
-        lostTraveler.dir = randNPCDir[Math.floor(Math.random() * 4)]
-        lostTraveler.lines = [randDir[Math.floor(Math.random() * 4)]]
-        
-      
+        changeDir()
       }
 
       if (p.y > 59 * 75) {
         p.y = 37 * 75
+        changeDir()
       }
     }
 
     if (p.y > 46 * 75 && p.y < 50 * 75) {
       if (p.x < 236 * 75) {
         p.x = 268 * 75
+        changeDir()
       }
 
       if (p.x > 268 * 75) {
         p.x = 236 * 75
+        changeDir()
       }
     }
     // mike.action = function (p) {
