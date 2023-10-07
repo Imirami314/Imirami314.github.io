@@ -44,7 +44,7 @@ var curCamera = null;
  * @param {*} cx X-coordinate to move camera to
  * @param {*} cy Y-coordinate to move camera to
  * @param {*} cspeed Speed to move camera to location
- * @param {*} type Type of camera being used (Options: "NPC")
+ * @param {*} type Type of camera being used (Options: "NPC", "AUTO")
  * @param {*} lineStop Dialogue line to terminate camera
  */
 function cameraStart(cx, cy, cspeed, type, lineStop) {
