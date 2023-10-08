@@ -1910,6 +1910,8 @@ var l48_22 = new LockToggle(cryoUnderground, 48, 22, function() {
 	//curMap.changeBlock(34, 22, '.')
 })
 
+var rd48_32 = new RaftDispenser(cryoUnderground, 48 * 75, 32 * 75, 47 * 75 + 37.5, 32 * 75 + 37.5)
+
 // Stormed Room
 
 var rd6_2 = new RaftDispenser(stormedRoom, 6 * 75, 2 * 75, 6 * 75 + 37.5, 3 * 75 + 37.5)
@@ -1970,6 +1972,7 @@ var interactives = [
   rd13_9,
   rd20_10,
   rd12_20,
+  rd48_32,
 ]
 
 
