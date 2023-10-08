@@ -195,12 +195,14 @@ Raft.prototype.move = function() {
   // Check if block is solid, bounces if so
   if (!getBlockInfoByCords(this.x - this.velocity.x, this.y).through ||
    !getBlockInfoByCords(this.x + this.velocity.x, this.y).through) {
+    this.hitIce()
     this.x -= this.velocity.x * 2
     this.velocity.x *= -0.75
   }
   
   if (!getBlockInfoByCords(this.x, this.y - this.velocity.y).through ||
    !getBlockInfoByCords(this.x, this.y + this.velocity.y).through) {
+    this.hitIce()
     this.y -= this.velocity.y * 2
     this.velocity.y *= -0.75
   }
@@ -215,6 +217,8 @@ Raft.prototype.move = function() {
 
       this.velocity.x = 0
       this.velocity.y = 0
+
+      this.hitIce() // Breaks ice if it is ice
     } else { // Deceleration is way slower on speedy snow
       this.velocity.x *= 0.997
       this.velocity.y *= 0.997
@@ -250,6 +254,28 @@ Raft.prototype.activate = function() {
     }
     this.enterRaftCooldown = 1
   }
+}
+
+Raft.prototype.hitIce = function() {
+  // Gets the id of the block that the raft WILL be on, on the next frame
+  var nextPositionBlock = getBlockInfoByCords(this.x + this.velocity.x, this.y + this.velocity.y).id
+
+  // Gets the block coordinates that the raft WILL be on, next frame
+  var nextCords = {
+    x: Math.floor((this.x + this.velocity.x) / 75),
+    y: Math.floor((this.y + this.velocity.y) / 75),
+  }
+
+  console.log(nextPositionBlock)
+  if (nextPositionBlock == 'i') {
+    curMap.changeBlock(nextCords.x, nextCords.y, '~')
+  }
+
+  if (nextPositionBlock == 'I') {
+    curMap.changeBlock(nextCords.x, nextCords.y, 'i')
+  }
+
+  console.log(curMap.getBlock(Math.floor(this.x / 75), Math.floor(this.y / 75)))
 }
 
 function RaftDispenser(map, x, y, dsx, dsy) {

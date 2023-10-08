@@ -241,7 +241,7 @@ var blocks = [
   {
     id: "z",
     name: "speedy snow",
-    through: "true",
+    through: true,
     dps: 0,
     speed: 10, // Default 10
 		sound: "Speedy Snow Walking" 
@@ -249,14 +249,14 @@ var blocks = [
   {
     id: "^",
     name: "suspensia",
-    through: "true",
+    through: true,
     dps: 75, // Default (change) 75
     speed: 0.5 // Default (change) 0.5
   },
 	{
 		id: "+",
 		name: "teleport",
-		through: "true",
+		through: true,
 		dps: 0,
 		speed: 4,
 		
@@ -264,9 +264,23 @@ var blocks = [
   {
     id: ";",
     name: "stun",
-    through: "true",
+    through: true,
     dps: 0,
     speed: 0.25
+  },
+  {
+    id: 'I',
+    name: "ice wall",
+    through: false,
+    dps: 0,
+    speed: 0,
+  },
+  {
+    id: 'i',
+    name: "cracked ice wall",
+    through: false,
+    dps: 0,
+    speed: 0,
   }
 ]
 
@@ -578,6 +592,14 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
 						break
           case ";":
             ctx.fillStyle = 'rgb(79, 13, 13)'
+            ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+            break
+          case 'I': // changeme to actual image later
+            ctx.fillStyle = 'rgb(0, 255, 255)'
+            ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+            break
+          case 'i': // changeme to actual image later
+            ctx.fillStyle = 'rgb(0, 200, 200)'
             ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
             break
         }
@@ -1290,13 +1312,13 @@ var stormedRoom = new Landscape([
   'WWWWWWWWWWWWWWWWWWWWWWWWW',
   'WzzzzzWz^zzzzzzzzzzzzzz^W',
   'Wz^zzWzSzzz^zzzzzzzWzWzzW',
-  'W^^zzzzzzzzzzzzzz^zzWzzzW',
-  'Wzzzzzzzzzzzzzz^zzzzzzzzW',
-  'Wzzzzz^zzzzzzzzzzz^zzzz^W',
+  'W^^zzzzzzzzzzzzzz^zIWzzzW',
+  'WzzzzzzzzIzzzzzIzzzzzzzzW',
+  'WzzzIz^zzzzzzzzzzz^zzzz^W',
   'WzzzzzWzzzzzzzzzzzzWzzzzW',
-  'W^zzzWzWzz^zzzzzzzWzzzzzW',
+  'W^zzzWzWzz^zIzzzzzWzzzzzW',
   'Wzzzz^zzzzWzzzzzzzzWzzzzW',
-  'WzzzzzzzzWzzzzzzzzzzzzzzW',
+  'WzzzIzzzzWzzzzzzzzzzzzzzW',
   'Wz^zzzzzzzzzzzzzzzzzzzzzW',
   'Wzz^zzzzzzzz^zzzzWzzzzzzW',
   'WzzzzzzzzzWzzzzzzzWzzzz^W',

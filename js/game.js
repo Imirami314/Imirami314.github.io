@@ -1,6 +1,6 @@
 // Function wrapping prevents console from altering game variables
 // (function() {
-curMap = imperilledPrison
+curMap = cryoUnderground
 
 var saveLoaded = false
 
@@ -2049,7 +2049,7 @@ var models = {
   }
 }
 
-var p = new Player(25 * 75, 10 * 75, npcs) // default x = width / 2, y = height / 2 helloooh
+var p = new Player(48 * 75, 24 * 75, npcs) // default x = width / 2, y = height / 2 helloooh
 
 var c121_31 = new Chest(mainMap, 121, 31, [
   items.heatHandle
