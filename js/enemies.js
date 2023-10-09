@@ -457,6 +457,12 @@ Stormed.prototype.draw = function() {
 }
 
 Stormed.prototype.update = function() {
+  if (this.health > 0) {
+    bossfight = true
+  } else {
+    bossfight = false
+  }
+  
 	// Particles (Wind)
   this.windParticles = new ParticleSystem(this.x, this.y, 10, 500, 100, 100, 100)
 	if (this.windMode) {
