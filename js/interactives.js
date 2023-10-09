@@ -265,14 +265,16 @@ Raft.prototype.hitIce = function() {
     x: Math.floor((this.x + this.velocity.x) / 75),
     y: Math.floor((this.y + this.velocity.y) / 75),
   }
+  console.log("x: " + this.velocity.x + " y: " + this.velocity.y)
+  //console.log(nextPositionBlock)
+  if (Math.abs(this.velocity.x) > 3.25 || Math.abs(this.velocity.y) > 3.25) { // must be at certain speed
+    if (nextPositionBlock == 'i') {
+      curMap.changeBlock(nextCords.x, nextCords.y, '~')
+    }
 
-  console.log(nextPositionBlock)
-  if (nextPositionBlock == 'i') {
-    curMap.changeBlock(nextCords.x, nextCords.y, '~')
-  }
-
-  if (nextPositionBlock == 'I') {
-    curMap.changeBlock(nextCords.x, nextCords.y, 'i')
+    if (nextPositionBlock == 'I') {
+      curMap.changeBlock(nextCords.x, nextCords.y, 'i')
+    }
   }
 
   console.log(curMap.getBlock(Math.floor(this.x / 75), Math.floor(this.y / 75)))
