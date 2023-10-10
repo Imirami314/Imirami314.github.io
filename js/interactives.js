@@ -274,9 +274,9 @@ Raft.prototype.hitIce = function() {
 
     if (nextPositionBlock == 'I') {
       curMap.changeBlock(nextCords.x, nextCords.y, 'i')
+      playSound("Ice Cracks")
     }
   }
-
   console.log(curMap.getBlock(Math.floor(this.x / 75), Math.floor(this.y / 75)))
 }
 
