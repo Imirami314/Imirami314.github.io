@@ -103,7 +103,6 @@ var bossDoors = [
 			curMap = stormedRoom
 			cutsceneFrame = 0
 			scene = "STORMED BOSS CUTSCENE"
-			alert(cutsceneFrame)
 		}
 	}
 ]
