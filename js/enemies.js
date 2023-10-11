@@ -379,19 +379,22 @@ function Stormed(map, spawnX, spawnY) {
   this.scaleShift = 1
   this.swordRotation = 0
 
-  this.phase = 1 // Default 1
+  this.phase = 2 // Default 1
   this.windMode = false // Default false
   this.windModeTimer = 20 // Countdown until windMode begins
   this.windPull = 0.1 // How fast the wind pulls the player towards the boss
 
   this.hitCooldown = 1
   this.hitting = false
-  this.hittable = true // Can boss be hite
+  this.hittable = true // Can boss be hit
   this.beingHit = false // Is boss being hit
   this.hitRegistered = false // Keeps track of whether damage has already been dealth
 
-	this.phase2Played = false // Check if phase 2 cutscene has played
-  this.phase2MapChanged = false // Check if Stormed changed the landscape so he doesn't do it over and over again in phase 2
+	this.phase2Played = true // Check if phase 2 cutscene has played, Default false
+  this.phase2MapChanged = true // Check if Stormed changed the landscape so he doesn't do it over and over again in phase 2, Default false
+
+  this.hasBuiltIceWalls = false // Default false, keeps track of whether the phase 2 ice walls have been built yet
+  this.isStunned = false // Default false
 
 	this.absorbX = 0
 	this.absorbY = 0
@@ -410,7 +413,6 @@ Stormed.prototype.draw = function() {
     ctx.translate(-1 * this.x, -1 * this.y)
 
     // Body
-    
     if (this.phase == 1) {
       if (this.beingHit) {
         ctx.save()
@@ -420,7 +422,7 @@ Stormed.prototype.draw = function() {
       } else {
         ctx.drawImage(images.stormedPhase1, this.x - 75, this.y - 75, 150, 150)
       }
-    } else if (this.phase == 2) {
+    } else if (this.phase == 2 || this.phase == 3) {
       ctx.drawImage(images.stormedPhase2, this.x - 75, this.y - 75, 150, 150)
     }
 		
@@ -462,7 +464,7 @@ Stormed.prototype.update = function() {
   } else {
     bossfight = false
   }
-  
+
 	// Particles (Wind)
   this.windParticles = new ParticleSystem(this.x, this.y, 10, 500, 100, 100, 100)
 	if (this.windMode) {
@@ -528,10 +530,10 @@ Stormed.prototype.update = function() {
 
   if (this.windModeTimer <= 0) {
     this.windMode = true
-    // Wind mode is on until windModeTimer reaches some negative number, then it becomes 0 and wind mode ends
+    // Wind mode is on until windModeTimer reaches a certain negative number, then it resets and wind mode ends
   }
 
-  if (this.phase == 1) {
+  if (this.phase == 1 || this.phase == 3) {
     if (!this.windMode) {
       if (!this.hitting) { // Makes Stormed always face towards the player, but freeze when hitting
         this.bodyAngle = this.playerAngle
@@ -558,35 +560,79 @@ Stormed.prototype.update = function() {
         this.hitting = true
       }
     } else if (this.windMode) {
-      this.bodyAngle += Math.PI / 25
-      p.manualMove(-1 * Math.cos(this.playerAngle - Math.PI / 2) * this.windPull, -1 * Math.sin(this.playerAngle - Math.PI / 2) * this.windPull) // Pulls the player towards Stormed
-      if (this.windPull <= 10) { // Accelerate speed that player gets pulled in, caps at 10 pixels/frame
-        this.windPull *= 1.01
-      }
-
-      if (this.playerDist <= 50) { // If the player gets sucked in too much, they take damage
-        p.health -= 1 / 6.66 // (10dps)
-      }
-
-      if (this.windModeTimer <= -10) { // Wind mode lasts for 10 seconds
-        this.windModeTimer = 20
-        this.windMode = false
-      }
+      this.doWindMode()
     }
 
-    if (this.health <= this.maxHealth / 2) {
+    if (this.health <= this.maxHealth / 2 && !this.phase2Played) {
 			cutsceneFrame = 0
       this.phase = 2
     }
   } else if (this.phase == 2) {
     if (this.phase2Played) {
-      
+      if (!this.windMode) {
+        
+      } else if (this.windMode) {
+        this.doWindMode()
+
+      }
     } else {
       scene = "STORMED BOSS CUTSCENE PHASE 2"
       this.phase2Played = true
+      this.windMode = true
     }
   }
 }
+
+Stormed.prototype.doWindMode = function() {
+  if (!this.hasBuiltIceWalls) {
+    // Builds ice wall around Stormed at the start of windMode
+    curMap.changeBlock(this.cords.x - 1, this.cords.y - 1, 'I')
+    curMap.changeBlock(this.cords.x, this.cords.y - 1, 'I')
+    curMap.changeBlock(this.cords.x + 1, this.cords.y - 1, 'I')
+    curMap.changeBlock(this.cords.x - 1, this.cords.y, 'I')
+    curMap.changeBlock(this.cords.x + 1, this.cords.y, 'I')
+    curMap.changeBlock(this.cords.x - 1, this.cords.y + 1, 'I')
+    curMap.changeBlock(this.cords.x, this.cords.y + 1, 'I')
+    curMap.changeBlock(this.cords.x + 1, this.cords.y + 1, 'I')
+    this.hasBuiltIceWalls = true
+  } else {
+    // Check if any of the walls are broken
+    if (curMap.getBlock(this.cords.x - 1, this.cords.y - 1) == '~' ||
+        curMap.getBlock(this.cords.x, this.cords.y - 1) == '~' ||
+        curMap.getBlock(this.cords.x + 1, this.cords.y - 1) == '~' ||
+        curMap.getBlock(this.cords.x - 1, this.cords.y) == '~' ||
+        curMap.getBlock(this.cords.x + 1, this.cords.y) == '~' ||
+        curMap.getBlock(this.cords.x - 1, this.cords.y + 1) == '~' ||
+        curMap.getBlock(this.cords.x, this.cords.y + 1) == '~' ||
+        curMap.getBlock(this.cords.x + 1, this.cords.y + 1) == '~') {
+      // this.beStunned()
+      this.phase = 3
+    }
+  }
+  this.bodyAngle += Math.PI / 25
+  p.manualMove(-1 * Math.cos(this.playerAngle - Math.PI / 2) * this.windPull, -1 * Math.sin(this.playerAngle - Math.PI / 2) * this.windPull) // Pulls the player towards Stormed
+  if (this.windPull <= 10) { // Accelerate speed that player gets pulled in, caps at 10 pixels/frame
+    this.windPull *= 1.01
+  }
+
+  if (this.playerDist <= 85) { // If the player gets sucked in too much, they take damage
+    p.health -= 1 / 6.66 // (10dps)
+  }
+
+  if (this.windModeTimer <= -10) { // Wind mode lasts for 10 seconds
+    this.resetWindMode()
+  }
+}
+
+Stormed.prototype.resetWindMode = function() {
+  this.windModeTimer = 20
+  this.windPull = 0.1
+}
+
+// Stormed.prototype.beStunned = function () {
+//   this.windMode = false
+//   this.resetWindMode()
+// }
 
 Stormed.prototype.healthBar = function() {
 	ctx.fillStyle = "rgb(150, 0, 0)"

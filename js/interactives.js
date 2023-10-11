@@ -220,8 +220,8 @@ Raft.prototype.move = function() {
 
       this.hitIce() // Breaks ice if it is ice
     } else { // Deceleration is way slower on speedy snow
-      this.velocity.x *= 0.997
-      this.velocity.y *= 0.997
+      this.velocity.x *= 0.998
+      this.velocity.y *= 0.998
     }
   }
   
@@ -267,7 +267,7 @@ Raft.prototype.hitIce = function() {
   }
   console.log("x: " + this.velocity.x + " y: " + this.velocity.y)
   console.log(nextPositionBlock)
-  if (Math.abs(this.velocity.x) > 3.25 || Math.abs(this.velocity.y) > 3.25) { // must be at certain speed
+  if (Math.hypot(this.velocity.x, this.velocity.y) >= 2.5) { // must be at certain speed
     if (nextPositionBlock == 'i') {
       curMap.changeBlock(nextCords.x, nextCords.y, '~')
     }
