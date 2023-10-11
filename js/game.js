@@ -3020,18 +3020,18 @@ var gameInterval = setInterval(function() {
         scene = "GAME"
       }
 
-      if (cutsceneFrame > 300) {
-        if (!stormedRoomChanged) {
-          // Covers all of stormedRoom in water
-          for (var i in curMap.arr) {
-            for (var j in curMap.arr[i]) {
-              curMap.changeBlock(j, i, '~');
-            }
-          }
+      // if (cutsceneFrame > 300) {
+      //   if (!stormedRoomChanged) {
+      //     // Covers all of stormedRoom in water
+      //     for (var i in curMap.arr) {
+      //       for (var j in curMap.arr[i]) {
+      //         curMap.changeBlock(j, i, '~');
+      //       }
+      //     }
 
-          stormedRoomChanged = true
-        }
-      }
+      //     stormedRoomChanged = true
+      //   }
+      // }
     } else if (scene == "BEAM UNLOCKED") {
 			 ctx.fillStyle = "rgb(255, 255, 255)"
       ctx.fillRect(0, 0, width, height)
