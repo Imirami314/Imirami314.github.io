@@ -117,11 +117,6 @@ Darkened.prototype.draw = function() {
     } else if (this.phase == 2) {
       playMusic("Darkened Battle Phase 2")
     }
-    if (this.health > 0) {
-      bossfight = true
-    } else {
-      bossfight = false
-    }
 	}
 	
   // Makes it so the calculations don't divide by 0
@@ -453,11 +448,6 @@ Stormed.prototype.draw = function() {
 }
 
 Stormed.prototype.update = function() {
-  if (this.health > 0) {
-    bossfight = true
-  } else {
-    bossfight = false
-  }
 
 	// Particles (Wind)
   this.windParticles = new ParticleSystem(this.x, this.y, 10, 500, 100, 100, 100)

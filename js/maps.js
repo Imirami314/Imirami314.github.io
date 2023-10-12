@@ -1057,7 +1057,13 @@ var darkenedRoom = new Landscape([
   '__S_________________',
   '____________S_______',
   '_______S__________S_',
-], 75, 75, 0, 0, "Darkened Room") // You don't enter through a door
+], 75, 75, 0, 0, "Darkened Room", function() {
+  if (bosses[0].health > 0) {
+    bossfight = true
+  } else {
+    bossfight = false
+  }
+}) // You don't enter through a door
 
 var glaciaCenter = new Landscape([
   'WWWWWWWWWWW',
@@ -1334,7 +1340,13 @@ var stormedRoom = new Landscape([
   'W^zzzzzzzzzzzzzzzzzzzzzzW',
   'Wzzzz^zzzzWzzz^zzzzzz^zzW',
   'WWWWWWWWWWWWWWWWWWWWWWWWW'
-], 13 * 75 + 37.5, 23 * 75 + 37.5, 0, 0, "Stormed Room") // Don't enter from mainMap
+], 13 * 75 + 37.5, 23 * 75 + 37.5, 0, 0, "Stormed Room", function() {
+  if (bosses[1].health > 0) {
+    bossfight = true
+  } else {
+    bossfight = false
+  }
+}) // Don't enter from mainMap
 
 
 
