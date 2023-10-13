@@ -1540,7 +1540,7 @@ var glaciaVillage = new Region([
         x1: 138,
         y1: 11,
         x2: 270,
-        y2: 31
+        y2: 30
     },
     {
         x1: 182,
@@ -1557,7 +1557,7 @@ var glaciaVillage = new Region([
 var windyWastelands = new Region([{
     x1: 139,
     y1: 32,
-    x2: 269,
+    x2: 224,
     y2: 50
 }], function() {
     
@@ -1565,4 +1565,15 @@ var windyWastelands = new Region([{
     playMusic("Windy Wastelands")
 })
 
-var regions = [chardTown, steelField, glaciaVillage, windyWastelands]
+var encompassedForest = new Region([{
+    x1: 225,
+    y1: 31,
+    x2: 279,
+    y2: 65
+}], function() {
+
+}, function() {
+    playMusic("Encompassed Forest")
+})
+
+var regions = [chardTown, steelField, glaciaVillage, windyWastelands, encompassedForest]

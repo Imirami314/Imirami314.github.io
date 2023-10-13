@@ -389,6 +389,10 @@ var music = [
         audio: new Audio('audio/windy_wastelands.mp3')
 	},
     {
+        name: "Encompassed Forest",
+        audio: new Audio('audio/encompassedForest.mp3')
+    },
+    {
 		name: "New Location",
         audio: new Audio('audio/new_location.mp3')
 	},
