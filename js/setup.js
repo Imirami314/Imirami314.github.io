@@ -393,6 +393,10 @@ var music = [
         audio: new Audio('audio/encompassedForest.mp3')
     },
     {
+        name: "Encompassed Forest Dark",
+        audio: new Audio('audio/encompassedForestDark.mp3')
+    },
+    {
 		name: "New Location",
         audio: new Audio('audio/new_location.mp3')
 	},
