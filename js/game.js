@@ -1,6 +1,6 @@
 // Function wrapping prevents console from altering game variables
 // (function() {
-curMap = mainMap
+curMap = stormedRoom
 
 var saveLoaded = false
 
@@ -2369,15 +2369,19 @@ var gameInterval = setInterval(function() {
                 }
 
                 
-                if (curBoss.health <= 0 && curMap == darkenedRoom) {
-                    ctx.fillStyle = "rgb(0, 0, 0, " + fade + ")"
-                    ctx.fillRect(0, 0, width, height)
-                    cutsceneFrame = 0
-                    fade += 0.005
-                    if (fade >= 1) {
-                        darkenedScale = 1
-                        scene = "DARKENED BOSS CUTSCENE DEFEATED"
-                        fade = 0
+                if (curBoss.health <= 0) {
+                    if (curMap == darkenedRoom) {
+                        Screen.fadeOut(0.005, function() {
+                            darkenedScale = 1
+                            scene = "DARKENED BOSS CUTSCENE DEFEATED"
+                        })
+                    } else if (curMap == stormedRoom) {
+                        Screen.fadeOut(0.005, function() {
+                            curMap = galeCave
+                            p.x = 44 * 75 + 37.5
+                            p.y = 34 * 75 + 37.5
+                            p.inventory.push(items.stormedsSword)
+                        })
                     }
                 }
             

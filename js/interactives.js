@@ -217,8 +217,6 @@ Raft.prototype.move = function() {
 
             this.velocity.x = 0
             this.velocity.y = 0
-
-            this.hitIce() // Breaks ice if it is ice
         } else { // Deceleration is way slower on speedy snow
             this.velocity.x *= 0.998
             this.velocity.y *= 0.998
