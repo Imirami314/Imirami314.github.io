@@ -813,8 +813,8 @@ Player.prototype.displayNPCList = function () {
         if (mouseNPCDist < 50) {
             ctx.fillStyle = "rgb(0, 0, 0)"
             ctx.textAlign = "center"
-            ctx.font = "50px serif"
 			if (npcs[i].talkedTo) {
+                ctx.font = "50px serif"
             	ctx.fillText(npcs[i].name, width / 2, height / 2 + 120)
                 if (mouseIsDown && !this.npcInfoDisplay) {
 					this.npcDisplayed = npcs[i]
@@ -2245,7 +2245,6 @@ var gameInterval = setInterval(function() {
         for (var i in eventDelays) {
             eventDelays[i].timer -= 1 / (66 + 2 / 3)
             var e = eventDelays[i]
-            e.f1()
             if (e.timer > 0) {
                 e.f1()
             } else {

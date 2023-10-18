@@ -1,3 +1,16 @@
+/**
+ * Creates new NPC
+ * @param {*} x X coordinate (in pixels)
+ * @param {*} y Y coordinate (in pixels)
+ * @param {*} name NPC name
+ * @param {*} map NPC map (use variable not map name)
+ * @param {*} dir Direction npc faces ("U", "D", "L", "R")
+ * @param {*} lines NPC's default lines when talked to
+ * @param {*} desc NPC's description (use '\n's!)
+ * @param {*} action NPC's action that executes during interaction
+ * @param {*} actionLine Dialogue line to execute action on (set to "after" to run the function when dialogue finishes)
+ * @param {*} shopMenu Insert shopMenu instance (brings up shop menu when dialogue finishes)
+ */
 function NPC(x, y, name, map, dir, lines, desc, action, actionLine, shopMenu) {
     this.x = x
     this.y = y
