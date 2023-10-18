@@ -887,6 +887,7 @@ mainMap.solve = function() {
     }
 
     if (p.area == "Encompassed Forest") {
+        lighting = 1500
         if (p.x > 250 * 75 && p.x < 254 * 75) {
             if (p.y < 37 * 75){
                 p.y = 59 * 75
@@ -1574,7 +1575,11 @@ var encompassedForest = new Region([{
 }], function() {
 
 }, function() {
-    playMusic("Encompassed Forest")
+    if (lighting == 1500) {
+        playMusic("Encompassed Forest Dark")
+    } else {
+        playMusic("Encompassed Forest")
+    }
 })
 
 var regions = [chardTown, steelField, glaciaVillage, windyWastelands, encompassedForest]
