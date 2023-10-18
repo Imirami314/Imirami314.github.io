@@ -411,6 +411,10 @@ var sounds = [
 		name: "Grass Walking",
         audio: new Audio('audio/grass-walking.mp3')
 	},
+    {
+        name: "Trail Walking",
+        audio: new Audio('audio/trail-walking.mp3')
+    },
 	{
 		name: "Sand Walking",
 		audio: new Audio('audio/sand-walking.mp3')
@@ -496,6 +500,7 @@ function stopSound(name) {
     for (var i in sounds) {
         var sound = sounds[i]
         if (sound.name == name) {
+            sound.audio.currentTime = 0 // Resets audio
             sound.audio.pause()
         }
     }
