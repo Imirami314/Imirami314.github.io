@@ -357,7 +357,7 @@ function Stormed(map, spawnX, spawnY) {
     this.name = "Stormed"
     this.damage = 10
     this.maxHealth = 500
-    this.health = 500 // Default 500
+    this.health = 0 // Default 500
 	this.animatedHealth = 500
 	
     this.cords = {
@@ -385,7 +385,7 @@ function Stormed(map, spawnX, spawnY) {
     this.beingHit = false // Is boss being hit
     this.hitRegistered = false // Keeps track of whether damage has already been dealth
 
-	this.phase2Played = false // Check if phase 2 cutscene has played, Default false
+	this.phase2Played = true // Check if phase 2 cutscene has played, Default false
 
     //Unused
     this.phase2MapChanged = false // Check if Stormed changed the landscape so he doesn't do it over and over again in phase 2, Default false

@@ -43,7 +43,7 @@ var items = {
     }, function(p) {
         p.spearAttack()
     }),
-    stormedsSword: new Item("Stormed's Sword", 25, function() {
+    stormedsSword: new Item("Stormed's Sword", 25, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)") // changeme to real image for Stormed's Sword
     }, function() {
         // changeme to animation for sword attack

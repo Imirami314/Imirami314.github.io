@@ -451,15 +451,19 @@ Player.prototype.move = function() {
     } else if (this.cords.x >= 138 && this.cords.y >= 32 && this.cords.x <= 224 && this.cords.y <= 50) {
         this.area = "Windy Wastelands"
 		
-        weather.wind.time += (1 / (66 + (2 / 3)))
-        weather.wind.x = weather.wind.equation(weather.wind.time % 10)
-        weather.wind.y = weather.wind.equation(weather.wind.time % 7)
-        if (getBlockById(curMap.getBlock(Math.floor((this.x + weather.wind.x) / 75), Math.floor((this.y) / 75))).through) {
-            this.x += weather.wind.x
+        if (!p.has(items.stormedsSword)) { // Once player has defeated Stormed, wind will stop
+            weather.wind.time += (1 / (66 + (2 / 3)))
+            weather.wind.x = weather.wind.equation(weather.wind.time % 10)
+            weather.wind.y = weather.wind.equation(weather.wind.time % 7)
+
+            if (getBlockById(curMap.getBlock(Math.floor((this.x + weather.wind.x) / 75), Math.floor((this.y) / 75))).through) {
+                this.x += weather.wind.x
+            }
+            if (getBlockById(curMap.getBlock(Math.floor((this.x) / 75), Math.floor((this.y + weather.wind.y) / 75))).through) {
+                this.y += weather.wind.y
+            }
         }
-        if (getBlockById(curMap.getBlock(Math.floor((this.x) / 75), Math.floor((this.y + weather.wind.y) / 75))).through) {
-            this.y += weather.wind.y
-        }
+        
     } else if (this.cords.x >= 225 && this.cords.y >= 31 && this.cords.x <= 279 && this.cords.y <= 65) {
         this.area = "Encompassed Forest"
     } else {
@@ -591,39 +595,52 @@ Player.prototype.collide = function() {
             this.canMove = true
         }
     }
+}
 
-    Player.prototype.hitEnemies = function() {
-        // For monsters
-        for (var i in monsters) {
-            var m = monsters[i]
-            var mDist = entityDistance(this, m)
-            this.mAngle = Math.atan2((m.y - this.y), (m.x - this.x))
-            if (mDist <= 150 && mouseIsDown && this.hitCooldown <= 0) {
-                this.hitCooldown = 0.35
-                if (!!this.weapon.damage) {
-                    m.health -= this.weapon.damage
-                } else {
-                    m.health -= 1
-                }
-                
-                // Monster knockback
-                m.x += Math.cos(this.mAngle) * 25
-                m.y += Math.sin(this.mAngle) * 25
-                
-                // Tells monster that it is hit (doesn't work for some monsters idk why)
-                eventsDelay(
-                    function() {
-						
-						m.isHit = true
-						
-                    },
-                    function() {
-                        m.isHit = false
-                    },
-                    0.5
-                )
-            } 
+
+/**
+ * Sees if player has a certain item
+ * @param {*} item Item to check
+ * @returns true or false
+ */
+Player.prototype.has = function(item) {
+    for (var i in this.inventory) {
+        if (this.inventory[i] == item) {
+            return true
         }
+    }
+
+    return false
+}
+
+Player.prototype.hitEnemies = function() {
+    // For monsters
+    for (var i in monsters) {
+        var m = monsters[i]
+        var mDist = entityDistance(this, m)
+        this.mAngle = Math.atan2((m.y - this.y), (m.x - this.x))
+        if (mDist <= 150 && mouseIsDown && this.hitCooldown <= 0) {
+            this.hitCooldown = 0.35
+            if (!!this.weapon.damage) {
+                m.health -= this.weapon.damage
+            } else {
+                m.health -= 1
+            }
+            
+            // Monster knockback
+            m.x += Math.cos(this.mAngle) * 25
+            m.y += Math.sin(this.mAngle) * 25
+            
+            // Tells monster that it is hit (doesn't work for some monsters idk why)
+            eventsDelay(
+                function() {
+                    m.isHit = true
+                },
+                function() {
+                    m.isHit = false
+                },
+            0.5)
+        } 
     }
 
     // Secret Entrances
@@ -2380,6 +2397,39 @@ var gameInterval = setInterval(function() {
                             p.x = 44 * 75 + 37.5
                             p.y = 34 * 75 + 37.5
                             p.inventory.push(items.stormedsSword)
+
+                            lonzo.map = mainMap
+                            lonzo.x = 158 * 75 + 37.5
+                            lonzo.y = 50 * 75 + 37.5
+                            lonzo.dir = "L"
+                            lonzo.lines = [
+                                "Hello! It's been a while!",
+                                "I don't know how, but the wind cleared up here\nso it's safe!",
+                                "Anyway, did you succeed?",
+                                "...",
+                                "(*)B@V#BV@#(*(BVP&WBY(*(BU!!!!!!1",
+                                "Sorry about that. I can't believe you actually\ndid it!",
+                                "By the way, Queen Alaska asked me to go find you.\nShe wanted to talk to you.",
+                                "I'm sure she'll be delighted to hear that you were successful!"
+                            ]
+
+                            queenAlaska.x = 253 * 75 + 37.5
+                            queenAlaska.y = 23 * 75 + 37.5
+                            queenAlaska.map = mainMap
+                            queenAlaska.lines = [
+                                "Wow, it's really you! You came back!",
+                                "How did it go?",
+                                "...",
+                                "That's great! I was just taking with Dr. Qua from Dropton Town\nabout how they, too, have been experiencing odd conditions lately.",
+                                "Their underwater city has been experiencing significant currents,\nsome of which even destroy buildings.",
+                                "I appreciate what you have done for us very much, but I'm afraid\nthere is more for you to take care of over there."
+                            ]
+                            queenAlaska.action = function() {}
+
+                            p.questPoint = {
+                                x: 253,
+                                y: 23
+                            }
                         })
                     }
                 }
@@ -2450,6 +2500,8 @@ var gameInterval = setInterval(function() {
                     if (!bossfight) {
                         saveGame()
                         SAVE_MENU = true
+                    } else {
+                        console.log("Could not save as bossfight is set to true")
                     }
                 }
         
