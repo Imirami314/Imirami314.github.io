@@ -1,6 +1,6 @@
 // Function wrapping prevents console from altering game variables
 // (function() {
-curMap = stormedRoom
+curMap = mainMap
 
 var saveLoaded = false
 
@@ -1613,7 +1613,27 @@ var lostTraveler = new NPC (252 * 75 + 37.5, 48 * 75 + 37.5, "Lost Traveler", ma
     "oh yeahh"
 ])
 
-var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, lyra, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler]
+
+// Starts outside of the map because he doesn't exist until later in the game
+var drQua = new NPC(69420 * 75, 42069 * 75, "Dr. Qua", mainMap, 'L', [
+    "Hello there!",
+    "You must be who Queen Alaska was talking about!",
+    "I'd only heard rumors about you until now. However...",
+    "We really do need your help.",
+    "Our city has been struck by many strong currents,\nand they've destroyed a lot.",
+    "Our leader has pinpointed where they are coming from,\nand he wants you to help eliminate this threat.",
+    "While you may not see Dropton City on the map, you will\nnotice a rather large lake named [lake name].", // changeme
+    "Under that lake our city is hidden. Unfortunately you will\nneed to pass through the Encompassed Forest.",
+    "This forest is known to be confusing and many travelers have\ngotten lost there and never been found.",
+    "...but I'm sure you'll be fine! Good luck!"
+], "[insert description]", function() {
+    p.questPoint = {
+        x: 252,
+        y: 80
+    }
+}, "after")
+
+var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, lyra, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua]
 
 npcs.searchByName = function(name) {
     for (var i in this) {
@@ -2244,6 +2264,49 @@ if (!!save) {
 // }
 
 
+// Start position code (use to set variables and start game from a certain point) Remove all this code later
+p.x = 255 * 75 + 37.5
+p.y = 24 * 75 + 37.5
+p.inventory.push(items.stormedsSword)
+
+lonzo.map = mainMap
+lonzo.x = 158 * 75 + 37.5
+lonzo.y = 50 * 75 + 37.5
+lonzo.dir = "L"
+lonzo.lines = [
+    "Hello! It's been a while!",
+    "I don't know how, but the wind cleared up here\nso it's safe!",
+    "Anyway, did you succeed?",
+    "...",
+    "(*)B@V#BV@#(*(BVP&WBY(*(BU!!!!!!1",
+    "Sorry about that. I can't believe you actually\ndid it!",
+    "By the way, Queen Alaska asked me to go find you.\nShe wanted to talk to you.",
+    "I'm sure she'll be delighted to hear that you were successful!"
+]
+
+queenAlaska.x = 253 * 75 + 37.5
+queenAlaska.y = 23 * 75 + 37.5
+queenAlaska.dir = 'R'
+queenAlaska.map = mainMap
+queenAlaska.lines = [
+    "Wow, it's really you! You came back!",
+    "How did it go?",
+    "...",
+    "That's great! I was just taking with Dr. Qua from Dropton Town\nabout how they, too, have been experiencing odd conditions lately.",
+    "Their underwater city has been experiencing significant currents,\nsome of which even destroy buildings.",
+    "I appreciate what you have done for us very much, but I'm afraid\nthere is more for you to take care of over there."
+]
+queenAlaska.action = function() {}
+
+drQua.x = 256 * 75 + 37.5
+drQua.y = 23 * 75 + 37.5
+
+p.questPoint = {
+    x: 253,
+    y: 23
+}
+
+
 var gameInterval = setInterval(function() {
     if (tabIsActive) {
         if (dev) {
@@ -2415,6 +2478,7 @@ var gameInterval = setInterval(function() {
 
                             queenAlaska.x = 253 * 75 + 37.5
                             queenAlaska.y = 23 * 75 + 37.5
+                            queenAlaska.dir = 'R'
                             queenAlaska.map = mainMap
                             queenAlaska.lines = [
                                 "Wow, it's really you! You came back!",
@@ -2425,6 +2489,9 @@ var gameInterval = setInterval(function() {
                                 "I appreciate what you have done for us very much, but I'm afraid\nthere is more for you to take care of over there."
                             ]
                             queenAlaska.action = function() {}
+
+                            drQua.x = 256 * 75 + 37.5
+                            drQua.y = 23 * 75 + 37.5
 
                             p.questPoint = {
                                 x: 253,
