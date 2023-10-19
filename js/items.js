@@ -44,7 +44,15 @@ var items = {
         p.spearAttack()
     }),
     stormedsSword: new Item("Stormed's Sword", 25, function(x, y) {
-        ellipse(x, y, 10, 10, "rgb(0, 0, 0)") // changeme to real image for Stormed's Sword
+        ctx.save()
+        ctx.translate(x + 45, y + 45)
+        ctx.rotate(Math.PI / 2) // Flip image vertically
+        ctx.translate(- 45 - x, - 45 - y)
+        ctx.drawImage(images.stormedSword, x - 15, y + 45, 25, 75)
+        ctx.restore()
+        
+
+        //ellipse(x, y, 10, 10, "rgb(0, 0, 0)") // changeme to real image for Stormed's Sword
     }, function() {
         // changeme to animation for sword attack
     }, "A mystical sword you obtained after defeating Stormed,\nMaster of Wind"),
