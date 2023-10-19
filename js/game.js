@@ -1620,12 +1620,13 @@ var drQua = new NPC(69420 * 75, 42069 * 75, "Dr. Qua", mainMap, 'L', [
     "You must be who Queen Alaska was talking about!",
     "I'd only heard rumors about you until now. However...",
     "We really do need your help.",
-    "Our city has been struck by many strong currents,\nand they've destroyed a lot.",
-    "Our leader has pinpointed where they are coming from,\nand he wants you to help eliminate this threat.",
-    "While you may not see Dropton City on the map, you will\nnotice a rather large lake named [lake name].", // changeme
-    "Under that lake our city is hidden. Unfortunately you will\nneed to pass through the Encompassed Forest.",
-    "This forest is known to be confusing and many travelers have\ngotten lost there and never been found.",
-    "...but I'm sure you'll be fine! Good luck!"
+    "Our city has been struck by many strong currents,\nand they've been very threatening to the people living there.",
+    "Usually I would be asking my captains to help,\nbut they were sent on a mission, and...",
+    "Unfortunately they got lost and have been missing for a few days now.",
+    "We've closed off the forest since then.\nWe don't want to lose anyone else.",
+    "We need a way to go into the forest safely, and bring back our captains!\nThey'll know what to do!",
+    "In the forest's west entrance, you'll meet a guard.\nYou should talk to her.",
+    "Good luck, and stay safe out there."
 ], "[insert description]", function() {
     p.questPoint = {
         x: 252,
@@ -2292,9 +2293,17 @@ queenAlaska.lines = [
     "Wow, it's really you! You came back!",
     "How did it go?",
     "...",
-    "That's great! I was just taking with Dr. Qua from Dropton Town\nabout how they, too, have been experiencing odd conditions lately.",
-    "Their underwater city has been experiencing significant currents,\nsome of which even destroy buildings.",
-    "I appreciate what you have done for us very much, but I'm afraid\nthere is more for you to take care of over there."
+    "Wow! Interesting. I guess that beast was the reason that Windy Wastelands\nwas so, well... windy.",
+    "I'm very impressed that you took down that hideous monster.\nThat was no easy feat.",
+    "I was just taking with Dr. Qua, a dear friend of mine, from Dropton Town.\nHe says that his city has been experiencing very odd conditions lately.",
+    "Their city has been experiencing significant currents,\nsome of which have even destroyed buildings.",
+    "I appreciate what you have done for us very much, but I'm afraid\nthe problems aren't over just yet.",
+    "But since you have done so much for our village, I'm not leaving you empty-handed.",
+    "I would like to give you my crown.\nIt has been passed down through many generations.",
+    "This isn't any ordinary crown. This crown has very special powers that lets you\nmake the floor below you freeze, creating Speedy Snow!",
+    "I know that you'll find this much more useful than me.",
+    "Again, thank you for everything you've done.",
+    "Now, Do you mind speaking with Dr. Qua?\nHe has some important intel."
 ]
 queenAlaska.action = function() {}
 
