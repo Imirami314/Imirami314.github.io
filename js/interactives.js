@@ -9,6 +9,14 @@ function Interactive(map, x, y, key, name, draw, action) {
     this.cutsceneOn = false
 }
 
+/**
+ * Create toggle
+ * @param {*} map Map to place toggle
+ * @param {*} x x block coordinate
+ * @param {*} y y block coordinate
+ * @param {*} action1 function to run when block is toggled back to yellow state
+ * @param {*} action2 function to run when block is toggled into purple state
+ */
 function Toggle(map, x, y, action1, action2) {
     this.map = map
     this.x = x
@@ -147,18 +155,22 @@ Raft.prototype.draw = function() {
 Raft.prototype.move = function() {
     if (this.hasPlayer) {
         if (keys.w) {
+            p.dir = 'U'
             this.velocity.y -= 2 / 66.67
         }
         
         if (keys.a) {
+            p.dir = 'L'
             this.velocity.x -=    2 / 66.67
         }
         
         if (keys.s) {
+            p.dir = 'D'
             this.velocity.y += 2 / 66.67
         }
         
         if (keys.d) {
+            p.dir = 'R'
             this.velocity.x += 2 / 66.67
         }
 
@@ -278,6 +290,15 @@ Raft.prototype.hitIce = function() {
     console.log(curMap.getBlock(Math.floor(this.x / 75), Math.floor(this.y / 75)))
 }
 
+
+/**
+ * Create raft dispenser
+ * @param {*} map Map to put raft dispenser
+ * @param {*} x x coordinate (pixels)
+ * @param {*} y y coordinate (pixels)
+ * @param {*} dsx x coordinate to place raft upon use (pixels)
+ * @param {*} dsy y coordinate to place raft upon use (pixels)
+ */
 function RaftDispenser(map, x, y, dsx, dsy) {
     this.map = map
     this.x = x

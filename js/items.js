@@ -54,7 +54,7 @@ var items = {
 
         //ellipse(x, y, 10, 10, "rgb(0, 0, 0)") // changeme to real image for Stormed's Sword
     }, function() {
-        // changeme to animation for sword attack
+        p.swordAttack()
     }, "A mystical sword you obtained after defeating Stormed,\nMaster of Wind"),
     oldMansGlasses: new Item("Old Man's Glasses", 0, function(x, y) {
             ctx.drawImage(images.oldMansGlasses, x - 15, y - 15, 35, 15)

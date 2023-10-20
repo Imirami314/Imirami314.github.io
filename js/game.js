@@ -311,7 +311,7 @@ Player.prototype.draw = function() {
                 try {
                     !!this.weapon ? this.weapon.draw(width / 2 + 15 + this.weaponShift.x, height / 2 + this.weaponShift.y) : 0
                 } catch(error) {
-                    
+                    console.log(error)
                 }
             }
             ctx.restore()
@@ -322,7 +322,7 @@ Player.prototype.draw = function() {
                 try {
                     !!this.weapon ? this.weapon.draw(width / 2 + 15 + this.weaponShift.x, height / 2 + this.weaponShift.y + 15) : 0
                 } catch(error) {
-                    
+                    console.log(error)
                 }
             } 
 
@@ -338,7 +338,7 @@ Player.prototype.draw = function() {
                 try {
                     !!this.weapon ? this.weapon.draw(width / 2 + 15 + this.weaponShift.x, height / 2 + this.weaponShift.y + 15) : 0
                 } catch(error) {
-                    
+                    console.log(error)
                 }
             }
             ctx.restore()
@@ -356,7 +356,7 @@ Player.prototype.draw = function() {
                 try {
                     !!this.weapon ? this.weapon.draw(width / 2 + 15 + this.weaponShift.x, height / 2 + this.weaponShift.y) : 0
                 } catch(error) {
-                    
+                    console.log(error)
                 }
             }
             ctx.restore()
@@ -471,7 +471,7 @@ Player.prototype.move = function() {
 
     }
     
-    if (!this.mapOn && this.canMove && !mouseIsDown) {
+    if (!this.mapOn && this.canMove && !mouseIsDown && !this.inRaft) {
         if (keys.w && this.stoppedDir != "U" && getBlockById(curMap.getBlock(Math.floor((this.x) / 75), Math.floor((this.y - this.speed) / 75))).through) {
             this.y -= this.speed
             this.dir = "U"
@@ -789,6 +789,13 @@ Player.prototype.displayInventory = function() {
 }
 
 // Player animations
+Player.prototype.swordAttack = function() {
+    this.swordHitting = true
+
+    if (this.swordAttackState == 1) {
+        
+    }
+}
 
 Player.prototype.spearAttack = function() {
     this.spearHitting = true
@@ -1695,6 +1702,8 @@ var t97_11 = new Toggle(mainMap, 97, 11, function() {
     curMap.changeBlock(121, 30, "(")
 })
 
+var rd257_30 = new RaftDispenser(mainMap, 257 * 75, 30 * 75, 257 * 75 + 37.5, 29 * 75 + 37.5)
+
 // Confounded Cave
 
 var t5_18 = new Toggle(confoundedCave, 5, 18, function() {
@@ -2006,6 +2015,7 @@ var interactives = [
     rd20_10,
     rd12_20,
     rd48_32,
+    rd257_30,
 ]
 
 
@@ -2266,54 +2276,61 @@ if (!!save) {
 
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
-p.x = 255 * 75 + 37.5
-p.y = 24 * 75 + 37.5
-p.inventory.push(items.stormedsSword)
+function startPos() {
+    p.x = 255 * 75 + 37.5
+    p.y = 24 * 75 + 37.5
+    p.inventory.push(items.stormedsSword)
 
-lonzo.map = mainMap
-lonzo.x = 158 * 75 + 37.5
-lonzo.y = 50 * 75 + 37.5
-lonzo.dir = "L"
-lonzo.lines = [
-    "Hello! It's been a while!",
-    "I don't know how, but the wind cleared up here\nso it's safe!",
-    "Anyway, did you succeed?",
-    "...",
-    "(*)B@V#BV@#(*(BVP&WBY(*(BU!!!!!!1",
-    "Sorry about that. I can't believe you actually\ndid it!",
-    "By the way, Queen Alaska asked me to go find you.\nShe wanted to talk to you.",
-    "I'm sure she'll be delighted to hear that you were successful!"
-]
+    lonzo.map = mainMap
+    lonzo.x = 158 * 75 + 37.5
+    lonzo.y = 50 * 75 + 37.5
+    lonzo.dir = "L"
+    lonzo.lines = [
+        "Hello! It's been a while!",
+        "I don't know how, but the wind cleared up here\nso it's safe!",
+        "Anyway, did you succeed?",
+        "...",
+        "(*)B@V#BV@#(*(BVP&WBY(*(BU!!!!!!1",
+        "Sorry about that. I can't believe you actually\ndid it!",
+        "By the way, Queen Alaska asked me to go find you.\nShe wanted to talk to you.",
+        "I'm sure she'll be delighted to hear that you were successful!"
+    ]
 
-queenAlaska.x = 253 * 75 + 37.5
-queenAlaska.y = 23 * 75 + 37.5
-queenAlaska.dir = 'R'
-queenAlaska.map = mainMap
-queenAlaska.lines = [
-    "Wow, it's really you! You came back!",
-    "How did it go?",
-    "...",
-    "Wow! Interesting. I guess that beast was the reason that Windy Wastelands\nwas so, well... windy.",
-    "I'm very impressed that you took down that hideous monster.\nThat was no easy feat.",
-    "I was just taking with Dr. Qua, a dear friend of mine, from Dropton Town.\nHe says that his city has been experiencing very odd conditions lately.",
-    "Their city has been experiencing significant currents,\nsome of which have even destroyed buildings.",
-    "I appreciate what you have done for us very much, but I'm afraid\nthe problems aren't over just yet.",
-    "But since you have done so much for our village, I'm not leaving you empty-handed.",
-    "I would like to give you my crown.\nIt has been passed down through many generations.",
-    "This isn't any ordinary crown. This crown has very special powers that lets you\nmake the floor below you freeze, creating Speedy Snow!",
-    "I know that you'll find this much more useful than me.",
-    "Again, thank you for everything you've done.",
-    "Now, Do you mind speaking with Dr. Qua?\nHe has some important intel."
-]
-queenAlaska.action = function() {}
+    queenAlaska.x = 253 * 75 + 37.5
+    queenAlaska.y = 23 * 75 + 37.5
+    queenAlaska.dir = 'R'
+    queenAlaska.map = mainMap
+    queenAlaska.lines = [
+        "Wow, it's really you! You came back!",
+        "How did it go?",
+        "...",
+        "Wow! Interesting. I guess that beast was the reason that Windy Wastelands\nwas so, well... windy.",
+        "I'm very impressed that you took down that hideous monster.\nThat was no easy feat.",
+        "I was just taking with Dr. Qua, a dear friend of mine, from Dropton Town.\nHe says that his city has been experiencing very odd conditions lately.",
+        "Their city has been experiencing significant currents,\nsome of which have even destroyed buildings.",
+        "I appreciate what you have done for us very much, but I'm afraid\nthe problems aren't over just yet.",
+        "But since you have done so much for our village, I'm not leaving you empty-handed.",
+        "I would like to give you my crown.\nIt has been passed down through many generations.",
+        "This isn't any ordinary crown. This crown has very special powers that lets you\nmake the floor below you freeze, creating Speedy Snow!",
+        "I know that you'll find this much more useful than me.",
+        "Again, thank you for everything you've done.",
+        "Now, Do you mind speaking with Dr. Qua?\nHe has some important intel."
+    ]
+    queenAlaska.action = function() {}
 
-drQua.x = 256 * 75 + 37.5
-drQua.y = 23 * 75 + 37.5
+    drQua.x = 256 * 75 + 37.5
+    drQua.y = 23 * 75 + 37.5
 
-p.questPoint = {
-    x: 253,
-    y: 23
+    p.questPoint = {
+        x: 253,
+        y: 23
+    }
+
+    mainMap.changeBlock(257, 29, 'z')
+    alerts.push(new GameAlert(258, 29, ["SEGREME DNIW FO RETSAM WEN A SA SKAERB LLAW EHT"], mainMap, "SIGN"))
 }
+
+startPos()
 
 
 var gameInterval = setInterval(function() {
@@ -2506,6 +2523,9 @@ var gameInterval = setInterval(function() {
                                 x: 253,
                                 y: 23
                             }
+
+                            mainMap.changeBlock(257, 29, 'z')
+                            alerts.push(new GameAlert(258, 29, ["SEGREME DNIW FO RETSAM WEN A SA SKAERB LLAW EHT"], mainMap, "SIGN"))
                         })
                     }
                 }
