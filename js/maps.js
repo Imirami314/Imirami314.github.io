@@ -22,7 +22,8 @@ var defeatSquareSpeed = 10
 var defeatSquareWidth = 50
 
 // Encompassed Forest vars
-var encompassedForestLoopStarted = false // Once player gets close enough to lost traveler, the loop begins and the forest never ends
+var forestLoopStarted = false // Once player gets close enough to lost traveler, the loop begins and the forest never ends
+var forestTeleport = true
 
 var scene = "GAME"
 
@@ -874,9 +875,7 @@ var mainMap = new Landscape([
 
 var c = new Camera(200 * 75, 15 * 75, 15)
 mainMap.solve = function() {
-    var randNPCDir = ["U", "R", "D", "L"]
-    var randDir = ["Forward", "Right", "Backward", "Left"] // Changed UP and DOWN to FORWARD and BACKWARD because it makes more sense if it's relative to where he is pointing
-    var pDir = ""
+    
     var centerDist = Math.hypot((252 * 75 - p.x), (48 * 75 - p.y))
     console.log(centerDist)
     function correctDir() {
@@ -888,10 +887,7 @@ mainMap.solve = function() {
         }
     }
 
-    function changeDir () {
-        lostTraveler.dir = randNPCDir[Math.floor(Math.random() * 4)]
-        lostTraveler.lines = [randDir[Math.floor(Math.random() * 4)]]
-    }
+    
 
     if (p.area == "Encompassed Forest") {
 
@@ -1560,13 +1556,23 @@ var encompassedForest = new Region([{
     y2: 65
 }], function() {
     lighting = 1000
-
-    if (entityDistance(lostTraveler, p) <= 300) {
-        encompassedForestLoopStarted = true
+    var randNPCDir = ["U", "R", "D", "L"]
+    var randDir = ["Forward", "Right", "Backward", "Left"] // Changed UP and DOWN to FORWARD and BACKWARD because it makes more sense if it's relative to where he is pointing
+    var pDir = ""
+    function changeDir () {
+        lostTraveler.dir = randNPCDir[Math.floor(Math.random() * 4)]
+        lostTraveler.lines = [randDir[Math.floor(Math.random() * 4)]]
+        forestTeleport = false
     }
 
+    if (entityDistance(lostTraveler, p) <= 300) {
+        forestLoopStarted = true
+        forestTeleport = true
+    }
+    console.log(forestTeleport)
+
     // Teleports the player in a seamless loop so it looks like the forest never ends
-    if (encompassedForestLoopStarted) {
+    if (forestLoopStarted && forestTeleport) {
         if (p.x > 250 * 75 && p.x < 254 * 75) {
             if (p.y < 37 * 75){
                 p.y = 59 * 75
