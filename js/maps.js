@@ -874,7 +874,6 @@ var mainMap = new Landscape([
 
 var c = new Camera(200 * 75, 15 * 75, 15)
 mainMap.solve = function() {
-    lighting = 2500
     var randNPCDir = ["U", "R", "D", "L"]
     var randDir = ["Forward", "Right", "Backward", "Left"] // Changed UP and DOWN to FORWARD and BACKWARD because it makes more sense if it's relative to where he is pointing
     var pDir = ""
@@ -896,46 +895,7 @@ mainMap.solve = function() {
 
     if (p.area == "Encompassed Forest") {
 
-        if (entityDistance(lostTraveler, p) <= 300) {
-            encompassedForestLoopStarted = true
-        }
-        
-        lighting = 1000
-
-        // Teleports the player in a seamless loop so it looks like the forest never ends
-        if (encompassedForestLoopStarted) {
-            if (p.x > 250 * 75 && p.x < 254 * 75) {
-                if (p.y < 37 * 75){
-                    p.y = 59 * 75
-                    changeDir()
-                    pDir = "U"
-                }
-
-                if (p.y > 59 * 75) {
-                    p.y = 37 * 75
-                    changeDir()
-                    pDir = "D"
-                }
-            }
-
-            if (p.y > 46 * 75 && p.y < 50 * 75) {
-                if (p.x < 236 * 75) {
-                    p.x = 268 * 75
-                    changeDir()
-                    pDir = "L"
-                }
-
-                if (p.x > 268 * 75) {
-                    p.x = 236 * 75
-                    changeDir()
-                    pDir = "R"
-                }
-            }
-        }
-        // mike.action = function (p) {
-        // 	cameras.push(new Camera(10 * 75, 10 * 75, 15, "NPC", 6))
-        // }
-        // mike.actionLine = 3             
+                    
     }
 	
 
@@ -1489,6 +1449,7 @@ Region.prototype.update = function() {
     for (var i in this.bounds) {
         var b = this.bounds[i]
         if (p.cords.x >= b.x1 && p.cords.y >= b.y1 && p.cords.x <= b.x2 && p.cords.y <= b.y2 && curMap == mainMap) {
+            p.region = this
             this.inRegion = true
             this.passiveRun = false
         }
@@ -1598,7 +1559,46 @@ var encompassedForest = new Region([{
     x2: 279,
     y2: 65
 }], function() {
+    lighting = 1000
 
+    if (entityDistance(lostTraveler, p) <= 300) {
+        encompassedForestLoopStarted = true
+    }
+
+    // Teleports the player in a seamless loop so it looks like the forest never ends
+    if (encompassedForestLoopStarted) {
+        if (p.x > 250 * 75 && p.x < 254 * 75) {
+            if (p.y < 37 * 75){
+                p.y = 59 * 75
+                changeDir()
+                pDir = "U"
+            }
+
+            if (p.y > 59 * 75) {
+                p.y = 37 * 75
+                changeDir()
+                pDir = "D"
+            }
+        }
+
+        if (p.y > 46 * 75 && p.y < 50 * 75) {
+            if (p.x < 236 * 75) {
+                p.x = 268 * 75
+                changeDir()
+                pDir = "L"
+            }
+
+            if (p.x > 268 * 75) {
+                p.x = 236 * 75
+                changeDir()
+                pDir = "R"
+            }
+        }
+    }
+    // mike.action = function (p) {
+    // 	cameras.push(new Camera(10 * 75, 10 * 75, 15, "NPC", 6))
+    // }
+    // mike.actionLine = 3 
 }, function() {
     if (lighting == 1000) {
         playMusic("Encompassed Forest Dark")

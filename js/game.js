@@ -174,6 +174,7 @@ function Player(x, y, npcs) {
     this.stunParticles = new ParticleSystem(width / 2, height / 2, 5, 50, 255, 0, 0)
 	// x, y, vx, vy, size, r, g, b
     this.area = ""
+    this.region = null
     
     this.weaponIndex = 0
     this.weapon = this.inventory[this.weaponIndex]
@@ -219,6 +220,10 @@ Player.prototype.draw = function() {
     this.hitCooldown -= 1 / (66 + (2 / 3))
     this.cords.x = Math.floor(this.x / 75) // This regulates it, because you don't start at x-cord 0, you start at x-cord 10
     this.cords.y = Math.floor(this.y / 75) // Same thing as x-cord, but height / 2 is about half of width / 2, so it's 5 instead of 10
+
+    if (!!!this.region) {
+        lighting = 2500
+    }
 
     // Load save for player
     if (!this.loadSaveComplete && save != null) {
@@ -366,7 +371,7 @@ Player.prototype.draw = function() {
     }
     
 
-    if (mouseIsDown && !keys.e) {
+    if (mouseIsDown && !keys.e && !this.mapOn) {
         try {
             this.weapon.use(this)
         } catch(error) {
