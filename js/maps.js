@@ -21,6 +21,9 @@ var defeatSquareX = width * 3 / 4
 var defeatSquareSpeed = 10
 var defeatSquareWidth = 50
 
+// Encompassed Forest vars
+var encompassedForestLoopStarted = false // Once player gets close enough to lost traveler, the loop begins and the forest never ends
+
 var scene = "GAME"
 
 
@@ -892,33 +895,41 @@ mainMap.solve = function() {
     }
 
     if (p.area == "Encompassed Forest") {
+
+        if (entityDistance(lostTraveler, p) <= 300) {
+            encompassedForestLoopStarted = true
+        }
         
         lighting = 1500
-        if (p.x > 250 * 75 && p.x < 254 * 75) {
-            if (p.y < 37 * 75){
-                p.y = 59 * 75
-                changeDir()
-                pDir = "U"
+
+        // Teleports the player in a seamless loop so it looks like the forest never ends
+        if (encompassedForestLoopStarted) {
+            if (p.x > 250 * 75 && p.x < 254 * 75) {
+                if (p.y < 37 * 75){
+                    p.y = 59 * 75
+                    changeDir()
+                    pDir = "U"
+                }
+
+                if (p.y > 59 * 75) {
+                    p.y = 37 * 75
+                    changeDir()
+                    pDir = "D"
+                }
             }
 
-            if (p.y > 59 * 75) {
-                p.y = 37 * 75
-                changeDir()
-                pDir = "D"
-            }
-        }
+            if (p.y > 46 * 75 && p.y < 50 * 75) {
+                if (p.x < 236 * 75) {
+                    p.x = 268 * 75
+                    changeDir()
+                    pDir = "L"
+                }
 
-        if (p.y > 46 * 75 && p.y < 50 * 75) {
-            if (p.x < 236 * 75) {
-                p.x = 268 * 75
-                changeDir()
-                pDir = "L"
-            }
-
-            if (p.x > 268 * 75) {
-                p.x = 236 * 75
-                changeDir()
-                pDir = "R"
+                if (p.x > 268 * 75) {
+                    p.x = 236 * 75
+                    changeDir()
+                    pDir = "R"
+                }
             }
         }
         // mike.action = function (p) {
