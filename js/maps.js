@@ -875,9 +875,6 @@ var mainMap = new Landscape([
 
 var c = new Camera(200 * 75, 15 * 75, 15)
 mainMap.solve = function() {
-    
-    var centerDist = Math.hypot((252 * 75 - p.x), (48 * 75 - p.y))
-    console.log(centerDist)
     function correctDir() {
         var lostTravelerLine = lostTraveler.lines[0]
         switch (lostTraveler.dir){
@@ -1569,7 +1566,6 @@ var encompassedForest = new Region([{
         forestLoopStarted = true
         forestTeleport = true
     }
-    console.log(forestTeleport)
 
     // Teleports the player in a seamless loop so it looks like the forest never ends
     if (forestLoopStarted && forestTeleport) {
