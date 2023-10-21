@@ -124,27 +124,6 @@ var bossDoors = [
 	}
 ]
 
-function loadSave() {
-    // if (!!save.player.map) {
-    //     alert(save.player.map.arr.length)
-    //     curMap = save.player.map
-    // }
-    p.x = parseFloat(save.player.x)
-    p.y = parseFloat(save.player.y)
-    p.health = parseFloat(save.player.health)
-    p.inventory = JSON.parse(save.player.inventory)
-    // for (var i in save.player.inventory) {
-    //     var s = save.player.inventory[i]
-    //     for (var j in items) {
-    //         if (j.name == j.name) {
-    //             p.inventory.push(j)
-    //         }
-    //     }
-    //     // p.inventory.push(save.player.inventory[i])
-    // }
-    p.loadSaveComplete = true
-}
-
 function Player(x, y, npcs) {
     this.x = x
     this.y = y
@@ -238,15 +217,16 @@ Player.prototype.draw = function() {
     this.cords.x = Math.floor(this.x / 75) // This regulates it, because you don't start at x-cord 0, you start at x-cord 10
     this.cords.y = Math.floor(this.y / 75) // Same thing as x-cord, but height / 2 is about half of width / 2, so it's 5 instead of 10
 
-    if (!!!this.region) {
-        lighting = 5000
-    }
-
     // Load save for player
     if (!this.loadSaveComplete && save != null) {
+        if (!!!this.region) {
+            lighting = 5000
+        }
+
         this.x = parseFloat(save.player.x)
         this.y = parseFloat(save.player.y)
-        lighting = save.lighting
+        this.health = save.player.health
+        lighting = parseFloat(save.lighting)
         if (save.player.map != "Main Map") {
             for (var i in areas) {
                 if (areas[i].name == save.player.map) {
@@ -256,7 +236,7 @@ Player.prototype.draw = function() {
         } else {
             curMap = mainMap
         }
-        this.health = parseFloat(save.player.health)
+        
         
         this.inventory = [] // Clearing inventory before save reload
         for (var i in save.player.inventory) {
@@ -565,7 +545,9 @@ Player.prototype.move = function() {
 
 Player.prototype.collide = function() {
     var b = curMap.getBlock(this.cords.x, this.cords.y)
-    this.blockOn = getBlockById(b)
+    if (b != "") {
+        this.blockOn = getBlockById(b)
+    }
     
     for (var i in chests) {
         if (this.cords.x == chests[i].cords.x && this.cords.y == chests[i].cords.y && chests[i].map == curMap) {
@@ -617,6 +599,41 @@ Player.prototype.collide = function() {
             this.canMove = true
         }
     }
+
+    // Secret Entrances
+    
+    if (this.cords.x == 160 && this.cords.y == 4 && keys.q) {
+        curMap = queensCastle
+        this.x = 37.5
+        this.y = 37.5
+    }
+
+    // Colliding with block properties
+    if (typeof this.blockOn.dps == 'number') {
+        this.speed = this.blockOn.speed * this.speedMultiplier
+        if (!this.inRaft) {
+            this.health -= this.blockOn.dps / (66 + (2 / 3))
+        } else {
+            if (this.blockOn.id != "!") {
+                this.health -= this.blockOn.dps / (66 + (2 / 3))
+            }
+        }
+    }
+    
+    // if (this.inRaft && this.blockOn.id == "^") { // Raft doesn't save you from suspensia
+        
+    // }
+
+    if (this.moving) {
+        playSound(this.blockOn.sound, true)
+        for (var i in blocks) {
+            if (blocks[i] != this.blockOn) {
+                stopSound(blocks[i].sound)
+            }
+        }
+    } else {
+        stopSound(this.blockOn.sound)
+    }
 }
 
 
@@ -663,31 +680,6 @@ Player.prototype.hitEnemies = function() {
                 },
             0.5)
         } 
-    }
-
-    // Secret Entrances
-    
-    if (this.cords.x == 160 && this.cords.y == 4 && keys.q) {
-        curMap = queensCastle
-        this.x = 37.5
-        this.y = 37.5
-    }
-
-    // Colliding with block properties
-    if (!this.inRaft || this.blockOn.id == "^") { // Raft doesn't save you from suspensia
-        this.speed = this.blockOn.speed * this.speedMultiplier
-        this.health -= this.blockOn.dps / (66 + (2 / 3))
-    }
-
-    if (this.moving) {
-        playSound(this.blockOn.sound, true)
-        for (var i in blocks) {
-            if (blocks[i] != this.blockOn) {
-                stopSound(blocks[i].sound)
-            }
-        }
-    } else {
-        stopSound(this.blockOn.sound)
     }
 }
 
@@ -2608,6 +2600,7 @@ var gameInterval = setInterval(function() {
                 p.HUD()
                 p.displayMap()
                 p.hitEnemies()
+                
         
                 // DEFAULT ON
                 for (var i in regions) {
