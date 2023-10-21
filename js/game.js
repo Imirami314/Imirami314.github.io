@@ -58,7 +58,24 @@ function cameraEnd() {
 
 }
 
-var lighting = 2500 // Between 0 and 2500
+var lighting = 5000 // Between 0 and 5000
+
+/**
+ * Sets lighting value, but instead of immediately changing it, it eases into it
+ * @param {} value New lighting value
+ */
+function setLighting(value) {
+    if (lighting < value) {
+        lighting += 45
+    } else if (lighting > value) {
+        lighting -= 45
+    }
+    
+    if (Math.abs(lighting - value) < 15) {
+        lighting = value
+        return
+    }
+}
 var lightingSize = 45
 
 var SAVE_MENU = false
@@ -222,7 +239,7 @@ Player.prototype.draw = function() {
     this.cords.y = Math.floor(this.y / 75) // Same thing as x-cord, but height / 2 is about half of width / 2, so it's 5 instead of 10
 
     if (!!!this.region) {
-        lighting = 2500
+        lighting = 5000
     }
 
     // Load save for player
@@ -2567,7 +2584,7 @@ var gameInterval = setInterval(function() {
                 }
         
                 // Display lighting pixels
-                if (lighting < 2500) {
+                if (lighting < 5000) {
                     for (var i = 0; i < (width / lightingSize) + 1; i ++) {
                         for (var j = 0; j < (height / lightingSize) + 1; j ++) {
                             var lightingCalc = Math.hypot((i * lightingSize - lightingSize / 2) - width / 2, (j * lightingSize - lightingSize / 2) - height / 2) / lighting
@@ -2844,7 +2861,7 @@ var gameInterval = setInterval(function() {
                 p.inventory.push(items.spearOfTheDarkened)
                 wayne.x = 6 * 75 + mainMap.blockSize / 2 // Makes Wayne centered
                 wayne.y = 46 * 75 + mainMap.blockSize / 2
-                lighting = 2500
+                lighting = 5000
                 wayne.actionLine = 2
                 wayne.action = function(p) {
                     this.curPath = [
@@ -3289,7 +3306,7 @@ var gameInterval = setInterval(function() {
 			ctx.translate((-1 * curCX) + (width / 2), (-1 * curCY) + (height / 2))
 			ctx.restore()
 
-            if (lighting < 2500) {
+            if (lighting < 5000) {
                 for (var i = 0; i < (width / lightingSize) + 1; i ++) {
                     for (var j = 0; j < (height / lightingSize) + 1; j ++) {
                         var lightingCalc = Math.hypot((i * lightingSize - lightingSize / 2) - width / 2, (j * lightingSize - lightingSize / 2) - height / 2) / lighting

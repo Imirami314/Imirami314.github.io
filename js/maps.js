@@ -422,9 +422,9 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
                     i * this.blockSize - p.y + height / 2 < height + this.blockSize)
             } else if (mode == "Map View") {
                 this.loadCase = (j * this.blockSize + p.mapPan.x < width / mapScale && 
-                                                 j * this.blockSize + p.mapPan.x > - width / mapScale && 
-                                                i * this.blockSize + p.mapPan.y < height / mapScale && 
-                                                i * this.blockSize + p.mapPan.y > - height / mapScale)
+                    j * this.blockSize + p.mapPan.x > - width / mapScale && 
+                    i * this.blockSize + p.mapPan.y < height / mapScale && 
+                    i * this.blockSize + p.mapPan.y > - height / mapScale)
             } else if (mode == "Cutscene View") {
                 this.loadCase = (j * this.blockSize - cx > -1 * this.blockSize &&
                     j * this.blockSize - cx < width / cscale &&
@@ -1492,7 +1492,7 @@ var chardTown = new Region([
         y2: 60
     }
 ], function() {
-    
+    setLighting(5000)
 }, function() {
     playMusic("Chard")
 })
@@ -1511,7 +1511,7 @@ var steelField = new Region([
         y2: 60
     }
 ], function() {
-    
+    setLighting(5000)
 }, function() {
     playMusic("Steel Field")
 })
@@ -1530,7 +1530,7 @@ var glaciaVillage = new Region([
         y2: 11
     }
 ], function() {
-    
+    setLighting(5000)
 }, function() {
     playMusic("Glacia Village")
 })
@@ -1541,7 +1541,7 @@ var windyWastelands = new Region([{
     x2: 224,
     y2: 50
 }], function() {
-    
+    setLighting(5000)
 }, function() {
     playMusic("Windy Wastelands")
 })
