@@ -875,10 +875,14 @@ mainMap.solve = function() {
     var randNPCDir = ["U", "R", "D", "L"]
     var randDir = ["Forward", "Right", "Backward", "Left"] // Changed UP and DOWN to FORWARD and BACKWARD because it makes more sense if it's relative to where he is pointing
     var pDir = ""
+    var centerDist = Math.hypot((252 * 75 - p.x), (48 * 75 - p.y))
+    console.log(centerDist)
     function correctDir() {
+        var lostTravelerLine = lostTraveler.lines[0]
         switch (lostTraveler.dir){
             case "U":
-                return lostTraveler.lines
+                return lostTravelerLine
+                break             
         }
     }
 
@@ -888,16 +892,19 @@ mainMap.solve = function() {
     }
 
     if (p.area == "Encompassed Forest") {
+        
         lighting = 1500
         if (p.x > 250 * 75 && p.x < 254 * 75) {
             if (p.y < 37 * 75){
                 p.y = 59 * 75
                 changeDir()
+                pDir = "U"
             }
 
             if (p.y > 59 * 75) {
                 p.y = 37 * 75
                 changeDir()
+                pDir = "D"
             }
         }
 
@@ -905,11 +912,13 @@ mainMap.solve = function() {
             if (p.x < 236 * 75) {
                 p.x = 268 * 75
                 changeDir()
+                pDir = "L"
             }
 
             if (p.x > 268 * 75) {
                 p.x = 236 * 75
                 changeDir()
+                pDir = "R"
             }
         }
         // mike.action = function (p) {
