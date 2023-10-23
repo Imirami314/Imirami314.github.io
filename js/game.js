@@ -1655,7 +1655,13 @@ var drQua = new NPC(69420 * 75, 42069 * 75, "Dr. Qua", mainMap, 'L', [
     }
 }, "after")
 
-var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, lyra, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua]
+var caruk = new NPC(227 * 75, 90 * 75 + 37.5, "Caruk the Fisherman", mainMap, 'L', [
+    "I am fisherger!",
+], "[insert description]", function() {
+
+}, "after")
+
+var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, lyra, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk]
 
 npcs.searchByName = function(name) {
     for (var i in this) {
