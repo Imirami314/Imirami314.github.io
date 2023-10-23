@@ -2291,8 +2291,8 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    p.x = 255 * 75 + 37.5
-    p.y = 24 * 75 + 37.5
+    p.x = 253 * 75 + 37.5
+    p.y = 30 * 75 + 37.5
     p.inventory.push(items.stormedsSword)
 
     lonzo.map = mainMap
