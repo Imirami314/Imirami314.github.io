@@ -205,17 +205,19 @@ Raft.prototype.move = function() {
     
 
     // Check if block is solid, bounces if so
-    if (!getBlockInfoByCords(this.x - this.velocity.x, this.y).through ||
-     !getBlockInfoByCords(this.x + this.velocity.x, this.y).through) {
+    if (/*!getBlockInfoByCords(this.x - this.velocity.x, this.y).through ||
+     */!getBlockInfoByCords(this.x + this.velocity.x, this.y).through) {
+        console.log("raft bounce x")
         this.hitIce()
-        this.x -= this.velocity.x * 3
+        this.x -= this.velocity.x * 2
         this.velocity.x *= -0.75
     }
     
-    if (!getBlockInfoByCords(this.x, this.y - this.velocity.y).through ||
-     !getBlockInfoByCords(this.x, this.y + this.velocity.y).through) {
+    if (/*!getBlockInfoByCords(this.x, this.y - this.velocity.y).through ||
+     */!getBlockInfoByCords(this.x, this.y + this.velocity.y).through) {
+        console.log("raft bounce y")
         this.hitIce()
-        this.y -= this.velocity.y * 3
+        this.y -= this.velocity.y * 2
         this.velocity.y *= -0.75
     }
 

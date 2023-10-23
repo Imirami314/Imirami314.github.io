@@ -2250,12 +2250,16 @@ function saveGame() {
     for (var i in interactives) {
         var intr = interactives[i]
         if (!!intr.map) {
-            intr.map = intr.map.name // Change npcs map attribute to the map name
+            intr.map = intr.map.name // Change interactive's map attribute to the map name
         }
     }
     lset("interactives", JSON.stringify(SAVING.interactives)) // Saves map name to save storage
     for (var i in interactives) {
-        interactives[i].map = areaSearchByName(interactives[i].map) // Reverts npcs map attribute to the actual map
+        if (interactives[i].map != "Main Map") {
+            interactives[i].map = areaSearchByName(interactives[i].map) // Reverts interactive's map attribute to the actual map
+        } else {
+            interactives[i].map = mainMap
+        }
     }
     
     lset("lighting", SAVING.lighting)
