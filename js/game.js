@@ -1682,18 +1682,6 @@ if (!!save) {
     }
 }
 
-// for (var i in save.npcs) {
-//     var n = save.npcs[i].name
-//     console.log(n)
-//     npcs.searchByName(n) = new NPC(n.x, n.y, n.name, n.map, n.dir, n.lines, n.action, n.actionLine)
-//     // for (var j in npcs) {
-//     //     if (npcs[j].name == n) {
-//     //         npcs[j] = 
-//     //     }
-//     // }
-    
-// }
-
 // Main Map
 
 var t116_31 = new Toggle(mainMap, 116, 31, function() {
@@ -1723,6 +1711,8 @@ var t97_11 = new Toggle(mainMap, 97, 11, function() {
 })
 
 var rd257_30 = new RaftDispenser(mainMap, 257 * 75, 30 * 75, 257 * 75 + 37.5, 29 * 75 + 37.5)
+
+var rd256_66 = new RaftDispenser(mainMap, 256 * 75, 66 * 75, 255 * 75 + 37.5, 66 * 75 + 37.5)
 
 // Confounded Cave
 
@@ -2036,6 +2026,7 @@ var interactives = [
     rd12_20,
     rd48_32,
     rd257_30,
+    rd256_66,
 ]
 
 

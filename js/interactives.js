@@ -208,14 +208,14 @@ Raft.prototype.move = function() {
     if (!getBlockInfoByCords(this.x - this.velocity.x, this.y).through ||
      !getBlockInfoByCords(this.x + this.velocity.x, this.y).through) {
         this.hitIce()
-        this.x -= this.velocity.x * 2
+        this.x -= this.velocity.x * 3
         this.velocity.x *= -0.75
     }
     
     if (!getBlockInfoByCords(this.x, this.y - this.velocity.y).through ||
      !getBlockInfoByCords(this.x, this.y + this.velocity.y).through) {
         this.hitIce()
-        this.y -= this.velocity.y * 2
+        this.y -= this.velocity.y * 3
         this.velocity.y *= -0.75
     }
 
