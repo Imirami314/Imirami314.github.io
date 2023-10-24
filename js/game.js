@@ -740,8 +740,8 @@ Player.prototype.displayMap = function() {
         ctx.fillStyle = "rgb(255, 255, 255)"
         ctx.font = "50px serif"
         ctx.textAlign = "center"
-        ctx.fillText("+", width / 2 - 35, height - 62.5)
-        ctx.fillText("-", width / 2 + 35, height - 62.5)
+        ctx.fillText("+", width / 2 - 35, height - 65)
+        ctx.fillText("-", width / 2 + 35, height - 65)
 
 		for (var i in teleports) {
 			teleports[i].draw()
@@ -1661,7 +1661,15 @@ var caruk = new NPC(227 * 75, 90 * 75 + 37.5, "Caruk the Fisherman", mainMap, 'L
 
 }, "after")
 
-var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, lyra, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk]
+var creek = new NPC(226 * 75 + 37.5, 87 * 75, "Creek", mainMap, 'U', [
+    "Hello there kind sir!",
+    "I'm setting up a shop, but it's not quite ready.",
+    "Come back later when it's complete."
+], "[insert description]", function() {
+
+}, "after")
+
+var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, lyra, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek]
 
 npcs.searchByName = function(name) {
     for (var i in this) {
@@ -2390,6 +2398,8 @@ var gameInterval = setInterval(function() {
                 if (!!curMap.solve) {
                     curMap.solve()
                 }
+
+                // Default gone
                 ctx.fillStyle = "rgb(0, 0, 0)"
                 ctx.font = "20px serif"
                 ctx.fillText(p.cords.x + " , " + p.cords.y + " , " + p.canMove, p.x, p.y - 50)

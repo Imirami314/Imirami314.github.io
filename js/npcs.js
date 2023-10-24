@@ -166,7 +166,9 @@ NPC.prototype.draw = function() {
             this.properties.skinColor = "rgb(220, 220, 255, 0.3)"
             this.properties.eyeColor = "rgb(0, 0, 0, 0.5)"
 	}
-	ellipse(this.x, this.y, 50, 50, this.properties.skinColor)
+
+    let npcPulsation = Math.sin(elapsed / 15) * 2
+	ellipse(this.x, this.y, 50 + npcPulsation, 50 + npcPulsation, this.properties.skinColor)
 	
 	switch (this.dir) {
         case "D":
