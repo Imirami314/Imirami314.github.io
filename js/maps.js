@@ -1567,6 +1567,14 @@ var encompassedForest = new Region([{
         forestTeleport = true
     }
 
+    function moveLostToggle() {
+        // Move lost traveler's toggle to next location in cycle
+        lostToggleCurPos ++
+        lostToggleCurPos = lostToggleCurPos % 4 // If it hits 4, it resets back to 0
+        lostTravelerToggle.x = lostTogglePositions[lostToggleCurPos][0]
+        lostTravelerToggle.y = lostTogglePositions[lostToggleCurPos][1]
+    }
+
     // Teleports the player in a seamless loop so it looks like the forest never ends
     if (forestLoopStarted && forestTeleport) {
         if (p.x > 250 * 75 && p.x < 254 * 75) {
@@ -1576,6 +1584,7 @@ var encompassedForest = new Region([{
                 pDir = "U"
 
                 lostTraveler.y -= 75
+                moveLostToggle()
             }
 
             if (p.y > 59 * 75) {
@@ -1584,6 +1593,7 @@ var encompassedForest = new Region([{
                 pDir = "D"
 
                 lostTraveler.y += 75
+                moveLostToggle()
             }
         }
 
@@ -1594,6 +1604,7 @@ var encompassedForest = new Region([{
                 pDir = "L"
 
                 lostTraveler.x -= 75
+                moveLostToggle()
             }
 
             if (p.x > 268 * 75) {
@@ -1602,6 +1613,7 @@ var encompassedForest = new Region([{
                 pDir = "R"
 
                 lostTraveler.x += 75
+                moveLostToggle()
             }
         }
     }

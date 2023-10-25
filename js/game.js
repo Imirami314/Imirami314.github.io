@@ -1979,6 +1979,23 @@ var rd13_9 = new RaftDispenser(stormedRoom, 13 * 75, 9 * 75, 14 * 75 + 37.5, 9 *
 var rd20_10 = new RaftDispenser(stormedRoom, 20 * 75, 10 * 75, 20 * 75 + 37.5, 11 * 75 + 37.5)
 var rd12_20 = new RaftDispenser(stormedRoom, 12 * 75, 20 * 75, 12 * 75 + 37.5, 21 * 75 + 37.5)
 
+// Encompassed forest
+
+var lostTogglePositions = [
+    [254, 49],
+    [253, 46],
+    [250, 47],
+    [251, 50]
+]
+var lostToggleCurPos = 0
+
+var lostTravelerToggle = new Toggle(mainMap, lostTogglePositions[lostToggleCurPos][0], lostTogglePositions[lostToggleCurPos][1],
+function() {
+    // changeme to add functionality
+}, function() {
+    // changeme to add functionality
+})
+
 
 /*
 t - Toggle
@@ -2035,6 +2052,7 @@ var interactives = [
     rd48_32,
     rd257_30,
     rd256_66,
+    lostTravelerToggle
 ]
 
 
@@ -2441,15 +2459,6 @@ var gameInterval = setInterval(function() {
                         playMusic("Darkened Battle") // Default ??? Need to make music for Stormed
                     }
                 }
-                
-                for (var i in npcs) {
-                    if (!!npcs[i].map) {
-                        if (curMap.name == npcs[i].map.name) {
-                            
-                            npcs[i].draw()
-                        }
-                    }
-                }
             
                 for (var i in chests) {
                     if (curMap == chests[i].map) {
@@ -2462,6 +2471,15 @@ var gameInterval = setInterval(function() {
                         interactives[i].draw()
                         if (!!interactives[i].update) {
                             interactives[i].update()
+                        }
+                    }
+                }
+
+                for (var i in npcs) {
+                    if (!!npcs[i].map) {
+                        if (curMap.name == npcs[i].map.name) {
+                            
+                            npcs[i].draw()
                         }
                     }
                 }

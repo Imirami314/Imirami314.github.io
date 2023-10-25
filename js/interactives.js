@@ -31,9 +31,9 @@ function Toggle(map, x, y, action1, action2) {
 Toggle.prototype.draw = function() {
     this.toggleCooldown -= 1 / (66 + (2 / 3))
     if (this.toggleState == 2) {
-        ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 50, 50, "rgb(100, 10, 175)")
+        ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 55, 55, "rgb(100, 10, 175)")
     } else {
-        ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 50, 50, "rgb(255, 255, 0)")
+        ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 55, 55, "rgb(255, 255, 0)")
     }
 }
 
@@ -85,7 +85,7 @@ function MultiToggle(map, x, y, changeX, changeY, blocks) {
 
 MultiToggle.prototype.draw = function () {
 	this.toggleCooldown -= 1 / (66 + (2 / 3))
-	ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 50, 50, "rgb(100, 10, 175)")
+	ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 55, 55, "rgb(100, 10, 175)")
 	
 	if (this.toggleNum != 0) {
 		ctx.fillStyle = 'rgb(0, 0, 0)'
@@ -117,9 +117,9 @@ function LockToggle(map, x, y, action) { // Can only press this toggle once
 LockToggle.prototype.draw = function() {
     
     if (!this.locked) {
-        ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 50, 50, "rgb(255, 0, 0)")
+        ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 55, 55, "rgb(255, 0, 0)")
     } else {
-        ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 50, 50, "rgb(0, 255, 0)")
+        ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 55, 55, "rgb(0, 255, 0)")
     }
 }
 
