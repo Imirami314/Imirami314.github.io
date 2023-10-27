@@ -590,8 +590,8 @@ Player.prototype.collide = function() {
                 curMap = areaJoining
             } else if (curMap != mainMap) {
                 curMap = mainMap
-                this.x = this.cordSave.x * 75
-                this.y = this.cordSave.y * 75
+                this.x = this.cordSave.x * 75 + 37.5
+                this.y = this.cordSave.y * 75 + 37.5
                 this.cordSave = {}
                 saveGame()
             }
