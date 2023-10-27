@@ -1629,4 +1629,17 @@ var encompassedForest = new Region([{
     }
 })
 
-var regions = [chardTown, steelField, glaciaVillage, windyWastelands, encompassedForest]
+var droptonDrylands = new Region([
+    {
+        x1: 197,
+        y1: 66,
+        x2: 289,
+        y2: 107
+    }
+], function() {
+    // Insert active function here
+}, function() {
+    // Insert passive function here
+})
+
+var regions = [chardTown, steelField, glaciaVillage, windyWastelands, encompassedForest, droptonDrylands]
