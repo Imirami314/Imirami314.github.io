@@ -1369,6 +1369,18 @@ var stormedRoom = new Landscape([
 
 
 
+var droptonWaterWear = new Landscape([
+    'WWWWWWWWWWWWWWWWW',
+    'W.....W...W.....W',
+    'W.....WWWWW.....W',
+    'W...............W',
+    'W...............W',
+    'WWWWWWWW|WWWWWWWW'
+], 8 * 75 + 37.5, 5 * 75 + 37.5, 216, 82, "Dropton Water Wear", function() {
+
+})
+
+
 var areas = [
     imperilledPrison,
     johnHouse,
@@ -1386,7 +1398,8 @@ var areas = [
     queensCastle,
     galeCave,
     cryoUnderground,
-    stormedRoom
+    stormedRoom,
+    droptonWaterWear
 ]
 
 // for (var l in areas) {

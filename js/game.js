@@ -1670,7 +1670,18 @@ var creek = new NPC(226 * 75 + 37.5, 87 * 75, "Creek", mainMap, 'U', [
 
 }, "after")
 
-var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, lyra, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek]
+var blake = new NPC(8 * 75 + 37.5, 1 * 75 + 75 /* So he stands on the very edge of the block */, "Blake", droptonWaterWear, 'D', [
+    "Hello there!",
+    "Welcome to Dropton Water Wear!",
+    "You don't appear to be a resident of Dropton.",
+    "Can I interest you in some gear? It can allow you to \n swim underneath some bodies of water.",
+], "[insert description]", function() {
+    ShopMenu.open([
+        {item: items.auraOfWarmth, cost: 12, amount: 2}
+    ])
+}, "after")
+
+var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, lyra, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake]
 
 npcs.searchByName = function(name) {
     for (var i in this) {

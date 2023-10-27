@@ -124,20 +124,20 @@ var items = {
             }
         }),
     windyWastelandKey: new Item("Windy Wasteland Key", 0, function(x, y) {
-                ctx.drawImage(images.confoundedCaveKey, x - 15, y - 15, 35, 15)
-            }, function(p) {
+            ctx.drawImage(images.confoundedCaveKey, x - 15, y - 15, 35, 15)
+        }, function(p) {
 
-                if (p.cords.x == 177 && p.cords.y == 31 && curMap == mainMap) {
-                    mainMap.changeBlock(177, 32, '_')
-                    
-                    for (var i in p.inventory) {
-                        var item = p.inventory[i]
-                        if (item.name == this.name) {
-                            p.inventory.splice(i, 1)
-                        }
+            if (p.cords.x == 177 && p.cords.y == 31 && curMap == mainMap) {
+                mainMap.changeBlock(177, 32, '_')
+                
+                for (var i in p.inventory) {
+                    var item = p.inventory[i]
+                    if (item.name == this.name) {
+                        p.inventory.splice(i, 1)
                     }
                 }
-            }, "A shiny key that constipates you."),
+            }
+        }, "A shiny key that constipates you."), // changeme
     confoundedCaveKey: new Item("Confounded Cave Key", 0, function(x, y) {
         ctx.drawImage(images.confoundedCaveKey, x - 15, y - 15, 35, 15)
     }, function(p) {
