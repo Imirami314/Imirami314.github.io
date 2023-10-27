@@ -397,6 +397,10 @@ var music = [
         audio: new Audio('audio/encompassedForestDark.mp3')
     },
     {
+        name: "Dropton Drylands",
+        audio: new Audio('audio/droptonDrylands.mp3')
+    },
+    {
 		name: "New Location",
         audio: new Audio('audio/new_location.mp3')
 	},

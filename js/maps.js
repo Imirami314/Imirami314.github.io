@@ -1651,8 +1651,10 @@ var droptonDrylands = new Region([
     }
 ], function() {
     // Insert active function here
+    setLighting(5000)
 }, function() {
     // Insert passive function here
+    playMusic("Dropton Drylands")
 })
 
 var regions = [chardTown, steelField, glaciaVillage, windyWastelands, encompassedForest, droptonDrylands]
