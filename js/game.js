@@ -249,6 +249,7 @@ Player.prototype.draw = function() {
                 }
             }
         }
+        this.weaponIndex = save.player.weaponIndex
 
         this.resistances = save.player.resistances || {
             cold: 0,
@@ -2223,6 +2224,7 @@ function saveGame() {
             health: p.health,
             map: curMap.name,
             inventory: [],
+            weaponIndex: p.weaponIndex,
             resistances: p.resistances
         },
         npcs: [],
