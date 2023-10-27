@@ -1261,7 +1261,7 @@ var ron = new NPC(150, 300, "Ron", ronHouse, "D", [
     "Hey, what are you looking at?",
     "...",
     "Yeah I know, my house is gross.\nNot sure why I chose my house to be stone.",
-    "If I were to choose again. I would've made it wood.",
+    "If I were to choose again, I would've made it wood.",
     "It's really expensive though.\n100 wood planks! In the end it isn't really worth it."
 ], "hi", function(p) {
     
@@ -1289,7 +1289,20 @@ var mike = new NPC(28 * 75, 44 * 75, "Mike", mainMap, "L", [
 var lyra = new NPC(6 * 75 + 37.5, 1 * 75 + 37.5, "Lyra", lyraHouse, "D", [
     "`What happened to all of the cool weapons?\nAll the weapons nowadays are the same.",
     "`It sure would be nice to see something new for a change..."
-]) 
+])
+
+var carol = new NPC(5 * 75 + 37.5, 1 * 75 + 37.5, "Carol", carolHouse, "R", [
+    "AAAH!",
+    "`how did he get in my house how did he get in my house\nhow did he get in my house...",
+    "*ahem",
+    "Hello!",
+    "Um, who exactly ARE you?",
+    "...",
+    "Okay then...",
+    "∑∑∑∑∑∑ G! πππππππ"
+], "Resident - Chard Town\nA passionate gardener. Slightly scared of strangers ever\nsince somebody stole her purse.", function() {
+    
+}, "after")
 
 var ley = new NPC(17 * 75 + 37.5, 29 * 75 + 37.5, "Ley", mainMap, "D", [
     "...",
@@ -1682,7 +1695,7 @@ var blake = new NPC(8 * 75 + 37.5, 1 * 75 + 75 /* So he stands on the very edge 
     ])
 }, "after")
 
-var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, lyra, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake]
+var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake]
 
 npcs.searchByName = function(name) {
     for (var i in this) {

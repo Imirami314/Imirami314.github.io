@@ -994,6 +994,14 @@ var lyraHouse = new Landscape([
     '......|......'
 ], 7 * 75 + 37.5, 4 * 75 + 37.5, 13, 27, "Lyra's House")
 
+var carolHouse = new Landscape([
+    '=========',
+    '=-----@@=',
+    '===----@=',
+    '=~=-----=',
+    '====|====',
+], 4 * 75 + 37.5, 4 * 75 + 37.5, 38, 27, "Carol's House")
+
 var leyHouse = new Landscape([
     '.......',
     '.......',
@@ -1388,6 +1396,7 @@ var areas = [
     mikeHouse,
     leyHouse,
 	lyraHouse,
+    carolHouse,
     smithHouse,
     rickHouse,
     confoundedCave,
