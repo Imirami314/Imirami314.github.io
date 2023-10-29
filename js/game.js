@@ -2909,10 +2909,10 @@ var gameInterval = setInterval(function() {
                 p.x = 6 * 75
                 p.y = 54 * 75
                 p.inventory.push(items.spearOfTheDarkened)
-                wayne.x = 6 * 75 + mainMap.blockSize / 2 // Makes Wayne centered
-                wayne.y = 46 * 75 + mainMap.blockSize / 2
+                wayne.x = 6 * 75 + 37.5
+                wayne.y = 46 * 75 + 37.5
                 lighting = 5000
-                wayne.actionLine = 2
+                wayne.actionLine = "after"
                 wayne.action = function(p) {
                     this.curPath = [
                         [6, 32],
@@ -2924,9 +2924,9 @@ var gameInterval = setInterval(function() {
                         [10, 8],
                         [12, 8],
                         function () {
-                            wayne.lines = [
-                                "ayo"
-                            ]
+                            // wayne.lines = [
+                            //     "ayo"
+                            // ]
                             wayne.action = function() {
                                 
                             }
@@ -2965,14 +2965,13 @@ var gameInterval = setInterval(function() {
                         [40, 59],
                         function() {
                             oldMan.lines = [
-                                "Now I will tell you about " + badGuy + "'s history.'"
+                                "Now I will tell you about " + badGuy + "'s history."
                             ]
                             oldMan.action = function(p) {
                                 cutsceneFrame = 0
                                 scene = "SACRED STAR CUTSCENE"
                             }
                             oldMan.actionLine = "after"
-                            // alert(this.lines[0])
                         }
                     ]
                 }
@@ -2980,9 +2979,6 @@ var gameInterval = setInterval(function() {
                 
                 wayne.talkedTo = false
                 cutsceneFrame = 0
-                // if (fade > 0) {
-                // 	fade -= 0.01
-                // }
         
             }
         
@@ -3117,7 +3113,7 @@ var gameInterval = setInterval(function() {
                     y: 50
                 }
     
-                curMap.changeBlock(67, 10, "_") // Opens the path to Steel Field (this only does anything when starting at a game point)
+                curMap.changeBlock(67, 10, "_") // Re-opens the path to Steel Field (in case it doesn't work for the save)
                 curMap.changeBlock(138, 4, "_")
     
                 // This code piece is a backup to move the old man into the correct spot, even though he should be there anyway
@@ -3135,14 +3131,14 @@ var gameInterval = setInterval(function() {
                 wayne.lines = [
                     "Hello!",
                     "I think the old man told you about this island's history,\nso I'll help you save it!",
-                    "Darkened, as well as the other masters, were corrupted and they created borders between\ndifferent regions of this island. This was to ensure that\nus islanders could not work together.",
-                    "However, now that you have defeated Darkened and taken his spear, the borders\nshould open up to you, as they were designed to open for Darkened.",
-                    "The weapon you possess contains the corrupted spirit of Darkened, and right now the\nonly person who has the spirit of the real Darkened is " + badGuy + ".",
-                    "The openings in the borders allowed Darkened to work with the other masters to do " + badGuy + "'s bidding.\nHowever, the islanders were able to safely contain the masters.'",
-                    "This all happened quite a long time ago, and so now only a select few people still\nhave this information.",
-                    "However, the masters have slowly grown stronger through their weapons\nand they get closer and closer to escaping each passing hour.",
-                    "Nobody knows when they will break free, but we need to prevent it from happening\nbefore it does.",
-                    "I've marked a spot on your map for where we believe the border was placed long ago.\nHead to it, and see if it is open for you."
+                    "Long ago, Darkened and the other masters were corrupted and\nwreaked havoc upon this island!",
+                    "Although the islanders could not defeat them, they were able\ntemporarily imprison them.",
+                    "Before they could do this, however, the masters built borders between\ndifferent regions of this island. This made it tougher for\nus islanders to work together.",
+                    "These borders were designed to open for their masters. But, since you conquered\none of the them, we suspect these borders may open for you.",
+                    "So, I've marked a spot on your map for where we believe\n the border was placed a long time ago. If you are\nable to pass, it should take you straight into Glacia Village.",
+                    "You'll have more work to do there.",
+                    "Be quick though, as the masters won't be imprisoned forever. For all we know\nthey could escape right now!",
+                    "I wish you the best of luck!"
                 ]
     
                 // 137, 4
