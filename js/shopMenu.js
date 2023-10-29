@@ -12,8 +12,8 @@ function ShopMenu(shopList) {
         var item = shopList[i].item
         ctx.fillStyle = "rgba(150, 150, 150, 0.3)"
         ctx.fillRect(width / 8 + i * 200 + 50, height / 8, 100, height * 3 / 4)
+        ctx.fillStyle = "rgb(125, 125, 125)"
         item.draw(width / 8 + i * 200 + 100, height / 8 + 100)
-
         ctx.fillStyle = "rgb(0, 0, 0)"
         ctx.font = "20px serif"
         ctx.textAlign = "center"
@@ -28,6 +28,7 @@ function ShopMenu(shopList) {
                     p.trills -= shopList[i].cost
                     shopList[i].amount --
                     PURCHASE_COOLDOWN = 0.5
+                    p.giveItem(item, true)
                 }
             }
         }
@@ -39,6 +40,7 @@ function ShopMenu(shopList) {
 }
 
 ShopMenu.open = function(shopList) {
+    console.log(shopList.length)
     CUR_SHOP_MENU = shopList
 }
 

@@ -160,6 +160,8 @@ function Player(x, y, npcs) {
     this.hitCooldown = 0.35
 
     this.inventoryDisplay = false
+    this.newItemAlert = false
+    this.newItem = null
 
     this.inventory = [items.spearOfTheDarkened, items.auraOfWarmth, items.speedySnowPath] // Default []
 
@@ -419,6 +421,22 @@ Player.prototype.HUD = function() {
         }
     }
     ctx.restore()
+
+    if (this.newItemAlert) { // Displays new item alert when you receive an item (sometimes)
+        ctx.fillStyle = "rgb(150, 150, 150, 0.7)"
+        ctx.roundRect(width / 8, height / 4, width * 3 / 4, height / 2, 15)
+        ctx.fill()
+        ctx.fillStyle = "rgb(0, 0, 0)"
+        ctx.textAlign = "center"
+        ctx.font = "50px serif"
+        ctx.fillText(this.newItem.name, width / 2, height / 3)
+        ctx.save()
+        ctx.translate(width / 2, height / 2)
+        ctx.scale(3, 3)
+        ctx.translate(- width / 2, - height / 2)
+        this.newItem.draw(width / 2, height / 2)
+        ctx.restore()
+    }
 }
 
 
@@ -653,6 +671,22 @@ Player.prototype.has = function(item) {
     }
 
     return false
+}
+
+/**
+ * Gives the player an item
+ * @param {*} item The item to give
+ * @param {*} itemAlert Whether or not to display the new item panel
+ */
+Player.prototype.giveItem = function(item, itemAlert) {
+    p.inventory.push(item)
+    if (itemAlert) {
+        this.newItemAlert = true
+        this.newItem = item
+        setTimeout(() => {
+            this.newItemAlert = false
+        }, 2000)
+    }
 }
 
 Player.prototype.hitEnemies = function() {
@@ -1346,7 +1380,7 @@ var mikesMom = new NPC(300, 300, "Mike's Mom", mikeHouse, "R", [
         "Fine, I guess I'll go back home in a little bit..."
     ]
     mike.action = function(p) {
-        p.inventory.push(items.oldMansGlasses)
+        p.giveItem(items.oldMansGlasses, true)
         // Location of the Old Man's house to give him the glasses
         p.questPoint = {
             x: 15,
@@ -1396,7 +1430,7 @@ var wayne = new NPC(48 * 75, 55 * 75, "Wayne", mainMap, "D", [
         ]
 
         // Location of Smith the Blacksmith's house
-        p.inventory.push(items.steelFieldKey)
+        p.giveItem(items.steelFieldKey, true)
         p.questPoint = {
             x: 130,
             y: 37
@@ -1541,7 +1575,7 @@ var queenAlaska = new NPC(42 * 75 + 37.5, 3 * 75 + 37.5, "Queen Alaska", queensC
         "Go*."
     ]
     lonzo.action = function(p) {
-        p.inventory.push(items.windyWastelandKey)
+        p.giveItem(items.windyWastelandKey, true)
     }
     lonzo.actionLine = "after"
 }, "after")
@@ -1693,7 +1727,8 @@ var blake = new NPC(8 * 75 + 37.5, 1 * 75 + 75 /* So he stands on the very edge 
     "Can I interest you in some gear? It can allow you to \n swim underneath some bodies of water.",
 ], "[insert description]", function() {
     ShopMenu.open([
-        {item: items.auraOfWarmth, cost: 12, amount: 2}
+        {item: items.auraOfWarmth, cost: 12, amount: 2},
+        {item: items.steelFieldKey, cost: 50, amount: 1}
     ])
 }, "after")
 
@@ -2350,7 +2385,7 @@ if (!!save) {
 function startPos() {
     p.x = 253 * 75 + 37.5
     p.y = 30 * 75 + 37.5
-    p.inventory.push(items.stormedsSword)
+    p.giveItem(items.stormedsSword, true)
 
     lonzo.map = mainMap
     lonzo.x = 158 * 75 + 37.5
@@ -2440,305 +2475,305 @@ var gameInterval = setInterval(function() {
             ctx.font = "200px serif"
             ctx.fillText("Loading", width / 3, height / 2)
 		} else if (scene == "GAME") {
-                ctx.save()
-                ctx.translate((-1 * p.x) + (width / 2), (-1 * p.y) + (height / 2))
-                curMap.draw(p, "Player View")
-                if (!!curMap.solve) {
-                    curMap.solve()
-                }
+            ctx.save()
+            ctx.translate((-1 * p.x) + (width / 2), (-1 * p.y) + (height / 2))
+            curMap.draw(p, "Player View")
+            if (!!curMap.solve) {
+                curMap.solve()
+            }
 
-                // Default gone
-                ctx.fillStyle = "rgb(0, 0, 0)"
-                ctx.font = "20px serif"
-                ctx.fillText(p.cords.x + " , " + p.cords.y + " , " + p.canMove, p.x, p.y - 50)
-                
+            // Default gone
+            ctx.fillStyle = "rgb(0, 0, 0)"
+            ctx.font = "20px serif"
+            ctx.fillText(p.cords.x + " , " + p.cords.y + " , " + p.canMove, p.x, p.y - 50)
             
-                if (mouseIsDown) {
-                    playing = true
-                }
-                
-                // Music
-                if (playing) {
-                    if (curMap == mainMap) {
-                    
-                        if (p.area == "Chard Town") {
-                            //playMusic("Chard")
-                        } else if (p.area == "Steel Field") {
-                            // playMusic("Steel Field")
-                        } else if (p.area == "Glacia Village") {
-                            // playMusic("Glacia Village")
-                        } else if (p.area == "Windy Wastelands") {
-                            // playSound("Speedy Snow Walking", true)
-                            // playMusic("Windy Wastelands")
-                        } else if (p.area == "NONE") {
-                            //playMusic("Adventure") // DEFAULT ON
-                        }
-                    } else if (curMap == confoundedCave) {
-                        playMusic("Puzzle")
-                    } else if (curMap == queensCastle) {
-                        playMusic("Queen's Castle")
-                    } else if (curMap == galeCave) {
-                        if (lighting < 1000) {
-                            playMusic("Gale Cave Dark")
-                        } else {
-                            playMusic("Gale Cave Light")
-                        }
-                    } else if (curMap == cryoUnderground) {
-                        playMusic("Cryo Underground")
-                    } else if (curMap == stormedRoom) {
-                        playMusic("Darkened Battle") // Default ??? Need to make music for Stormed
-                    }
-                }
+        
+            if (mouseIsDown) {
+                playing = true
+            }
             
-                for (var i in chests) {
-                    if (curMap == chests[i].map) {
-                        chests[i].draw()
-                    }
-                }
-            
-                for (var i in interactives) {
-                    if (curMap == interactives[i].map) {
-                        interactives[i].draw()
-                        if (!!interactives[i].update) {
-                            interactives[i].update()
-                        }
-                    }
-                }
-
-                for (var i in npcs) {
-                    if (!!npcs[i].map) {
-                        if (curMap.name == npcs[i].map.name) {
-                            
-                            npcs[i].draw()
-                        }
-                    }
-                }
-        
-                for (var i in bossDoors) {
-                    var b = bossDoors[i]
-                    if (keys.space && p.cords.x == b.x && p.cords.y == b.y) {
-                        b.enterFunction(p)
-                    }
-                }
-            
-                for (var i in monsters) {
-                    if (curMap.name == monsters[i].map && !monsters[i].dead) {
-                        monsters[i].draw(p)
-                    }
-                }
-            
-                for (var i in bosses) {
-                    if (curMap.name == bosses[i].map) {
-                        curBoss = bosses[i]
-                        curBoss.update()
-                    }
-                }
-        
+            // Music
+            if (playing) {
+                if (curMap == mainMap) {
                 
-                
-                ctx.restore()
-        
-                for (var i = 0; i < alerts.length; i ++) {
-                    alerts[i].draw()
-                }
-
-                if (!!curCamera) {
-                    curCamera.draw()
-                }
-
-                
-                if (curBoss.health <= 0) {
-                    if (curMap == darkenedRoom) {
-                        Screen.fadeOut(0.005, function() {
-                            darkenedScale = 1
-                            scene = "DARKENED BOSS CUTSCENE DEFEATED"
-                        })
-                    } else if (curMap == stormedRoom) {
-                        Screen.fadeOut(0.005, function() {
-                            curMap = galeCave
-                            p.x = 44 * 75 + 37.5
-                            p.y = 34 * 75 + 37.5
-                            p.inventory.push(items.stormedsSword)
-
-                            lonzo.map = mainMap
-                            lonzo.x = 158 * 75 + 37.5
-                            lonzo.y = 50 * 75 + 37.5
-                            lonzo.dir = "L"
-                            lonzo.lines = [
-                                "Hello! It's been a while!",
-                                "I don't know how, but the wind cleared up here\nso it's safe!",
-                                "Anyway, did you succeed?",
-                                "...",
-                                "(*)B@V#BV@#(*(BVP&WBY(*(BU!!!!!!1",
-                                "Sorry about that. I can't believe you actually\ndid it!",
-                                "By the way, Queen Alaska asked me to go find you.\nShe wanted to talk to you.",
-                                "I'm sure she'll be delighted to hear that you were successful!"
-                            ]
-
-                            queenAlaska.x = 253 * 75 + 37.5
-                            queenAlaska.y = 23 * 75 + 37.5
-                            queenAlaska.dir = 'R'
-                            queenAlaska.map = mainMap
-                            queenAlaska.lines = [
-                                "Wow, it's really you! You came back!",
-                                "How did it go?",
-                                "...",
-                                "That's great! I was just taking with Dr. Qua from Dropton Town\nabout how they, too, have been experiencing odd conditions lately.",
-                                "Their underwater city has been experiencing significant currents,\nsome of which even destroy buildings.",
-                                "I appreciate what you have done for us very much, but I'm afraid\nthere is more for you to take care of over there."
-                            ]
-                            queenAlaska.action = function() {}
-
-                            drQua.x = 256 * 75 + 37.5
-                            drQua.y = 23 * 75 + 37.5
-
-                            p.questPoint = {
-                                x: 253,
-                                y: 23
-                            }
-
-                            mainMap.changeBlock(257, 29, 'z')
-                            alerts.push(new GameAlert(258, 29, ["SEGREME DNIW FO RETSAM WEN A SA SKAERB LLAW EHT"], mainMap, "SIGN"))
-                        })
+                    if (p.area == "Chard Town") {
+                        //playMusic("Chard")
+                    } else if (p.area == "Steel Field") {
+                        // playMusic("Steel Field")
+                    } else if (p.area == "Glacia Village") {
+                        // playMusic("Glacia Village")
+                    } else if (p.area == "Windy Wastelands") {
+                        // playSound("Speedy Snow Walking", true)
+                        // playMusic("Windy Wastelands")
+                    } else if (p.area == "NONE") {
+                        //playMusic("Adventure") // DEFAULT ON
                     }
-                }
-            
-                
-            
-                for (var i in bosses) {
-                    if (curMap.name == bosses[i].map) {
-                        // bosses[i].update()
-                        bosses[i].healthBar()
-                    }
-                }
-        
-                // if (curBoss != 0) {
-                //     curBoss.update()
-                //     curBoss.healthBar()
-                // }
-                
-                p.draw()
-
-                ctx.save()
-                ctx.translate((-1 * p.x) + (width / 2), (-1 * p.y) + (height / 2))
-                curMap.drawNextLayer(p)
-                ctx.restore()
-        
-                // Play toggle cutscenes
-                for (var i in interactives) {
-                    if (interactives[i].constructor.name == "Toggle") {
-                        var inter = interactives[i]
-                        if (inter.cutscene != null) {
-                            inter.toggleCutscene(inter.cutscene.x, inter.cutscene.y)
-                        }
-                    }
-                }
-        
-                // Display lighting pixels
-                if (lighting < 5000) {
-                    for (var i = 0; i < (width / lightingSize) + 1; i ++) {
-                        for (var j = 0; j < (height / lightingSize) + 1; j ++) {
-                            var lightingCalc = Math.hypot((i * lightingSize - lightingSize / 2) - width / 2, (j * lightingSize - lightingSize / 2) - height / 2) / lighting
-                            ctx.fillStyle = "rgba(0, 0, 0, " + lightingCalc + ")"
-                            ctx.fillRect((i - 1) * lightingSize, (j - 1) * lightingSize, lightingSize * 2, lightingSize * 2)
-                        }
-                    }
-                }
-        
-                
-                if (keys.e) {
-                    p.displayInventory()
-                }
-                
-                if (keys.n) {
-                    p.displayNPCList()	
-                }
-                
-                p.move()
-                p.collide()
-                p.HUD()
-                p.displayMap()
-                p.hitEnemies()
-                
-        
-                // DEFAULT ON
-                for (var i in regions) {
-                    regions[i].update()
-                }
-        
-                if (keys.slash) {
-                    if (!bossfight) {
-                        saveGame()
-                        SAVE_MENU = true
+                } else if (curMap == confoundedCave) {
+                    playMusic("Puzzle")
+                } else if (curMap == queensCastle) {
+                    playMusic("Queen's Castle")
+                } else if (curMap == galeCave) {
+                    if (lighting < 1000) {
+                        playMusic("Gale Cave Dark")
                     } else {
-                        console.log("Could not save as bossfight is set to true")
+                        playMusic("Gale Cave Light")
+                    }
+                } else if (curMap == cryoUnderground) {
+                    playMusic("Cryo Underground")
+                } else if (curMap == stormedRoom) {
+                    playMusic("Darkened Battle") // Default ??? Need to make music for Stormed
+                }
+            }
+        
+            for (var i in chests) {
+                if (curMap == chests[i].map) {
+                    chests[i].draw()
+                }
+            }
+        
+            for (var i in interactives) {
+                if (curMap == interactives[i].map) {
+                    interactives[i].draw()
+                    if (!!interactives[i].update) {
+                        interactives[i].update()
                     }
                 }
-        
-                if (SAVE_MENU) {
-                    ctx.fillStyle = "rgb(0, 0, 0)"
-                    ctx.fillRect(width - 200, 0, 200, 100)
-                    ctx.fillStyle = "rgb(255, 255, 255)"
-                    ctx.fillText("Game saved.", width - 100, 50)
-                    var SAVE_MENU_TIMER = setTimeout(function() {
-                        SAVE_MENU = false
-                    }, 1500)
-                }
-        
-                // Alert to open door, talk to NPC, etc
-                p.drawAlert()
+            }
 
-                // NPCS speech bubbles
-                
-                for (var i in npcs) {
-                    if (!!npcs[i].map) {
-                        if (curMap.name == npcs[i].map.name) {
-                            
-                                npcs[i].talk(p, npcs)
-                        }
+            for (var i in npcs) {
+                if (!!npcs[i].map) {
+                    if (curMap.name == npcs[i].map.name) {
+                        
+                        npcs[i].draw()
                     }
                 }
-                
-                // Block Alert bubbles
-                for (var i = 0; i < alerts.length; i ++) {
-                    alerts[i].drawMessage()
+            }
+    
+            for (var i in bossDoors) {
+                var b = bossDoors[i]
+                if (keys.space && p.cords.x == b.x && p.cords.y == b.y) {
+                    b.enterFunction(p)
                 }
+            }
+        
+            for (var i in monsters) {
+                if (curMap.name == monsters[i].map && !monsters[i].dead) {
+                    monsters[i].draw(p)
+                }
+            }
+        
+            for (var i in bosses) {
+                if (curMap.name == bosses[i].map) {
+                    curBoss = bosses[i]
+                    curBoss.update()
+                }
+            }
+    
+            
+            
+            ctx.restore()
+    
+            for (var i = 0; i < alerts.length; i ++) {
+                alerts[i].draw()
+            }
 
-                for (var i in missions) {
-                    missions[i].alert("NEW")
-                    missions[i].solve()
-                }
-                
-                if (p.health <= 0) {
-                    ctx.fillStyle = "rgba(0, 0, 0, " + fade + ")"
-                    ctx.fillRect(0, 0, width, height)
-                    fade += 0.01
-                    if (fade >= 1) {
-                        fade = 0
-                        scene = "DEATH"
-                    }
-                }
-        
-                
-                
-                
-                if (keys.shift) {
-                    // Screen.fadeOut(255, 255, 255, 0.01)
-                    p.mapPan.x = (- p.x + width / 2)
-                    p.mapPan.y = (- p.y + height / 2)
-                    if (p.mapSwitchTimer <= 0) {
-                        if (!p.mapOn) {
-                            p.mapOn = true
-                        } else {
-                            p.mapOn = false
+            if (!!curCamera) {
+                curCamera.draw()
+            }
+
+            
+            if (curBoss.health <= 0) {
+                if (curMap == darkenedRoom) {
+                    Screen.fadeOut(0.005, function() {
+                        darkenedScale = 1
+                        scene = "DARKENED BOSS CUTSCENE DEFEATED"
+                    })
+                } else if (curMap == stormedRoom) {
+                    Screen.fadeOut(0.005, function() {
+                        curMap = galeCave
+                        p.x = 44 * 75 + 37.5
+                        p.y = 34 * 75 + 37.5
+                        p.giveItem(items.stormedsSword, true)
+
+                        lonzo.map = mainMap
+                        lonzo.x = 158 * 75 + 37.5
+                        lonzo.y = 50 * 75 + 37.5
+                        lonzo.dir = "L"
+                        lonzo.lines = [
+                            "Hello! It's been a while!",
+                            "I don't know how, but the wind cleared up here\nso it's safe!",
+                            "Anyway, did you succeed?",
+                            "...",
+                            "(*)B@V#BV@#(*(BVP&WBY(*(BU!!!!!!1",
+                            "Sorry about that. I can't believe you actually\ndid it!",
+                            "By the way, Queen Alaska asked me to go find you.\nShe wanted to talk to you.",
+                            "I'm sure she'll be delighted to hear that you were successful!"
+                        ]
+
+                        queenAlaska.x = 253 * 75 + 37.5
+                        queenAlaska.y = 23 * 75 + 37.5
+                        queenAlaska.dir = 'R'
+                        queenAlaska.map = mainMap
+                        queenAlaska.lines = [
+                            "Wow, it's really you! You came back!",
+                            "How did it go?",
+                            "...",
+                            "That's great! I was just taking with Dr. Qua from Dropton Town\nabout how they, too, have been experiencing odd conditions lately.",
+                            "Their underwater city has been experiencing significant currents,\nsome of which even destroy buildings.",
+                            "I appreciate what you have done for us very much, but I'm afraid\nthere is more for you to take care of over there."
+                        ]
+                        queenAlaska.action = function() {}
+
+                        drQua.x = 256 * 75 + 37.5
+                        drQua.y = 23 * 75 + 37.5
+
+                        p.questPoint = {
+                            x: 253,
+                            y: 23
                         }
-                        p.mapSwitchTimer = 0.3
+
+                        mainMap.changeBlock(257, 29, 'z')
+                        alerts.push(new GameAlert(258, 29, ["SEGREME DNIW FO RETSAM WEN A SA SKAERB LLAW EHT"], mainMap, "SIGN"))
+                    })
+                }
+            }
+        
+            
+        
+            for (var i in bosses) {
+                if (curMap.name == bosses[i].map) {
+                    // bosses[i].update()
+                    bosses[i].healthBar()
+                }
+            }
+    
+            // if (curBoss != 0) {
+            //     curBoss.update()
+            //     curBoss.healthBar()
+            // }
+            
+            p.draw()
+
+            ctx.save()
+            ctx.translate((-1 * p.x) + (width / 2), (-1 * p.y) + (height / 2))
+            curMap.drawNextLayer(p)
+            ctx.restore()
+    
+            // Play toggle cutscenes
+            for (var i in interactives) {
+                if (interactives[i].constructor.name == "Toggle") {
+                    var inter = interactives[i]
+                    if (inter.cutscene != null) {
+                        inter.toggleCutscene(inter.cutscene.x, inter.cutscene.y)
                     }
                 }
-        
-                if (CUR_SHOP_MENU != 0) {
-                    ShopMenu(CUR_SHOP_MENU)
+            }
+    
+            // Display lighting pixels
+            if (lighting < 5000) {
+                for (var i = 0; i < (width / lightingSize) + 1; i ++) {
+                    for (var j = 0; j < (height / lightingSize) + 1; j ++) {
+                        var lightingCalc = Math.hypot((i * lightingSize - lightingSize / 2) - width / 2, (j * lightingSize - lightingSize / 2) - height / 2) / lighting
+                        ctx.fillStyle = "rgba(0, 0, 0, " + lightingCalc + ")"
+                        ctx.fillRect((i - 1) * lightingSize, (j - 1) * lightingSize, lightingSize * 2, lightingSize * 2)
+                    }
                 }
+            }
+    
+            
+            if (keys.e) {
+                p.displayInventory()
+            }
+            
+            if (keys.n) {
+                p.displayNPCList()	
+            }
+            
+            p.move()
+            p.collide()
+            p.HUD()
+            p.displayMap()
+            p.hitEnemies()
+            
+    
+            // DEFAULT ON
+            for (var i in regions) {
+                regions[i].update()
+            }
+    
+            if (keys.slash) {
+                if (!bossfight) {
+                    saveGame()
+                    SAVE_MENU = true
+                } else {
+                    console.log("Could not save as bossfight is set to true")
+                }
+            }
+    
+            if (SAVE_MENU) {
+                ctx.fillStyle = "rgb(0, 0, 0)"
+                ctx.fillRect(width - 200, 0, 200, 100)
+                ctx.fillStyle = "rgb(255, 255, 255)"
+                ctx.fillText("Game saved.", width - 100, 50)
+                var SAVE_MENU_TIMER = setTimeout(function() {
+                    SAVE_MENU = false
+                }, 1500)
+            }
+    
+            // Alert to open door, talk to NPC, etc
+            p.drawAlert()
+
+            // NPCS speech bubbles
+            
+            for (var i in npcs) {
+                if (!!npcs[i].map) {
+                    if (curMap.name == npcs[i].map.name) {
+                        
+                            npcs[i].talk(p, npcs)
+                    }
+                }
+            }
+            
+            // Block Alert bubbles
+            for (var i = 0; i < alerts.length; i ++) {
+                alerts[i].drawMessage()
+            }
+
+            for (var i in missions) {
+                missions[i].alert("NEW")
+                missions[i].solve()
+            }
+            
+            if (p.health <= 0) {
+                ctx.fillStyle = "rgba(0, 0, 0, " + fade + ")"
+                ctx.fillRect(0, 0, width, height)
+                fade += 0.01
+                if (fade >= 1) {
+                    fade = 0
+                    scene = "DEATH"
+                }
+            }
+    
+            
+            
+            
+            if (keys.shift) {
+                // Screen.fadeOut(255, 255, 255, 0.01)
+                p.mapPan.x = (- p.x + width / 2)
+                p.mapPan.y = (- p.y + height / 2)
+                if (p.mapSwitchTimer <= 0) {
+                    if (!p.mapOn) {
+                        p.mapOn = true
+                    } else {
+                        p.mapOn = false
+                    }
+                    p.mapSwitchTimer = 0.3
+                }
+            }
+    
+            if (CUR_SHOP_MENU != 0) {
+                ShopMenu(CUR_SHOP_MENU)
+            }
             
         } else if (scene == "DARKENED BOSS CUTSCENE") {
             playMusic("Boss Cutscene")
@@ -2910,7 +2945,7 @@ var gameInterval = setInterval(function() {
                 curMap = mainMap
                 p.x = 6 * 75
                 p.y = 54 * 75
-                p.inventory.push(items.spearOfTheDarkened)
+                p.giveItem(items.spearOfTheDarkened, false)
                 wayne.x = 6 * 75 + 37.5
                 wayne.y = 46 * 75 + 37.5
                 lighting = 5000

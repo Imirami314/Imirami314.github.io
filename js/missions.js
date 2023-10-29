@@ -26,7 +26,7 @@ Mission.prototype.alert = function(t) {
 	if (this.newMission && t == "NEW") {
 		playSound("New Mission", false)
 		ctx.fillStyle = "rgba(200, 200, 200, 0.5)"
-     		ctx.fillRect(0, height / 8 - 75, width, 150)
+     	ctx.fillRect(0, height / 8 - 75, width, 150)
 		ctx.fillStyle = "rgb(0, 0, 0)"
 		ctx.font = "75px serif"
 		ctx.textAlign = 'center'
@@ -91,7 +91,7 @@ theWanderersRiddles.solve = function () {
 		]
 		theWanderer.action = function(p) {
 			
-			p.inventory.push(items.decipherer)
+			p.giveItem(items.decipherer, true)
 			secrets[0][1] = true
 		}
 		theWanderer.actionLine = "after"

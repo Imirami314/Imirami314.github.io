@@ -976,7 +976,7 @@ var mikeHouse = new Landscape([
 mikeHouse.solve = function () {
 
 	if (p.cords.x == 8 && p.cords.y == 5 && keys.x && !secrets[0][3]) {
-		p.inventory.push(items.chardTownBeam)
+		p.giveItem(items.chardTownBeam, true)
 		secrets[0][3] = true
 		
 	}
