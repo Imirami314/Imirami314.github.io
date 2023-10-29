@@ -226,6 +226,7 @@ Player.prototype.draw = function() {
 
         this.x = parseFloat(save.player.x)
         this.y = parseFloat(save.player.y)
+        this.cordSave = save.player.cordSave
         this.health = save.player.health
         lighting = parseFloat(save.lighting)
         if (save.player.map != "Main Map") {
@@ -2235,6 +2236,7 @@ function saveGame() {
         player: {
             x: p.x,
             y: p.y,
+            cordSave: p.cordSave,
             health: p.health,
             map: curMap.name,
             inventory: [],
