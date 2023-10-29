@@ -2156,7 +2156,7 @@ if (!!save) {
                 // interactives[i].map = inter.map
             }
 
-            if (!!inter.dsx) {
+            if (!!inter.dsx) { // Check if it is a Raft Dispenser
                 interactives[i].x = inter.x
                 interactives[i].y = inter.y
                 interactives[i].dsx = inter.dsx
