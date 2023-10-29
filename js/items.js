@@ -30,8 +30,8 @@ Chest.prototype.draw = function() {
 Chest.prototype.open = function(p) {
     if (!this.opened && keys.space) {
         for (var i in this.items) {
-            p.inventory.push(this.items[i])
-        } // fanny lu
+            p.giveItem(this.items[i], true)
+        }
         this.opened = true
     }
 }
@@ -170,12 +170,7 @@ var items = {
                 "See ya later."
             ]
 
-            // Name should change lol
-            p.inventory.push(new Item("Steel Sword", 5, function(x, y) {
-                ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
-            }, function(p) {
-                
-            }))
+            p.giveItem(items.steelSword, true)
             
             smith.lineNum = 0
             smith.talk(p)
