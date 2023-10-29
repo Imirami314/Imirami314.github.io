@@ -1,13 +1,15 @@
 One Time
 
-- Fix event delay algorithm to make monsters turn red for 0.5 sec when hit
 - Add flowers (extra detail)
 - Fix speedy snow image to make the block consistent
-- Make it so darkened doesn't keep shooting you after you beat him lol
 - Improve on health bar somehow
-- Fix softlocks in cryo underground
-- Fix problem where at the start of Stormed phase 2 you are stuck in his ice wall
 - Come up with a better way to make cutscenes
+- Finish shop menus and allow you to actually buy stuff
+- Change old man's path to the sacred star location to fit the new changes made to the map
+- Make the old man not in a tree sometimes
+- Make wayne not in a tree sometimes
+- Add player sword attack animation
+- Make the storyline at the beginning better (it sucks)
 
 Continuous
 - Add sound effects for all blocks
@@ -23,15 +25,29 @@ Textures and images we need:
 - Steel Field Key
 - Aura of Warmth
 - Sand (we have one right now but it sucks)
+- Ice
+- Cracked Ice
 - Maybe more tree textures for variety?
 - Windy Wastelands Key (it's just the confounded cave key right now lol)
 - Decipherer
+- Puzzle keys
 - Chard Town Beam
 
+Game bugs/issues to fix
+- Make it so darkened doesn't keep shooting you after you beat him lol
+- Fix problem where at the start of Stormed phase 2 you are stuck in his ice wall
+- Fix event delay algorithm to make monsters turn red for 0.5 sec when hit
+- Fix error with npc paths that prevents user from opening map (occured when reloading save after completing Confounded Cave)
+- Fix basically everything with all the boss cutscenes
+- Fix bug where signs with backwards text (that appear next to changed things after beating a boss) don't actually appear
+- Fix double action issues (e.g. pressing space and it talks to an NPC and reads a sign at the same time)
+- Fix issue when you save in another map, reload, and leave and it doesn't know where to put you (p.cordSave didn't transfer when saving the game)
+- Fix issue where wayne says "ayo" instead of the correct lines (occurs after the sacred star cutscene)
+- Fix issue where NPCS give you multiple items if you talk to them multiple times
 
 
 Completed
 - Fix player movement when speaking to NPCs
 - Add currency and shop menus
-- Add player attack animation
+- Add player spear attack animation
 - Increase local storage space so it doesn't fill up

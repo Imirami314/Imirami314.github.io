@@ -357,7 +357,7 @@ function Stormed(map, spawnX, spawnY) {
     this.name = "Stormed"
     this.damage = 10
     this.maxHealth = 500
-    this.health = 0 // Default 500
+    this.health = 500 // Default 500
 	this.animatedHealth = 500
 	
     this.cords = {
@@ -385,7 +385,7 @@ function Stormed(map, spawnX, spawnY) {
     this.beingHit = false // Is boss being hit
     this.hitRegistered = false // Keeps track of whether damage has already been dealth
 
-	this.phase2Played = true // Check if phase 2 cutscene has played, Default false
+	this.phase2Played = false // Check if phase 2 cutscene has played, Default false
 
     //Unused
     this.phase2MapChanged = false // Check if Stormed changed the landscape so he doesn't do it over and over again in phase 2, Default false
@@ -769,6 +769,10 @@ var monsters = [
     new Splint("Main Map", 48 * 75, 18 * 75),
     new Splint("Gale Cave", 50 * 75, 33 * 75)
 ]
+
+// for (var i = 0; i < 500; i ++) {
+//     monsters.push(new Splint("Main Map", mainMap.getDimensions().x * Math.random() * 75, mainMap.getDimensions().y * Math.random() * 75))
+// }
 
 var bosses = [
     new Darkened("Darkened Room", 712.5, 100),
