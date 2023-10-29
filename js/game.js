@@ -1509,17 +1509,18 @@ var queenAlaska = new NPC(42 * 75 + 37.5, 3 * 75 + 37.5, "Queen Alaska", queensC
     "That's incredible. You know, another Elemental Master was\ncaptured here, in Glacia.",
     "Unfortunately, almost nobody knows that the Elemental Masters exist anymore!",
     "Anyway, legend says that it can be found\nsomewhere in Glacia. However, many past Queens have\nfailed to locate it.",
-    "This leads me to believe that it's underground\nsomewhere. Specifically underneath this castle.",
+    "This leads me to believe that it's underground\nsomewhere. Specifically near Glacia Village.",
     "However, even if you do find where the prison is, it could be\nextremely dangerous to enter!",
-    "Long ago, when the Elemental Masters were corrupted and\nrunning free, this specific one was known for its high speed.",
+    "Long ago, when the Elemental Masters were corrupted and\nrunning free, this specific one was notorious for causing\nannoying winds.",
     "While Darkened had its magical spear to bring it power\n(which " + badGuy + " gave it), this Master, known as Stormed\nwould use a powerful sword.",
-    "Its strong control over wind and weather meant that\nthe strong people of Glacia were be best suited to\ncapture this beast.",
+    "Its strong control over wind and weather meant that\nthe people of Glacia were be best suited to\ncapture this beast.",
     "The leaders of this island's regions, like me,\nhave attempted to locate and take down these corrupted masters.",
     "However, the borders between the regions made this\nvery difficult. So, we need you to take the Masters out one at a time.",
     badGuy + " provided the Masters with weapons in the\norder of the Sacred Star.",
     "So, by looking at the connection points,\nwe believe you should defeat the Masters in the\nfollowing order: Night, Wind, Sea, Land and Day.",
 	"Although I wish that I could tell you where this prison is,\nI'm going to have to leave it up to you.",
     "However, we suspect it could be somewhere in the perilous Windy Wastelands.\nIf you do go there, please be extremely careful.",
+    "I'll call Lonzo to help you out. He'll be waiting for you at\nthe front of this castle.",
 	"Good luck my friend! You're definitely going to need it."
 ], "hi", function(p) {
     lonzo.x = 252 * 75 + 37.5
