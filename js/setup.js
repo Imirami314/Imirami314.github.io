@@ -442,6 +442,10 @@ var sounds = [
     {
         name: "Ice Cracks",
         audio: new Audio('audio/ice-cracks.mp3')
+    },
+    {
+        name: "Purchase",
+        audio: new Audio('audio/purchase.mp3')
     }
 ]
 
