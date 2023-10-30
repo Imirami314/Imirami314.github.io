@@ -63,7 +63,6 @@ Enemy.prototype.movePathToPlayer = function() {
         //     this.moveAngle = Math.PI / 2
         // }
      // console.log(Math.atan2(dy / dx))
-        console.log(this.curAngle)
         //console.log(this.moveAngle)
         this.move(dx * 3, dy * 3)
     }
@@ -665,6 +664,7 @@ function Splint(map, spawnX, spawnY) { // Idk what to call it man
     
     this.weaponPos = 0
     this.hitting = false
+    this.isHit = false
     this.hitCooldown = 1
 
     this.dead = false
@@ -741,6 +741,14 @@ Splint.prototype.draw = function(p) {
             this.weaponPos += Math.PI / 66
         } else {
             this.weaponPos = 0
+        }
+    }
+
+    if (this.dead) {
+        for (var i in monsters) {
+            if (monsters[i] == this) {
+                monsters.splice(i, 1)
+            }
         }
     }
 }

@@ -690,6 +690,7 @@ Player.prototype.giveItem = function(item, itemAlert) {
 }
 
 Player.prototype.hitEnemies = function() {
+    var monsterThatWasHitNum = null
     // For monsters
     for (var i in monsters) {
         var m = monsters[i]
@@ -708,15 +709,24 @@ Player.prototype.hitEnemies = function() {
             m.y += Math.sin(this.mAngle) * 25
             
             // Tells monster that it is hit (doesn't work for some monsters idk why)
-            eventsDelay(
-                function() {
-                    m.isHit = true
-                },
-                function() {
-                    m.isHit = false
-                },
-            0.5)
-        } 
+            m.isHit = true
+            monsterThatWasHitNum = i
+            // eventsDelay(
+            //     function() {
+            //         m.isHit = true
+            //     },
+            //     function() {
+            //         m.isHit = false
+            //     },
+            // 0.5)
+        }
+    }
+
+    if (monsterThatWasHitNum != null) {
+        setTimeout(() => {
+            monsters[monsterThatWasHitNum].isHit = false
+            monsterThatWasHitNum = null
+        }, 500)
     }
 }
 
@@ -2565,7 +2575,9 @@ var gameInterval = setInterval(function() {
             for (var i in bosses) {
                 if (curMap.name == bosses[i].map) {
                     curBoss = bosses[i]
-                    curBoss.update()
+                    if (curBoss.health > 0) {
+                        curBoss.update()
+                    }
                 }
             }
     

@@ -34,9 +34,8 @@ Textures and images we need:
 - Chard Town Beam
 
 Game bugs/issues to fix
-- Make it so darkened doesn't keep shooting you after you beat him lol
+- Fix issue where clicking doesn't give the glasses to the old man or the heat handle to Smith (it fixes itself when you reload the save)
 - Fix problem where at the start of Stormed phase 2 you are stuck in his ice wall
-- Fix event delay algorithm to make monsters turn red for 0.5 sec when hit
 - Fix error with npc paths that prevents user from opening map (occured when reloading save after completing Confounded Cave)
 - Fix basically everything with all the boss cutscenes
 - Fix bug where signs with backwards text (that appear next to changed things after beating a boss) don't actually appear
@@ -52,3 +51,5 @@ Completed
 - Add currency and shop menus
 - Add player spear attack animation
 - Increase local storage space so it doesn't fill up
+- Fix event delay algorithm to make monsters turn red for 0.5 sec when hit
+- Make it so darkened doesn't keep shooting you after you beat him lol

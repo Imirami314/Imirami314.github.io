@@ -106,8 +106,9 @@ function stopAtZero(num) {
     }
 }
 
+
 String.prototype.replaceAt = function(index, replacement) {
-        return this.substring(0, index) + replacement + this.substring(index + replacement.length);
+    return this.substring(0, index) + replacement + this.substring(index + replacement.length);
 }
 
 function fillTextMultiLine(text, x, y) {
