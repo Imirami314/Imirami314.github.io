@@ -1604,8 +1604,10 @@ var encompassedForest = new Region([{
                 p.y = 59 * 75
                 changeDir()
                 pDir = "U"
-
-                lostTraveler.y -= 75
+                
+                if (getBlockInfoByCords(lostTraveler.x, lostTraveler.y - 75).through) {
+                    lostTraveler.y -= 75
+                }
                 moveLostToggle()
             }
 
@@ -1614,7 +1616,9 @@ var encompassedForest = new Region([{
                 changeDir()
                 pDir = "D"
 
-                lostTraveler.y += 75
+                if (getBlockInfoByCords(lostTraveler.x, lostTraveler.y + 75).through) {
+                    lostTraveler.y += 75
+                }
                 moveLostToggle()
             }
         }
@@ -1624,8 +1628,10 @@ var encompassedForest = new Region([{
                 p.x = 268 * 75
                 changeDir()
                 pDir = "L"
-
-                lostTraveler.x -= 75
+                
+                if (getBlockInfoByCords(lostTraveler.x - 75, lostTraveler.y).through) {
+                    lostTraveler.x -= 75
+                }
                 moveLostToggle()
             }
 
@@ -1634,15 +1640,19 @@ var encompassedForest = new Region([{
                 changeDir()
                 pDir = "R"
 
-                lostTraveler.x += 75
+                if (getBlockInfoByCords(lostTraveler.x + 75, lostTraveler.y).through) {
+                    lostTraveler.x += 75
+                }
                 moveLostToggle()
             }
         }
     }
-    // mike.action = function (p) {
-    // 	cameras.push(new Camera(10 * 75, 10 * 75, 15, "NPC", 6))
-    // }
-    // mike.actionLine = 3 
+
+    if (lostTraveler.cords.x == lostTravelerToggle.x && lostTraveler.cords.y == lostTravelerToggle.y) {
+        lostTravelerToggle.toggleState = 2
+    } else {
+        lostTravelerToggle.toggleState = 1
+    }
 }, function() {
     if (lighting == 1000) {
         playMusic("Encompassed Forest Dark")
