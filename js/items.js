@@ -224,6 +224,12 @@ var items = {
 			scene = "BEAM UNLOCKED"
 			cutsceneFrame = 0
 		}
-	}, "Search for the place with no beginnings and no ends...")
-	
+	}, "Search for the place with no beginnings and no ends..."),
+	aquaLung: new Item("Aqua Lung", 0, function(x, y) {
+        ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
+    }, function() {
+        p.equip(this)
+
+        p.can.goUnderWater = true
+    }, "A special item that allows you to swim underwater and breathe")
 } // Puzzle Keys are not included as they vary depending on where they came from

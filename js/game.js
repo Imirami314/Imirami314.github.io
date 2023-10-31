@@ -177,6 +177,7 @@ function Player(x, y, npcs) {
     
     this.weaponIndex = 0
     this.weapon = this.inventory[this.weaponIndex]
+    this.equipped = [] // Things that the player has equipped (e.g. Aqua Lung)
     this.weaponShift = {
         x: 0,
         y: 0
@@ -201,6 +202,10 @@ function Player(x, y, npcs) {
     this.resistances = {
         cold: 0, // Default 0
         heat: 0
+    }
+
+    this.can = {
+        goUnderWater: false,
     }
 
 	this.inRaft = false
@@ -379,6 +384,12 @@ Player.prototype.draw = function() {
         } catch(error) {
             
         }
+    }
+
+    for (var i in this.equipped) {
+        // Equipped items have a constantly running effect
+        let e = this.equipped[i]
+        e.use()
     }
 }
 
@@ -671,6 +682,30 @@ Player.prototype.has = function(item) {
     }
 
     return false
+}
+
+Player.prototype.equip = function(item) {
+    // Make sure it doesn't equip the same item multiple times
+    let itemAlreadyEquipped = false
+    for (var i in this.equipped) {
+        let e = this.equipped[i]
+        if (e == item) {
+            itemAlreadyEquipped = true
+        }
+    }
+
+    if (!itemAlreadyEquipped) {
+        this.equipped.push(item)
+    }
+}
+
+Player.prototype.dequip = function(item) {
+    for (var i in this.equipped) {
+        let e = this.equipped[i]
+        if (e == item) {
+            this.equipped.splice(i, 1)
+        }
+    }
 }
 
 /**
@@ -1737,8 +1772,7 @@ var blake = new NPC(8 * 75 + 37.5, 1 * 75 + 75 /* So he stands on the very edge 
     "Can I interest you in some gear? It can allow you to \n swim underneath some bodies of water.",
 ], "[insert description]", function() {
     ShopMenu.open([
-        {item: items.auraOfWarmth, cost: 12, amount: 2},
-        {item: items.steelFieldKey, cost: 50, amount: 1}
+        {item: items.aquaLung, cost: 100, amount: 1}
     ])
 }, "after")
 
@@ -2395,7 +2429,7 @@ if (!!save) {
 function startPos() {
     p.x = 253 * 75 + 37.5
     p.y = 30 * 75 + 37.5
-    p.giveItem(items.stormedsSword, true)
+    p.giveItem(items.stormedsSword, false)
 
     lonzo.map = mainMap
     lonzo.x = 158 * 75 + 37.5
