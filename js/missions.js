@@ -105,3 +105,5 @@ leysGreatFear.solve = function () {
 	console.log("ley mann")
 	ley.lines = ["Are they gone yet?!"]
 }
+
+var davidsDreamPond = new Mission("David's Dream Pond", "Reward", null, 0)

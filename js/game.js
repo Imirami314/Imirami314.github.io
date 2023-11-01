@@ -1366,6 +1366,16 @@ var mike = new NPC(28 * 75, 44 * 75, "Mike", mainMap, "L", [
     }
 }, "after")
 
+var david = new NPC(16 * 75 + 37.5, 16 * 75 + 37.5, "David Swimmer", mainMap, "D", [
+    "In case you're wondering, yes, my last name is actually Swimmer.",
+    "I don't know what my parents were thinking.",
+    "But I do love to swim!",
+    "This pond is kind of depressing though. I would love to find\na great big pond that I could swim in forever!"
+], "Resident - Chard Town\nA socially awkward dude who loves to swim.\nUnfortunately, he's not great at it.", function() {
+    missions.push(davidsDreamPond)
+}, "after")
+
+
 var lyra = new NPC(6 * 75 + 37.5, 1 * 75 + 37.5, "Lyra", lyraHouse, "D", [
     "`What happened to all of the cool weapons?\nAll the weapons nowadays are the same.",
     "`It sure would be nice to see something new for a change..."
@@ -1776,7 +1786,7 @@ var blake = new NPC(8 * 75 + 37.5, 1 * 75 + 75 /* So he stands on the very edge 
     ])
 }, "after")
 
-var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake]
+var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake]
 
 npcs.searchByName = function(name) {
     for (var i in this) {
