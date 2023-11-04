@@ -34,6 +34,31 @@ Enemy.prototype.isStuck = function(dx, dy) {
     }
 }
 
+// Does not work - fix
+/*Enemy.prototype.updatePath = function() {
+    var monsterOnBlock = false
+    for (var i = 0; i < mainMap.arr.length; i ++) {
+        for (var j = 0; j < mainMap.arr[i].length; j ++) {
+            var c = mainMap.arr[i].charAt(j)
+            for (var m in monsters) {
+                
+                if (monsters[m].cords.x == j && monsters[m].cords.y == i &&
+                    (monsters[m].cords.x != this.cords.x && monsters[m].cords.y != this.cords.y)) {
+                    monsterOnBlock = true
+                    break
+                }
+            }
+            if (getBlockById(c).through) {
+                if (monsterOnBlock) {
+                    mainMap.grid.setWalkableAt(j, i, false)
+                }  else {
+                    mainMap.grid.setWalkableAt(j, i, true)
+                }
+            }
+        }
+    }
+}*/
+
 Enemy.prototype.pathToPlayer = function() {
     var curMapGrid = mainMap.grid.clone() // You need to clone before using findPath
     return finder.findPath(this.cords.x, this.cords.y, p.cords.x, p.cords.y, curMapGrid)
@@ -688,6 +713,7 @@ Splint.prototype.draw = function(p) {
 
     if (this.agro && this.playerDist >= 90 && !this.hitting) {
         // this.move(Math.cos(this.playerAngle) * 2, Math.sin(this.playerAngle) * 2)
+        //this.updatePath()
         this.movePathToPlayer()
     }
 

@@ -33,9 +33,9 @@ Mission.prototype.alert = function(t) {
 		ctx.fillText(this.name, width / 2, height / 8 - 25)
 		ctx.font = "30px serif"
 		ctx.fillText("New " + this.type + " Mission", width / 2, height / 8 + 50)
-		if (this.newMissionFrame > 300) {
+		setTimeout(() => { 
 			this.newMission = false
-		}
+		}, 3000)
 	}
 }
 
