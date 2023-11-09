@@ -927,7 +927,7 @@ imperilledPrison.solve = function () {
         lighting = 1500
         if (!(p.cords.x == 25 && p.cords.y == 10)) {
             
-            playSound("Alarm", true)
+            //playSound("Alarm", true)
             if (!prisonCameraActivated) {
                 cutsceneFrame ++
                 console.log(cutsceneFrame)

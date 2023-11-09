@@ -169,7 +169,7 @@ NPC.prototype.draw = function() {
 
     let npcPulsation = Math.sin(elapsed / 15) * 2
 	ellipse(this.x, this.y, 50 + npcPulsation, 50 + npcPulsation, this.properties.skinColor)
-	
+
 	switch (this.dir) {
         case "D":
             ellipse(this.x - 10, this.y - 10, 10, 10, this.properties.eyeColor)
