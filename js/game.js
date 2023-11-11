@@ -2797,7 +2797,14 @@ var gameInterval = setInterval(function() {
 
             for (var i in missions) {
                 missions[i].alert("NEW")
-                missions[i].solve()
+
+                if (!!missions[i].solve) {
+                    missions[i].solve()
+                }
+
+                if (missions[i].complete) {
+                    missions[i].alert("COMPLETE")
+                }
             }
             
             if (p.health <= 0) {

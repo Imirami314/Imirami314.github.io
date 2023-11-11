@@ -11,6 +11,7 @@ function Mission(name, type, nodes, num, solve) {
 	this.newMissionFrame = 0
 
 	this.complete = false
+	this.completionPopup = false
 }
 
 Mission.prototype.drawDesc = function () {
@@ -36,7 +37,25 @@ Mission.prototype.alert = function(t) {
 		setTimeout(() => { 
 			this.newMission = false
 		}, 3000)
+	} else if (this.completionPopup && t == "COMPLETE") {
+		//playSound("New Mission", false)
+		ctx.fillStyle = "rgba(200, 200, 200, 0.5)"
+     	ctx.fillRect(0, height / 8 - 75, width, 150)
+		ctx.fillStyle = "rgb(0, 0, 0)"
+		ctx.font = "75px serif"
+		ctx.textAlign = 'center'
+		ctx.fillText(this.name, width / 2, height / 8 - 25)
+		ctx.font = "30px serif"
+		ctx.fillText("Completed!", width / 2, height / 8 + 50)
+		setTimeout(() => { 
+			this.completionPopup = false
+		}, 3000)
 	}
+}
+
+Mission.prototype.finish = function() {
+	this.complete = true
+	this.completionPopup = true
 }
 
 var aStrangeWorld = new Mission("A Strange World", "Main", null, 0)
