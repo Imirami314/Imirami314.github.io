@@ -6,7 +6,6 @@ function Item(name, damage, draw, use, desc) {
     this.use = use
     this.desc = desc || "[no description]"
     this.draw = draw
-    this.opened = false
 }
 
 function Chest(map, cordX, cordY, items) {
@@ -16,6 +15,7 @@ function Chest(map, cordX, cordY, items) {
         y: cordY
     }
     this.items = items
+    this.opened = false
 }
 
 Chest.prototype.draw = function() {
@@ -231,5 +231,6 @@ var items = {
         p.equip(this)
 
         p.can.goUnderWater = true
+        ellipse(width / 2, height / 2, 75, 75, "rgb(0, 255, 255, 0.4)")
     }, "A special item that allows you to swim underwater and breathe")
 } // Puzzle Keys are not included as they vary depending on where they came from

@@ -684,6 +684,16 @@ Player.prototype.has = function(item) {
     return false
 }
 
+Player.prototype.hasEquipped = function(item) {
+    for (var i in this.equipped) {
+        if (this.equipped[i] == item) {
+            return true
+        }
+    }
+
+    return false
+}
+
 Player.prototype.equip = function(item) {
     // Make sure it doesn't equip the same item multiple times
     let itemAlreadyEquipped = false
@@ -861,7 +871,8 @@ Player.prototype.displayMap = function() {
 
 Player.prototype.displayInventory = function() {
     ctx.fillStyle = "rgba(50, 50, 255, 0.5)"
-    ctx.fillRect(width / 8, height / 8, width * 3 / 4, height * 3 / 4)
+    ctx.roundRect(width / 8, height / 8, width * 3 / 4, height * 3 / 4, 10)
+    ctx.fill()
     for (var i in this.inventory) {
         try {
             var item = this.inventory[i]
@@ -882,6 +893,20 @@ Player.prototype.displayInventory = function() {
             console.log(error)
         }
     }
+
+    // Equipped items sidebar
+    ctx.fillStyle = "rgba(25, 25, 255, 0.75)"
+    ctx.roundRect(width * 3 / 4, height / 8, width / 8, height * 3 / 4, 10)
+    ctx.fill()
+    for (var i in this.equipped) {
+        item.draw(width * 13 / 16, height / 8 + 100 + i * 100)
+    }
+
+    // Border
+    ctx.strokeStyle = "rgb(0, 0, 0)"
+    ctx.lineWidth = 4
+    ctx.roundRect(width / 8, height / 8, width * 3 / 4, height * 3 / 4, 10)
+    ctx.stroke()
 }
 
 // Player animations
@@ -2735,8 +2760,13 @@ var gameInterval = setInterval(function() {
                     }
                 }
             }
-    
             
+            p.move()
+            p.collide()
+            p.HUD()
+            p.displayMap()
+            p.hitEnemies()
+
             if (keys.e) {
                 p.displayInventory()
             }
@@ -2744,12 +2774,6 @@ var gameInterval = setInterval(function() {
             if (keys.n) {
                 p.displayNPCList()	
             }
-            
-            p.move()
-            p.collide()
-            p.HUD()
-            p.displayMap()
-            p.hitEnemies()
             
     
             // DEFAULT ON
