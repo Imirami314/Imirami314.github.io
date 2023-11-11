@@ -257,12 +257,26 @@ Player.prototype.draw = function() {
                 }
             }
         }
+
+        this.equipped = [] // Clearing equipped items before save reload
+        for (var i in save.player.equipped) {
+            var s = save.player.equipped[i]
+            console.log(s.name)
+            for (var j in items) {
+                if (items[j].name == save.player.equipped[i].name) {
+                    this.equipped.push(items[j])
+                }
+            }
+        }
+
         this.weaponIndex = save.player.weaponIndex
 
         this.resistances = save.player.resistances || {
             cold: 0,
             heat: 0
         }
+
+        this.can = save.player.can
         
         this.loadSaveComplete = true
     }
@@ -593,6 +607,12 @@ Player.prototype.collide = function() {
         }
     }
 
+    for (var i in secrets) {
+        if (secrets[i].map == curMap && this.on(secrets[i].x, secrets[i].y)) {
+            secrets[i].activate()
+        }
+    }
+
     if (this.doorCooldown <= 0) {
         if ((this.blockOn.name == "door" || this.blockOn.name == "hole") && keys.space) {
             fadeStarted = true
@@ -677,6 +697,16 @@ Player.prototype.collide = function() {
 Player.prototype.has = function(item) {
     for (var i in this.inventory) {
         if (this.inventory[i] == item) {
+            return true
+        }
+    }
+
+    return false
+}
+
+Player.prototype.hasEquipped = function(item) {
+    for (var i in this.equipped) {
+        if (this.equipped[i] == item) {
             return true
         }
     }
@@ -861,7 +891,8 @@ Player.prototype.displayMap = function() {
 
 Player.prototype.displayInventory = function() {
     ctx.fillStyle = "rgba(50, 50, 255, 0.5)"
-    ctx.fillRect(width / 8, height / 8, width * 3 / 4, height * 3 / 4)
+    ctx.roundRect(width / 8, height / 8, width * 3 / 4, height * 3 / 4, 10)
+    ctx.fill()
     for (var i in this.inventory) {
         try {
             var item = this.inventory[i]
@@ -882,6 +913,20 @@ Player.prototype.displayInventory = function() {
             console.log(error)
         }
     }
+
+    // Equipped items sidebar
+    ctx.fillStyle = "rgba(25, 25, 255, 0.75)"
+    ctx.roundRect(width * 3 / 4, height / 8, width / 8, height * 3 / 4, 10)
+    ctx.fill()
+    for (var i in this.equipped) {
+        item.draw(width * 13 / 16, height / 8 + 100 + i * 100)
+    }
+
+    // Border
+    ctx.strokeStyle = "rgb(0, 0, 0)"
+    ctx.lineWidth = 4
+    ctx.roundRect(width / 8, height / 8, width * 3 / 4, height * 3 / 4, 10)
+    ctx.stroke()
 }
 
 // Player animations
@@ -2173,27 +2218,10 @@ var interactives = [
 ]
 
 
-// WIP
-// var interactives = []
-
-// for (var w in Object.values(window)) {
-//     var i = Object.values(window)[w]
-
-//     if (!!i.constructor) {
-//         if (i.constructor.name == "Toggle" ||
-//                 i.constructor.name == "MultiToggle" ||
-//                 i.constructor.name == "Raft" ||
-//                 i.constructor.name == "RaftDispenser") {
-//             alert(w.constructor.name)
-//             interactives.push(i)
-//         }
-//     }
-// }
-
 // Load save for interactives
 if (!!save) {
     for (var i in save.interactives) {
-        var inter = save.interactives[i] 
+        var inter = save.interactives[i]
         
         if (!!interactives[i]) {
             if (!!inter.toggleState) { // Check if it is a Toggle using a unique property
@@ -2306,6 +2334,18 @@ var chests = [
     c10_1,
 ]
 
+// Secrets
+
+var droptonTunnelsEntrance = new Secret(270, 78, mainMap, function() {
+    if (p.can.goUnderWater && keys.space) {
+        curMap = droptonTunnels
+        p.x = 14 * 75 + 37.5
+        p.y = 14 * 75 + 37.5
+    }
+})
+
+var secrets = [droptonTunnelsEntrance]
+
 var opacity = 1
 
 // Darkened phase 2 cutscene variables
@@ -2329,8 +2369,10 @@ function saveGame() {
             health: p.health,
             map: curMap.name,
             inventory: [],
+            equipped: [],
             weaponIndex: p.weaponIndex,
-            resistances: p.resistances
+            resistances: p.resistances,
+            can: p.can,
         },
         npcs: [],
         npcActions: [],
@@ -2356,6 +2398,11 @@ function saveGame() {
     for (var j in p.inventory) {
         var i = p.inventory[j]
         SAVING.player.inventory.push(i)
+    }
+
+    for (var j in p.equipped) {
+        var i = p.equipped[j]
+        SAVING.player.equipped.push(i)
     }
 
     for (var i in npcs) {
@@ -2735,8 +2782,13 @@ var gameInterval = setInterval(function() {
                     }
                 }
             }
-    
             
+            p.move()
+            p.collide()
+            p.HUD()
+            p.displayMap()
+            p.hitEnemies()
+
             if (keys.e) {
                 p.displayInventory()
             }
@@ -2744,12 +2796,6 @@ var gameInterval = setInterval(function() {
             if (keys.n) {
                 p.displayNPCList()	
             }
-            
-            p.move()
-            p.collide()
-            p.HUD()
-            p.displayMap()
-            p.hitEnemies()
             
     
             // DEFAULT ON
@@ -2797,7 +2843,14 @@ var gameInterval = setInterval(function() {
 
             for (var i in missions) {
                 missions[i].alert("NEW")
-                missions[i].solve()
+
+                if (!!missions[i].solve) {
+                    missions[i].solve()
+                }
+
+                if (missions[i].complete) {
+                    missions[i].alert("COMPLETE")
+                }
             }
             
             if (p.health <= 0) {
