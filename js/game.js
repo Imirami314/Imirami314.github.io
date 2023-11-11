@@ -257,6 +257,18 @@ Player.prototype.draw = function() {
                 }
             }
         }
+
+        this.equipped = [] // Clearing equipped items before save reload
+        for (var i in save.player.equipped) {
+            var s = save.player.equipped[i]
+            console.log(s.name)
+            for (var j in items) {
+                if (items[j].name == save.player.equipped[i].name) {
+                    this.equipped.push(items[j])
+                }
+            }
+        }
+
         this.weaponIndex = save.player.weaponIndex
 
         this.resistances = save.player.resistances || {
@@ -2354,8 +2366,9 @@ function saveGame() {
             health: p.health,
             map: curMap.name,
             inventory: [],
+            equipped: [],
             weaponIndex: p.weaponIndex,
-            resistances: p.resistances
+            resistances: p.resistances,
         },
         npcs: [],
         npcActions: [],
@@ -2381,6 +2394,11 @@ function saveGame() {
     for (var j in p.inventory) {
         var i = p.inventory[j]
         SAVING.player.inventory.push(i)
+    }
+
+    for (var j in p.equipped) {
+        var i = p.equipped[j]
+        SAVING.player.equipped.push(i)
     }
 
     for (var i in npcs) {
