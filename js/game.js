@@ -275,6 +275,8 @@ Player.prototype.draw = function() {
             cold: 0,
             heat: 0
         }
+
+        this.can = save.player.can
         
         this.loadSaveComplete = true
     }
@@ -602,6 +604,12 @@ Player.prototype.collide = function() {
     for (var i in interactives) {
         if (interactives[i].map == curMap) {
             interactives[i].activate()
+        }
+    }
+
+    for (var i in secrets) {
+        if (secrets[i].map == curMap && this.on(secrets[i].x, secrets[i].y)) {
+            secrets[i].activate()
         }
     }
 
@@ -2210,27 +2218,10 @@ var interactives = [
 ]
 
 
-// WIP
-// var interactives = []
-
-// for (var w in Object.values(window)) {
-//     var i = Object.values(window)[w]
-
-//     if (!!i.constructor) {
-//         if (i.constructor.name == "Toggle" ||
-//                 i.constructor.name == "MultiToggle" ||
-//                 i.constructor.name == "Raft" ||
-//                 i.constructor.name == "RaftDispenser") {
-//             alert(w.constructor.name)
-//             interactives.push(i)
-//         }
-//     }
-// }
-
 // Load save for interactives
 if (!!save) {
     for (var i in save.interactives) {
-        var inter = save.interactives[i] 
+        var inter = save.interactives[i]
         
         if (!!interactives[i]) {
             if (!!inter.toggleState) { // Check if it is a Toggle using a unique property
@@ -2343,6 +2334,18 @@ var chests = [
     c10_1,
 ]
 
+// Secrets
+
+var droptonTunnelsEntrance = new Secret(270, 78, mainMap, function() {
+    if (p.can.goUnderWater && keys.space) {
+        curMap = droptonTunnels
+        p.x = 14 * 75 + 37.5
+        p.y = 14 * 75 + 37.5
+    }
+})
+
+var secrets = [droptonTunnelsEntrance]
+
 var opacity = 1
 
 // Darkened phase 2 cutscene variables
@@ -2369,6 +2372,7 @@ function saveGame() {
             equipped: [],
             weaponIndex: p.weaponIndex,
             resistances: p.resistances,
+            can: p.can,
         },
         npcs: [],
         npcActions: [],
