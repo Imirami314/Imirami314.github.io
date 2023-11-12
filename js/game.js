@@ -163,7 +163,7 @@ function Player(x, y, npcs) {
     this.newItemAlert = false
     this.newItem = null
 
-    this.inventory = [items.spearOfTheDarkened, items.auraOfWarmth, items.speedySnowPath] // Default []
+    this.inventory = [items.spearOfTheDarkened, items.auraOfWarmth, items.speedySnowPath, items.aquaLung] // Default []
 
     this.waterParticles = new ParticleSystem(width / 2, height / 2, 5, 50, 0, 0, 100)
     this.lavaParticles = new ParticleSystem(width / 2, height / 2, 1, 75, 50, 50, 50)
@@ -177,7 +177,7 @@ function Player(x, y, npcs) {
     
     this.weaponIndex = 0
     this.weapon = this.inventory[this.weaponIndex]
-    this.equipped = [] // Things that the player has equipped (e.g. Aqua Lung)
+    this.equipped = [items.aquaLung] // Things that the player has equipped (e.g. Aqua Lung), Default []
     this.weaponShift = {
         x: 0,
         y: 0
@@ -1839,7 +1839,28 @@ var blake = new NPC(8 * 75 + 37.5, 1 * 75 + 75 /* So he stands on the very edge 
     ])
 }, "after")
 
-var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake]
+var ness = new NPC(13 * 75 + 37.5, 13 * 75 + 37.5, "Ness", droptonTunnels, 'R', [
+    "Welcome to the Dropton Tunnels!",
+    "Are you new here or are you returning?",
+    "...",
+    "I see. I can let you in to the main city, but\nyou'll be denied entry to certain places until\nyou get a Full Pass.",
+    "I'm not able to help you get one, but I'm sure\nsomebody in Dropton can."
+], "[insert description]", function() {
+
+}, "after")
+
+var bay = new NPC(15 * 75 + 37.5, 9 * 75 + 37.5, "Bay", droptonTunnels, 'D', [
+    "Hi there!",
+    "These tunnels are confusing, aren't they?",
+    "Most of the paths don't do anything, they're only used in emergencies.",
+    "But if you're heading to central Dropton City, take a left.",
+    "If you're trying to get to Dropton Town, take a right.\nNot much happens there though...",
+    "If you don't know where to go, you should take a\nleft and visit Dropton City."
+], "[insert description]", function() {
+
+}, "after")
+
+var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay]
 
 npcs.searchByName = function(name) {
     for (var i in this) {
@@ -2285,7 +2306,7 @@ var models = {
     }
 }
 
-var p = new Player(3 * 75, 3 * 75, npcs) // default x = width / 2, y = height / 2 helloooh
+var p = new Player(15 * 75, 15 * 75, npcs) // default x = width / 2, y = height / 2 helloooh
 
 var c121_31 = new Chest(mainMap, 121, 31, [
     items.heatHandle
@@ -2492,8 +2513,9 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    p.x = 253 * 75 + 37.5
-    p.y = 30 * 75 + 37.5
+    curMap = droptonTunnels
+    p.x = 4 * 75 + 37.5
+    p.y = 15 * 75 + 37.5
     p.giveItem(items.stormedsSword, false)
 
     lonzo.map = mainMap

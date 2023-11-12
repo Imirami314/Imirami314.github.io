@@ -1405,11 +1405,11 @@ var droptonTunnels = new Landscape([
     'SSSS~SSSSSSSS~S~~~~~~SSSSSSSSS',
     'SSSS~SSSSSSSS~~~SSSS~SSSSSSSSS',
     'SSSS~SSSSSSSSSS~SSSS~SSSSSSSSS',
-    'SSSS~SSSSSSSSSS~SSSS~~~~~~~~~~',
-    'SSSS~SSSSSSSSSS~SSSSSS~SSSSSSS',
-    'SSSS~SSSSSSSSS~~SSSSSS~SSSSSSS',
-    '~~~~~SSSSSSSSS~~SSSSSS~SSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSS~SSSSSSS',
+    'SSSS~SSSSSSSSSS~SSSS~~~~~~~~~O',
+    'SSSS~SSSSSSSS~~~~SSSSS~SSSSSSS',
+    'SSSS~SSSSSSSS~~~~SSSSS~SSSSSSS',
+    'O~~~~SSSSSSSS~~~~SSSSS~SSSSSSS',
+    'SSSSSSSSSSSSS~~~~SSSSS~SSSSSSS',
     '~~~~~~~~~~SSSSSSSSSSSS~SSSSSSS',
     'SSSSSSSSS~SSSSSSSSSSSS~~~~~~~~',
     'SSSSSSSSS~SSSSSSSSSSSS~SSSSSSS',
@@ -1428,6 +1428,16 @@ var droptonTunnels = new Landscape([
 droptonTunnels.solve = function() {
     if (!p.can.goUnderWater) {
         p.getHit(0.1)
+    }
+
+    if (keys.space) {
+        if (p.on(0, 15)) {
+            // Code that takes you to Dropton City
+        }
+
+        if (p.on(29, 12)) {
+            // Code that takes you to Dropton Town
+        }
     }
 }
 
