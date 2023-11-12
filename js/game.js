@@ -663,6 +663,14 @@ Player.prototype.collide = function() {
     // Colliding with block properties
     if (typeof this.blockOn.dps == 'number') {
         this.speed = this.blockOn.speed * this.speedMultiplier
+
+        // Special cases
+        if (this.hasEquipped(items.aquaLung) && this.blockOn.id == '~') { // Swim faster with aqua lung
+            this.speed *= 1.5
+        }
+
+
+        // Hurt player when standing on harmful block
         if (!this.inRaft) {
             this.health -= this.blockOn.dps / (66 + (2 / 3))
         } else {
@@ -2623,6 +2631,8 @@ var gameInterval = setInterval(function() {
                     playMusic("Cryo Underground")
                 } else if (curMap == stormedRoom) {
                     playMusic("Darkened Battle") // Default ??? Need to make music for Stormed
+                } else if (curMap == droptonTunnels) {
+
                 }
             }
         
