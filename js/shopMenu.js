@@ -10,7 +10,7 @@ function ShopMenu(shopList) {
 
     PURCHASE_COOLDOWN -= 1 / (66 + (2 / 3))
     for (var i in shopList) {
-        var item = shopList[i].item
+        var shopItem = shopList[i].item
 
         // Vertical Bars
         ctx.fillStyle = "rgb(150, 150, 150, 0.3)"
@@ -22,7 +22,7 @@ function ShopMenu(shopList) {
         ctx.fill()
         
         // Drawing the item
-        item.draw(width / 8 + i * 200 + 100, height / 8 + 100)
+        shopItem.draw(width / 8 + i * 200 + 100, height / 8 + 100)
 
         // Displaying item details in text
         ctx.fillStyle = "rgb(0, 0, 0)"
@@ -47,11 +47,23 @@ function ShopMenu(shopList) {
                     p.trills -= shopList[i].cost
                     shopList[i].amount --
                     PURCHASE_COOLDOWN = 0.5
-                    p.giveItem(item, true)
+                    p.giveItem(shopItem, true)
                     playSound("Purchase")
                 }
             }
         }
+
+     
+        if (mouseX > width / 8 + i * 200 + 60 &&
+                mouseY > height / 8 + 60 &&
+                mouseX < width / 8 + i * 200 + 140 &&
+                mouseY < height / 8 + 140) {
+            ctx.fillStyle = "rgb(0, 0, 0)"
+            ctx.font = "50px serif"
+            ctx.fillText(shopItem.name, width / 2, height * 6 / 8)
+            
+        }
+        
     }
 
     if (keys.esc) {
@@ -61,7 +73,7 @@ function ShopMenu(shopList) {
 
 ShopMenu.open = function(shopList) {
     console.log(shopList.length)
-    CUR_SHOP_MENU = shopList
+    CUR_SHOP_MENU = shopList   
 }
 
 ShopMenu.close = function() {
