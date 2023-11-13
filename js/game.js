@@ -476,6 +476,16 @@ Player.prototype.on = function(x, y) {
     }
 }
 
+/**
+ * Teleports player to specific location
+ * @param {*} x IN PIXELS
+ * @param {*} y IN PIXELS
+ */
+Player.prototype.goTo = function(x, y) {
+    this.x = x
+    this.y = y
+}
+
 Player.prototype.move = function() {
     if (!!this.inventory[this.weaponIndex]) {
         this.weapon = this.inventory[this.weaponIndex]
@@ -640,11 +650,14 @@ Player.prototype.collide = function() {
                 this.y = areaJoining.enterY
                 curMap = areaJoining
             } else if (curMap != mainMap) {
-                curMap = mainMap
-                this.x = this.cordSave.x * 75 + 37.5
-                this.y = this.cordSave.y * 75 + 37.5
-                this.cordSave = {}
-                saveGame()
+                if (!!this.cordSave.x && !!this.cordSave.y) {
+                    curMap = mainMap
+                    this.x = this.cordSave.x * 75 + 37.5
+                    this.y = this.cordSave.y * 75 + 37.5
+                    this.cordSave = {}
+                } else {
+                    console.log("No coordinates were saved upon area entry")
+                }
             }
             fadeStarted = false
             fadeOut = 0
@@ -2655,6 +2668,8 @@ var gameInterval = setInterval(function() {
                     playMusic("Darkened Battle") // Default ??? Need to make music for Stormed
                 } else if (curMap == droptonTunnels) {
 
+                } else if (curMap == droptonCity) {
+                    playMusic("Dropton City")
                 }
             }
         

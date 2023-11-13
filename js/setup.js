@@ -402,6 +402,10 @@ var music = [
         audio: new Audio('audio/droptonDrylands.mp3')
     },
     {
+        name: "Dropton City",
+        audio: new Audio('audio/droptonCity.mp3')
+    },
+    {
 		name: "New Location",
         audio: new Audio('audio/new_location.mp3')
 	},
