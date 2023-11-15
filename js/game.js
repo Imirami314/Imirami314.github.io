@@ -2566,7 +2566,10 @@ function startPos() {
         "Again, thank you for everything you've done.",
         "Now, Do you mind speaking with Dr. Qua?\nHe has some important intel."
     ]
-    queenAlaska.action = function() {}
+    queenAlaska.action = function() {
+        p.giveItem(items.queenAlaskasCrown)
+    }
+    queenAlaska.actionLine = "after"
 
     drQua.x = 256 * 75 + 37.5
     drQua.y = 23 * 75 + 37.5
@@ -2575,6 +2578,7 @@ function startPos() {
         x: 253,
         y: 23
     }
+    
 
     mainMap.changeBlock(257, 29, 'z')
     alerts.push(new GameAlert(258, 29, ["SEGREME DNIW FO RETSAM WEN A SA SKAERB LLAW EHT"], mainMap, "SIGN"))

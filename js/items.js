@@ -232,5 +232,18 @@ var items = {
 
         p.can.goUnderWater = true
         ellipse(width / 2, height / 2, 75, 75, "rgb(0, 255, 255, 0.4)")
-    }, "A special item that allows you to swim underwater and breathe")
+    }, "A special item that allows you to swim underwater and breathe"),
+
+    queenAlaskasCrown: new Item("Queen Alaska's Crown", 0, function(x, y) {
+        ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
+    }, function () {
+        p.equip(this)
+        if (curMap.getBlock(p.cords.x, p.cords.y) == "*") {
+            curMap.changeBlock(p.cords.x, p.cords.y, "z")
+        } 
+        
+
+        ellipse(width / 2, height / 2, 75, 75, "rgb(255, 255, 255, 0.4)")
+        
+    }, "A very goos crown")
 } // Puzzle Keys are not included as they vary depending on where they came from
