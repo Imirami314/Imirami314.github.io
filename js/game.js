@@ -409,9 +409,11 @@ Player.prototype.draw = function() {
 
 Player.prototype.HUD = function() {
     ctx.fillStyle = "rgb(255, 255, 255)"
-    ctx.fillRect(40, 45, 120, 60)
+    ctx.roundRect(40, 42.5, 120, 65, 10)
+    ctx.fill()
     ctx.fillStyle = "rgb(0, 200, 0)"
-    ctx.fillRect(50, 50, this.animatedHealth * 10, 50)
+    ctx.roundRect(50, 50, this.animatedHealth * 10, 50, 10)
+    ctx.fill()
 
     ctx.fillStyle = "rgb(255, 255, 255)"
     ctx.font = "20px serif"
@@ -2200,6 +2202,9 @@ function() {
     // changeme to add functionality
 })
 
+// Dropton City
+var rd2_2 = new RaftDispenser(droptonCity, 2 * 75, 2 * 75, 2 * 75 + 37.5, 3 * 75 + 37.5)
+
 
 /*
 t - Toggle
@@ -2256,7 +2261,8 @@ var interactives = [
     rd48_32,
     rd257_30,
     rd256_66,
-    lostTravelerToggle
+    lostTravelerToggle,
+    rd2_2
 ]
 
 
