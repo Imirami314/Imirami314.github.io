@@ -1487,8 +1487,25 @@ var droptonCity = new Landscape([
 ], null, null, null, null, "Dropton City")
 
 droptonCity.solve = function() {
-
+    // Houses
+    if (keys.space) {
+        if (p.on(21, 25)) {
+            curMap = droptonHall
+            p.goTo(7 * 75 + 37.5, 6 * 75 - 5)
+        }
+    }
 }
+
+// In Dropton City
+var droptonHall = new Landscape([
+    'IIIIIIIIIIIIIII',
+    'I*__________**I',
+    'I*____________I',
+    'I_____________I',
+    'I____________*I',
+    'I**__________*I',
+    'IIIIIII|IIIIIII',
+], null, null, null, null, "Dropton Hall")
 
 
 var areas = [
@@ -1512,7 +1529,8 @@ var areas = [
     stormedRoom,
     droptonWaterWear,
     droptonTunnels,
-    droptonCity
+    droptonCity,
+    droptonHall
 ]
 
 // for (var l in areas) {

@@ -1890,7 +1890,17 @@ var tyde = new NPC(33 * 75 + 37.5, 16 * 75 + 37.5, "Tyde", droptonCity, 'U', [
 
 }, "after")
 
-var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde]
+var walter = new NPC(11 * 75 + 75 / 2, 1 * 75 + 75 / 2, "Walter", droptonHall, 'L', [
+    "Hello there!",
+    "You don't seem like a water dude. You look\nlike a surface dude.",
+    "Have you heard about the strange currents destroying\nthis place?",
+    "...",
+    "You're here to help? Thank the lord, I've been waiting for\nsomebody to do something about it.",
+    "I'd suggest you talk to our president. He's out in Dropton Town\nright now doing some business. I'm sure he'd be very glad to meet you.",
+    "Until we meet again!"
+])
+
+var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde, walter]
 
 npcs.searchByName = function(name) {
     for (var i in this) {
@@ -2547,9 +2557,9 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    curMap = droptonTunnels
-    p.x = 4 * 75 + 37.5
-    p.y = 15 * 75 + 37.5
+    curMap = droptonCity
+    p.x = 21 * 75 + 37.5
+    p.y = 26 * 75 + 37.5
     p.giveItem(items.stormedsSword, false)
 
     lonzo.map = mainMap
