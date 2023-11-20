@@ -2,7 +2,7 @@
 // Function wrapping prevents console from altering game variables
 // (function() {
 curMap = mainMap
-
+console.log("tay")
 var saveLoaded = false
 
 var alerts = [
