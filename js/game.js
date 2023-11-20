@@ -407,6 +407,8 @@ Player.prototype.draw = function() {
     }
 }
 
+// full of chub
+
 Player.prototype.HUD = function() {
     ctx.fillStyle = "rgb(255, 255, 255)"
     ctx.roundRect(40, 42.5, 120, 65, 10)
