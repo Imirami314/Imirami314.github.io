@@ -23,7 +23,8 @@ var alerts = [
     new GameAlert(44, 33, ["Warning: very cold past this point!", "Auras are recommended."], galeCave, "SIGN"),
 	new GameAlert(10, 7, ["BOW??20! hSHDs1@???:\n?fdkj2!","SDHG9 dahf!!01 fdhk!@8 d,\nhjfdj sh>9 /rhd9:f hfu???jfnvjejdj..??."], mainMap, "DECIPHER", null, ["Chard Town's Secret:\nPART 2","Chard Town possesses an unfinished letter,\nPress the right key to make everything better..."]),
 	new GameAlert(24, 8, ["This mysterious substance will come with a curse,\nThe player will perish, the raft alone may traverse."], cryoUnderground, "SIGN"),
-    new GameAlert(252, 67, ["Welcome to the Dropton Drylands!", "Not that it's dry here, it's just dry compared to being underwater..."], mainMap, "SIGN")
+    new GameAlert(252, 67, ["Welcome to the Dropton Drylands!", "Not that it's dry here, it's just dry compared to being underwater..."], mainMap, "SIGN"),
+    new GameAlert(38, 16, ["House under repair due to mysterious current...", "KEEP OUT!"], droptonCity, "SIGN")
 ]
 
 var teleports = [
@@ -1877,7 +1878,19 @@ var bay = new NPC(15 * 75 + 37.5, 9 * 75 + 37.5, "Bay", droptonTunnels, 'D', [
 
 }, "after")
 
-var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay]
+var tyde = new NPC(33 * 75 + 37.5, 16 * 75 + 37.5, "Tyde", droptonCity, 'U', [
+    "*sniff*",
+    "Hi...",
+    "You look like you're from surface.",
+    "Sorry you have to see me like this.",
+    "A couple days ago, the water started flowing really fast, kind of\nlike the wind you guys have.",
+    "Except it was REALLY scary!",
+    "...and my house got destroyed. I'm just waiting for the construction\npeople to fix it."
+], "[insert description]", function() {
+
+}, "after")
+
+var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde]
 
 npcs.searchByName = function(name) {
     for (var i in this) {
