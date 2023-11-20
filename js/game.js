@@ -1,3 +1,4 @@
+// electron
 // Function wrapping prevents console from altering game variables
 // (function() {
 curMap = mainMap
