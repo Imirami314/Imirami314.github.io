@@ -1901,7 +1901,32 @@ var walter = new NPC(11 * 75 + 75 / 2, 1 * 75 + 75 / 2, "Walter", droptonHall, '
     "Until we meet again!"
 ])
 
-var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde, walter]
+var marina = new NPC(2 * 75 + 75, 17 * 75 + 37.5, "Officer Marina", droptonCity, 'D', [
+    "Hey.",
+    "The Pass Office is closed right now. Sorry\nabout the inconvenience.",
+    "Dropton is short on money due to all the repairs,\nso we're shut down for the time being.",
+    "If you could donate to the city of Dropton,\nI'm sure that'd help speed things up.",
+    "See you later!"
+], "A Dropton Pass Officer. Unfortunately the Pass Office is closed right now because\nDropton is short on money.", function() {
+
+}, "after")
+
+var ariel = new NPC(14 * 75 + 37.5, 26 * 75 + 37.5, "Ariel", droptonCity, 'L', [
+    "Hello there!",
+    "You seem to be from the surface!",
+    "Unfortunately, you came to visit Dropton City at a\nreally bad time.",
+    "The city desperately needs funding, and while I appreciate\nthe efforts to fundraise...",
+    "...that Raine kid who's doing it is so ANNOYING!",
+    "He just...he makes me want to scream! No wonder this town is broke!",
+    "`I probably shouldn't have said that so loud...",
+    "Anyway, I'd steer clear of that kid. He's a real menace.",
+    "He lives somewhere on the eastern side on Dropton City,\nbut I'm not sure where exactly.",
+    "Alright, this has been a nice chat. Bye!"
+], "Resident - Dropton City\nProbably has anger issues. Does not like 'that Raine kid'.", function() {
+
+}, "after")
+
+var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde, walter, marina, ariel]
 
 npcs.searchByName = function(name) {
     for (var i in this) {
@@ -2559,8 +2584,8 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     curMap = droptonCity
-    p.x = 21 * 75 + 37.5
-    p.y = 26 * 75 + 37.5
+    p.x = 4 * 75 + 37.5
+    p.y = 17 * 75 + 37.5
     p.giveItem(items.stormedsSword, false)
 
     lonzo.map = mainMap
