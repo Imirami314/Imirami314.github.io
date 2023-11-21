@@ -1941,7 +1941,6 @@ var raine = new NPC(47 * 75, 32 * 75 + 37.5, "Raine", droptonCity, 'L', [
     "...ugh, fine. I'll stop",
     "Bye-bye random person."
 ], "Resident - Dropton City\nReally annoying kid that nobody wants to go near.", function() {
-    alert("chub")
     rainesDad.curPath = [
         [55, 34],
         [49, 34],
