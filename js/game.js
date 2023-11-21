@@ -1926,7 +1926,54 @@ var ariel = new NPC(14 * 75 + 37.5, 26 * 75 + 37.5, "Ariel", droptonCity, 'L', [
 
 }, "after")
 
-var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde, walter, marina, ariel]
+var raine = new NPC(47 * 75, 32 * 75 + 37.5, "Raine", droptonCity, 'L', [
+    "Ayo!",
+    "GIVE ME MONEY!!!!",
+    "To fIx ThE hOUsEs!!!!",
+    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "GIVE IT NOW I PROMISE I WON't STEAL IT!!!!!!",
+    "EEEEEEEEEEEEÊEEEEEEEEEEEEÊEEEEEEEEEEEE",
+    "QOBV*YIUROS(*BIVSYOH(EBWYOESITVSYBUOIYUYBOI&!!!!!!!!",
+    "MONEYMONEYMONEYMONEYMONEYMONEYMONEYMONEYMONEYMONEYMONEY",
+    "...",
+    "Dad?",
+    "I'm not THAT loud!!",
+    "...ugh, fine. I'll stop",
+    "Bye-bye random person."
+], "Resident - Dropton City\nReally annoying kid that nobody wants to go near.", function() {
+    alert("chub")
+    rainesDad.curPath = [
+        [55, 34],
+        [49, 34],
+        [49, 32],
+        [47, 32]
+    ]
+
+    rainesDad.lines = [
+        "*sigh",
+        "`I wish my son was quieter..."
+    ]
+
+    raine.action = function() {
+        raine.curPath = [
+            [49, 32],
+            [49, 34],
+            [53, 34]
+        ]
+    }
+    raine.actionLine = "after"
+}, 4)
+
+var rainesDad = new NPC(55 * 75 + 37.5, 32 * 75 + 37.5, "Raine's Dad", droptonCity, 'L', [
+    "Hello there, how are you?",
+    "...",
+    "Good. I work as a repairman, so as you can imagine, I'm pretty\nbusy these days.",
+    "This is one of the few times I get a break, so I enjoy it while I can..."
+], "Resident - Dropton City\nMuch more enjoyable to talk to than his son.", function() {
+
+}, "after")
+
+var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde, walter, marina, ariel, raine, rainesDad]
 
 npcs.searchByName = function(name) {
     for (var i in this) {
@@ -2584,8 +2631,8 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     curMap = droptonCity
-    p.x = 4 * 75 + 37.5
-    p.y = 17 * 75 + 37.5
+    p.x = 45 * 75 + 37.5
+    p.y = 32 * 75 + 37.5
     p.giveItem(items.stormedsSword, false)
 
     lonzo.map = mainMap
