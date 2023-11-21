@@ -1951,7 +1951,12 @@ var raine = new NPC(47 * 75, 32 * 75 + 37.5, "Raine", droptonCity, 'L', [
 
     rainesDad.lines = [
         "*sigh",
-        "`I wish my son was quieter..."
+        "`I wish my son was quieter...",
+        "...",
+        "Oh, hi, didn't see you there.",
+        "If you still want to support Dropton, I'd suggest heading\non over to Dropton Town.",
+        "There are plenty of shops there which would allow you to help us out.",
+        "Thank you so much, and I apologize about my son."
     ]
 
     raine.action = function() {
