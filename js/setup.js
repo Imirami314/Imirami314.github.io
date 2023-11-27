@@ -432,6 +432,10 @@ var sounds = [
 		name: "Speedy Snow Walking",
 		audio: new Audio('audio/speedysnow-walking.mp3')
 	},
+    {
+        name: "Sword",
+        audio: new Audio("audio/sword.mp3")
+    },
 	{
 		name: "Spear",
 		audio: new Audio('audio/spear.mp3')

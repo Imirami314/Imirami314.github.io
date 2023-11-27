@@ -160,8 +160,6 @@ function Player(x, y, npcs) {
 
     this.moving = false
 
-    this.hitCooldown = 0.35
-
     this.inventoryDisplay = false
     this.newItemAlert = false
     this.newItem = null
@@ -185,6 +183,7 @@ function Player(x, y, npcs) {
         x: 0,
         y: 0
     }
+    this.weaponAngle = 0
     this.throwState = 1
     this.spearAttackState = 1
     this.swordAttackState = 1
@@ -192,6 +191,8 @@ function Player(x, y, npcs) {
     this.throwing = false
     this.spearHitting = false
     this.swordHitting = false
+    this.hitting = false
+    this.hitCooldown = 0.35
 
     this.tracking = []
     this.questPoint = {
@@ -324,18 +325,27 @@ Player.prototype.draw = function() {
 		 }
 	 }
 
+     // Body
+    ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
+
     switch (this.dir) {
         case "D":
-            ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
 
             // Eyes
             ellipse((width / 2) - 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
             ellipse((width / 2) + 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
 
             ctx.save()
+
+            // Rotation based on weapon angle
+            ctx.translate(width / 2, height / 2)
+            ctx.rotate(- this.weaponAngle)
+            ctx.translate(- width / 2, - height / 2)
+            // Rotation based on player dir
             ctx.translate(width / 2 - 30, height / 2 - 15)
             ctx.rotate(Math.PI / 2)
             ctx.translate(- width / 2, - height / 2)
+
             if (this.inventory.length >= 1) {
                 try {
                     !!this.weapon ? this.weapon.draw(width / 2 + 15 + this.weaponShift.x, height / 2 + this.weaponShift.y) : 0
@@ -346,7 +356,14 @@ Player.prototype.draw = function() {
             ctx.restore()
             break
         case "R":
-            ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
+            // Eyes
+            ellipse((width / 2) + 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
+
+            ctx.save()
+            // Rotation based on weapon angle
+            ctx.translate(width / 2, height / 2)
+            ctx.rotate(- this.weaponAngle)
+            ctx.translate(- width / 2, - height / 2)
             if (this.inventory.length >= 1) {
                 try {
                     !!this.weapon ? this.weapon.draw(width / 2 + 15 + this.weaponShift.x, height / 2 + this.weaponShift.y + 15) : 0
@@ -354,14 +371,13 @@ Player.prototype.draw = function() {
                     console.log(error)
                 }
             } 
-
-            // Eyes
-            ellipse((width / 2) + 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
+            ctx.restore()
             break
         case "L": 
             ctx.save()
             ctx.translate(width / 2, height / 2)
             ctx.scale(-1, 1)
+            ctx.rotate(- this.weaponAngle)
             ctx.translate(- width / 2, - height / 2)
             if (this.inventory.length >= 1) {
                 try {
@@ -371,13 +387,15 @@ Player.prototype.draw = function() {
                 }
             }
             ctx.restore()
-            ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
 
             // Eyes
             ellipse((width / 2) - 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
             break
         case "U":
             ctx.save()
+            ctx.translate(width / 2, height / 2)
+            ctx.rotate(- this.weaponAngle)
+            ctx.translate(- width / 2, - height / 2)
             ctx.translate(width / 2 + 30, height / 2 + 15)
             ctx.rotate(- Math.PI / 2)
             ctx.translate(- width / 2, - height / 2)
@@ -389,13 +407,12 @@ Player.prototype.draw = function() {
                 }
             }
             ctx.restore()
-            ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
 
             // No eyes are shown in the up position
     }
     
 
-    if (mouseIsDown && !keys.e && !this.mapOn) {
+    if (mouseIsDown && !keys.e && !this.mapOn && !this.hitting) {
         try {
             this.weapon.use(this)
         } catch(error) {
@@ -499,9 +516,19 @@ Player.prototype.move = function() {
     } else {
         this.weaponIndex --
     }
+
+    if (this.spearHitting || this.swordHitting) {
+        this.hitting = true
+    } else {
+        this.hitting = false
+    }
     
     if (this.spearHitting) {
         this.spearAttack()
+    }
+
+    if (this.swordHitting) {
+        this.swordAttack()
     }
     
     if ((this.cords.x > 66 && this.cords.x < 138 && this.cords.y >= 1 && this.cords.y <= 12) || 
@@ -536,7 +563,7 @@ Player.prototype.move = function() {
 
     }
     
-    if (!this.mapOn && this.canMove && !mouseIsDown && !this.inRaft) {
+    if (!this.mapOn && this.canMove && !mouseIsDown && !this.inRaft && !this.hitting) {
         if (keys.w && this.stoppedDir != "U" && getBlockById(curMap.getBlock(Math.floor((this.x) / 75), Math.floor((this.y - this.speed) / 75))).through) {
             this.y -= this.speed
             this.dir = "U"
@@ -962,7 +989,28 @@ Player.prototype.swordAttack = function() {
     this.swordHitting = true
 
     if (this.swordAttackState == 1) {
-        
+        if (this.weaponAngle >= Math.PI / 2) {
+            setTimeout(() => {
+                this.swordAttackState = 2
+            }, 200)
+        } else {
+            playSound("Sword", false)
+            this.weaponShift.x = 25
+            this.weaponAngle += Math.PI / 20 // First swing is slightly slower
+        }
+    } else if (this.swordAttackState == 2) {
+        if (this.weaponAngle <= - Math.PI / 4) {
+            setTimeout(() => {
+                this.weaponShift.x = 0
+                this.weaponAngle = 0
+                this.swordAttackState = 1
+                this.swordHitting = false
+            }, 200)
+        } else {
+            playSound("Sword", false)
+            this.weaponShift.x = 25
+            this.weaponAngle -= Math.PI / 15
+        }
     }
 }
 
