@@ -35,18 +35,18 @@ Textures and images we need:
 
 Game bugs/issues to fix
 - Fix issue where clicking doesn't give the glasses to the old man or the heat handle to Smith (it fixes itself when you reload the save)
-- Fix problem where at the start of Stormed phase 2 you are stuck in his ice wall
 - Fix error with npc paths that prevents user from opening map (occured when reloading save after completing Confounded Cave)
 - Fix basically everything with all the boss cutscenes
 - Fix bug where signs with backwards text (that appear next to changed things after beating a boss) don't actually appear
 - Fix double action issues (e.g. pressing space and it talks to an NPC and reads a sign at the same time)
-- Fix issue when you save in another map, reload, and leave and it doesn't know where to put you (p.cordSave didn't transfer when saving the game)
 - Fix issue where wayne says "ayo" instead of the correct lines (occurs after the sacred star cutscene)
 - Fix issue where NPCS give you multiple items if you talk to them multiple times
 
 
 
 Completed
+- Fix issue when you save in another map, reload, and leave and it doesn't know where to put you (p.cordSave didn't transfer when saving the game)
+- Fix problem where at the start of Stormed phase 2 you are stuck in his ice wall
 - Fix player movement when speaking to NPCs
 - Add currency and shop menus
 - Add player spear attack animation

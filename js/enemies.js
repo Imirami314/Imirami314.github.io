@@ -589,6 +589,9 @@ Stormed.prototype.update = function() {
             scene = "STORMED BOSS CUTSCENE PHASE 2"
             this.phase2Played = true
             this.windMode = true
+            this.x = 13 * 75 + 37.5
+            this.y = 15 * 75 + 37.5
+            p.goTo(13 * 75 + 37.5, 21 * 75 + 37.5)
         }
     }
 }
