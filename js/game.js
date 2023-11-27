@@ -25,7 +25,8 @@ var alerts = [
 	new GameAlert(24, 8, ["This mysterious substance will come with a curse,\nThe player will perish, the raft alone may traverse."], cryoUnderground, "SIGN"),
     new GameAlert(252, 67, ["Welcome to the Dropton Drylands!", "Not that it's dry here, it's just dry compared to being underwater..."], mainMap, "SIGN"),
     new GameAlert(38, 16, ["House under repair due to mysterious current...", "KEEP OUT!"], droptonCity, "SIGN"),
-    new GameAlert(22, 28, ["Full Pass required for entry."], droptonCity, "SIGN")
+    new GameAlert(22, 28, ["Full Pass required for entry to Dropton Hall."], droptonCity, "SIGN"),
+    new GameAlert(37, 20, ["Full Pass required for entry to Dropton Research Facility."], droptonTown, "SIGN")
 ]
 
 var teleports = [
@@ -1882,9 +1883,9 @@ var bay = new NPC(15 * 75 + 37.5, 9 * 75 + 37.5, "Bay", droptonTunnels, 'D', [
 var tyde = new NPC(33 * 75 + 37.5, 16 * 75 + 37.5, "Tyde", droptonCity, 'U', [
     "*sniff*",
     "Hi...",
-    "You look like you're from surface.",
+    "You look like you're from the surface.",
     "Sorry you have to see me like this.",
-    "A couple days ago, the water started flowing really fast, kind of\nlike the wind you guys have.",
+    "A couple days ago, the water started flowing really fast, kind of\nlike the wind you guys have on the surface.",
     "Except it was REALLY scary!",
     "...and my house got destroyed. I'm just waiting for the construction\npeople to fix it."
 ], "[insert description]", function() {
@@ -2634,9 +2635,10 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    curMap = droptonCity
-    p.x = 45 * 75 + 37.5
-    p.y = 32 * 75 + 37.5
+    dev = true
+    curMap = droptonTown
+    p.x = 1 * 75 + 37.5
+    p.y = 1 * 75 + 37.5
     p.giveItem(items.stormedsSword, false)
 
     lonzo.map = mainMap
@@ -2782,6 +2784,8 @@ var gameInterval = setInterval(function() {
 
                 } else if (curMap == droptonCity) {
                     playMusic("Dropton City")
+                } else if (curMap == droptonTown) {
+                    playMusic("Dropton City") // changeme later when we make new music
                 }
             }
         
