@@ -992,24 +992,29 @@ Player.prototype.swordAttack = function() {
         if (this.weaponAngle >= Math.PI / 2) {
             setTimeout(() => {
                 this.swordAttackState = 2
-            }, 200)
+            }, 75)
         } else {
             playSound("Sword", false)
-            this.weaponShift.x = 25
-            this.weaponAngle += Math.PI / 20 // First swing is slightly slower
+            this.weaponAngle += Math.PI / 10 // First swing is slightly slower
         }
     } else if (this.swordAttackState == 2) {
         if (this.weaponAngle <= - Math.PI / 4) {
-            setTimeout(() => {
-                this.weaponShift.x = 0
-                this.weaponAngle = 0
+            if (mouseIsDown) {
+                // Seamlessly start another attack
                 this.swordAttackState = 1
-                this.swordHitting = false
-            }, 200)
+            } else {
+                // Finish attack
+                setTimeout(() => {
+                    this.weaponShift.x = 0
+                    this.weaponAngle = 0
+                    this.swordAttackState = 1
+                    this.swordHitting = false
+                }, 250)
+            }
         } else {
             playSound("Sword", false)
-            this.weaponShift.x = 25
-            this.weaponAngle -= Math.PI / 15
+            this.weaponShift.x = 30
+            this.weaponAngle -= Math.PI / 8
         }
     }
 }
