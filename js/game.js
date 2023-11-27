@@ -1144,30 +1144,6 @@ Player.prototype.drawAlert = function () {
     ctx.textAlign = "center"
     ctx.fillText(this.curAlert, width / 2, height - 75)
 }
-// Player.prototype.throw = function() {
-//     if (this.throwState == 1) { // Drawing back the item
-//         this.weaponShift.x -= 10 / 66.667
-//         if (this.weaponShift.x <= -10) {
-//             this.throwState = 2
-//             this.weaponThrowSpeed = Math.abs(this.weaponShift.x)
-//         }
-//     } else if (this.throwState == 2) { // Throwing the item
-//         this.weaponShift.x += this.weaponThrowSpeed
-//         this.weaponThrowSpeed *= 0.97 // Decelerating the item after being thrown
-//     }
-// }
-
-Player.prototype.showAlert = function () {
-	
-}
-
-function Block(id, x, y, through) {
-    this.id = id
-    this.x = x
-    this.y = y
-    this.through = through
-    this.playerOn = false
-}
 
 function GameAlert(x, y, lines, map, type, item, decipherLines) {
     this.x = x
