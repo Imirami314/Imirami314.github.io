@@ -1413,7 +1413,7 @@ var droptonTunnels = new Landscape([
     'SSSS~SSSSSSSS~~~~SSSSS~SSSSSSS',
     'SSSS~SSSSSSSS~~~~SSSSS~SSSSSSS',
     'O~~~~SSSSSSSS~~~~SSSSS~SSSSSSS',
-    'SSSSSSSSSSSSS~~~~SSSSS~SSSSSSS',
+    'SSSSSSSSSSSSS~~~OSSSSS~SSSSSSS',
     '~~~~~~~~~~SSSSSSSSSSSS~SSSSSSS',
     'SSSSSSSSS~SSSSSSSSSSSS~~~~~~~~',
     'SSSSSSSSS~SSSSSSSSSSSS~SSSSSSS',
@@ -1435,6 +1435,12 @@ droptonTunnels.solve = function() {
     }
 
     if (keys.space) {
+        // Exit
+        if (p.on(16, 16)) {
+            curMap = mainMap
+            p.goTo(271 * 75 + 5, 78 * 75 + 37.5)
+        }
+
         if (p.on(0, 15)) {
             // Code that takes you to Dropton City
             curMap = droptonCity
@@ -1444,7 +1450,7 @@ droptonTunnels.solve = function() {
         if (p.on(29, 12)) {
             // Code that takes you to Dropton Town
             curMap = droptonTown
-            p.goTo(0 * 75 + 75 / 2, 0 * 75 + 75 / 2)
+            p.goTo(1 * 75 + 75 / 2, 1 * 75 + 75 / 2)
         }
     }
 }

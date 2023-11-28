@@ -2815,7 +2815,7 @@ var gameInterval = setInterval(function() {
                 } else if (curMap == stormedRoom) {
                     playMusic("Darkened Battle") // Default ??? Need to make music for Stormed
                 } else if (curMap == droptonTunnels) {
-
+                    playMusic("Dropton City") // changeme later when we make new music
                 } else if (curMap == droptonCity) {
                     playMusic("Dropton City")
                 } else if (curMap == droptonTown) {
