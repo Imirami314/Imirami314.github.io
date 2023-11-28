@@ -67,6 +67,8 @@ var images = {
 	sand: initImage('sprites/sand.png'),
     oldMansGlasses: initImage('sprites/oldMansGlasses.png'),
     suspensia: initImage('sprites/suspensia.png'),
+    iceWall: initImage('sprites/iceWall.png'),
+    crackedIceWall: initImage('sprites/crackedIceWall.png'),
     stormedPhase1: initImage('sprites/stormed-phase-1.png'),
     stormedPhase2: initImage('sprites/stormed-phase-2.png'),
     stormedSword: initImage('sprites/stormed-sword.png')
@@ -461,9 +463,9 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
                         // }
                         break
                     case '~': // Water
-                        ctx.fillStyle = 'rgb(0, 0, 255)'
-                        ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
-                        // ctx.drawImage(images.water, j * this.blockSize, i * this.blockSize, 75, 75)
+                        // ctx.fillStyle = 'rgb(0, 0, 255)'
+                        // ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+                        ctx.drawImage(images.water, j * this.blockSize, i * this.blockSize, 75, 75)
                         break
                     case '_': // Stone
                         ctx.drawImage(images.stone, j * this.blockSize, i * this.blockSize, 75, 75)
@@ -621,13 +623,15 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
                         ctx.fillStyle = 'rgb(79, 13, 13)'
                         ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
                         break
-                    case 'I': // changeme to actual image later
-                        ctx.fillStyle = 'rgb(0, 255, 255)'
-                        ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+                    case 'I': 
+                        // ctx.fillStyle = 'rgb(0, 255, 255)'
+                        // ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+                        ctx.drawImage(images.iceWall, j * this.blockSize, i * this.blockSize, 75, 75)
                         break
-                    case 'i': // changeme to actual image later
-                        ctx.fillStyle = 'rgb(0, 200, 200)'
-                        ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+                    case 'i':
+                        // ctx.fillStyle = 'rgb(0, 200, 200)'
+                        // ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+                        ctx.drawImage(images.crackedIceWall, j * this.blockSize, i * this.blockSize, 75, 75)
                         break
                 }
             }

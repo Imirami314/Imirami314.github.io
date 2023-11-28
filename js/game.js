@@ -212,6 +212,9 @@ function Player(x, y, npcs) {
         goUnderWater: false,
     }
 
+    this.fullPass = false
+    this.droptonDonations = 0
+
 	this.inRaft = false
 
 	this.decipher = false
@@ -1935,8 +1938,10 @@ var marina = new NPC(2 * 75 + 75, 17 * 75 + 37.5, "Officer Marina", droptonCity,
     "Hey.",
     "The Pass Office is closed right now. Sorry\nabout the inconvenience.",
     "Dropton is short on money due to all the repairs,\nso we're shut down for the time being.",
-    "If you could donate to the city of Dropton,\nI'm sure that'd help speed things up.",
-    "See you later!"
+    "If you could support to the city of Dropton by buying from shops,\nthat would help a lot!",
+    "I will warn you, though, that the shops are a good deal more expensive.",
+    "So, as a bonus, the President is offering a Full Pass to anyone\nwho contributes at least 250 trills!",
+    "So, if you need one, this is your chance!",
 ], "A Dropton Pass Officer. Unfortunately the Pass Office is closed right now because\nDropton is short on money.", function() {
 
 }, "after")

@@ -2,6 +2,11 @@ var CUR_SHOP_MENU = 0
 var SHOP_MENU_PAGE = 1
 var PURCHASE_COOLDOWN = 0.5
 
+
+/**
+ * Opens up a purchase menu
+ * @param {*} shopList List of items being sold
+ */
 function ShopMenu(shopList) {
     // Entire panel background
     ctx.fillStyle = "rgb(100, 100, 120)"
