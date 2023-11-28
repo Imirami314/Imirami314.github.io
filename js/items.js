@@ -256,6 +256,14 @@ function Food(name, img, health, secs) {
     this.secsPassed = 0
 }
 
+Food.prototype.draw = function(x, y) {
+    if (this.img != "") {
+
+    } else {
+        ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
+    }
+}
+
 var food = {
     apple: new Food("Apple", "", 3, 10)
 }
