@@ -160,6 +160,8 @@ function Player(x, y, npcs) {
 
     this.moving = false
 
+    this.curEating = []
+
     this.inventoryDisplay = false
     this.newItemAlert = false
     this.newItem = null
@@ -812,6 +814,20 @@ Player.prototype.giveItem = function(item, itemAlert) {
     }
 }
 
+Player.prototype.eat = function(foodItem) {
+    this.curEating.push(foodItem)
+    var eatInterval = setInterval(() => {
+        for (var i in this.curEating) {
+            var f = this.curEating[i]
+            this.health += f.health * (1 / f.secs)
+            f.secsPassed ++
+            if (f.secsPassed == f.secs) {
+                clearInterval(eatInterval)
+            }
+        }
+    }, 1000)
+}
+
 Player.prototype.hitEnemies = function() {
     var monsterThatWasHitNum = null
     // For monsters
@@ -948,7 +964,7 @@ Player.prototype.displayMap = function() {
 }
 
 Player.prototype.displayInventory = function() {
-    ctx.fillStyle = "rgba(50, 50, 255, 0.5)"
+    ctx.fillStyle = "rgba(50, 50, 255, 0.9)"
     ctx.roundRect(width / 8, height / 8, width * 3 / 4, height * 3 / 4, 10)
     ctx.fill()
     for (var i in this.inventory) {

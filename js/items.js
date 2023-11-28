@@ -247,3 +247,15 @@ var items = {
         
     }, "A very goos crown")
 } // Puzzle Keys are not included as they vary depending on where they came from
+
+function Food(name, img, health, secs) {
+    this.name = name
+    this.img = img
+    this.health = health
+    this.secs = secs
+    this.secsPassed = 0
+}
+
+var food = {
+    apple: new Food("Apple", "", 3, 10)
+}
