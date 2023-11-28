@@ -438,9 +438,12 @@ Player.prototype.HUD = function() {
     ctx.fillStyle = "rgb(255, 255, 255)"
     ctx.roundRect(40, 42.5, 120, 65, 10)
     ctx.fill()
-    ctx.fillStyle = "rgb(0, 200, 0)"
-    ctx.roundRect(50, 50, this.animatedHealth * 10, 50, 10)
-    ctx.fill()
+
+    if (p.health > 0) {
+        ctx.fillStyle = "rgb(0, 200, 0)"
+        ctx.roundRect(50, 50, this.animatedHealth * 10, 50, 10)
+        ctx.fill()
+    }
 
     ctx.fillStyle = "rgb(255, 255, 255)"
     ctx.font = "20px serif"
@@ -3018,8 +3021,10 @@ var gameInterval = setInterval(function() {
     
             if (keys.slash) {
                 if (!bossfight) {
-                    saveGame()
-                    SAVE_MENU = true
+                    if (p.blockOn.dps == 0) {
+                        saveGame()
+                        SAVE_MENU = true
+                    }
                 } else {
                     console.log("Could not save as bossfight is set to true")
                 }
