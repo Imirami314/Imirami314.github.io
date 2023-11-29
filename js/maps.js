@@ -46,32 +46,41 @@ var cameraMoving = false
 var camera = 0;
 
 var images = {
+    // Blocks
     grass: initImage('sprites/blocks/grass.png'),
     water: initImage('sprites/blocks/water.png'),
     bush: initImage('sprites/blocks/bush.png'),
     stone: initImage('sprites/blocks/stone.png'),
     stoneWall: initImage('sprites/blocks/stone_wall.png'),
     tree: initImage('sprites/blocks/tree.png'),
-    confoundedCaveKey: initImage('sprites/items/confoundedCaveKey.png'),
-    spearOfTheDarkened: initImage('sprites/items/spearOfTheDarkened.png'),
-    sacredStar: initImage('sprites/icons/sacredStar.png'),
-    splint: initImage('sprites/enemies/splint.png'),
-    splintHurt: initImage('sprites/enemies/splint-hurt.png'),
     snow: initImage('sprites/blocks/snow.png'),
     leaf: initImage('sprites/blocks/leaf.png'),
     woodenWall: initImage('sprites/blocks/woodenWall.png'),
     speedySnow: initImage('sprites/blocks/speedySnow.png'),
-	speedySnowPath: initImage('sprites/items/speedySnowPath.png'),
 	lava: initImage('sprites/blocks/lava.png'),
 	trail: initImage('sprites/blocks/trail.png'),
 	sand: initImage('sprites/blocks/sand.png'),
-    oldMansGlasses: initImage('sprites/items/oldMansGlasses.png'),
     suspensia: initImage('sprites/blocks/suspensia.png'),
     iceWall: initImage('sprites/blocks/iceWall.png'),
     crackedIceWall: initImage('sprites/blocks/crackedIceWall.png'),
+    
+    // Enemies
+    splint: initImage('sprites/enemies/splint.png'),
+    splintHurt: initImage('sprites/enemies/splint-hurt.png'),
     stormedPhase1: initImage('sprites/enemies/stormed-phase-1.png'),
     stormedPhase2: initImage('sprites/enemies/stormed-phase-2.png'),
-    stormedSword: initImage('sprites/items/stormed-sword.png')
+
+    // Items
+    confoundedCaveKey: initImage('sprites/items/confoundedCaveKey.png'),
+    spearOfTheDarkened: initImage('sprites/items/spearOfTheDarkened.png'),
+    stormedSword: initImage('sprites/items/stormed-sword.png'),
+    oldMansGlasses: initImage('sprites/items/oldMansGlasses.png'),
+	speedySnowPath: initImage('sprites/items/speedySnowPath.png'),
+
+    // Icons
+    sacredStar: initImage('sprites/icons/sacredStar.png'),
+    foodIcon: initImage('sprites/icons/food.png'),
+    inventoryIcon: initImage('sprites/icons/inventory.png'),
 }
 
 var blocks = [

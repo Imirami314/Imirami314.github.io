@@ -327,6 +327,11 @@ window.addEventListener('mouseup', function() {
     mouseIsDown = false;
 });
 
+
+function mouseRect(x, y, w, h) {
+    return (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h)
+}
+
 var playing = false
 
 var curMusic;

@@ -167,6 +167,8 @@ function Player(x, y, npcs) {
     this.newItem = null
 
     this.inventory = [items.spearOfTheDarkened, items.auraOfWarmth, items.speedySnowPath, items.aquaLung] // Default []
+    this.basket = []
+    this.itemsMode = "INVENTORY"
 
     this.waterParticles = new ParticleSystem(width / 2, height / 2, 5, 50, 0, 0, 100)
     this.lavaParticles = new ParticleSystem(width / 2, height / 2, 1, 75, 50, 50, 50)
@@ -819,6 +821,12 @@ Player.prototype.giveItem = function(item, itemAlert) {
 
 Player.prototype.eat = function(foodItem) {
     this.curEating.push(foodItem)
+    for (var i in this.basket) {
+        var f = this.basket[i]
+        if (f == foodItem) {
+            this.basket.splice(i, 1)
+        }
+    }
     var eatInterval = setInterval(() => {
         for (var i in this.curEating) {
             var f = this.curEating[i]
@@ -970,24 +978,72 @@ Player.prototype.displayInventory = function() {
     ctx.fillStyle = "rgba(50, 50, 255, 0.9)"
     ctx.roundRect(width / 8, height / 8, width * 3 / 4, height * 3 / 4, 10)
     ctx.fill()
-    for (var i in this.inventory) {
-        try {
-            var item = this.inventory[i]
-            var mouseItemDist = Math.hypot(mouseX - ((i % 8) * 100 + width / 8 + 100), mouseY - (height / 8 + 100 * (Math.floor(i / 8) + 1)))
-            item.draw((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1))
-            if (mouseItemDist < 50) {
-                ctx.fillStyle = "rgb(0, 0, 0)"
-                ctx.textAlign = "center"
-                ctx.font = "50px serif"
-                ctx.fillText(item.name, width / 2, height / 2 + 120)
-                ctx.font = "15px serif"
-                ctx.fillText(item.desc + "\nDamage: " + item.damage, width / 2, height / 2 + 150)
-                if (mouseIsDown) {
-                    this.weaponIndex = i
+
+    if (this.itemsMode == 'INVENTORY') {
+        for (var i in this.inventory) {
+            try {
+                var item = this.inventory[i]
+                var mouseItemDist = Math.hypot(mouseX - ((i % 8) * 100 + width / 8 + 100), mouseY - (height / 8 + 100 * (Math.floor(i / 8) + 1)))
+                item.draw((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1))
+                if (mouseItemDist < 50) {
+                    ctx.fillStyle = "rgb(0, 0, 0)"
+                    ctx.textAlign = "center"
+                    ctx.font = "50px serif"
+                    ctx.fillText(item.name, width / 2, height / 2 + 120)
+                    ctx.font = "15px serif"
+                    ctx.fillText(item.desc + "\nDamage: " + item.damage, width / 2, height / 2 + 150)
+                    if (mouseIsDown) {
+                        this.weaponIndex = i
+                    }
                 }
+            } catch (error) {
+                console.log(error)
             }
-        } catch (error) {
-            console.log(error)
+        }
+    } else if (this.itemsMode == 'BASKET') {
+        for (var i in this.basket) {
+            try {
+                var foodItem = this.basket[i]
+                var mouseItemDist = Math.hypot(mouseX - ((i % 8) * 100 + width / 8 + 100), mouseY - (height / 8 + 100 * (Math.floor(i / 8) + 1)))
+                foodItem.draw((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1))
+                if (mouseItemDist < 50) {
+                    ctx.fillStyle = "rgb(0, 0, 0)"
+                    ctx.textAlign = "center"
+                    ctx.font = "50px serif"
+                    ctx.fillText(foodItem.name, width / 2, height / 2 + 120)
+                    // ctx.font = "15px serif"
+                    // ctx.fillText(foodItem.desc + "\nDamage: " + item.damage, width / 2, height / 2 + 150)
+                    if (mouseIsDown) {
+                        this.eat(foodItem)
+                    }
+                }
+            } catch (error) {
+                console.log(error)
+            }
+        }
+    }
+
+    // Inventory/Food switcher
+    ctx.fillStyle = "rgb(25, 25, 175)"
+    ctx.lineWidth = 4
+    ctx.roundRect(width * 3 / 4 - 60, height / 8, 50, 50, 5)
+    ctx.fill()
+    ctx.stroke()
+    ctx.drawImage(images.foodIcon, width * 3 / 4 - 50, height / 8 + 10, 30, 30)
+
+    ctx.roundRect(width * 3 / 4 - 120, height / 8, 50, 50, 5)
+    ctx.fill()
+    ctx.stroke()
+    ctx.lineWidth = 0
+    ctx.drawImage(images.inventoryIcon, width * 3 / 4 - 110, height / 8 + 10, 30, 30)
+
+    if (mouseIsDown) {
+        if (mouseRect(width * 3 / 4 - 120, height / 8, 50, 50)) {
+            this.itemsMode = "INVENTORY"
+        }
+
+        if (mouseRect(width * 3 / 4 - 60, height / 8, 50, 50)) {
+            this.itemsMode = "BASKET"
         }
     }
 
