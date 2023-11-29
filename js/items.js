@@ -239,7 +239,7 @@ var items = {
     }, function () {
         p.equip(this)
         if (curMap.getBlock(p.cords.x, p.cords.y) == "*") {
-            curMap.changeBlock(p.cords.x, p.cords.y, "z")
+            p.speed = 10
         } 
         
 
