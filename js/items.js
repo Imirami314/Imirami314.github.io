@@ -55,7 +55,7 @@ var items = {
         //ellipse(x, y, 10, 10, "rgb(0, 0, 0)") // changeme to real image for Stormed's Sword
     }, function() {
         p.swordAttack()
-    }, "A mystical sword you obtained after defeating Stormed,\nMaster of Wind"),
+    }, "A mystical sword you obtained after defeating Stormed, Master of Wind."),
     oldMansGlasses: new Item("Old Man's Glasses", 0, function(x, y) {
             ctx.drawImage(images.oldMansGlasses, x - 15, y - 15, 35, 15)
         }, function(p) {
@@ -196,7 +196,7 @@ var items = {
     function(p) {
         p.speedMultiplier = 0.75
         p.resistances.cold = 1
-    }, "A mysterious item that channels the power of the island's elements.\nWhen used, it minorly drains the user's speed to grant a moderate resistance to low temperatures."),
+    }, "A mysterious item that grants you a moderate resistance to cold places, but at the cost of some of your speed."),
 	
 	speedySnowPath: new Item("Speedy Snow Path", 0,
     function(x, y) {
@@ -232,7 +232,7 @@ var items = {
 
         p.can.goUnderWater = true
         ellipse(width / 2, height / 2, 75, 75, "rgb(0, 255, 255, 0.4)")
-    }, "A special item that allows you to swim underwater and breathe"),
+    }, "A special item that allows you to swim underwater and breathe."),
 
     queenAlaskasCrown: new Item("Queen Alaska's Crown", 0, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")

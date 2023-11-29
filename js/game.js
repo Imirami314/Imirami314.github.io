@@ -167,7 +167,7 @@ function Player(x, y, npcs) {
     this.newItem = null
 
     this.inventory = [items.spearOfTheDarkened, items.auraOfWarmth, items.speedySnowPath, items.aquaLung] // Default []
-    this.basket = []
+    this.basket = [food.apple]
     this.itemsMode = "INVENTORY"
 
     this.waterParticles = new ParticleSystem(width / 2, height / 2, 5, 50, 0, 0, 100)
@@ -809,7 +809,12 @@ Player.prototype.dequip = function(item) {
  * @param {*} itemAlert Whether or not to display the new item panel
  */
 Player.prototype.giveItem = function(item, itemAlert) {
-    p.inventory.push(item)
+    if (item.constructor.name == "Item") {
+        p.inventory.push(item)
+    } else if (item.constructor.name == "Food") {
+        p.basket.push(item)
+    }
+
     if (itemAlert) {
         this.newItemAlert = true
         this.newItem = item
@@ -991,7 +996,7 @@ Player.prototype.displayInventory = function() {
                     ctx.font = "50px serif"
                     ctx.fillText(item.name, width / 2, height / 2 + 120)
                     ctx.font = "15px serif"
-                    ctx.fillText(item.desc + "\nDamage: " + item.damage, width / 2, height / 2 + 150)
+                    fillTextMultiLine(item.desc + "\nDamage: " + item.damage, width / 2, height / 2 + 150)
                     if (mouseIsDown) {
                         this.weaponIndex = i
                     }
@@ -1024,13 +1029,26 @@ Player.prototype.displayInventory = function() {
     }
 
     // Inventory/Food switcher
-    ctx.fillStyle = "rgb(25, 25, 175)"
+    if (this.itemsMode == "INVENTORY") {
+        // Deselected
+        ctx.fillStyle = "rgb(25, 25, 175)"
+    } else {
+        // Selected
+        ctx.fillStyle = "rgb(50, 50, 255)"
+    }
     ctx.lineWidth = 4
     ctx.roundRect(width * 3 / 4 - 60, height / 8, 50, 50, 5)
     ctx.fill()
     ctx.stroke()
     ctx.drawImage(images.foodIcon, width * 3 / 4 - 50, height / 8 + 10, 30, 30)
 
+    if (this.itemsMode == "BASKET") {
+        // Deselected
+        ctx.fillStyle = "rgb(25, 25, 175)"
+    } else {
+        // Selected
+        ctx.fillStyle = "rgb(50, 50, 255)"
+    }
     ctx.roundRect(width * 3 / 4 - 120, height / 8, 50, 50, 5)
     ctx.fill()
     ctx.stroke()
@@ -1051,8 +1069,9 @@ Player.prototype.displayInventory = function() {
     ctx.fillStyle = "rgba(25, 25, 255, 0.75)"
     ctx.roundRect(width * 3 / 4, height / 8, width / 8, height * 3 / 4, 10)
     ctx.fill()
+    
     for (var i in this.equipped) {
-        item.draw(width * 13 / 16, height / 8 + 100 + i * 100)
+        this.equipped[i].draw(width * 13 / 16, height / 8 + 100 + i * 100)
     }
 
     // Border
@@ -2087,7 +2106,17 @@ var rainesDad = new NPC(55 * 75 + 37.5, 32 * 75 + 37.5, "Raine's Dad", droptonCi
 
 }, "after")
 
-var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde, walter, marina, ariel, raine, rainesDad]
+var caspian = new NPC(6 * 75, 4 * 75 + 37.5, "Caspian", droptonTown, 'L', [
+    "Hey there!",
+    "I'm trying my best to help support Dropton, so I've\nset up a little shop!",
+    "It's not much right now though...",
+], "Resident - Dropton Town\nEnthusiastic little guy who wants to help Dropton.", function() {
+    ShopMenu.open([
+        {item: food.apple, cost: 5, amount: 5}
+    ])
+}, "after")
+
+var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde, walter, marina, ariel, raine, rainesDad, caspian]
 
 npcs.searchByName = function(name) {
     for (var i in this) {
@@ -3057,17 +3086,7 @@ var gameInterval = setInterval(function() {
             
             p.move()
             p.collide()
-            p.HUD()
-            p.displayMap()
             p.hitEnemies()
-
-            if (keys.e) {
-                p.displayInventory()
-            }
-            
-            if (keys.n) {
-                p.displayNPCList()	
-            }
             
     
             // DEFAULT ON
@@ -3126,6 +3145,18 @@ var gameInterval = setInterval(function() {
                     missions[i].alert("COMPLETE")
                 }
             }
+
+            p.HUD()
+
+            if (keys.e) {
+                p.displayInventory()
+            }
+            
+            if (keys.n) {
+                p.displayNPCList()	
+            }
+
+            p.displayMap()
             
             if (p.health <= 0) {
                 ctx.fillStyle = "rgba(0, 0, 0, " + fade + ")"
