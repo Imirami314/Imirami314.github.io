@@ -2039,6 +2039,7 @@ var marina = new NPC(2 * 75 + 75, 17 * 75 + 37.5, "Officer Marina", droptonCity,
     "If you could support to the city of Dropton by buying from shops,\nthat would help a lot!",
     "I will warn you, though, that the shops are a good deal more expensive.",
     "So, as a bonus, the President is offering a Full Pass to anyone\nwho contributes at least 250 trills!",
+    "If you're short on trills, I heard people up in the drylands\nhave some problems going on. Maybe you can help them out!",
     "So, if you need one, this is your chance!",
 ], "A Dropton Pass Officer. Unfortunately the Pass Office is closed right now because\nDropton is short on money.", function() {
 

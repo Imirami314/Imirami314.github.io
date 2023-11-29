@@ -245,7 +245,7 @@ var items = {
 
         ellipse(width / 2, height / 2, 75, 75, "rgb(255, 255, 255, 0.4)")
         
-    }, "A very goos crown")
+    }, "A magical crown that instantly turns snow into speedy snow.")
 } // Puzzle Keys are not included as they vary depending on where they came from
 
 function Food(name, img, health, secs) {
