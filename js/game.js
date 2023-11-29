@@ -1861,6 +1861,10 @@ var fum = new NPC(37 * 75 + 37.5, 2 * 75 + 37.5, "Fum", galeCave, "D", [
     "You have any idea why the cave is so dark?"
 ], "hi")
 
+var muhammadShop = [
+    {item: items.auraOfWarmth, cost: 12, amount: 2}
+]
+
 var shopkeeperMuhammad = new NPC(58 * 75, 33 * 75 + 37.5, "Shopkeeper Muhammad", galeCave, "L", [
     "Hello!",
     "Would you like to purchase some auras?\nWe use all-natural ingredients.",
@@ -1868,9 +1872,7 @@ var shopkeeperMuhammad = new NPC(58 * 75, 33 * 75 + 37.5, "Shopkeeper Muhammad",
     "If I remember correctly, there used to be plenty\nover at the Crooked Coast, south of Chard Town.",
     "I don't know if they are still there, but\nit's worth checking out."
 ], "hi", function() {
-    ShopMenu.open([
-        {item: items.auraOfWarmth, cost: 12, amount: 2}
-    ])
+    ShopMenu.open(muhammadShop)
 }, "after")
 
 var mildred = new NPC(6 * 75 + 37.5, 2 * 75 + 37.5, "Mildred", trailShop, "D", [
@@ -1974,15 +1976,17 @@ var creek = new NPC(226 * 75 + 37.5, 87 * 75, "Creek", mainMap, 'U', [
 
 }, "after")
 
+var blakeShop = [
+    {item: items.aquaLung, cost: 100, amount: 1}
+]
+
 var blake = new NPC(8 * 75 + 37.5, 1 * 75 + 75 /* So he stands on the very edge of the block */, "Blake", droptonWaterWear, 'D', [
     "Hello there!",
     "Welcome to Dropton Water Wear!",
     "You don't appear to be a resident of Dropton.",
     "Can I interest you in some gear? It can allow you to \n swim underneath some bodies of water.",
 ], "[insert description]", function() {
-    ShopMenu.open([
-        {item: items.aquaLung, cost: 100, amount: 1}
-    ])
+    ShopMenu.open(blakeShop)
 }, "after")
 
 var ness = new NPC(13 * 75 + 37.5, 13 * 75 + 37.5, "Ness", droptonTunnels, 'R', [
@@ -2106,17 +2110,20 @@ var rainesDad = new NPC(55 * 75 + 37.5, 32 * 75 + 37.5, "Raine's Dad", droptonCi
 
 }, "after")
 
+var caspianShop = [
+    {item: food.apple, cost: 5, amount: 5}
+]
+
 var caspian = new NPC(6 * 75, 4 * 75 + 37.5, "Caspian", droptonTown, 'L', [
     "Hey there!",
     "I'm trying my best to help support Dropton, so I've\nset up a little shop!",
     "It's not much right now though...",
 ], "Resident - Dropton Town\nEnthusiastic little guy who wants to help Dropton.", function() {
-    ShopMenu.open([
-        {item: food.apple, cost: 5, amount: 5}
-    ])
+    ShopMenu.open(caspianShop)
 }, "after")
 
 var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde, walter, marina, ariel, raine, rainesDad, caspian]
+var shopMenus = [muhammadShop, blakeShop, caspianShop]
 
 npcs.searchByName = function(name) {
     for (var i in this) {
