@@ -80,7 +80,10 @@ var images = {
     // Icons
     sacredStar: initImage('sprites/icons/sacredStar.png'),
     foodIcon: initImage('sprites/icons/food.png'),
-    inventoryIcon: initImage('sprites/icons/inventory.png'),
+    swordIcon: initImage('sprites/icons/inventory.png'),
+    keyIcon: initImage('sprites/icons/key.png'),
+    starIcon: initImage('sprites/icons/star.png'),
+    questionMarkIcon: initImage('sprites/icons/questionMark.png'),
 }
 
 var blocks = [
@@ -1459,7 +1462,7 @@ droptonTunnels.solve = function() {
         if (p.on(29, 12)) {
             // Code that takes you to Dropton Town
             curMap = droptonTown
-            p.goTo(1 * 75 + 75 / 2, 1 * 75 + 75 / 2)
+            p.goTo(2 * 75 + 5, 1 * 75 + 75 / 2)
         }
     }
 }
@@ -1608,7 +1611,8 @@ var areas = [
     droptonWaterWear,
     droptonTunnels,
     droptonCity,
-    droptonHall
+    droptonHall,
+    droptonTown
 ]
 
 // for (var l in areas) {

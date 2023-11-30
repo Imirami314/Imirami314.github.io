@@ -55,6 +55,11 @@ function ShopMenu(shopList) {
                         PURCHASE_COOLDOWN = 0.5
                         p.giveItem(shopItem, true)
                         playSound("Purchase")
+
+                        // Add to Dropton donations
+                        if (curMap == droptonTown || curMap == droptonCity) {
+                            p.droptonDonations += shopList[i].cost
+                        }
                     }
                 }
             }

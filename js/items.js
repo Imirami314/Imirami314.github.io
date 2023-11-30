@@ -1,10 +1,11 @@
-function Item(name, damage, draw, use, desc) {
+function Item(name, damage, draw, use, desc, category) {
     this.name = name
     this.damage = damage
     this.x = null
     this.y = null
     this.use = use
     this.desc = desc || "[no description]"
+    this.category = category || "MISC"
     this.draw = draw
 }
 
@@ -42,7 +43,7 @@ var items = {
         ctx.drawImage(images.spearOfTheDarkened, x - 15, y - 15, 50, 15)
     }, function(p) {
         p.spearAttack()
-    }),
+    }, "A mystical spear you obtained after defeating Darkened, Master of Night.", "WEAPONS"),
     stormedsSword: new Item("Stormed's Sword", 25, function(x, y) {
         ctx.save()
         ctx.translate(x + 45, y + 45)
@@ -55,7 +56,7 @@ var items = {
         //ellipse(x, y, 10, 10, "rgb(0, 0, 0)") // changeme to real image for Stormed's Sword
     }, function() {
         p.swordAttack()
-    }, "A mystical sword you obtained after defeating Stormed, Master of Wind."),
+    }, "A mystical sword you obtained after defeating Stormed, Master of Wind.", "WEAPONS"),
     oldMansGlasses: new Item("Old Man's Glasses", 0, function(x, y) {
             ctx.drawImage(images.oldMansGlasses, x - 15, y - 15, 35, 15)
         }, function(p) {
@@ -105,7 +106,7 @@ var items = {
                     }
                 }
             }
-        }, "A pair of glasses that Mike gave you for the old man."),
+        }, "A pair of glasses that Mike gave you for the old man.", "MISC"),
     steelFieldKey: new Item("Steel Field Key", 0, function(x, y) {
             ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
         }, function(p) {
@@ -137,7 +138,7 @@ var items = {
                     }
                 }
             }
-        }, "A shiny key that constipates you."), // changeme
+        }, "A shiny key that constipates you.", "KEYS"), // changeme
     confoundedCaveKey: new Item("Confounded Cave Key", 0, function(x, y) {
         ctx.drawImage(images.confoundedCaveKey, x - 15, y - 15, 35, 15)
     }, function(p) {
@@ -152,7 +153,7 @@ var items = {
                 }
             }
         }
-    }, "A dusty key with an inscription saying 'West'"),
+    }, "A dusty key with an inscription saying 'West'", "KEYS"),
     heatHandle: new Item("Heat Handle", 0, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
     }, function(p) {
@@ -182,12 +183,12 @@ var items = {
                 }
             }
         }
-    }),
+    }, "An odd fragment of a sword. Absorbs heat very easily.", "MISC"),
     steelSword: new Item("Steel Sword", 5, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
     }, function(p) {
         
-    }),
+    }, "A weak, simple sword that is easy to use.", "WEAPONS"),
     
 	auraOfWarmth: new Item("Aura of Warmth", 0,
     function(x, y) {
@@ -196,7 +197,7 @@ var items = {
     function(p) {
         p.speedMultiplier = 0.75
         p.resistances.cold = 1
-    }, "A mysterious item that grants you a moderate resistance to cold places, but at the cost of some of your speed."),
+    }, "A mysterious item that grants you a moderate resistance to cold places, but at the cost of some of your speed.", "MISC"),
 	
 	speedySnowPath: new Item("Speedy Snow Path", 0,
     function(x, y) {
@@ -206,14 +207,14 @@ var items = {
 		
      //p.buildMode = true
 		//p.bb = 'z'
-    }, ""),
+    }, "[insert description]", "MISC"),
 
 	decipherer: new Item("Decipherer", 0, 
 	function(x, y) {
 		ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
 	}, function(p) {
 		
-	}, ""),
+	}, "[insert description]", "MISC"),
 	chardTownBeam: new Item("Chard Town Beam", 0, 
 	function(x, y) {
 		ellipse(x, y, 10, 10, "rgb(0, 0, 0")
@@ -224,7 +225,7 @@ var items = {
 			scene = "BEAM UNLOCKED"
 			cutsceneFrame = 0
 		}
-	}, "Search for the place with no beginnings and no ends..."),
+	}, "Search for the place with no beginnings and no ends...", "MISC"),
 	aquaLung: new Item("Aqua Lung", 0, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
     }, function() {
@@ -232,7 +233,7 @@ var items = {
 
         p.can.goUnderWater = true
         ellipse(width / 2, height / 2, 75, 75, "rgb(0, 255, 255, 0.4)")
-    }, "A special item that allows you to swim underwater and breathe."),
+    }, "A special item that allows you to swim underwater and breathe.", "MISC"),
 
     queenAlaskasCrown: new Item("Queen Alaska's Crown", 0, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
@@ -245,15 +246,17 @@ var items = {
 
         ellipse(width / 2, height / 2, 75, 75, "rgb(255, 255, 255, 0.4)")
         
-    }, "A magical crown that instantly turns snow into speedy snow.")
+    }, "A magical crown that instantly turns snow into speedy snow.", "MISC")
 } // Puzzle Keys are not included as they vary depending on where they came from
 
 function Food(name, img, health, secs) {
     this.name = name
     this.img = img
     this.health = health
+    this.healthAdded = 0
     this.secs = secs
     this.secsPassed = 0
+    this.category = 'FOOD'
 }
 
 Food.prototype.draw = function(x, y) {
@@ -264,6 +267,12 @@ Food.prototype.draw = function(x, y) {
     }
 }
 
+Food.prototype.use = function(p) {
+    p.eat(this)
+}
+
 var food = {
-    apple: new Food("Apple", "", 3, 10)
+    apple: function() {
+        return new Food("Apple", "", 3, 10)
+    }
 }

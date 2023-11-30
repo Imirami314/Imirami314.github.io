@@ -166,9 +166,8 @@ function Player(x, y, npcs) {
     this.newItemAlert = false
     this.newItem = null
 
-    this.inventory = [items.spearOfTheDarkened, items.auraOfWarmth, items.speedySnowPath, items.aquaLung] // Default []
-    this.basket = [food.apple]
-    this.itemsMode = "INVENTORY"
+    this.inventory = [items.spearOfTheDarkened, items.auraOfWarmth, items.speedySnowPath, items.aquaLung, food.apple()] // Default []
+    this.itemsMode = "ALL"
 
     this.waterParticles = new ParticleSystem(width / 2, height / 2, 5, 50, 0, 0, 100)
     this.lavaParticles = new ParticleSystem(width / 2, height / 2, 1, 75, 50, 50, 50)
@@ -236,6 +235,23 @@ Player.prototype.draw = function() {
     this.cords.x = Math.floor(this.x / 75) // This regulates it, because you don't start at x-cord 0, you start at x-cord 10
     this.cords.y = Math.floor(this.y / 75) // Same thing as x-cord, but height / 2 is about half of width / 2, so it's 5 instead of 10
 
+    // Foods in this.curEating steadily give health
+    for (var i in this.curEating) {
+        var f = this.curEating[i]
+        var healthInc = (f.health * (1 / f.secs)) / 66.67
+        this.health += healthInc
+        f.healthAdded += healthInc
+        if (f.healthAdded >= f.health) {
+            this.curEating.splice(i, 1)
+            break
+        }
+        // f.secsPassed ++
+        // if (f.secsPassed == f.secs) {
+        //     this.curEating = []
+        //     clearInterval(this.eatInterval)
+        // }
+    }
+
     // Load save for player
     if (!this.loadSaveComplete && save != null) {
         if (!!!this.region) {
@@ -265,6 +281,12 @@ Player.prototype.draw = function() {
             for (var j in items) {
                 if (items[j].name == save.player.inventory[i].name) {
                     this.inventory.push(items[j])
+                }
+            }
+
+            for (var j in food) {
+                if (food[j].name == save.player.inventory[i].name) {
+                    this.inventory.push(food[j])
                 }
             }
         }
@@ -809,11 +831,7 @@ Player.prototype.dequip = function(item) {
  * @param {*} itemAlert Whether or not to display the new item panel
  */
 Player.prototype.giveItem = function(item, itemAlert) {
-    if (item.constructor.name == "Item") {
-        p.inventory.push(item)
-    } else if (item.constructor.name == "Food") {
-        p.basket.push(item)
-    }
+    p.inventory.push(item)
 
     if (itemAlert) {
         this.newItemAlert = true
@@ -825,23 +843,20 @@ Player.prototype.giveItem = function(item, itemAlert) {
 }
 
 Player.prototype.eat = function(foodItem) {
-    this.curEating.push(foodItem)
-    for (var i in this.basket) {
-        var f = this.basket[i]
+    for (var i in this.inventory) {
+        var f = this.inventory[i]
         if (f == foodItem) {
-            this.basket.splice(i, 1)
+            this.curEating.push(foodItem)
+            this.inventory.splice(i, 1)
+            break
         }
     }
-    var eatInterval = setInterval(() => {
-        for (var i in this.curEating) {
-            var f = this.curEating[i]
-            this.health += f.health * (1 / f.secs)
-            f.secsPassed ++
-            if (f.secsPassed == f.secs) {
-                clearInterval(eatInterval)
-            }
-        }
-    }, 1000)
+
+    // this.eatInterval = setInterval(() => {
+    //     if (this.curEating.length > 0) {
+            
+    //     }
+    // }, 1000)
 }
 
 Player.prototype.hitEnemies = function() {
@@ -984,11 +999,57 @@ Player.prototype.displayInventory = function() {
     ctx.roundRect(width / 8, height / 8, width * 3 / 4, height * 3 / 4, 10)
     ctx.fill()
 
-    if (this.itemsMode == 'INVENTORY') {
-        for (var i in this.inventory) {
-            try {
-                var item = this.inventory[i]
-                var mouseItemDist = Math.hypot(mouseX - ((i % 8) * 100 + width / 8 + 100), mouseY - (height / 8 + 100 * (Math.floor(i / 8) + 1)))
+    // if (this.itemsMode == 'ALL') {
+    //     for (var i in this.inventory) {
+    //         try {
+    //             var item = this.inventory[i]
+    //             var mouseItemDist = Math.hypot(mouseX - ((i % 8) * 100 + width / 8 + 100), mouseY - (height / 8 + 100 * (Math.floor(i / 8) + 1)))
+    //             item.draw((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1))
+    //             if (mouseItemDist < 50) {
+    //                 ctx.fillStyle = "rgb(0, 0, 0)"
+    //                 ctx.textAlign = "center"
+    //                 ctx.font = "50px serif"
+    //                 ctx.fillText(item.name, width / 2, height / 2 + 120)
+    //                 ctx.font = "15px serif"
+    //                 fillTextMultiLine(item.desc + "\nDamage: " + item.damage, width / 2, height / 2 + 150)
+    //                 if (mouseIsDown) {
+    //                     this.weaponIndex = i
+    //                 }
+    //             }
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //     }
+    // } else if (this.itemsMode == 'FOOD') {
+    //     for (var i in this.basket) {
+    //         try {
+    //             var foodItem = this.basket[i]
+    //             var mouseItemDist = Math.hypot(mouseX - ((i % 8) * 100 + width / 8 + 100), mouseY - (height / 8 + 100 * (Math.floor(i / 8) + 1)))
+    //             foodItem.draw((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1))
+    //             if (mouseItemDist < 50) {
+    //                 ctx.fillStyle = "rgb(0, 0, 0)"
+    //                 ctx.textAlign = "center"
+    //                 ctx.font = "50px serif"
+    //                 ctx.fillText(foodItem.name, width / 2, height / 2 + 120)
+    //                 // ctx.font = "15px serif"
+    //                 // ctx.fillText(foodItem.desc + "\nDamage: " + item.damage, width / 2, height / 2 + 150)
+    //                 if (mouseIsDown) {
+    //                     this.eat(foodItem)
+    //                 }
+    //             }
+    //         } catch (error) {
+    //             console.log(error)
+    //         }
+    //     }
+    // }
+
+    var subcategory = []
+
+    for (var i in this.inventory) {
+        try {
+            var item = this.inventory[i]
+            var mouseItemDist = Math.hypot(mouseX - ((i % 8) * 100 + width / 8 + 100), mouseY - (height / 8 + 100 * (Math.floor(i / 8) + 1)))
+            if (this.itemsMode == 'ALL') {
                 item.draw((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1))
                 if (mouseItemDist < 50) {
                     ctx.fillStyle = "rgb(0, 0, 0)"
@@ -1001,25 +1062,34 @@ Player.prototype.displayInventory = function() {
                         this.weaponIndex = i
                     }
                 }
-            } catch (error) {
-                console.log(error)
+            } else if (item.category == this.itemsMode) {
+                subcategory.push(item)
             }
+        } catch (error) {
+            console.log(error)
         }
-    } else if (this.itemsMode == 'BASKET') {
-        for (var i in this.basket) {
+    }
+
+    if (subcategory.length > 0) {
+        for (var i in subcategory) {
             try {
-                var foodItem = this.basket[i]
+                var item = subcategory[i]
                 var mouseItemDist = Math.hypot(mouseX - ((i % 8) * 100 + width / 8 + 100), mouseY - (height / 8 + 100 * (Math.floor(i / 8) + 1)))
-                foodItem.draw((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1))
+                item.draw((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1))
                 if (mouseItemDist < 50) {
                     ctx.fillStyle = "rgb(0, 0, 0)"
                     ctx.textAlign = "center"
                     ctx.font = "50px serif"
-                    ctx.fillText(foodItem.name, width / 2, height / 2 + 120)
-                    // ctx.font = "15px serif"
-                    // ctx.fillText(foodItem.desc + "\nDamage: " + item.damage, width / 2, height / 2 + 150)
+                    ctx.fillText(item.name, width / 2, height / 2 + 120)
+                    ctx.font = "15px serif"
+                    fillTextMultiLine(item.desc + "\nDamage: " + item.damage, width / 2, height / 2 + 150)
                     if (mouseIsDown) {
-                        this.eat(foodItem)
+                        for (var j in this.inventory) {
+                            if (this.inventory[j].name == item.name) {
+                                this.weaponIndex = j
+                                continue
+                            }
+                        }
                     }
                 }
             } catch (error) {
@@ -1028,42 +1098,71 @@ Player.prototype.displayInventory = function() {
         }
     }
 
-    // Inventory/Food switcher
-    if (this.itemsMode == "INVENTORY") {
-        // Deselected
-        ctx.fillStyle = "rgb(25, 25, 175)"
-    } else {
-        // Selected
-        ctx.fillStyle = "rgb(50, 50, 255)"
-    }
-    ctx.lineWidth = 4
-    ctx.roundRect(width * 3 / 4 - 60, height / 8, 50, 50, 5)
-    ctx.fill()
-    ctx.stroke()
-    ctx.drawImage(images.foodIcon, width * 3 / 4 - 50, height / 8 + 10, 30, 30)
+    var inventoryCategories = [
+        {img: images.starIcon, itemsMode: "ALL"},
+        {img: images.swordIcon, itemsMode: "WEAPONS"},
+        {img: images.foodIcon, itemsMode: "FOOD"},
+        {img: images.keyIcon, itemsMode: "KEYS"},
+        {img: images.questionMarkIcon, itemsMode: "MISC"},
+    ]
 
-    if (this.itemsMode == "BASKET") {
-        // Deselected
-        ctx.fillStyle = "rgb(25, 25, 175)"
-    } else {
-        // Selected
-        ctx.fillStyle = "rgb(50, 50, 255)"
-    }
-    ctx.roundRect(width * 3 / 4 - 120, height / 8, 50, 50, 5)
-    ctx.fill()
-    ctx.stroke()
-    ctx.lineWidth = 0
-    ctx.drawImage(images.inventoryIcon, width * 3 / 4 - 110, height / 8 + 10, 30, 30)
-
-    if (mouseIsDown) {
-        if (mouseRect(width * 3 / 4 - 120, height / 8, 50, 50)) {
-            this.itemsMode = "INVENTORY"
+    for (var i in inventoryCategories) {
+        var invCat = inventoryCategories[i]
+        if (this.itemsMode == invCat.itemsMode) {
+            // Deselected
+            ctx.fillStyle = "rgb(25, 25, 175)"
+        } else {
+            // Selected
+            ctx.fillStyle = "rgb(50, 50, 255)"
         }
 
-        if (mouseRect(width * 3 / 4 - 60, height / 8, 50, 50)) {
-            this.itemsMode = "BASKET"
+        ctx.lineWidth = 4
+        ctx.roundRect(width * 3 / 4 - 60 - i * 60, height / 8, 50, 50, 5)
+        ctx.fill()
+        ctx.stroke()
+        ctx.drawImage(invCat.img, width * 3 / 4 - 50 - i * 60, height / 8 + 10, 30, 30)
+
+        if (mouseIsDown && mouseRect(width * 3 / 4 - 60 - i * 60, height / 8, 50, 50)) {
+            this.itemsMode = invCat.itemsMode
         }
     }
+
+    // // Inventory/Food switcher
+    // if (this.itemsMode == "INVENTORY") {
+    //     // Deselected
+    //     ctx.fillStyle = "rgb(25, 25, 175)"
+    // } else {
+    //     // Selected
+    //     ctx.fillStyle = "rgb(50, 50, 255)"
+    // }
+    // ctx.lineWidth = 4
+    // ctx.roundRect(width * 3 / 4 - 60, height / 8, 50, 50, 5)
+    // ctx.fill()
+    // ctx.stroke()
+    // ctx.drawImage(images.foodIcon, width * 3 / 4 - 50, height / 8 + 10, 30, 30)
+
+    // if (this.itemsMode == "BASKET") {
+    //     // Deselected
+    //     ctx.fillStyle = "rgb(25, 25, 175)"
+    // } else {
+    //     // Selected
+    //     ctx.fillStyle = "rgb(50, 50, 255)"
+    // }
+    // ctx.roundRect(width * 3 / 4 - 120, height / 8, 50, 50, 5)
+    // ctx.fill()
+    // ctx.stroke()
+    // ctx.lineWidth = 0
+    // ctx.drawImage(images.inventoryIcon, width * 3 / 4 - 110, height / 8 + 10, 30, 30)
+
+    // if (mouseIsDown) {
+    //     if (mouseRect(width * 3 / 4 - 120, height / 8, 50, 50)) {
+    //         this.itemsMode = "FOOD"
+    //     }
+
+    //     if (mouseRect(width * 3 / 4 - 60, height / 8, 50, 50)) {
+    //         this.itemsMode = "ALL"
+    //     }
+    // }
 
     // Equipped items sidebar
     ctx.fillStyle = "rgba(25, 25, 255, 0.75)"
@@ -2112,7 +2211,7 @@ var rainesDad = new NPC(55 * 75 + 37.5, 32 * 75 + 37.5, "Raine's Dad", droptonCi
 }, "after")
 
 var caspianShop = [
-    {item: food.apple, cost: 5, amount: 5}
+    {item: food.apple(), cost: 5, amount: 5}
 ]
 
 var caspian = new NPC(6 * 75, 4 * 75 + 37.5, "Caspian", droptonTown, 'L', [
