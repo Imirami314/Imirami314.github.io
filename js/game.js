@@ -2236,9 +2236,15 @@ var caspian = new NPC(6 * 75, 4 * 75 + 37.5, "Caspian", droptonTown, 'L', [
 }, "after")
 
 var loch = new NPC(34 * 75 + 37.5, 22 * 75 + 37.5, "Loch", droptonCity, 'L', [
-    "Hey there."
+    "Hey there.",
+    "This mysterious substance just recently formed around Dropton City's\nmain entrance.",
+    "...",
+    "Wait, you know about this stuff?",
+    "Anyways, if we find a way to get rid of this ice, I'm pretty sure the\nflow of the water will get rid of this purple stuff.",
+    "Opening up this entrance will also provide easy access to Dropton Dryalnds!",
+    "If you have any ideas on how to fix this, it will be very helpful.\nI'll reward you too!"
 ], "ello", function() {
-
+    missions.push(theBlockedEntrance)
 }, "after")
 var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde, walter, marina, ariel, raine, rainesDad, caspian, loch]
 var shopMenus = [muhammadShop, blakeShop, caspianShop]
@@ -2899,7 +2905,7 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = true
+    dev = false
     curMap = droptonTown
     p.x = 1 * 75 + 37.5
     p.y = 1 * 75 + 37.5

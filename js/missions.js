@@ -126,3 +126,28 @@ leysGreatFear.solve = function () {
 }
 
 var davidsDreamPond = new Mission("David's Dream Pond", "Reward", null, 0)
+
+var theBlockedEntrance = new Mission("The Blocked Entrance", "Reward", null, 0)
+
+theBlockedEntrance.solve = function () {
+    if (droptonCity.checkBlocks([
+        [30, 20], [29, 21], [30, 21], [31, 21], [28, 22], [29, 22], [31, 22], [32, 22],
+        [29, 23], [30, 23], [31, 23], [30, 24]
+    ], "~")) {
+        loch.lines = [
+            "...", "What?! All the ice and purple stuff is gone!",
+            "And look at that, the entrance opened again?\nDid you do this?",
+            "...", "Wow. Thank you so much!",
+            "I must reward you. Here, take these trills!"
+        ]
+        loch.action = function (p) {
+            p.trills += 50
+            loch.lines = ["Wow, I've sure missed this entrance.", "If you want to go up and down, just enter in the middle!"]
+            theBlockedEntrance.complete = true
+                
+        }
+        loch.actionLine = "after"
+    }
+    
+   
+}
