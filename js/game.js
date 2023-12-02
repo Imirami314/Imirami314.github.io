@@ -2905,7 +2905,7 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = false
+    // dev = false
     curMap = droptonTown
     p.x = 1 * 75 + 37.5
     p.y = 1 * 75 + 37.5
