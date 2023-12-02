@@ -216,7 +216,7 @@ function Player(x, y, npcs) {
     }
 
     this.fullPass = false
-    this.droptonDonations = 0
+    this.droptonDonations = 50 // Default 0
 
 	this.inRaft = false
 
@@ -285,8 +285,8 @@ Player.prototype.draw = function() {
             }
 
             for (var j in food) {
-                if (food[j].name == save.player.inventory[i].name) {
-                    this.inventory.push(food[j])
+                if (food[j]().name == save.player.inventory[i].name) {
+                    this.inventory.push(food[j]())
                 }
             }
         }
@@ -310,6 +310,8 @@ Player.prototype.draw = function() {
         }
 
         this.can = save.player.can
+
+        this.droptonDonations = save.player.droptonDonations
         
         this.loadSaveComplete = true
     }
@@ -517,6 +519,17 @@ Player.prototype.HUD = function() {
         ctx.translate(- width / 2, - height / 2)
         this.newItem.draw(width / 2, height / 2)
         ctx.restore()
+    }
+
+    // Special
+    if (this.droptonDonations > 0 && this.droptonDonations < 150) {
+        ctx.fillStyle = "rgb(50, 200, 200)"
+        ctx.roundRect(50, 125, 100, 50, 10)
+        ctx.fill()
+        ctx.fillStyle = "rgb(255, 255, 255)"
+        ctx.font = "20px serif"
+        ctx.textAlign = "center"
+        ctx.fillText(p.droptonDonations + "/150", 100, 155.5)
     }
 }
 
@@ -2137,7 +2150,7 @@ var marina = new NPC(2 * 75 + 75, 17 * 75 + 37.5, "Officer Marina", droptonCity,
     "Dropton is short on money due to all the repairs,\nso we're shut down for the time being.",
     "If you could support to the city of Dropton by buying from shops,\nthat would help a lot!",
     "I will warn you, though, that the shops are a good deal more expensive.",
-    "So, as a bonus, the President is offering a Full Pass to anyone\nwho contributes at least 250 trills!",
+    "So, as a bonus, the President is offering a Full Pass to anyone\nwho contributes at least 150 trills!",
     "If you're short on trills, I heard people up in the drylands\nhave some problems going on. Maybe you can help them out!",
     "So, if you need one, this is your chance!",
 ], "A Dropton Pass Officer. Unfortunately the Pass Office is closed right now because\nDropton is short on money.", function() {
@@ -2774,6 +2787,7 @@ function saveGame() {
             weaponIndex: p.weaponIndex,
             resistances: p.resistances,
             can: p.can,
+            droptonDonations: p.droptonDonations,
         },
         npcs: [],
         npcActions: [],
@@ -2885,7 +2899,7 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = false
+    dev = true
     curMap = droptonTown
     p.x = 1 * 75 + 37.5
     p.y = 1 * 75 + 37.5
@@ -3299,6 +3313,11 @@ var gameInterval = setInterval(function() {
     
             if (CUR_SHOP_MENU != 0) {
                 ShopMenu(CUR_SHOP_MENU)
+            }
+
+            // Special
+            if (p.droptonDonations >= 150) {
+
             }
             
         } else if (scene == "DARKENED BOSS CUTSCENE") {
