@@ -309,6 +309,8 @@ Player.prototype.draw = function() {
             heat: 0
         }
 
+        this.trills = save.player.trills
+
         this.can = save.player.can
 
         this.droptonDonations = save.player.droptonDonations
@@ -2792,6 +2794,7 @@ function saveGame() {
             equipped: [],
             weaponIndex: p.weaponIndex,
             resistances: p.resistances,
+            trills: p.trills,
             can: p.can,
             droptonDonations: p.droptonDonations,
         },
