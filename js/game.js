@@ -340,16 +340,16 @@ Player.prototype.draw = function() {
 
 	// Path making
 	 if (this.weapon.name == "Speedy Snow Path") {
-		 this.buildMode = true
-		 this.bb = 'z'
+		this.buildMode = true
+		this.bb = 'z'
 	 } else {
-		 this.buildMode = false
+		this.buildMode = false
 	 }
 	 if (this.buildMode) {
 	     if (this.blockOn.name == "trail" || this.blockOn.name == "water" || this.blockOn.name == "lava" || this.blockOn.name == "speedy snow" || this.blockOn.name == "door" || this.blockOn.name == "lock" || curMap != mainMap) {
-			 this.buildable = false
-			 ctx.fillStyle = "rgb(255, 0, 0, 0.5)"
-    		 ctx.fillRect(p.cords.x * 75 - p.x + width / 2 , p.cords.y * 75 - p.y + height / 2, 75, 75)
+			this.buildable = false
+			ctx.fillStyle = "rgb(255, 0, 0, 0.5)"
+    		ctx.fillRect(p.cords.x * 75 - p.x + width / 2 , p.cords.y * 75 - p.y + height / 2, 75, 75)
 			 
 		 } else {
 			this.buildable = true
