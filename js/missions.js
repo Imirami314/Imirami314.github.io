@@ -38,7 +38,7 @@ Mission.prototype.alert = function(t) {
 			this.newMission = false
 		}, 3000)
 	} else if (this.completionPopup && t == "COMPLETE") {
-		//playSound("New Mission", false)
+		playSound("Mission Complete", false)
 		ctx.fillStyle = "rgba(200, 200, 200, 0.5)"
      	ctx.fillRect(0, height / 8 - 75, width, 150)
 		ctx.fillStyle = "rgb(0, 0, 0)"
@@ -141,9 +141,11 @@ theBlockedEntrance.solve = function () {
             "I must reward you. Here, take these trills!"
         ]
         loch.action = function (p) {
-            p.trills += 50
+            if (!theBlockedEntrance.complete) {
+                p.trills += 50
+            }
             loch.lines = ["Wow, I've sure missed this entrance.", "If you want to go up and down, just enter in the middle!"]
-            theBlockedEntrance.complete = true
+            theBlockedEntrance.finish()
                 
         }
         loch.actionLine = "after"

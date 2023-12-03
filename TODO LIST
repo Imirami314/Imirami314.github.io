@@ -10,6 +10,8 @@ One Time
 - Make wayne not in a tree sometimes
 - Add player sword attack animation
 - Make the storyline at the beginning better (it sucks)
+- Fix rafting while talking to NPCS to prevent softlocks
+- Fix missions/mission saving
 
 Continuous
 - Add sound effects for all blocks
