@@ -2576,6 +2576,13 @@ function() {
     // changeme to add functionality
 })
 
+// Encompassed Labyrinth
+var t16_4 = new Toggle(encompassedLabyrinth, 16, 4, function() {
+
+}, function() {
+
+})
+
 // Dropton City
 var rd2_2 = new RaftDispenser(droptonCity, 2 * 75, 2 * 75, 2 * 75 + 37.5, 3 * 75 + 37.5)
 
@@ -2636,7 +2643,8 @@ var interactives = [
     rd257_30,
     rd256_66,
     lostTravelerToggle,
-    rd2_2
+    t16_4,
+    rd2_2,
 ]
 
 
