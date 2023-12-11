@@ -531,7 +531,7 @@ Player.prototype.HUD = function() {
         ctx.fillStyle = "rgb(255, 255, 255)"
         ctx.font = "20px serif"
         ctx.textAlign = "center"
-        ctx.fillText(p.droptonDonations + "/150", 100, 155.5)
+        ctx.fillText(p.droptonDonations + "/250", 100, 155.5)
     }
 }
 
@@ -2152,7 +2152,7 @@ var marina = new NPC(2 * 75 + 75, 17 * 75 + 37.5, "Officer Marina", droptonCity,
     "Dropton is short on money due to all the repairs,\nso we're shut down for the time being.",
     "If you could support to the city of Dropton by buying from shops,\nthat would help a lot!",
     "I will warn you, though, that the shops are a good deal more expensive.",
-    "So, as a bonus, the President is offering a Full Pass to anyone\nwho contributes at least 150 trills!",
+    "So, as a bonus, we are offering a Full Pass to anyone\nwho contributes at least 250 trills!",
     "If you're short on trills, I heard people up in the drylands\nhave some problems going on. Maybe you can help them out!",
     "So, if you need one, this is your chance!",
 ], "A Dropton Pass Officer. Unfortunately the Pass Office is closed right now because\nDropton is short on money.", function() {
@@ -3330,11 +3330,6 @@ var gameInterval = setInterval(function() {
     
             if (CUR_SHOP_MENU != 0) {
                 ShopMenu(CUR_SHOP_MENU)
-            }
-
-            // Special
-            if (p.droptonDonations >= 150) {
-
             }
             
         } else if (scene == "DARKENED BOSS CUTSCENE") {

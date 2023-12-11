@@ -1555,6 +1555,19 @@ var droptonCity = new Landscape([
 ], null, null, null, null, "Dropton City")
 
 droptonCity.solve = function() {
+    // Make Officer Marina give you the full pass once you reach the required amount
+    if (p.droptonDonations >= 250) {
+        marina.lines = [
+            "The Pass Office is back in business!",
+            "...and it looks like you've reached 250 trills in contributions!",
+            "On behalf of Dropton, take this as a thank you gift!"
+        ]
+
+        marina.action = function() {
+            p.giveItem(items.fullPass, true)
+        }
+    }
+
     // Places to go
     if (keys.space) {
         //Exit

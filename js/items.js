@@ -246,7 +246,12 @@ var items = {
 
         ellipse(width / 2, height / 2, 75, 75, "rgb(255, 255, 255, 0.4)")
         
-    }, "A magical crown that instantly turns snow into speedy snow.", "MISC")
+    }, "A magical crown that instantly turns snow into speedy snow.", "MISC"),
+    fullPass: new Item("Full Pass", 0, function(x, y) {
+        ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
+    }, function() {
+        // changeme to add functionality here
+    }, "A special pass that lets you access more of Dropton!", "MISC")
 } // Puzzle Keys are not included as they vary depending on where they came from
 
 function Food(name, img, health, secs) {
