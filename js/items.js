@@ -260,8 +260,8 @@ var items = {
     }, function() {
         // Doors that the Full Pass opens
         if (curMap == droptonCity) { // Dropton Hall
-            if (p.on(21, 32)) {
-                curMap.changeBlock(21, 33, '(')
+            if (p.on(21, 33)) {
+                curMap.changeBlock(21, 32, '(')
             }
         } else if (curMap == droptonTown) {
             if (p.on(38, 21)) { // Dropton Research Facility

@@ -524,7 +524,7 @@ Player.prototype.HUD = function() {
     }
 
     // Special
-    if (this.droptonDonations > 0 && this.droptonDonations < 150) {
+    if (this.droptonDonations > 0 && this.droptonDonations < 250) {
         ctx.fillStyle = "rgb(50, 200, 200)"
         ctx.roundRect(50, 125, 100, 50, 10)
         ctx.fill()
