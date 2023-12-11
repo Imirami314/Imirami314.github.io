@@ -153,3 +153,26 @@ theBlockedEntrance.solve = function () {
     
    
 }
+
+var deltasLostTreasure = new Mission("Delta's Lost Treasure", "Reward", null, 0, function() {
+	if (entityDistance(p, delta) <= 100 && p.weapon.name == 'Light Container' && mouseIsDown) {
+		delta.lines = [
+			"Did you find the treasure?",
+			"...",
+			"Wow! Thank you so much!",
+			"...can I have it?",
+			"...",
+			"I appreciate you doing this for me.\nTake these 75 trills as a gift!"
+		]
+
+		delta.action = function() {
+			p.trills += 75
+			p.removeItem(items.lightContainer)
+			deltasLostTreasure.finish()
+		}
+
+		delta.actionLine = "after"
+
+		delta.lineNum = 0
+	}
+})

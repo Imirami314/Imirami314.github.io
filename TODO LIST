@@ -31,6 +31,9 @@ Textures and images we need:
 - Decipherer
 - Puzzle keys
 - Chard Town Beam
+- Full Pass
+- Queen's Crown
+- Light Container
 
 Game bugs/issues to fix
 - Fix issue where clicking doesn't give the glasses to the old man or the heat handle to Smith (it fixes itself when you reload the save)

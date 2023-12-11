@@ -247,11 +247,33 @@ var items = {
         ellipse(width / 2, height / 2, 75, 75, "rgb(255, 255, 255, 0.4)")
         
     }, "A magical crown that instantly turns snow into speedy snow.", "MISC"),
+    deltasKey: new Item("Delta's Key", 0, function(x, y) {
+        ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
+    }, function() {
+        if (p.on(4, 43)) {
+            curMap.changeBlock(4, 42, '_')
+            p.removeItem(this)
+        }
+    }, "A random key that Delta found on the ground. Look for the hidden chest!", "KEYS"),
     fullPass: new Item("Full Pass", 0, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
     }, function() {
-        // changeme to add functionality here
-    }, "A special pass that lets you access more of Dropton!", "MISC")
+        // Doors that the Full Pass opens
+        if (curMap == droptonCity) { // Dropton Hall
+            if (p.on(21, 32)) {
+                curMap.changeBlock(21, 33, '(')
+            }
+        } else if (curMap == droptonTown) {
+            if (p.on(38, 21)) { // Dropton Research Facility
+                curMap.changeBlock(38, 20, '(')
+            }
+        }
+    }, "A special pass that lets you access more of Dropton!", "MISC"),
+    lightContainer: new Item("Light Container", 0, function(x, y) {
+        ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
+    }, function() {
+        // changeme to add functionality
+    }, "A small vial made of glass, yet much shinier. What could it be used for?", "MISC")
 } // Puzzle Keys are not included as they vary depending on where they came from
 
 function Food(name, img, health, secs) {

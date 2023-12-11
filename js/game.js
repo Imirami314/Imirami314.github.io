@@ -26,7 +26,7 @@ var alerts = [
     new GameAlert(252, 67, ["Welcome to the Dropton Drylands!", "Not that it's dry here, it's just dry compared to being underwater..."], mainMap, "SIGN"),
     new GameAlert(38, 16, ["House under repair due to mysterious current...", "KEEP OUT!"], droptonCity, "SIGN"),
     new GameAlert(22, 28, ["Full Pass required for entry to Dropton Hall."], droptonCity, "SIGN"),
-    new GameAlert(37, 20, ["Full Pass required for entry to Dropton Research Facility."], droptonTown, "SIGN")
+    new GameAlert(37, 21, ["Full Pass required for entry to Dropton Research Facility."], droptonTown, "SIGN")
 ]
 
 var teleports = [
@@ -854,6 +854,16 @@ Player.prototype.giveItem = function(item, itemAlert) {
         setTimeout(() => {
             this.newItemAlert = false
         }, 2000)
+    }
+}
+
+Player.prototype.removeItem = function(item) {
+    for (var i in this.inventory) {
+        var itm = this.inventory[i]
+        if (itm == item) {
+            this.inventory.splice(i, 1)
+            break
+        }
     }
 }
 
@@ -2248,7 +2258,23 @@ var loch = new NPC(34 * 75 + 37.5, 22 * 75 + 37.5, "Loch", droptonCity, 'L', [
 ], "ello", function() {
     missions.push(theBlockedEntrance)
 }, "after")
-var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde, walter, marina, ariel, raine, rainesDad, caspian, loch]
+
+var delta = new NPC(18 * 75 + 37.5, 11 * 75 + 37.5, "Delta", droptonTown, 'D', [
+    "Hi! Could you help me with something?",
+    "I found this treasure chest in Dropton City, but I didn't have the key.",
+    "Then, I found the key many days later on the ground!",
+    "There's just one problem...I don't remember where the treasure chest was.",
+    "I just know that it was on the south side of the city, and it had walls around it.",
+    "Can you help me find it?",
+    "...",
+    "Thanks! Here's the key so that you can unlock it when you find it.",
+    "I'm counting on you!"
+], "[insert description]", function() {
+    p.giveItem(items.deltasKey, true)
+    missions.push(deltasLostTreasure)
+}, "after")
+
+var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde, walter, marina, ariel, raine, rainesDad, caspian, loch, delta]
 var shopMenus = [muhammadShop, blakeShop, caspianShop]
 
 npcs.searchByName = function(name) {
@@ -2752,6 +2778,10 @@ var c10_1 = new Chest(cryoUnderground, 10, 1, [
     })
 ])
 
+var c4_41 = new Chest(droptonCity, 4, 41, [
+    items.lightContainer
+])
+
 var chests = [
     // Main Map
     c121_31, // Heat Handle
@@ -2762,6 +2792,8 @@ var chests = [
 
     // Cryo Underground
     c10_1,
+    // Dropton City,
+    c4_41,
 ]
 
 // Secrets
