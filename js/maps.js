@@ -1578,7 +1578,7 @@ droptonCity.solve = function() {
         }
 
         // Houses/Rooms
-        if (p.on(21, 25)) {
+        if (p.on(21, 31)) {
             curMap = droptonHall
             p.goTo(7 * 75 + 37.5, 6 * 75 - 5)
         }
@@ -1597,7 +1597,7 @@ var droptonHall = new Landscape([
 ], null, null, null, null, "Dropton Hall", function() {
     if (keys.space && p.on(7, 6)) {
         curMap = droptonCity
-        p.goTo(21 * 75 + 75 / 2, 26 * 75 + 5)
+        p.goTo(21 * 75 + 75 / 2, 32 * 75 + 5)
     }
 })
 // }
@@ -1645,7 +1645,7 @@ var droptonTown = new Landscape([
         // Houses/Rooms
         if (p.on(38, 19)) {
             curMap = droptonResearchFacility
-            p.goTo(4 * 75 + 37.5, 2 * 75 + 70)
+            p.goTo(4 * 75 + 37.5, 3 * 75 + 70)
         }
     }
 })
@@ -1654,11 +1654,12 @@ var droptonResearchFacility = new Landscape([
     '_________',
     '_________',
     '_________',
+    '_________',
     '____|____',
 ], null, null, null, null, "Dropton Research Facility", function() {
     if (keys.space) {
         // Exit
-        if (p.on(4, 3)) {
+        if (p.on(4, 4)) {
             curMap = droptonTown
             p.goTo(38 * 75 + 37.5, 20 * 75 + 5)
         }

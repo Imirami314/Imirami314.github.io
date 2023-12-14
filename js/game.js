@@ -2146,7 +2146,7 @@ var tyde = new NPC(33 * 75 + 37.5, 16 * 75 + 37.5, "Tyde", droptonCity, 'U', [
 
 }, "after")
 
-var walter = new NPC(11 * 75 + 75 / 2, 1 * 75 + 75 / 2, "Walter", droptonHall, 'L', [
+var walter = new NPC(23 * 75 + 75 / 2, 32 * 75 + 75 / 2, "Walter", droptonCity, 'L', [
     "Hello there!",
     "You don't seem like a water dude. You look\nlike a surface dude.",
     "Have you heard about the strange currents destroying\nthis place?",
@@ -2274,7 +2274,27 @@ var delta = new NPC(18 * 75 + 37.5, 11 * 75 + 37.5, "Delta", droptonTown, 'D', [
     missions.push(deltasLostTreasure)
 }, "after")
 
-var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde, walter, marina, ariel, raine, rainesDad, caspian, loch, delta]
+var presidentWells = new NPC(1 * 75 + 37.5, 1 * 75 + 37.5, "President Wells", droptonResearchFacility, 'R', [
+    "Oh hello there!",
+    "...erm, who are you?",
+    "...",
+    "Ah yes! I remember now. You've become quite famous, you know.",
+    "As I'm sure you've heard, something mysterious is going on.",
+    "Unfortunately, I can't talk about this here.",
+    "Meet me at Dropton Hall, in Dropton City."
+], "[insert description]", function() {
+    presidentWells.curPath = [
+        [1, 4],
+        [4, 4],
+        function() {
+            presidentWells.map = droptonHall
+            presidentWells.x = 1 * 75 + 37.5
+            presidentWells.y = 1 * 75 + 37.5
+        }
+    ]
+}, "after")
+
+var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde, walter, marina, ariel, raine, rainesDad, caspian, loch, delta, presidentWells]
 var shopMenus = [muhammadShop, blakeShop, caspianShop]
 
 npcs.searchByName = function(name) {
