@@ -1,4 +1,5 @@
 var Screen = {
+    effects: [],
     fade: 0,
     shakeTime: 0,
     shakeOffset: {
@@ -19,16 +20,61 @@ Screen.fadeOut = function(speed, action) {
 }
 
 Screen.shake = function(intensity, duration) {
-    if (this.shakeTime < duration) {
-        this.shakeOffset.x = intensity * Math.pow(Math.random() - 0.5, 0) // Returns either -1 or 1
-        this.shakeOffset.y = intensity * Math.pow(Math.random() - 0.5, 0)
-        this.shakeTime += 1 / 66.67
+    if (!this.checkEffectActive("SHAKE")) {
+        this.effects.push({
+            type: "SHAKE",
+            intensity: intensity,
+            duration: duration
+        })
     } else {
-        this.shakeTime = 0
-        this.shakeOffset = {
-            x: 0,
-            y: 0
+        console.log("Cannot add another effect if one of the same type is active")
+    }
+
+    // if (this.shakeTime < duration) {
+    //     this.shakeOffset.x = intensity * (Math.random() < 0.5 ? -1 : 1) // Returns either -1 or 1
+    //     this.shakeOffset.y = intensity * (Math.random() < 0.5 ? -1 : 1)
+    //     this.shakeTime += 1 / 66.67
+    // } else {
+    //     this.shakeTime = 0
+    //     this.shakeOffset = {
+    //         x: 0,
+    //         y: 0
+    //     }
+    //     return
+    // }
+}
+
+Screen.checkEffectActive = function(type) {
+    for (var i in this.effects) {
+        if (this.effects[i].type == type) {
+            return true
         }
-        return
+    }
+
+    return false
+}
+
+Screen.stopEffect = function(type) {
+    for (var i in this.effects) {
+        if (this.effects[i].type == type) {
+            this.effects.splice(i, 1)
+        }
+    }
+}
+
+Screen.update = function() {
+    for (var i in this.effects) {
+        var e = this.effects[i]
+        switch (e.type) {
+            case "SHAKE":
+                if (this.shakeTime < e.duration) {
+                    this.shakeOffset.x = e.intensity * (Math.random() < 0.5 ? -1 : 1) // Returns either -1 or 1
+                    this.shakeOffset.y = e.intensity * (Math.random() < 0.5 ? -1 : 1)
+                    this.shakeTime += 1 / 66.67
+                } else {
+                    this.stopEffect("SHAKE")
+                }
+                break
+        }
     }
 }
