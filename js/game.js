@@ -2290,6 +2290,18 @@ var presidentWells = new NPC(1 * 75 + 37.5, 1 * 75 + 37.5, "President Wells", dr
             presidentWells.map = droptonHall
             presidentWells.x = 1 * 75 + 37.5
             presidentWells.y = 1 * 75 + 37.5
+
+            presidentWells.lines = [
+                "Hello again! Great to see that you made it.",
+                "Can I trust you with something important?",
+                "...",
+                "Okay. You must know about the strong currents destroying Dropton, right?",
+                "Well, everybody believes that it has to do with hydrothermal vents.\nBut I suspect that it's something else.",
+                "You see, we have always believed that we sat at the bottom of this lake.\nBut right before the currents came, I felt a strong rumble.",
+                "I figured it came from the surface, but nobody there seemed to have felt a thing!",
+                "Not just that, but in testing, the hydrothermal vents weren't able to generate such forces.",
+                ""
+            ]
         }
     ]
 }, "after")
@@ -3068,6 +3080,10 @@ var gameInterval = setInterval(function() {
 		} else if (scene == "GAME") {
             ctx.save()
             ctx.translate((-1 * p.x) + (width / 2), (-1 * p.y) + (height / 2))
+
+            // Screen Shake
+            ctx.translate(Screen.shakeOffset.x, Screen.shakeOffset.y)
+
             curMap.draw(p, "Player View")
             if (!!curMap.solve) {
                 curMap.solve()
