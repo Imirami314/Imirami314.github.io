@@ -1337,7 +1337,7 @@ Player.prototype.displayNPCInfo = function(n) {
 
 Player.prototype.nearNPC = function () {
     for (var i in npcs) {
-        if (npcs[i].showName && npcs[i].lineNum == -1) {
+        if (npcs[i].map == curMap && entityDistance(p, npcs[i]) < 100) {
             return true
         }
     }
