@@ -133,10 +133,11 @@ var theBlockedEntrance = new Mission("The Blocked Entrance", "Reward", null, 0)
 
 theBlockedEntrance.solve = function () {
     if (droptonCity.checkBlocks([
-        [30, 20], [29, 21], [30, 21], [31, 21], [28, 22], [29, 22], [31, 22], [32, 22],
-        [29, 23], [30, 23], [31, 23], [30, 24]
+        [35, 26], [34, 27], [35, 27], [36, 27], [33, 28], [34, 28], [36, 28], [37, 28],
+        [34, 29], [35, 29], [36, 29], [35, 30]
     ], "~")) {
-        loch.lines = [
+        
+        loch.lines = [ 
             "...", "What?! All the ice and purple stuff is gone!",
             "And look at that, the entrance opened again?\nDid you do this?",
             "...", "Wow. Thank you so much!",
@@ -145,6 +146,7 @@ theBlockedEntrance.solve = function () {
         loch.action = function (p) {
             if (!theBlockedEntrance.complete) {
                 p.trills += 50
+                
             }
             loch.lines = ["Wow, I've sure missed this entrance.", "If you want to go up and down, just enter in the middle!"]
             theBlockedEntrance.finish()
