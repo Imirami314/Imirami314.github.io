@@ -2247,7 +2247,7 @@ var caspian = new NPC(6 * 75, 4 * 75 + 37.5, "Caspian", droptonTown, 'L', [
     ShopMenu.open(caspianShop)
 }, "after")
 
-var loch = new NPC(34 * 75 + 37.5, 22 * 75 + 37.5, "Loch", droptonCity, 'L', [
+var loch = new NPC(40 * 75 + 37.5, 28 * 75 + 37.5, "Loch", droptonCity, 'L', [
     "Hey there.",
     "This mysterious substance just recently formed around Dropton City's\nmain entrance.",
     "...",
