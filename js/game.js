@@ -2340,7 +2340,28 @@ var presidentWells = new NPC(1 * 75 + 37.5, 1 * 75 + 37.5, "President Wells", dr
                                 curMap.changeBlock(41, 2, '_')
                                 curMap.changeBlock(42, 2, '_')
                                 curMap.changeBlock(41, 3, 'S')
+                                
+                                // Change Ariel
+                                ariel.x = 34 * 75 + 37.5
+                                ariel.y = 2 * 75 + 37.5
+                                ariel.dir = 'R'
+                                ariel.lines = [
+                                    "What happened here?",
+                                    "This clump of rocks was formed the last time the ground shook like this.",
+                                    "But now it looks like it has opened up into some sort of cave!",
+                                    "I never realized that there was anything below Dropton City.",
+                                    "Hopefully something is done about it..."
+                                ]
 
+                                // Change Walter
+                                walter.x = 45 * 75 + 37.5
+                                walter.y = 2 * 75 + 37.5
+                                walter.dir = 'L'
+                                walter.lines = [
+                                    "Oh my goodness...",
+                                    "I've never seen this before! There's a cave underneath Dropton!",
+                                    "The president better get over here quick!"
+                                ]
                             }
                         ]
                     }
