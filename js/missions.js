@@ -54,8 +54,10 @@ Mission.prototype.alert = function(t) {
 }
 
 Mission.prototype.finish = function() {
-	this.complete = true
-	this.completionPopup = true
+    if (!this.complete) {
+        this.complete = true
+        this.completionPopup = true
+    }
 }
 
 var aStrangeWorld = new Mission("A Strange World", "Main", null, 0)
@@ -77,7 +79,7 @@ theWanderersRiddles.solve = function () {
 		theWanderer.lines = [
 			"`...", "You probably didn't expect me to be here already.",
 			"Congratulations on finding such a rare and mysterious item.\nI've only seen these items in ancient scrolls.",
-			"You are now on the final step of teleporation.", "Sit in the center of the magical ring,\nPlace the beam and the water will spring."
+			"You are now on the final step of teleportation.", "Sit in the center of the magical ring,\nPlace the beam and the water will spring."
 		]
 	} else if (secrets[0][2] == true) {
 		theWanderer.lines = ["I sense that you've almost completed Chard Town's secret..."]
