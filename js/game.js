@@ -2300,8 +2300,52 @@ var presidentWells = new NPC(1 * 75 + 37.5, 1 * 75 + 37.5, "President Wells", dr
                 "You see, we have always believed that we sat at the bottom of this lake.\nBut right before the currents came, I felt a strong rumble.",
                 "I figured it came from the surface, but nobody there seemed to have felt a thing!",
                 "Not just that, but in testing, the hydrothermal vents weren't able to generate such forces.",
-                ""
+                "...sorry, that was a lot.",
+                "Anyway, I'll need you to help me investigate."
             ]
+
+            presidentWells.action = function() {
+                Screen.shake(5, 5)
+                setTimeout(() => {
+                    presidentWells.lines = [
+                        "What was that??",
+                        "Quick, we need to make sure everyone is safe!"
+                    ]
+
+                    presidentWells.lineNum = 0 // Starts talking automatically
+
+                    presidentWells.action = function() {
+                        presidentWells.curPath = [
+                            [1, 5],
+                            [7, 5],
+                            [7, 6],
+                            function() {
+                                presidentWells.x = 23 * 75 + 37.5
+                                presidentWells.y = 35 * 75 + 37.5
+                                presidentWells.map = droptonCity
+
+                                presidentWells.lines = [
+                                    "Did you hear? Something is happening on the north side of Dropton City!",
+                                    "I'm going to need your help. Can you go up there are see if everything is alright?",
+                                    "I'll check the rest of the city, and help anybody who needs it.",
+                                    "Good luck!"
+                                ]
+
+                                // Open weird crack thing at the top of Dropton City
+                                curMap.changeBlock(36, 0, 'S')
+                                curMap.changeBlock(36, 2, 'S')
+                                curMap.changeBlock(37, 3, 'S')
+                                curMap.changeBlock(39, 1, 'O')
+                                curMap.changeBlock(41, 1, '_')
+                                curMap.changeBlock(41, 2, '_')
+                                curMap.changeBlock(42, 2, '_')
+                                curMap.changeBlock(41, 3, 'S')
+
+                            }
+                        ]
+                    }
+                }, 5500)
+            }
         }
     ]
 }, "after")
@@ -2980,7 +3024,7 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    // dev = false
+    dev = true
     curMap = droptonTown
     p.x = 1 * 75 + 37.5
     p.y = 1 * 75 + 37.5
@@ -3078,6 +3122,7 @@ var gameInterval = setInterval(function() {
             ctx.font = "200px serif"
             ctx.fillText("Loading", width / 3, height / 2)
 		} else if (scene == "GAME") {
+            Screen.update()
             ctx.save()
             ctx.translate((-1 * p.x) + (width / 2), (-1 * p.y) + (height / 2))
 
