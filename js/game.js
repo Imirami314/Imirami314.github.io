@@ -166,7 +166,7 @@ function Player(x, y, npcs) {
     this.newItemAlert = false
     this.newItem = null
 
-    this.inventory = [items.spearOfTheDarkened, items.auraOfWarmth, items.speedySnowPath, items.aquaLung, food.apple()] // Default []
+    this.inventory = [] // Default []
     this.itemsMode = "ALL"
 
     this.waterParticles = new ParticleSystem(width / 2, height / 2, 5, 50, 0, 0, 100)
@@ -216,7 +216,7 @@ function Player(x, y, npcs) {
     }
 
     this.fullPass = false
-    this.droptonDonations = 50 // Default 0
+    this.droptonDonations = 0 // Default 0
 
 	this.inRaft = false
 
@@ -339,24 +339,26 @@ Player.prototype.draw = function() {
     }
 
 	// Path making
-	 if (this.weapon.name == "Speedy Snow Path") {
-		this.buildMode = true
-		this.bb = 'z'
-	 } else {
-		this.buildMode = false
-	 }
-	 if (this.buildMode) {
-	     if (this.blockOn.name == "trail" || this.blockOn.name == "water" || this.blockOn.name == "lava" || this.blockOn.name == "speedy snow" || this.blockOn.name == "door" || this.blockOn.name == "lock" || curMap != mainMap) {
-			this.buildable = false
-			ctx.fillStyle = "rgb(255, 0, 0, 0.5)"
-    		ctx.fillRect(p.cords.x * 75 - p.x + width / 2 , p.cords.y * 75 - p.y + height / 2, 75, 75)
-			 
-		 } else {
-			this.buildable = true
-			ctx.fillStyle = "rgb(0, 255, 0, 0.5)"
-    		ctx.fillRect(p.cords.x * 75 - p.x + width / 2 , p.cords.y * 75 - p.y + height / 2, 75, 75)
-		 }
-	 }
+    if (!!this.weapon) {
+        if (this.weapon.name == "Speedy Snow Path") {
+        this.buildMode = true
+        this.bb = 'z'
+        } else {
+        this.buildMode = false
+        }
+        if (this.buildMode) {
+            if (this.blockOn.name == "trail" || this.blockOn.name == "water" || this.blockOn.name == "lava" || this.blockOn.name == "speedy snow" || this.blockOn.name == "door" || this.blockOn.name == "lock" || curMap != mainMap) {
+            this.buildable = false
+            ctx.fillStyle = "rgb(255, 0, 0, 0.5)"
+            ctx.fillRect(p.cords.x * 75 - p.x + width / 2 , p.cords.y * 75 - p.y + height / 2, 75, 75)
+                
+            } else {
+            this.buildable = true
+            ctx.fillStyle = "rgb(0, 255, 0, 0.5)"
+            ctx.fillRect(p.cords.x * 75 - p.x + width / 2 , p.cords.y * 75 - p.y + height / 2, 75, 75)
+            }
+        }
+    }
 
      // Body
     ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
@@ -1337,7 +1339,7 @@ Player.prototype.displayNPCInfo = function(n) {
 
 Player.prototype.nearNPC = function () {
     for (var i in npcs) {
-        if (npcs[i].map == curMap && entityDistance(p, npcs[i]) < 100) {
+        if (npcs[i].map == curMap && entityDistance(p, npcs[i]) < 100 && npcs[i].lineNum == -1) {
             return true
         }
     }
@@ -2306,7 +2308,7 @@ var presidentWells = new NPC(1 * 75 + 37.5, 1 * 75 + 37.5, "President Wells", dr
             ]
 
             presidentWells.action = function() {
-                Screen.shake(5, 5)
+                Screen.shake(5, 3)
                 setTimeout(() => {
                     presidentWells.lines = [
                         "What was that??",
@@ -2327,20 +2329,25 @@ var presidentWells = new NPC(1 * 75 + 37.5, 1 * 75 + 37.5, "President Wells", dr
 
                                 presidentWells.lines = [
                                     "Did you hear? Something is happening on the north side of Dropton City!",
-                                    "I'm going to need your help. Can you go up there are see if everything is alright?",
-                                    "I'll check the rest of the city, and help anybody who needs it.",
-                                    "Good luck!"
+                                    "I haven't got a clue what it is, but everybody seems to be rushing to\nsee it!",
+                                    "So, I'm going to need your help. Can you head over there\nand see what's going on?",
+                                    "I'll check the rest of the city, and make sure that everybody is okay.",
+                                    "Good luck!",
                                 ]
+                                presidentWells.actionLine = 1
+                                presidentWells.action = function() {
+                                    curCamera = new Camera(39 * 75, 4 * 75 + 37.5, 15, "NPC", 3)
+                                }
 
                                 // Open weird crack thing at the top of Dropton City
-                                curMap.changeBlock(36, 0, 'S')
-                                curMap.changeBlock(36, 2, 'S')
-                                curMap.changeBlock(37, 3, 'S')
-                                curMap.changeBlock(39, 1, 'O')
-                                curMap.changeBlock(41, 1, '_')
-                                curMap.changeBlock(41, 2, '_')
-                                curMap.changeBlock(42, 2, '_')
-                                curMap.changeBlock(41, 3, 'S')
+                                droptonCity.changeBlock(36, 0, 'S')
+                                droptonCity.changeBlock(36, 2, 'S')
+                                droptonCity.changeBlock(37, 3, 'S')
+                                droptonCity.changeBlock(39, 1, 'O')
+                                droptonCity.changeBlock(41, 1, '_')
+                                droptonCity.changeBlock(41, 2, '_')
+                                droptonCity.changeBlock(42, 2, '_')
+                                droptonCity.changeBlock(41, 3, 'S')
                                 
                                 // Change Ariel
                                 ariel.x = 34 * 75 + 37.5
@@ -2583,8 +2590,6 @@ var t21_4 = new Toggle(cryoUnderground, 21, 4, function() {
     curMap.changeBlock(17, 6, '(')
 })
 
-var testRaft = new Raft(mainMap, 33 * 75, 41 * 75)
-
 var raft12_20 = new Raft(cryoUnderground, 12 * 75, 20 * 75)
 
 var rd11_15 = new RaftDispenser(cryoUnderground, 11 * 75, 15 * 75, 11 * 75 + 37.5, 16 * 75 + 37.5)
@@ -2745,7 +2750,6 @@ var interactives = [
     t19_24,
     t13_6,
     t21_4,
-    testRaft,
     raft12_20,
     rd11_15,
     rd22_22,
@@ -2831,7 +2835,7 @@ var models = {
     }
 }
 
-var p = new Player(15 * 75, 15 * 75, npcs) // default x = width / 2, y = height / 2 helloooh
+var p = new Player(2 * 75, 2 * 75, npcs) // default x = width / 2, y = height / 2 helloooh
 
 var c121_31 = new Chest(mainMap, 121, 31, [
     items.heatHandle
@@ -3051,7 +3055,9 @@ function startPos() {
     curMap = droptonTown
     p.x = 1 * 75 + 37.5
     p.y = 1 * 75 + 37.5
-    p.giveItem(items.stormedsSword, false)
+    p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.stormedsSword]
+    p.equipped = [items.aquaLung]
+    p.droptonDonations = 100
 
     lonzo.map = mainMap
     lonzo.x = 158 * 75 + 37.5

@@ -686,7 +686,7 @@ function Splint(map, spawnX, spawnY) { // Idk what to call it man
     this.speed = 1
     this.playerDist = 10000 // Gets updated by the draw method
     this.agroDist = 500
-    this.deAgroDist = 3500
+    this.deAgroDist = 1000
     this.agro = false
     // this.pathToPlayer = null;
     
@@ -800,16 +800,11 @@ Splint.prototype.hit = function() {
 
 
 var monsters = [
-    new Splint("Main Map", 4 * 75, 4 * 75),
     new Splint("Main Map", 46 * 75, 18 * 75),
     new Splint("Main Map", 47 * 75, 18 * 75),
     new Splint("Main Map", 48 * 75, 18 * 75),
     new Splint("Gale Cave", 50 * 75, 33 * 75)
 ]
-
-// for (var i = 0; i < 500; i ++) {
-//     monsters.push(new Splint("Main Map", mainMap.getDimensions().x * Math.random() * 75, mainMap.getDimensions().y * Math.random() * 75))
-// }
 
 var bosses = [
     new Darkened("Darkened Room", 712.5, 100),
