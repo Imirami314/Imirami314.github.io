@@ -2897,9 +2897,10 @@ var chests = [
 
 var droptonTunnelsEntrance = new Secret(270, 78, mainMap, function() {
     if (p.can.goUnderWater && keys.space) {
-        curMap = droptonTunnels
-        p.x = 14 * 75 + 37.5
-        p.y = 14 * 75 + 37.5
+        Screen.fadeOut(0.01, function() {
+            curMap = droptonTunnels
+            p.goTo(14 * 75 + 37.5, 14 * 75 + 37.5)
+        })
     }
 })
 
@@ -3436,13 +3437,9 @@ var gameInterval = setInterval(function() {
             p.displayMap()
             
             if (p.health <= 0) {
-                ctx.fillStyle = "rgba(0, 0, 0, " + fade + ")"
-                ctx.fillRect(0, 0, width, height)
-                fade += 0.01
-                if (fade >= 1) {
-                    fade = 0
+                Screen.fadeOut(0.01, function() {
                     scene = "DEATH"
-                }
+                })
             }
     
             
@@ -3465,6 +3462,10 @@ var gameInterval = setInterval(function() {
             if (CUR_SHOP_MENU != 0) {
                 ShopMenu(CUR_SHOP_MENU)
             }
+
+            // Screen fade cover
+            ctx.fillStyle = "rgb(0, 0, 0, " + Screen.fade + ")"
+            ctx.fillRect(0, 0, width, height)
             
         } else if (scene == "DARKENED BOSS CUTSCENE") {
             playMusic("Boss Cutscene")

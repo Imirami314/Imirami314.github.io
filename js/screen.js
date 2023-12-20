@@ -9,14 +9,24 @@ var Screen = {
 }
 
 Screen.fadeOut = function(speed, action) {
-    ctx.fillStyle = "rgb(0, 0, 0, " + this.fade + ")"
-    ctx.fillRect(0, 0, width, height)
-    cutsceneFrame = 0
-    this.fade += speed
-    if (this.fade >= 1) {
-        action()
-        this.fade = 0
+    if (!this.checkEffectActive("FADE OUT")) {
+        this.effects.push({
+            type: "FADE OUT",
+            speed: speed,
+            action: action
+        })
+    } else {
+        console.log("Cannot add another effect if one of the same type is active")
     }
+
+    // ctx.fillStyle = "rgb(0, 0, 0, " + this.fade + ")"
+    // ctx.fillRect(0, 0, width, height)
+    // cutsceneFrame = 0
+    // this.fade += speed
+    // if (this.fade >= 1) {
+    //     action()
+    //     this.fade = 0
+    // }
 }
 
 Screen.shake = function(intensity, duration) {
@@ -66,6 +76,15 @@ Screen.update = function() {
     for (var i in this.effects) {
         var e = this.effects[i]
         switch (e.type) {
+            case "FADE OUT":
+                cutsceneFrame = 0
+                this.fade += e.speed
+                if (this.fade >= 1) {
+                    e.action()
+                    this.fade = 0
+                    this.stopEffect("FADE OUT")
+                }
+                break
             case "SHAKE":
                 if (this.shakeTime < e.duration) {
                     this.shakeOffset.x = e.intensity * (Math.random() < 0.5 ? -1 : 1) // Returns either -1 or 1
