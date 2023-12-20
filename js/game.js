@@ -2253,7 +2253,8 @@ var loch = new NPC(40 * 75 + 37.5, 28 * 75 + 37.5, "Loch", droptonCity, 'L', [
     "...",
     "Wait, you know about this stuff?",
     "Anyways, if we find a way to get rid of this ice, I'm pretty sure the\nflow of the water will get rid of this purple stuff.",
-    "Opening up this entrance will also provide easy access to Dropton Dryalnds!",
+    "I tried to break as much as possible by hand, but it was too dangerous.",
+    "Opening up this entrance would provide easy access to Dropton Dryalnds!",
     "If you have any ideas on how to fix this, it will be very helpful.\nI'll reward you too!"
 ], "ello", function() {
     missions.push(theBlockedEntrance)
