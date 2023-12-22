@@ -43,6 +43,7 @@ function NPC(x, y, name, map, dir, lines, desc, action, actionLine, shopMenu) {
     this.pathPoint = 0
     this.pathPointReached = false
     this.curPath = 0
+    this.speed = 2 // Default 2
 
 	this.firstInteraction = true
 
@@ -354,19 +355,19 @@ NPC.prototype.move = function(pos) {
     
     if (this.cords.x < moveX) {
         this.dir = "R"
-        this.x += 2
+        this.x += this.speed
     }
     if (this.cords.x > moveX) {
         this.dir = "L"
-        this.x -= 2
+        this.x -= this.speed
     }
     if (this.cords.y < moveY) {
         this.dir = "D"
-        this.y += 2
+        this.y += this.speed
     }
     if (this.cords.y > moveY) {
         this.dir = "U"
-        this.y -= 2
+        this.y -= this.speed
     }
         
     

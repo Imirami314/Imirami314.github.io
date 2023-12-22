@@ -136,20 +136,33 @@ theBlockedEntrance.solve = function () {
         [35, 26], [34, 27], [35, 27], [36, 27], [33, 28], [34, 28], [36, 28], [37, 28],
         [34, 29], [35, 29], [36, 29], [35, 30]
     ], "~")) {
-        
-        loch.lines = [ 
-            "...", "What?! All the ice and purple stuff is gone!",
-            "And look at that, the entrance opened again?\nDid you do this?",
-            "...", "Wow. Thank you so much!",
-            "I must reward you. Here, take these trills!"
-        ]
+        if (!theBlockedEntrance.complete) {
+            loch.lines = [
+                "...", "What?! All the ice and purple stuff is gone!",
+                "And look at that, the entrance opened again?\nDid you do this?",
+                "...", "Wow. Thank you so much!",
+                "I must reward you. Here, take these trills!",
+                "If you ever need me, I'll be in my house to the west.\nSee ya!"
+            ]
+        }
         loch.action = function (p) {
             if (!theBlockedEntrance.complete) {
                 p.trills += 50
                 
+                loch.speed = 5
+                loch.curPath = [
+                    [40, 21],
+                    function () {
+                    loch.x = 75
+                    loch.y = 75
+                    loch.map = lochNessHouse
+                    loch.dir = "R"
+                    loch.lines = ["Wow, I've sure missed that entrance.\nThanks again for fixing it!",
+                        "If you want to go up and down, just enter from the middle!"]
+                    }
+                ]
+                theBlockedEntrance.finish()
             }
-            loch.lines = ["Wow, I've sure missed this entrance.", "If you want to go up and down, just enter in the middle!"]
-            theBlockedEntrance.finish()
                 
         }
         loch.actionLine = "after"

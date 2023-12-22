@@ -1593,6 +1593,11 @@ droptonCity.solve = function() {
             curMap = droptonHall
             p.goTo(7 * 75 + 37.5, 6 * 75 - 5)
         }
+
+        if (p.on(2, 11)) {
+            curMap = lochNessHouse
+            p.goTo(5 * 75 + 37.5, 4 * 75 + 37.5)
+        }
     }
 }
 
@@ -1677,6 +1682,22 @@ var droptonResearchFacility = new Landscape([
     }
 })
 
+var lochNessHouse = new Landscape([
+    '___________',
+    '___________',
+    '___________',
+    '___________',
+    '___________',
+    '_____|_____',
+], null, null, null, null, "Loch Ness House", function() {
+    if (keys.space) {
+        if (p.on(5, 5)) {
+            curMap = droptonCity
+            p.goTo(2 * 75 + 37.5, 12 * 75 + 37.5)
+        }
+    }
+})
+
 
 var areas = [
     imperilledPrison,
@@ -1703,7 +1724,8 @@ var areas = [
     droptonCity,
     droptonHall,
     droptonTown,
-    droptonResearchFacility
+    droptonResearchFacility,
+    lochNessHouse
 ]
 
 // for (var l in areas) {
