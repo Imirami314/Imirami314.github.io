@@ -708,6 +708,22 @@ Landscape.prototype.changeBlock = function(x, y, block) {
 }
 
 /**
+ * Changes multiple blocks to a specific block
+ * @param {*} a Two dim array of coords (in BLOCKS)
+ * @param {*} block The block char of the new block
+ */
+Landscape.prototype.changeBlocks = function (a, block) {
+    for (var i in a) {
+        this.arr[a[i][1]] = this.arr[a[i][1]].replaceAt(a[i][0], block)
+        this.changes.push({
+            x: a[i][0],
+            y: a[i][1],
+            block: block
+        }) 
+    }
+}
+
+/**
  * Gets the dimensions of the map
  * @returns Object containing .x and .y which give the lengths of the sides (in BLOCKS)
  */
