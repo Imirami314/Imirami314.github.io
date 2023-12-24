@@ -896,7 +896,7 @@ Player.prototype.hitEnemies = function() {
         if (mDist <= 150 && mouseIsDown && this.hitCooldown <= 0) {
             this.hitCooldown = 0.35
             if (!!this.weapon.damage) {
-                m.health -= this.weapon.damage
+                m.health -= (this.weapon.damage || 1.5)
             } else {
                 m.health -= 1
             }
@@ -2373,7 +2373,7 @@ var presidentWells = new NPC(1 * 75 + 37.5, 1 * 75 + 37.5, "President Wells", dr
                             }
                         ]
                     }
-                }, 5500)
+                }, 5250)
             }
         }
     ]
