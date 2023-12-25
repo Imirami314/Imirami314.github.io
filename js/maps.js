@@ -1604,6 +1604,12 @@ droptonCity.solve = function() {
             p.goTo(1 * 75 + 5, 15 * 75 + 75 / 2)
         }
 
+        // Abandoned Channel
+        if (p.on(39, 1)) {
+            curMap = abandonedChannel
+            p.goTo(10 * 75, 10 * 75)
+        }
+
         // Houses/Rooms
         if (p.on(21, 31)) {
             curMap = droptonHall
@@ -1714,6 +1720,31 @@ var lochNessHouse = new Landscape([
     }
 })
 
+var abandonedChannel = new Landscape([
+    'SSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSS~~SSSSSSSSSS',
+    'SSSSSSSS~~SSSSSSSSSS',
+    'SSSSSSSS~~SSSSSSSSSS',
+    'SSSSSSSS~~SSSSSSSSSS',
+    'SSS~~~~~~~~~S..SSSSS',
+    'SSS~~~~~~~~~S..SSSSS',
+    '~~~~~SSSSSSSS..SSSSS',
+    '~~~~~SSSS.....SSSSSS',
+    'SS~~SSSSS..SSSSSSSSS',
+    'SS~~SSSSS..SSSSSSSSS',
+    'SS~~SS.....SSSSSSSSS',
+    'SS~~SS..SSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSS',
+], null, null, null, null, "Abandoned Channel", function() {
+
+})
+
 
 var areas = [
     imperilledPrison,
@@ -1741,7 +1772,8 @@ var areas = [
     droptonHall,
     droptonTown,
     droptonResearchFacility,
-    lochNessHouse
+    lochNessHouse,
+    abandonedChannel
 ]
 
 // for (var l in areas) {

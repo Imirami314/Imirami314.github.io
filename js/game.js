@@ -25,7 +25,7 @@ var alerts = [
 	new GameAlert(24, 8, ["This mysterious substance will come with a curse,\nThe player will perish, the raft alone may traverse."], cryoUnderground, "SIGN"),
     new GameAlert(252, 67, ["Welcome to the Dropton Drylands!", "Not that it's dry here, it's just dry compared to being underwater..."], mainMap, "SIGN"),
     new GameAlert(38, 16, ["House under repair due to mysterious current...", "KEEP OUT!"], droptonCity, "SIGN"),
-    new GameAlert(22, 28, ["Full Pass required for entry to Dropton Hall."], droptonCity, "SIGN"),
+    new GameAlert(22, 34, ["Full Pass required for entry to Dropton Hall."], droptonCity, "SIGN"),
     new GameAlert(37, 21, ["Full Pass required for entry to Dropton Research Facility."], droptonTown, "SIGN")
 ]
 
@@ -3052,9 +3052,8 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = true
-    curMap = droptonTown
-    p.x = 1 * 75 + 37.5
-    p.y = 1 * 75 + 37.5
+    curMap = droptonCity
+    p.goTo(39 * 75, 5 * 75)
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.stormedsSword]
     p.equipped = [items.aquaLung]
     p.droptonDonations = 100
@@ -3110,6 +3109,55 @@ function startPos() {
 
     mainMap.changeBlock(257, 29, 'z')
     alerts.push(new GameAlert(258, 29, ["SEGREME DNIW FO RETSAM WEN A SA SKAERB LLAW EHT"], mainMap, "SIGN"))
+
+    // Abandoned channel is open
+    presidentWells.x = 23 * 75 + 37.5
+    presidentWells.y = 35 * 75 + 37.5
+    presidentWells.map = droptonCity
+
+    presidentWells.lines = [
+        "Did you hear? Something is happening on the north side of Dropton City!",
+        "I haven't got a clue what it is, but everybody seems to be rushing to\nsee it!",
+        "So, I'm going to need your help. Can you head over there\nand see what's going on?",
+        "I'll check the rest of the city, and make sure that everybody is okay.",
+        "Good luck!",
+    ]
+    presidentWells.actionLine = 1
+    presidentWells.action = function() {
+        curCamera = new Camera(39 * 75, 4 * 75 + 37.5, 15, "NPC", 3)
+    }
+
+    // Open weird crack thing at the top of Dropton City
+    droptonCity.changeBlock(36, 0, 'S')
+    droptonCity.changeBlock(36, 2, 'S')
+    droptonCity.changeBlock(37, 3, 'S')
+    droptonCity.changeBlock(39, 1, 'O')
+    droptonCity.changeBlock(41, 1, '_')
+    droptonCity.changeBlock(41, 2, '_')
+    droptonCity.changeBlock(42, 2, '_')
+    droptonCity.changeBlock(41, 3, 'S')
+    
+    // Change Ariel
+    ariel.x = 34 * 75 + 37.5
+    ariel.y = 2 * 75 + 37.5
+    ariel.dir = 'R'
+    ariel.lines = [
+        "What happened here?",
+        "This clump of rocks was formed the last time the ground shook like this.",
+        "But now it looks like it has opened up into some sort of cave!",
+        "I never realized that there was anything below Dropton City.",
+        "Hopefully something is done about it..."
+    ]
+
+    // Change Walter
+    walter.x = 45 * 75 + 37.5
+    walter.y = 2 * 75 + 37.5
+    walter.dir = 'L'
+    walter.lines = [
+        "Oh my goodness...",
+        "I've never seen this before! There's a cave underneath Dropton!",
+        "The president better get over here quick!"
+    ]
 }
 
 startPos()
