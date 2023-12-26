@@ -8,7 +8,7 @@ var alerts = [
     new GameAlert(0, 0, ["WASD To Move\n[Space] To Continue"], imperilledPrison, "MESSAGE"),
     new GameAlert(9, 53, ["Confounded Cave\nKEEP OUT!"], mainMap, "SIGN"),
     new GameAlert(1, 44, ["Got you! - Mike"], mainMap, "SIGN"),
-    new GameAlert(182, 3, ["Glacia Village    ---------->\n<---------- Steel Field\nIf text on the signs confuse and confound, it all becomes clearer if you flip it around."], mainMap, "SIGN"),
+    new GameAlert(182, 3, ["Glacia Village ---------->\n<---------- Steel Field\nIf text on the signs confuse and confound, it all becomes clearer if you flip it around."], mainMap, "SIGN"),
     new GameAlert(66, 10, ["Huh? It's locked.\nYou need the 'Steel Field Key'."], mainMap, "KEY", "Map Key"),
     new GameAlert(6, 53, ["Huh? It's locked.\nYou need the 'Confounded Cave Key'."], mainMap, "KEY", "Confounded Cave Key"),
     new GameAlert(6, 21, ["The buttons above will alter the walls,\nPress them correctly to open both halls..."], confoundedCave, "SIGN"),
@@ -2379,7 +2379,15 @@ var presidentWells = new NPC(1 * 75 + 37.5, 1 * 75 + 37.5, "President Wells", dr
     ]
 }, "after")
 
-var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde, walter, marina, ariel, raine, rainesDad, caspian, loch, delta, presidentWells]
+var cascade = new NPC(6 * 75 + 75, 2 * 75 + 37.5, "Dr. Cascade", droptonResearchFacility, 'R', [
+    "Hmm...",
+    "Let's see here, if I add some water...",
+    "No, that won't work..."
+], "[insert description]", function() {
+
+}, "after")
+
+var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde, walter, marina, ariel, raine, rainesDad, caspian, loch, delta, presidentWells, cascade]
 var shopMenus = [muhammadShop, blakeShop, caspianShop]
 
 npcs.searchByName = function(name) {

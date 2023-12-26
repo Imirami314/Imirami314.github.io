@@ -25,6 +25,9 @@ var defeatSquareWidth = 50
 var forestLoopStarted = false // Once player gets close enough to lost traveler, the loop begins and the forest never ends
 var forestTeleport = true
 
+// Abandoned Channel vars
+var cascadeEntered = false // Has Cascade entered the place and started the adventure
+
 var scene = "GAME"
 
 
@@ -1689,10 +1692,10 @@ var droptonTown = new Landscape([
 })
 
 var droptonResearchFacility = new Landscape([
-    '_________',
-    '_________',
-    '_________',
-    '_________',
+    '_____ScSS',
+    '_____SSS!',
+    '_______S~',
+    '_______SS',
     '____|____',
 ], null, null, null, null, "Dropton Research Facility", function() {
     if (keys.space) {
@@ -1722,15 +1725,15 @@ var lochNessHouse = new Landscape([
 
 var abandonedChannel = new Landscape([
     'SSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSS~~SSSSSSSSSS',
-    'SSSSSSSS~~SSSSSSSSSS',
-    'SSSSSSSS~~SSSSSSSSSS',
-    'SSSSSSSS~~SSSSSSSSSS',
-    'SSS~~~~~~~~~S..SSSSS',
+    'SSSSSSSS~~_____SSSSS',
+    'SSSSSSSS~~______SSSS',
+    'SSSSSSSS~~SSSSS__SSS',
+    'SSSSSSSS~~SSSSS__SSS',
+    'SSSSSSSS~~SSSSS__SSS',
+    'SSS~~~~~~~~~S..__SSS',
     'SSS~~~~~~~~~S..SSSSS',
     '~~~~~SSSSSSSS..SSSSS',
-    '~~~~~SSSS.....SSSSSS',
+    '~~~~~SSSSO....SSSSSS',
     'SS~~SSSSS..SSSSSSSSS',
     'SS~~SSSSS..SSSSSSSSS',
     'SS~~SS.....SSSSSSSSS',
@@ -1742,7 +1745,47 @@ var abandonedChannel = new Landscape([
     'SSSSSSSSSSSSSSSSSSSS',
     'SSSSSSSSSSSSSSSSSSSS',
 ], null, null, null, null, "Abandoned Channel", function() {
+    // Places to go
+    if (keys.space) {
+        // Exit
+        if (p.on(9, 9)) {
+            curMap = droptonCity
+            p.goTo(39 * 75 + 37.5, 2 * 75 + 5)
+        }
+    }
+    if (!cascadeEntered) {
+        setTimeout(() => {
+            cascade.x = 9 * 75 + 37.5
+            cascade.y = 9 * 75 + 37.5
+            cascade.map = abandonedChannel
 
+            cascade.lines = [
+                "Hello there!",
+                "I heard about the disturbance, and I came all\nthe way from Dropton Town to investigate!",
+                "I even had to get permission from the President...",
+                "Somehow, though, it looks like you beat me to it.",
+                "Say, I could use a research partner. Want to\nhelp me learn about this place?",
+                "...",
+                "Perfect! Let's get started right away!",
+                "I'll explore this wooden passage here, and you\ncan take the stony one.",
+                "Good luck!"
+            ]
+
+            cascade.curPath = [
+                [11, 9],
+            ]
+
+            cascade.action = function() {
+                cascade.curPath = [
+                    [10, 9],
+                    [10, 12],
+                    [6, 12]
+                ]
+            }
+        }, 5000)
+
+        cascadeEntered = true
+    }
 })
 
 
@@ -1841,29 +1884,8 @@ Region.prototype.update = function() {
             this.passive()
             this.passiveRun = true
         }
-        // this.musicStartDelay -= 1 / 66.67
-
-        // if (this.musicStartDelay <= 2.9) {
-        //     playMusic("New Location")
-        //     if (this.musicStartDelay <= 0) {
-        //         this.startMusic()
-        //     }
-        // }
-        
-    // } else {
-    //     this.musicStartDelay = 3.9
     }
-
-    // if (this.musicStarted) {
-    //     playMusic(this.music)
-    // }
 }
-
-// Region.prototype.startMusic = function() {
-//     curMusic = {}
-//     this.musicStarted = true
-// }
-// this.cords.x >= 158 && this.cords.y >= 32 && this.cords.x <= 269 && this.cords.y <= 50
 
 var chardTown = new Region([
     {
