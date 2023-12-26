@@ -4194,8 +4194,11 @@ var gameInterval = setInterval(function() {
 			if (curCY > camera.cy) {
 				curCY -= camera.cspeed
 			}
+            
 			console.log("x: " + Math.round(curCX / 100) + " " + Math.round(finalCX / 100) + " y: " + Math.round(curCY / 100) + " " + Math.round(finalCY / 100))
 			if (Math.hypot((curCX - camera.cx), (curCY - camera.cy)) < 75) { // round to the nearest hundreth
+                curCX = camera.cx
+                curCY = camera.cy
 				cameraMoving = false
 			}
             if (camera.type == "AUTO") {
