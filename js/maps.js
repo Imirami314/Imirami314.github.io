@@ -737,13 +737,26 @@ Landscape.prototype.getDimensions = function() {
     }
 }
 
-
-function Camera(cx, cy, cspeed, type, lineStop) {
+/**
+ * 
+ * @param {*} cx Center x coordinate the camera should focus on
+ * @param {*} cy Center y coordinate the camera should focus on
+ * @param {*} cspeed Speed that the camera moves to the specified coordinates
+ * @param {*} type Type of camera use: ("NPC", "MINI SCENE")
+ * @param {*} config Variables specific to the camera type (e.g for "NPC" you would set lineStop or for "MINI SCENE" you would set time)
+ */
+function Camera(cx, cy, cspeed, type, config) {
 	this.cx = cx
 	this.cy = cy
 	this.cspeed = cspeed
 	this.type = type
-	this.lineStop = lineStop
+
+    if (!!config) {
+        this.lineStop = config.lineStop
+        this.time = config.time
+    }
+
+
 	this.showCamera = true
 	this.cameraMoving = true
 }
@@ -762,15 +775,6 @@ Camera.prototype.draw = function() {
 		p.canMove = true
 		this.showCamera = false
         cutsceneFrame = 0
-		//this.cameraMoving = false
-			
-	}
-	
-	if (this.type == "NPC") {
-		// cameraType = "NPC"
-		// for (var i in npcs) {
-		// 	if (npcs[i].)
-		// }
 	}
 }
 
@@ -984,7 +988,7 @@ imperilledPrison.solve = function () {
                 p.canMove = false
                 if (cutsceneFrame > 50) {
                     alerts.push(new GameAlert(165, 17, ["WHAT? The alarm turned on?", "That must be an error..."], imperilledPrison, "NPC Prison Guard"))
-                    curCamera = new Camera(19 * 75, 2 * 75, 10, "AUTO")
+                    cameraStart(19 * 75, 2 * 75, 10, "AUTO", {})
                     prisonGuard.lines = [
                         "WHAT?! You escaped?!",
                         "I don't have time to explain.\nNot that I could explain anyways...",
@@ -1779,7 +1783,13 @@ var abandonedChannel = new Landscape([
                 cascade.curPath = [
                     [10, 9],
                     [10, 12],
-                    [6, 12]
+                    [6, 12],
+                    function() {
+                        cascade.lines = [
+                            "Please explore the stone passage while I investigate this one.",
+                            "I already told you once, we haven't got time for dillydallying!"
+                        ]
+                    }
                 ]
             }
         }, 5000)

@@ -51,8 +51,8 @@ var curCamera = null;
  * @param {*} type Type of camera being used (Options: "NPC", "AUTO")
  * @param {*} lineStop Dialogue line to terminate camera
  */
-function cameraStart(cx, cy, cspeed, type, lineStop) {
-    curCamera = new Camera(cx, cy, cspeed, type, lineStop)
+function cameraStart(cx, cy, cspeed, type, config) {
+    curCamera = new Camera(cx, cy, cspeed, type, config)
 }
 
 /**
@@ -1730,7 +1730,9 @@ var ley = new NPC(17 * 75 + 37.5, 29 * 75 + 37.5, "Ley", mainMap, "D", [
     "...",
     "Thank you! Let me know once you're done\nso I can go over there again!"
 ], "Resident - Chard Town\nA coward at times, but loves both the outdoors and spending time at home.", function(p) {
-    curCamera = new Camera(44 * 75, 19 * 75, 15, "NPC", 7)
+    cameraStart(44 * 75, 19 * 75, 15, "NPC", {
+        lineStop: 7
+    })
     ley.action = function(p) {
         if (ley.firstInteraction) {
             missions.push(leysGreatFear)    
@@ -2336,7 +2338,9 @@ var presidentWells = new NPC(1 * 75 + 37.5, 1 * 75 + 37.5, "President Wells", dr
                                 ]
                                 presidentWells.actionLine = 1
                                 presidentWells.action = function() {
-                                    curCamera = new Camera(39 * 75, 4 * 75 + 37.5, 15, "NPC", 3)
+                                    cameraStart(39 * 75, 4 * 75 + 37.5, 15, "NPC", {
+                                        lineStop: 3
+                                    })
                                 }
 
                                 // Open weird crack thing at the top of Dropton City
@@ -2419,23 +2423,21 @@ var t116_31 = new Toggle(mainMap, 116, 31, function() {
 
 var t102_3 = new Toggle(mainMap, 102, 3, function() {
     curMap.changeBlock(121, 28, ")")
-    this.playCutscene(110 * 75, 23 * 75)
-    //var timeout = setTimeout(this.stopCutscene, 1000)
 }, function() {
     curMap.changeBlock(121, 28, "(")
-})
+}, 121 * 75 + 37.5, 28 * 75 + 37.5)
 
 var t77_5 = new Toggle(mainMap, 77, 5, function() {
     curMap.changeBlock(121, 29, ")")
 }, function() {
     curMap.changeBlock(121, 29, "(")
-})
+}, 121 * 75 + 37.5, 29 * 75 + 37.5)
 
 var t97_11 = new Toggle(mainMap, 97, 11, function() {
     curMap.changeBlock(121, 30, ")")
 }, function() {
     curMap.changeBlock(121, 30, "(")
-})
+}, 121 * 75 + 37.5, 30 * 75 + 37.5)
 
 var rd257_30 = new RaftDispenser(mainMap, 257 * 75, 30 * 75, 257 * 75 + 37.5, 29 * 75 + 37.5)
 
@@ -2488,19 +2490,19 @@ var t6_12 = new Toggle(confoundedCave, 6, 12, function() {
     curMap.changeBlock(11, 22, "(")
     curMap.changeBlock(11, 16, "(")
     curMap.changeBlock(5, 14, "S")
-})
+}, 11 * 75 + 37.5, 19 * 75 + 37.5)
 
 var t14_12 = new Toggle(confoundedCave, 14, 12, function() {
     curMap.changeBlock(39, 22, ")")
 }, function() {
     curMap.changeBlock(39, 22, "(")
-})
+}, 39 * 75 + 37.5, 22 * 75 + 37.5)
 
 var t15_8 = new Toggle(confoundedCave, 15, 8, function() {
     curMap.changeBlock(20, 0, ")")
 }, function() {
     curMap.changeBlock(20, 0, "(")
-})
+}, 20 * 75 + 37.5, 0 * 75 + 37.5)
 
 // Queen's Castle
 
@@ -3132,7 +3134,9 @@ function startPos() {
     ]
     presidentWells.actionLine = 1
     presidentWells.action = function() {
-        curCamera = new Camera(39 * 75, 4 * 75 + 37.5, 15, "NPC", 3)
+        cameraStart(39 * 75, 4 * 75 + 37.5, 15, "NPC", {
+            lineStop: 3
+        })
     }
 
     // Open weird crack thing at the top of Dropton City
@@ -4133,7 +4137,16 @@ var gameInterval = setInterval(function() {
 						npcs[i].draw()
 					}
 				}
-			} 
+			}
+
+            for (var i in interactives) {
+                if (curMap == interactives[i].map) {
+                    interactives[i].draw()
+                    if (!!interactives[i].update) {
+                        interactives[i].update()
+                    }
+                }
+            }
 
 			for (var i in monsters) {
                 if (curMap.name == monsters[i].map && !monsters[i].dead) {
@@ -4157,7 +4170,6 @@ var gameInterval = setInterval(function() {
 			for (var i in npcs) {
                 if (!!npcs[i].map) {
                     if (curMap.name == npcs[i].map.name) {
-    					
                         	npcs[i].talk(p, npcs)
                     }
                 }
@@ -4192,7 +4204,9 @@ var gameInterval = setInterval(function() {
                 } else {
                     scene = "GAME"
                 }
-            } if (camera.type == "NPC") {
+            }
+
+            if (camera.type == "NPC") {
 				for (i in npcs) {
 					if (npcs[i].lineNum == camera.lineStop) {
 						if (keys.space) {
@@ -4202,7 +4216,16 @@ var gameInterval = setInterval(function() {
 					}
 				}
 			}
-	
+
+            if (camera.type == "MINI SCENE") {
+                if (!camera.stopTimerSet) {
+                    setTimeout(() => {
+                        scene = "GAME"
+                        cameraEnd()
+                    }, camera.time)
+                    camera.stopTimerSet = true
+                }
+			}
 		} else if (scene == "DEATH") {
             ctx.fillStyle = "rgb(255, 255, 255)"
             ctx.textAlign = "center"

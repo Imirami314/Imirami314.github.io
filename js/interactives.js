@@ -16,15 +16,20 @@ function Interactive(map, x, y, key, name, draw, action) {
  * @param {*} y y block coordinate
  * @param {*} action1 function to run when block is toggled back to yellow state
  * @param {*} action2 function to run when block is toggled into purple state
+ * @param {*} cameraX OPTIONAL: x position to send the camera to for the mini cutscene
+ * @param {*} cameraY OPTIONAL: x position to send the camera to for the mini cutscene
  */
-function Toggle(map, x, y, action1, action2) {
+function Toggle(map, x, y, action1, action2, cameraX, cameraY) {
     this.map = map
     this.x = x
     this.y = y
     this.toggleCooldown = 0.5
     this.action1 = action1
     this.action2 = action2
-    this.cutscene = null
+    this.cameraX = cameraX
+    this.cameraY = cameraY
+
+   //  this.cutscene = null
     this.toggleState = 1
 }
 
@@ -39,15 +44,33 @@ Toggle.prototype.draw = function() {
 
 Toggle.prototype.activate = function() {
     if (keys.space && this.toggleCooldown <= 0 && p.cords.x == this.x && p.cords.y == this.y) {
-        if (this.toggleState == 2) {
-            this.action1()
-            this.toggleState = 1
+        if (!!this.cameraX && !!this.cameraY) {
+            cameraStart(this.cameraX, this.cameraY, 100, "MINI SCENE", {
+                time: 3250
+            })
+            
+            if (this.toggleState == 2) {
+                this.toggleState = 1
+                setTimeout(() => {
+                    this.action1()
+                }, 1500)
+            } else {
+                this.toggleState = 2
+                setTimeout(() => {
+                    this.action2()
+                }, 1500)
+            }
         } else {
-            this.action2()
-            this.toggleState = 2
+            if (this.toggleState == 2) {
+                this.toggleState = 1
+                this.action1()
+            } else {
+                this.toggleState = 2
+                this.action2()
+            }
         }
+        
         this.toggleCooldown = 0.5
-        // alert(this.toggleState)
     }
 }
 
