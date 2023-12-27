@@ -66,7 +66,8 @@ var images = {
     suspensia: initImage('sprites/blocks/suspensia.png'),
     iceWall: initImage('sprites/blocks/iceWall.png'),
     crackedIceWall: initImage('sprites/blocks/crackedIceWall.png'),
-    
+    teleport: initImage('sprites/blocks/teleport.png'),
+     
     // Enemies
     splint: initImage('sprites/enemies/splint.png'),
     splintHurt: initImage('sprites/enemies/splint-hurt.png'),
@@ -632,7 +633,7 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
                         ctx.drawImage(images.suspensia, j * this.blockSize, i * this.blockSize, 75, 75)
                         break
 					case "+": // Teleport
-						ctx.drawImage(images.water, j * this.blockSize, i * this.blockSize, 75, 75)
+						ctx.drawImage(images.teleport, j * this.blockSize, i * this.blockSize, 75, 75)
 						break
                     case ";":
                         ctx.fillStyle = 'rgb(79, 13, 13)'
@@ -713,16 +714,11 @@ Landscape.prototype.changeBlock = function(x, y, block) {
 /**
  * Changes multiple blocks to a specific block
  * @param {*} a Two dim array of coords (in BLOCKS)
- * @param {*} block The block char of the new block
+ * @param {*} b The block char of the new block
  */
-Landscape.prototype.changeBlocks = function (a, block) {
+Landscape.prototype.changeBlocks = function (a, b) {
     for (var i in a) {
-        this.arr[a[i][1]] = this.arr[a[i][1]].replaceAt(a[i][0], block)
-        this.changes.push({
-            x: a[i][0],
-            y: a[i][1],
-            block: block
-        }) 
+        this.changeBlock(a[i][0], a[i][1], b)
     }
 }
 
@@ -943,6 +939,13 @@ mainMap.solve = function() {
     if (p.area == "Encompassed Forest") {
 
                     
+    }
+
+    if (keys.space) {
+        if (theBlockedEntrance.complete && p.on(252, 81)) {
+            curMap = droptonCity
+            p.goTo(35 * 75 + 37.5, 27 * 75 + 37.5)
+        }
     }
 	
 
@@ -1577,11 +1580,11 @@ var droptonCity = new Landscape([
     '~~~~~~~~~~~~~~~~~~~~~S~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
     '~~~~~~~~~~~~~~~~~~~~SIS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
     '~~~~~~~~~~~~~~~~~~~SIIIS~~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
-    '~~~~~~~~~~~~~~~~~~SIIIIIS~~~~~~~~~^i^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
-    '~~~~~~~~~~~~~~~~~SIIIIIIIS~~~~~~~^IIi^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
-    '~~~~~~~~~~~~~~~~SIIIIIIIIIS~~~~~^II~Ii^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
-    '~~~~~~~~~~~~~~~~SIIIIIIIIIS~~~~~~^IIi^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
-    '~~~~~~~~~~~~~~~~SIIIIIIIIIS~~~~~~~^i^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
+    '~~~~~~~~~~~~~~~~~~SIIIIIS~~~~~~~~~^~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
+    '~~~~~~~~~~~~~~~~~SIIIIIIIS~~~~~~~^~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
+    '~~~~~~~~~~~~~~~~SIIIIIIIIIS~~~~~^~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
+    '~~~~~~~~~~~~~~~~SIIIIIIIIIS~~~~~~^~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
+    '~~~~~~~~~~~~~~~~SIIIIIIIIIS~~~~~~~^~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
     '~~~~~~~~~~~~~~~~SIIII|IIIIS~~~~~~~~^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
     '~~~~~~~~~~~~~~______S)S______~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
     '~~~~~~~~~~~~~~~~~~~~ScS~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~',
@@ -1648,6 +1651,11 @@ droptonCity.solve = function() {
         if (p.on(2, 11)) {
             curMap = lochNessHouse
             p.goTo(5 * 75 + 37.5, 4 * 75 + 37.5)
+        }
+        
+        if (p.on(35, 28) && theBlockedEntrance.complete) {
+            curMap = mainMap
+            p.goTo(252 * 75 + 37.5, 80 * 75 + 37.5)
         }
     }
 }
