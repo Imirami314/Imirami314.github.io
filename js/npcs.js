@@ -369,17 +369,11 @@ NPC.prototype.move = function(pos) {
         this.dir = "U"
         this.y -= this.speed
     }
-        
-    
-	
-		
-	// }
 }
 
 NPC.prototype.runPath = function(path) {
     if (typeof path[this.pathPoint] == "object") {
         if (this.cords.x == path[this.pathPoint][0] && this.cords.y == path[this.pathPoint][1]) { // Checks to make sure npc is on the right block
-            // if ((this.x % 75) - 37.5 <= 5 && (this.x % 75) - 37.5 <= 5)
             if (!!!path[this.pathPoint + 1]) {
                 this.curPath = 0
                 return

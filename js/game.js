@@ -1741,6 +1741,20 @@ var ley = new NPC(17 * 75 + 37.5, 29 * 75 + 37.5, "Ley", mainMap, "D", [
     ley.actionLine = "after"
 }, 5)
 
+var sarahShopMenu = [
+    {item: food.apple(), cost: 10, amount: 5}
+]
+
+var sarah = new NPC(4 * 75 + 37.5, 1 * 75 + 37.5, "Sarah", sarahsShop, "D", [
+    "Hello there, uh...",
+    "`what was it again? Oh yeah!",
+    "Hello there, good sir! I'm opening a\nshop here in Chard Town!",
+    "Right now I just sell food, but one day I'll\nbe making billions of trills!",
+    "Want to buy something? You'd be my very first customer!"
+], "Resident - Chard Town\nAn aspiring businesswoman with big ambitions. Everybody starts small, though.", function(p) {
+    ShopMenu.open(sarahShopMenu)
+}, "after")
+
 var mikesMom = new NPC(300, 300, "Mike's Mom", mikeHouse, "R", [
     "Wait.",
     "Are you the new person on the island I've been\nlooking for?",
@@ -2391,7 +2405,7 @@ var cascade = new NPC(6 * 75 + 75, 2 * 75 + 37.5, "Dr. Cascade", droptonResearch
 
 }, "after")
 
-var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde, walter, marina, ariel, raine, rainesDad, caspian, loch, delta, presidentWells, cascade]
+var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, sarah, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde, walter, marina, ariel, raine, rainesDad, caspian, loch, delta, presidentWells, cascade]
 var shopMenus = [muhammadShop, blakeShop, caspianShop]
 
 npcs.searchByName = function(name) {
@@ -2953,6 +2967,7 @@ function saveGame() {
         },
         npcs: [],
         npcActions: [],
+        npcPathActions: [],
         maps: [],
         interactives: [],
         lighting: lighting,
@@ -2986,7 +3001,27 @@ function saveGame() {
         var n = npcs[i]
         SAVING.npcs.push(npcs[i])
         if (!!npcs[i].action) {
-            SAVING.npcActions.push({name: npcs[i].name, action: npcs[i].action.toString()})
+            SAVING.npcActions.push({
+                name: npcs[i].name,
+                action: npcs[i].action.toString()
+            })
+        }
+
+        if (!!npcs[i].curPath && npcs[i].curPath != 0) {
+            for (var j in npcs[i].curPath) {
+                console.log(typeof npcs[i].curPath[j] == "function")
+                if (typeof npcs[i].curPath[j] == "function") {
+                    SAVING.npcPathActions.push({
+                        pathAction: npcs[i].curPath[j].toString(),
+                        index: j
+                    })
+
+                    console.log({
+                        pathAction: npcs[i].curPath[j].toString(),
+                        index: j
+                    })
+                }
+            }
         }
     }
 
@@ -4196,7 +4231,7 @@ var gameInterval = setInterval(function() {
 			}
             
 			console.log("x: " + Math.round(curCX / 100) + " " + Math.round(finalCX / 100) + " y: " + Math.round(curCY / 100) + " " + Math.round(finalCY / 100))
-			if (Math.hypot((curCX - camera.cx), (curCY - camera.cy)) < 75) { // round to the nearest hundreth
+			if (Math.hypot((curCX - camera.cx), (curCY - camera.cy)) <= camera.cspeed) { // round to the nearest hundreth
                 curCX = camera.cx
                 curCY = camera.cy
 				cameraMoving = false
