@@ -300,6 +300,15 @@ Food.prototype.use = function(p) {
 
 var food = {
     apple: function() {
-        return new Food("Apple", "", 3, 10)
-    }
+        return new Food("Apple", "", 3, 15)
+    },
+    steak: function() {
+        return new Food("Steak", "", 7, 60)
+    },
+    cookie: function() {
+        return new Food("Cookie", "", 5, 30)
+    },
+    cake: function() {
+        return new Food("Cake", "", 10, 120)
+    },
 }

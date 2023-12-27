@@ -1742,7 +1742,9 @@ var ley = new NPC(17 * 75 + 37.5, 29 * 75 + 37.5, "Ley", mainMap, "D", [
 }, 5)
 
 var sarahShopMenu = [
-    {item: food.apple(), cost: 10, amount: 5}
+    {item: food.apple(), cost: 10, amount: 5},
+    {item: food.cookie(), cost: 15, amount: 3},
+    {item: food.steak(), cost: 30, amount: 1},
 ]
 
 var sarah = new NPC(4 * 75 + 37.5, 1 * 75 + 37.5, "Sarah", sarahsShop, "D", [
@@ -1799,6 +1801,20 @@ var mikesMom = new NPC(300, 300, "Mike's Mom", mikeHouse, "R", [
 
 	
 }, 0)
+
+var rowan = new NPC(7 * 75 + 37.5, 6 * 75 + 37.5, "Rowan", rowansDojo, "L", [
+    "Welcome to my dojo!",
+    "Want to to learn some tips on combat?",
+    "...",
+    "Perfect!",
+    "Tip #1: Some weapons are faster than others, and are only useful in\nvery specific situations. Choose them wisely!",
+    "Tip #2: When fighting monsters, you can quickly go near them to bait\nthem into hitting.",
+    "Then, get out of their range. This will leave you with an opening to\nattack before they can hit you again!",
+    "Hopefully these tips will prove themselves helpful to you. And hopefully,\none day, my dojo will have real students!",
+    "See ya."
+], "Resident - Chard Town\nA skilled fighter who wants to teach the world! He doesn't have any students yet, though.", function(p) {
+    
+}, "after")
 
 var wayne = new NPC(48 * 75, 55 * 75, "Wayne", mainMap, "D", [
     "Aye matey! What brings you to this foreign land?",
@@ -2405,7 +2421,7 @@ var cascade = new NPC(6 * 75 + 75, 2 * 75 + 37.5, "Dr. Cascade", droptonResearch
 
 }, "after")
 
-var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, sarah, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde, walter, marina, ariel, raine, rainesDad, caspian, loch, delta, presidentWells, cascade]
+var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, sarah, rowan, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde, walter, marina, ariel, raine, rainesDad, caspian, loch, delta, presidentWells, cascade]
 var shopMenus = [muhammadShop, blakeShop, caspianShop]
 
 npcs.searchByName = function(name) {
