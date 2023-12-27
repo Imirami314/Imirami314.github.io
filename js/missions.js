@@ -139,6 +139,7 @@ theBlockedEntrance.solve = function () {
         droptonCity.changeBlocks([[35, 25], [34, 26], [36, 26], [33, 27], [37, 27],
         [32, 28], [38, 28], [33, 29], [37, 29], [34, 30], [36, 30], [35, 31]], '~')
         droptonCity.changeBlock(35, 28, '+')
+        mainMap.changeBlock(252, 81, '+')
         if (!theBlockedEntrance.complete) {
             loch.lines = [
                 "...", "What?! All the ice and purple stuff is gone!",

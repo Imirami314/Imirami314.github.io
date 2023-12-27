@@ -17,7 +17,7 @@ function Interactive(map, x, y, key, name, draw, action) {
  * @param {*} action1 function to run when block is toggled back to yellow state
  * @param {*} action2 function to run when block is toggled into purple state
  * @param {*} cameraX OPTIONAL: x position to send the camera to for the mini cutscene
- * @param {*} cameraY OPTIONAL: x position to send the camera to for the mini cutscene
+ * @param {*} cameraY OPTIONAL: y position to send the camera to for the mini cutscene
  */
 function Toggle(map, x, y, action1, action2, cameraX, cameraY) {
     this.map = map
