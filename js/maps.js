@@ -74,6 +74,7 @@ var images = {
     stormedPhase2: initImage('sprites/enemies/stormed-phase-2.png'),
 
     // Items
+    steelFieldKey: initImage('sprites/items/steelFieldKey.png'),
     steelSword: initImage('sprites/items/steelSword.png'),
     confoundedCaveKey: initImage('sprites/items/confoundedCaveKey.png'),
     spearOfTheDarkened: initImage('sprites/items/spearOfTheDarkened.png'),

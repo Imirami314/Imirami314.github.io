@@ -108,37 +108,37 @@ var items = {
             }
         }, "A pair of glasses that Mike gave you for the old man.", "MISC"),
     steelFieldKey: new Item("Steel Field Key", 0, function(x, y) {
-            ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
-        }, function(p) {
-            if (p.cords.x == 66 && p.cords.y == 10) { // Map Lock from main village to steel field or whatever
-                var itemFound = false
-                for (var i in p.inventory) {
-                    var item = p.inventory[i]
-                    if (item.name == this.name) {
-                        p.inventory.splice(i, 1)
-                        itemFound = true
-                    }
+        ctx.drawImage(images.steelFieldKey, x - 15, y - 10, 35, 12.5)
+    }, function(p) {
+        if (p.cords.x == 66 && p.cords.y == 10) { // Map Lock from main village to steel field or whatever
+            var itemFound = false
+            for (var i in p.inventory) {
+                var item = p.inventory[i]
+                if (item.name == this.name) {
+                    p.inventory.splice(i, 1)
+                    itemFound = true
                 }
-                if (itemFound) {
-                    curMap.changeBlock(67, 10, "_")
-                } 
             }
-        }),
+            if (itemFound) {
+                curMap.changeBlock(67, 10, "_")
+            } 
+        }
+    }),
     windyWastelandKey: new Item("Windy Wasteland Key", 0, function(x, y) {
-            ctx.drawImage(images.confoundedCaveKey, x - 15, y - 15, 35, 15)
-        }, function(p) {
+        ctx.drawImage(images.confoundedCaveKey, x - 15, y - 15, 35, 15)
+    }, function(p) {
 
-            if (p.cords.x == 177 && p.cords.y == 31 && curMap == mainMap) {
-                mainMap.changeBlock(177, 32, '_')
-                
-                for (var i in p.inventory) {
-                    var item = p.inventory[i]
-                    if (item.name == this.name) {
-                        p.inventory.splice(i, 1)
-                    }
+        if (p.cords.x == 177 && p.cords.y == 31 && curMap == mainMap) {
+            mainMap.changeBlock(177, 32, '_')
+            
+            for (var i in p.inventory) {
+                var item = p.inventory[i]
+                if (item.name == this.name) {
+                    p.inventory.splice(i, 1)
                 }
             }
-        }, "A shiny key that constipates you.", "KEYS"), // changeme
+        }
+    }, "A shiny key that Lonzo entrusted to you.", "KEYS"), // changeme
     confoundedCaveKey: new Item("Confounded Cave Key", 0, function(x, y) {
         ctx.drawImage(images.confoundedCaveKey, x - 15, y - 15, 35, 15)
     }, function(p) {
