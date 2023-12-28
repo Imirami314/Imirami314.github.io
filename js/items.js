@@ -123,7 +123,7 @@ var items = {
                 curMap.changeBlock(67, 10, "_")
             } 
         }
-    }),
+    }, "A key that allows you to enter Steel Field. Be careful!", "KEYS"),
     windyWastelandKey: new Item("Windy Wasteland Key", 0, function(x, y) {
         ctx.drawImage(images.confoundedCaveKey, x - 15, y - 15, 35, 15)
     }, function(p) {
