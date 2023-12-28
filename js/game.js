@@ -181,7 +181,7 @@ function Player(x, y, npcs) {
     
     this.weaponIndex = 0
     this.weapon = this.inventory[this.weaponIndex]
-    this.equipped = [items.aquaLung] // Things that the player has equipped (e.g. Aqua Lung), Default []
+    this.equipped = [] // Things that the player has equipped (e.g. Aqua Lung), Default []
     this.weaponShift = {
         x: 0,
         y: 0
@@ -1647,19 +1647,17 @@ var oldMan = new NPC(5*75, 1*75, "Old Man", johnHouse, "D", [
 
 // oldMan.glasses = true // Default false
 
-var john = new NPC(70, 70, "John", johnHouse, "D", [
-    "Hi!",
-    "Do you want to hear my song?",
-    "Well too bad, im gonna sing it anyway lol",
-    "Here goes...",
-    "I'm a barbie girl! In a barbie woooorrld!",
-    "Oh wait sorry no no not that, say im a zuchinni",
-    "shoud i turn on the stove for the biryani, or its already hot...?",
-    "bought saari heh? huh? yeah microwave it. back",
-    "(lyrics courtesy of diya)"
+var john = new NPC(17 * 75 + 37.5, 9 * 75 + 37.5, "John", mainMap, "D", [
+    "Hi! You're that prison guy, aren't you?",
+    "You know, ever since you suddenly woke up, \nyou've become a bit of a celebrity. At least for a few of us.",
+    "We had heard about somebody stuck in the Imperilled Prison, but we never knew\nwhy. To be honest, we never thought you'd get out.",
+    "If I were you, I'd speak to the old man. He's very knowledgable\nabout this stuff.",
+    "And yes, I don't know his real name. He refuses to tell anyone, so\nwe just call him the old man.",
+    "I've been taking care of him recently as his age is getting to him.\nHe's in my house right now.",
+    "Anyway, I'll see you later!"
 ], "", function(p) {
-    p.dir = "D"
-}, 6)
+
+}, "after")
 
 var ron = new NPC(150, 300, "Ron", ronHouse, "D", [
     "*sigh*",
@@ -1676,20 +1674,23 @@ var mike = new NPC(28 * 75, 44 * 75, "Mike", mainMap, "L", [
     "Hi.",
     "Who are you?",
     "...",
-    "Oh, you're the new person in this village.\nNo wonder I didn't know who you were.",
+    "Oh, you're that dude who escaped from that prison thing!",
     "...",
     "You're looking for a pair of glasses?",
-    "I found one on the ground. But first, I need to you\nto do me a favor.",
-    "My mom heard about you being new here\nand desperately wanted to meet you.",
-    "Could you go talk to her? She's at home right now.",
-    "Thanks."
-], "Resident - Chard Town\nA curious child whos favorite spot is the Big Lake.", function(p) {
+    "I found one on the ground. But first, I need to you\nto do me a big favor.",
+    "My mom is a journalist, so she knows about your escape,\nor whatever it is.",
+    "She's been trying to get a hold of you for an interview for\nages! I'm sure she'd love it if you paid her a visit.",
+    "So, yeah. If you want these glasses, that's what you\ngotta do for me in return.",
+], "Resident - Chard Town\nA curious child whose favorite spot is the Big Lake.", function(p) {
+    cameraStart(51 * 75 + 37.5, 6 * 75 + 37.5, 25, "NPC", {
+        lineStop: 9
+    })
     // Location of Mike's Mom's house
     p.questPoint = {
         x: 51,
         y: 8
     }
-}, "after")
+}, 7)
 
 var david = new NPC(16 * 75 + 37.5, 16 * 75 + 37.5, "David Swimmer", mainMap, "D", [
     "In case you're wondering, yes, my last name is actually Swimmer.",
@@ -1759,23 +1760,28 @@ var sarah = new NPC(4 * 75 + 37.5, 1 * 75 + 37.5, "Sarah", sarahsShop, "D", [
 
 var mikesMom = new NPC(300, 300, "Mike's Mom", mikeHouse, "R", [
     "Wait.",
-    "Are you the new person on the island I've been\nlooking for?",
+    "Are you that guy who was stuck in that prison for all this time?",
     "...",
-    "Woah! I was searching everywhere to find\nout what you look like, and then you just\nshow up at my house!",
-    "Every time somebody new arrives on this\nisland, I have to meet them.",
-    "Anyway, It was super nice meeting you.",
-    "See you later!"
-], "Resident - Chard Town\nMike's Mother. She loves meeting new people and making new friends.", function(p) {
+    "Woah! I've been trying to interview you for so long, and you just\nturn up at my house!",
+    "Unfortunately, you turned up at an inconvenient time for me. I've got to do\nreports all over Chard Town today.",
+    "Well, anyway, at least I got to meet you. I was starting to believe you didn't exist!",
+    "Maybe we can conduct an interview later.",
+    "Oh! By the way, have you seen my son? I let him play by the lake, but\nhe hasn't come home yet.",
+    "...",
+    "You have seen him? That's a relief. Could you please tell him to come back home?",
+    "...",
+    "Thank you!"
+], "Resident - Chard Town\nMike's Mother. An enthusiastic journalist who loves meeting new people and making new friends.", function(p) {
     mike.lines = [
         "Hi.",
         "Did you talk to my mom?",
         "...",
         "Thanks.",
         "...",
-        "Oh yeah, here's the glasses. I don't know why\nyou need them, but whatever.",
-        "Here's a pair I found on the ground. Hope it's what\nyou are looking for.",
+        "She was busy? That's okay. I appreciate you for trying.",
+        "Here, you can have the glasses. I don't know why\nyou need them, but whatever.",
         "...",
-        "Fine, I guess I'll go back home in a little bit..."
+        "Fine, I'll go back home."
     ]
     mike.action = function(p) {
         p.giveItem(items.oldMansGlasses, true)
@@ -1791,6 +1797,23 @@ var mikesMom = new NPC(300, 300, "Mike's Mom", mikeHouse, "R", [
         ]
 
         mike.actionLine = -2
+
+        mike.curPath = [ // Walk back to his house
+            [11, 44],
+            [11, 37],
+            [14, 34],
+            [14, 31],
+            [23, 31],
+            [23, 10],
+            [51, 10],
+            [51, 8],
+            function() {
+                mike.map = mikeHouse
+                mike.x = 6 * 75 + 37.5
+                mike.y = 4 * 75 + 37.5
+                mike.dir = 'L'
+            }
+        ]
     }
     mike.actionLine = "after"
     // Second location of mike to get the glasses
@@ -3223,7 +3246,7 @@ function startPos() {
     ]
 }
 
-startPos()
+//startPos()
 
 
 var gameInterval = setInterval(function() {
