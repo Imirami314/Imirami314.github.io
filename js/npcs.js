@@ -166,11 +166,13 @@ NPC.prototype.draw = function() {
         case "Lost Traveler":
             this.properties.skinColor = "rgb(220, 220, 255, 0.3)"
             this.properties.eyeColor = "rgb(0, 0, 0, 0.5)"
+            break
         case "President Wells":
             // Top hat
             ctx.fillStyle = "rgb(0, 0, 0)"
             ctx.fillRect(this.x - 35, this.y - 25, 70, 5)
             ctx.fillRect(this.x - 20, this.y - 35, 40, 10)
+            break
 	}
 
     let npcPulsation = Math.sin(elapsed / 15) * 2

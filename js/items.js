@@ -185,9 +185,9 @@ var items = {
         }
     }, "An odd fragment of a sword. Absorbs heat very easily.", "MISC"),
     steelSword: new Item("Steel Sword", 5, function(x, y) {
-        ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
+        ctx.drawImage(images.steelSword, x - 15, y - 15, 40, 20)
     }, function(p) {
-        
+        p.swordAttack()
     }, "A weak, simple sword that is easy to use.", "WEAPONS"),
     
 	auraOfWarmth: new Item("Aura of Warmth", 0,
