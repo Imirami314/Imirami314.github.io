@@ -210,3 +210,7 @@ var deltasLostTreasure = new Mission("Delta's Lost Treasure", "Reward", null, 0,
 		delta.lineNum = 0
 	}
 })
+
+
+var missions = [theWanderersRiddles, leysGreatFear, davidsDreamPond, theBlockedEntrance, deltasLostTreasure]
+var curMissions = []

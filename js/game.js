@@ -41,8 +41,6 @@ var secrets = [ // (Last bool is the beam, meaning the secret is solved)
 	[false, false, false, false] // Chard Town
 ]
 
-var missions = []
-
 var curCamera = null;
 
 
@@ -1644,7 +1642,7 @@ var oldMan = new NPC(5*75, 1*75, "Old Man", johnHouse, "D", [
     }
 
 	if (oldMan.firstInteraction) {
-		missions.push(aStrangeWorld)
+		curMissions.push(aStrangeWorld)
 	}
 }, "after")
 
@@ -1701,7 +1699,7 @@ var david = new NPC(16 * 75 + 37.5, 16 * 75 + 37.5, "David Swimmer", mainMap, "D
     "But I do love to swim!",
     "This pond is kind of depressing though. I would love to find\na great big pond that I could swim in forever!"
 ], "Resident - Chard Town\nA socially awkward dude who loves to swim.\nUnfortunately, he's not great at it.", function() {
-    missions.push(davidsDreamPond)
+    curMissions.push(davidsDreamPond)
 }, "after")
 
 
@@ -1739,7 +1737,7 @@ var ley = new NPC(17 * 75 + 37.5, 29 * 75 + 37.5, "Ley", mainMap, "D", [
     })
     ley.action = function(p) {
         if (ley.firstInteraction) {
-            missions.push(leysGreatFear)    
+            curMissions.push(leysGreatFear)    
         }
     }
     ley.actionLine = "after"
@@ -2110,7 +2108,7 @@ var theWanderer = new NPC (60 * 75, 41 * 75, "The Wanderer", mainMap, "D",    [
 	
 ], "hi", function () {
     if (theWanderer.firstInteraction) {
-        missions.push(theWanderersRiddles)
+        curMissions.push(theWanderersRiddles)
     }
     theWanderer.action = function (p) {
         
@@ -2317,7 +2315,7 @@ var loch = new NPC(40 * 75 + 37.5, 28 * 75 + 37.5, "Loch", droptonCity, 'L', [
     "Opening up this entrance would provide easy access to Dropton Dryalnds!",
     "If you have any ideas on how to fix this, it will be very helpful.\nI'll reward you too!"
 ], "ello", function() {
-    missions.push(theBlockedEntrance)
+    curMissions.push(theBlockedEntrance)
 }, "after")
 
 var delta = new NPC(18 * 75 + 37.5, 11 * 75 + 37.5, "Delta", droptonTown, 'D', [
@@ -2332,7 +2330,7 @@ var delta = new NPC(18 * 75 + 37.5, 11 * 75 + 37.5, "Delta", droptonTown, 'D', [
     "I'm counting on you!"
 ], "[insert description]", function() {
     p.giveItem(items.deltasKey, true)
-    missions.push(deltasLostTreasure)
+    curMissions.push(deltasLostTreasure)
 }, "after")
 
 var presidentWells = new NPC(1 * 75 + 37.5, 1 * 75 + 37.5, "President Wells", droptonResearchFacility, 'R', [
@@ -2888,6 +2886,23 @@ if (!!save) {
     }
 }
 
+// Load save for missions
+if (!!save) {
+    save.curMissions.forEach((mission) => {
+        for (var i in missions) {
+            if (missions[i].name == mission.name) {
+                var savedMission = missions[i]
+                savedMission.curNode = mission.curNode
+                savedMission.newMission = mission.newMission
+                savedMission.complete = mission.complete
+                savedMission.completionPopup = mission.completionPopup
+
+                curMissions.push(missions[i])
+            }
+        }
+    })
+}
+
 
 
 var models = {
@@ -3014,6 +3029,7 @@ function saveGame() {
         interactives: [],
         lighting: lighting,
         dev: dev,
+        curMissions: []
     }
 
     SAVING.maps.push({
@@ -3107,6 +3123,11 @@ function saveGame() {
             interactives[i].map = mainMap
         }
     }
+
+    curMissions.forEach((mission) => {
+        SAVING.curMissions.push(mission)
+    })
+    lset("curMissions", JSON.stringify(SAVING.curMissions))
     
     lset("lighting", SAVING.lighting)
     lset("dev", dev)
@@ -3249,7 +3270,7 @@ function startPos() {
     ]
 }
 
-//startPos()
+startPos()
 
 
 var gameInterval = setInterval(function() {
@@ -3556,15 +3577,15 @@ var gameInterval = setInterval(function() {
                 alerts[i].drawMessage()
             }
 
-            for (var i in missions) {
-                missions[i].alert("NEW")
+            for (var i in curMissions) {
+                curMissions[i].alert("NEW")
 
-                if (!!missions[i].solve) {
-                    missions[i].solve()
+                if (!!curMissions[i].solve) {
+                    curMissions[i].solve()
                 }
 
-                if (missions[i].complete) {
-                    missions[i].alert("COMPLETE")
+                if (curMissions[i].complete) {
+                    curMissions[i].alert("COMPLETE")
                 }
             }
 

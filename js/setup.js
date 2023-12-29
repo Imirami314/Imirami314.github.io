@@ -60,7 +60,8 @@ if (!!lget("player")) {
         npcActions: JSON.parse(lget("npcActions")),
         interactives: JSON.parse(lget("interactives")),
         lighting: lget("lighting"),
-        dev: lget("dev")
+        dev: lget("dev"),
+        curMissions: JSON.parse(lget("curMissions"))
     }
 }
 
@@ -211,6 +212,12 @@ CanvasRenderingContext2D.prototype.roundRect = function (x, y, w, h, r) {
     this.closePath();
     return this;
 }
+
+var wrapper = function(f, args) { // https://stackoverflow.com/questions/5054926/javascript-create-instance-with-array-of-arguments
+    return function() {
+        f.apply(this, args);
+    };
+};
 
 function onKeyDown(event) {
     var keyCode = event.keyCode;
