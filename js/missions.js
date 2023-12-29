@@ -106,7 +106,7 @@ theWanderersRiddles.solve = function () {
 			"Impressive.", "Now, you might be wondering why all of the words\nwere jumbled up.", 
 			"Ancient texts like these require a very special item.\nA decipherer...",
 			"When the decipherer is held in your hand, you can read indecipherable texts!",
-			"I've given you 3 decipherers,\nwhich from my research should be enough to complete Chard Town's riddle",
+			"I've given you 3 decipherers,\nwhich from my research should be enough to complete Chard Town's riddle.",
 			"Now quick, go back to the first location.\nThe second riddle will be waiting for you."
 	
 		]
@@ -136,11 +136,22 @@ theBlockedEntrance.solve = function () {
         [35, 26], [34, 27], [35, 27], [36, 27], [33, 28], [34, 28], [36, 28], [37, 28],
         [34, 29], [35, 29], [36, 29], [35, 30]
     ], "~")) {
+
         droptonCity.changeBlocks([[35, 25], [34, 26], [36, 26], [33, 27], [37, 27],
         [32, 28], [38, 28], [33, 29], [37, 29], [34, 30], [36, 30], [35, 31]], '~')
-        droptonCity.changeBlock(35, 28, '+')
+        for (var i = 0; i < 9; i ++) {
+            droptonCity.changeBlock(31 + i, 28, '+')
+            droptonCity.changeBlock(35, 24 + i, '+')
+        }
+        for (var i = 0; i < 3; i ++) {
+            droptonCity.changeBlocks([[36 + i, 25 + i], [34 - i, 25 + i], [32 + i, 29 + i], [38 - i, 29 + i]], '+')
+            
+        }
+        droptonCity.changeBlocks([[34, 27], [35, 27], [36, 27], [34, 29], [35, 29], [36, 29]], '+')
         mainMap.changeBlock(252, 81, '+')
+
         if (!theBlockedEntrance.complete) {
+            
             loch.lines = [
                 "...", "What?! All the ice and purple stuff is gone!",
                 "And look at that, the entrance opened again?\nDid you do this?",
@@ -148,6 +159,8 @@ theBlockedEntrance.solve = function () {
                 "I must reward you. Here, take these trills!",
                 "If you ever need me, I'll be in my house to the west.\nSee ya!"
             ]
+
+            
         }
         loch.action = function (p) {
             if (!theBlockedEntrance.complete) {
