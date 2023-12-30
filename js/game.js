@@ -2158,6 +2158,18 @@ var creek = new NPC(226 * 75 + 37.5, 87 * 75, "Creek", mainMap, 'U', [
 
 }, "after")
 
+var coral = new NPC(5 * 75 + 37.5, 2 * 75, "Coral", coralsWatercolors, 'D', [
+    "Hello, I'm coral, and welcome to my watercolor shop.",
+    "You know the big lake outside? I paint pictures of it so you can\nappreciate it when you're away!",
+    "If you'd like to buy a painting, please let me know!"
+], "coral reef changeme", function () {
+    ShopMenu.open(coralShop)
+}, "after")
+
+var coralShop = [
+    {item: items.droptonLakePainting, cost: 80, amount: 1}
+]
+
 var blakeShop = [
     {item: items.aquaLung, cost: 100, amount: 1}
 ]
@@ -2445,7 +2457,7 @@ var cascade = new NPC(6 * 75 + 75, 2 * 75 + 37.5, "Dr. Cascade", droptonResearch
 
 }, "after")
 
-var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, sarah, rowan, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, blake, ness, bay, tyde, walter, marina, ariel, raine, rainesDad, caspian, loch, delta, presidentWells, cascade]
+var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, sarah, rowan, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, coral, blake, ness, bay, tyde, walter, marina, ariel, raine, rainesDad, caspian, loch, delta, presidentWells, cascade]
 var shopMenus = [muhammadShop, blakeShop, caspianShop]
 
 npcs.searchByName = function(name) {

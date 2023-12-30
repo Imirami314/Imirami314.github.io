@@ -273,7 +273,34 @@ var items = {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
     }, function() {
         // changeme to add functionality
-    }, "A small vial made of glass, yet much shinier. What could it be used for?", "MISC")
+    }, "A small vial made of glass, yet much shinier. What could it be used for?", "MISC"),
+    droptonLakePainting: new Item("Dropton Lake Painting", 0, function(x, y) {
+        ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
+    }, function(p) {
+        var d = npcs.searchByName("David Swimmer")
+        var davidDist = Math.hypot(p.x - d.x, p.y - d.y)
+        if (davidDist <= 100) {
+            david.lines = ["Oh my- is that...\nit's incredible!",
+            "Do you know where this place is? Surely it isn't real.",
+            "...", "Dropton Drylands? Huh. Never heard of it.",
+            "You said it was to the southeast? Well then...",
+            "I better leave RIGHT NOW! See you later!"]
+            david.action = function () {
+                david.curPath = [[]]
+                davidsDreamPond.finish()
+            }
+            david.actionLine = "after"
+            d.lineNum = 0
+            d.talk(p)
+        }
+
+        for (var i in p.inventory) {
+            var item = p.inventory[i]
+            if (item.name == this.name) {
+                p.inventory.splice(i, 1)
+            }
+        }
+    })
 } // Puzzle Keys are not included as they vary depending on where they came from
 
 function Food(name, img, health, secs) {
