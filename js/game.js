@@ -3597,17 +3597,7 @@ var gameInterval = setInterval(function() {
                 alerts[i].drawMessage()
             }
 
-            for (var i in curMissions) {
-                curMissions[i].alert("NEW")
-
-                if (!!curMissions[i].solve) {
-                    curMissions[i].solve()
-                }
-
-                if (curMissions[i].complete) {
-                    curMissions[i].alert("COMPLETE")
-                }
-            }
+            
 
             p.HUD()
 
@@ -3626,7 +3616,18 @@ var gameInterval = setInterval(function() {
                     scene = "DEATH"
                 })
             }
-    
+            
+            for (var i in curMissions) {
+                curMissions[i].alert("NEW")
+
+                if (!!curMissions[i].solve) {
+                    curMissions[i].solve()
+                }
+
+                if (curMissions[i].complete) {
+                    curMissions[i].alert("COMPLETE")
+                }
+            }
             
             
             

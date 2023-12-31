@@ -308,7 +308,7 @@ var items = {
                 p.inventory.splice(i, 1)
             }
         }
-    })
+    }, "A painting by Coral featuring the stunning lake of Dropton.", "MISC")
 } // Puzzle Keys are not included as they vary depending on where they came from
 
 function Food(name, img, health, secs) {
