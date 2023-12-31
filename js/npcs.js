@@ -294,34 +294,36 @@ NPC.prototype.talk = function(p, npcs) {
 				}
             }
 
-            if (typeof this.lines[this.lineNum] != "function") {
-                ctx.fillStyle = "rgba(255, 255, 255, 0.60)"
-                ctx.roundRect(width / 4, height * 3 / 4 - 10, width / 2, height / 4, 10)
-                ctx.fill()
-                ctx.fillStyle = "rgb(0, 0, 0)"
-                ctx.font = "15px serif"
-                ctx.textAlign = 'left'
-                ctx.fillText(this.name, width / 4 + 10, height * 3 / 4 + 5)
-    			ctx.textBaseline = 'middle'
+            if (!!this.lines[this.lineNum]) { // Check if line even exists (fixes annoying console error)
+                if (typeof this.lines[this.lineNum] != "function") {
+                    ctx.fillStyle = "rgba(255, 255, 255, 0.60)"
+                    ctx.roundRect(width / 4, height * 3 / 4 - 10, width / 2, height / 4, 10)
+                    ctx.fill()
+                    ctx.fillStyle = "rgb(0, 0, 0)"
+                    ctx.font = "15px serif"
+                    ctx.textAlign = 'left'
+                    ctx.fillText(this.name, width / 4 + 10, height * 3 / 4 + 5)
+                    ctx.textBaseline = 'middle'
 
-				// Small or big text
-				ctx.textAlign = 'center'
-				if (this.lines[this.lineNum].charAt(0) == "`") {
-                	ctx.font = "15px serif"
-					fillTextMultiLine(this.lines[this.lineNum].substring(1,(this.lines[this.lineNum]).length), width / 2, (height * 3 / 4) + 60)
-				} else {
-					ctx.font = "20px serif"
-					fillTextMultiLine(this.lines[this.lineNum], width / 2, (height * 3 / 4) + 60)
-				}
-    			
-                
-    			if (this.nextIndicator) {
-    				if (this.nextIndicator) {
-    					triangle(width / 2 - 10, height - 60 + this.nextIndicatorY, width/2 + 10, height - 60 + this.nextIndicatorY, width/2, height - 40 + this.nextIndicatorY, "rgb(0, 0, 0)")
-    				}
-    			}
-            } else {
-                this.lines[this.lineNum].update()
+                    // Small or big text
+                    ctx.textAlign = 'center'
+                    if (this.lines[this.lineNum].charAt(0) == "`") {
+                        ctx.font = "15px serif"
+                        fillTextMultiLine(this.lines[this.lineNum].substring(1,(this.lines[this.lineNum]).length), width / 2, (height * 3 / 4) + 60)
+                    } else {
+                        ctx.font = "20px serif"
+                        fillTextMultiLine(this.lines[this.lineNum], width / 2, (height * 3 / 4) + 60)
+                    }
+                    
+                    
+                    if (this.nextIndicator) {
+                        if (this.nextIndicator) {
+                            triangle(width / 2 - 10, height - 60 + this.nextIndicatorY, width/2 + 10, height - 60 + this.nextIndicatorY, width/2, height - 40 + this.nextIndicatorY, "rgb(0, 0, 0)")
+                        }
+                    }
+                } else {
+                    this.lines[this.lineNum].update()
+                }
             }
         } else {
             this.lineNum = -1

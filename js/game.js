@@ -1855,14 +1855,8 @@ var wayne = new NPC(48 * 75, 55 * 75, "Wayne", mainMap, "D", [
 ], "Resident - Chard Town\nHe is always outdoors, and loves to raft and swim whenever he gets the chance.", function(p, npc) {
     var old_man = npcs.searchByName("Old Man")
     if (old_man.glasses) {
-        this.lines = [
-            "Aye matey!",
-            "The old man probably asked you to talk\nto me.",
-            "You need to get off this island ASAP and go back to where\n" + badGuy + " is.",
-            "I've given you a key to get out of this little village\nplace, but this island is much bigger\nthan you might think.",
-            "This key should get you further east.\nFollow the trail, and you'll reach the next village.",
-            "From there, you're going to want to talk to Smith The Blacksmith.\nHe'll get you geared up!",
-            "Good luck, you're gonna need it.\nAnd don't worry! I'll be around."
+        wayne.lines = [
+            "Use the key I gave you to head east, towards the next village!"
         ]
 
         // Location of Smith the Blacksmith's house
@@ -1871,8 +1865,10 @@ var wayne = new NPC(48 * 75, 55 * 75, "Wayne", mainMap, "D", [
             x: 130,
             y: 37
         }
+
+        wayne.action = function() {}
     }
-}, 0)
+}, "after")
 
 var smith = new NPC(4 * 75, 1 * 75, "Smith the Blacksmith", smithHouse, "D", [
     "Hey!",
