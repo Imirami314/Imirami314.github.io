@@ -1770,12 +1770,12 @@ var lochNessHouse = new Landscape([
 
 var abandonedChannel = new Landscape([
     'SSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSS~~$$$$$SSSSS',
-    'SSSSSSSS~~$$$$$$SSSS',
-    'SSSSSSSS~~SSSSS$$SSS',
-    'SSSSSSSS~~SSSSS$$SSS',
-    'SSSSSSSS~~SSSSS$$SSS',
-    'SSS~~~~~~~~~S..$$SSS',
+    'SSS_____~~_____SSSSS',
+    'SSSSSSSS~~______SSSS',
+    'SSSSSSSS~~SSSSS__SSS',
+    'SSSSSSSS~~SSSSS__SSS',
+    'SSSSSSSS~~SSSSS__SSS',
+    'SSS~~~~~~~~~S..__SSS',
     'SSS~~~~~~~~~S..SSSSS',
     '~~~~~SSSSSSSS..S~~SS',
     '~~~~~SSSSO....SS~~SS',
@@ -1784,10 +1784,10 @@ var abandonedChannel = new Landscape([
     'SS~~SS...SSS~~~SSSSS',
     'SS~~SS..SS~~~~SSSSSS',
     'SS~~~S..S~~~~~SSSSSS',
-    'SS~~~S..S~~~~~SSSSSS',
-    'SSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSS',
+    'SSSSSS..S~~~~~SSSSSS',
+    'SSSS_$__$_SSSSSSSSSS',
+    'SSSS______SSSSSSSSSS',
+    'SSSS_$__$_SSSSSSSSSS',
     'SSSSSSSSSSSSSSSSSSSS',
 ], null, null, null, null, "Abandoned Channel", function() {
     // Places to go
@@ -1798,7 +1798,7 @@ var abandonedChannel = new Landscape([
             p.goTo(39 * 75 + 37.5, 2 * 75 + 5)
         }
     }
-    if (!cascadeEntered) {
+    if (!cascadeEntered && cascade.map != abandonedChannel) {
         setTimeout(() => {
             cascade.x = 9 * 75 + 37.5
             cascade.y = 9 * 75 + 37.5
@@ -1821,14 +1821,20 @@ var abandonedChannel = new Landscape([
             ]
 
             cascade.action = function() {
+                cascade.lines = [
+                    "Please explore the stone passage while I investigate this one.",
+                    "I already told you once, we haven't got time for dillydallying!"
+                ]
+
                 cascade.curPath = [
                     [10, 9],
-                    [10, 12],
-                    [6, 12],
+                    [10, 11],
+                    [7, 11],
+                    [7, 17],
                     function() {
+                        cascade.dir = 'R'
                         cascade.lines = [
-                            "Please explore the stone passage while I investigate this one.",
-                            "I already told you once, we haven't got time for dillydallying!"
+                            "Hmmm...",
                         ]
                     }
                 ]

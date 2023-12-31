@@ -2254,7 +2254,7 @@ var ariel = new NPC(14 * 75 + 37.5, 26 * 75 + 37.5, "Ariel", droptonCity, 'L', [
 
 }, "after")
 
-var raine = new NPC(47 * 75, 32 * 75 + 37.5, "Raine", droptonCity, 'L', [
+var raine = new NPC(47 * 75, 38 * 75 + 37.5, "Raine", droptonCity, 'L', [
     "Ayo!",
     "GIVE ME MONEY!!!!",
     "To fIx ThE hOUsEs!!!!",
@@ -2270,10 +2270,10 @@ var raine = new NPC(47 * 75, 32 * 75 + 37.5, "Raine", droptonCity, 'L', [
     "Bye-bye random person."
 ], "Resident - Dropton City\nReally annoying kid that nobody wants to go near.", function() {
     rainesDad.curPath = [
-        [55, 34],
-        [49, 34],
-        [49, 32],
-        [47, 32]
+        [55, 40],
+        [49, 40],
+        [49, 38],
+        [48, 38]
     ]
 
     rainesDad.lines = [
@@ -2288,15 +2288,15 @@ var raine = new NPC(47 * 75, 32 * 75 + 37.5, "Raine", droptonCity, 'L', [
 
     raine.action = function() {
         raine.curPath = [
-            [49, 32],
-            [49, 34],
-            [53, 34]
+            [49, 38],
+            [49, 40],
+            [52, 40],
         ]
     }
     raine.actionLine = "after"
 }, 4)
 
-var rainesDad = new NPC(55 * 75 + 37.5, 32 * 75 + 37.5, "Raine's Dad", droptonCity, 'L', [
+var rainesDad = new NPC(55 * 75 + 37.5, 39 * 75 + 37.5, "Raine's Dad", droptonCity, 'L', [
     "Hello there, how are you?",
     "...",
     "Good. I work as a repairman, so as you can imagine, I'm pretty\nbusy these days.",
@@ -2469,14 +2469,19 @@ npcs.searchByName = function(name) {
     }
 }
 
-
-// Load save for NPCS actions
 if (!!save) {
-    for (var i in save.npcActions) {
+    for (var i in save.npcActions) { // Load save for NPC actions
         var actn = save.npcActions[i].action
         var nm = save.npcActions[i].name
         npcs.searchByName(nm).action = eval("(" + actn + ")")
     }
+
+    for (var i in save.npcPathActions) { // Load save for NPC path actions
+        var actn = save.npcPathActions[i].pathAction
+        var nm = save.npcPathActions[i].name
+        var nindex = parseFloat(save.npcPathActions[i].index)
+        npcs.searchByName(nm).curPath[nindex] = eval("(" + actn + ")")
+    }    
 }
 
 // Main Map
@@ -2791,6 +2796,9 @@ var t16_4 = new Toggle(encompassedLabyrinth, 16, 4, function() {
 // Dropton City
 var rd2_2 = new RaftDispenser(droptonCity, 2 * 75, 2 * 75, 2 * 75 + 37.5, 3 * 75 + 37.5)
 
+// Abandoned Channel
+
+
 
 /*
 t - Toggle
@@ -3077,16 +3085,18 @@ function saveGame() {
             })
         }
 
-        if (!!npcs[i].curPath && npcs[i].curPath != 0) {
+        if (!!npcs[i].curPath && npcs[i].curPath != 0) { // Save npc path actions
             for (var j in npcs[i].curPath) {
                 console.log(typeof npcs[i].curPath[j] == "function")
                 if (typeof npcs[i].curPath[j] == "function") {
                     SAVING.npcPathActions.push({
+                        name: npcs[i].name,
                         pathAction: npcs[i].curPath[j].toString(),
                         index: j
                     })
 
                     console.log({
+                        name: npcs[i].name,
                         pathAction: npcs[i].curPath[j].toString(),
                         index: j
                     })
@@ -3119,6 +3129,8 @@ function saveGame() {
     
     
     lset("npcActions", JSON.stringify(SAVING.npcActions))
+    lset("npcPathActions", JSON.stringify(SAVING.npcPathActions))
+
     lset("maps", JSON.stringify(SAVING.maps))
 
     for (var i in interactives) {
@@ -3408,7 +3420,7 @@ var gameInterval = setInterval(function() {
     
             for (var i in bossDoors) {
                 var b = bossDoors[i]
-                if (keys.space && p.cords.x == b.x && p.cords.y == b.y) {
+                if (keys.space && p.cords.x == b.x && p.cords.y == b.y && b.map == curMap) {
                     b.enterFunction(p)
                 }
             }

@@ -58,6 +58,7 @@ if (!!lget("player")) {
         npcs: JSON.parse(lget("npcs")),
         maps: JSON.parse(lget("maps")),
         npcActions: JSON.parse(lget("npcActions")),
+        npcPathActions: JSON.parse(lget("npcPathActions")),
         interactives: JSON.parse(lget("interactives")),
         lighting: lget("lighting"),
         dev: lget("dev"),

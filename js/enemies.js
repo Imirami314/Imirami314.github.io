@@ -60,8 +60,13 @@ Enemy.prototype.isStuck = function(dx, dy) {
 }*/
 
 Enemy.prototype.pathToPlayer = function() {
-    var curMapGrid = mainMap.grid.clone() // You need to clone before using findPath
+    var curMapGrid = curMap.grid.clone() // You need to clone before using findPath
     return finder.findPath(this.cords.x, this.cords.y, p.cords.x, p.cords.y, curMapGrid)
+}
+
+Enemy.prototype.pathToHome = function() {
+    var curMapGrid = curMap.grid.clone() // You need to clone before using findPath
+    return finder.findPath(this.cords.x, this.cords.y, Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75), curMapGrid)
 }
 
 Enemy.prototype.movePathToPlayer = function() {
@@ -82,13 +87,30 @@ Enemy.prototype.movePathToPlayer = function() {
                 this.curAngle -= 0.2
             }
         }
-        // if (dx != 0) {
-            
-        // } else {
-        //     this.moveAngle = Math.PI / 2
-        // }
-     // console.log(Math.atan2(dy / dx))
-        //console.log(this.moveAngle)
+
+        this.move(dx * 3, dy * 3)
+    }
+}
+
+Enemy.prototype.movePathToHome = function() {
+    if (!!this.pathToHome()[1] && this.pathToHome().length > 0) {
+        this.nextPoint = {
+            x: this.pathToHome()[1][0],
+            y: this.pathToHome()[1][1]
+        }
+
+        var dx = this.nextPoint.x - this.cords.x
+        var dy = this.nextPoint.y - this.cords.y
+        
+        this.moveAngle = Math.atan2(dy, dx)
+        if (Math.abs(this.moveAngle - this.curAngle) > 0.1) {
+            if (this.curAngle < this.moveAngle) {
+                this.curAngle += 0.2
+            } else {
+                this.curAngle -= 0.2
+            }
+        }
+        
         this.move(dx * 3, dy * 3)
     }
 }
@@ -737,6 +759,10 @@ Splint.prototype.draw = function(p) {
 
         if (this.playerDist >= this.deAgroDist) {
             this.agro = false
+
+            if (this.playerDist >= this.deAgroDist * 1.5) { // Splint moves back to its home if the player gets far enough
+                this.movePathToHome()
+            }
         }
         ctx.save()
         ctx.translate(this.x, this.y)
