@@ -249,9 +249,10 @@ var items = {
         p.equip(this)
         if (curMap.getBlock(p.cords.x, p.cords.y) == "*") {
             p.speed = 10
+            
         } 
         
-
+        
         ellipse(width / 2, height / 2, 75, 75, "rgb(255, 255, 255, 0.4)")
         
     }, "A magical crown that instantly turns snow into speedy snow.", "MISC"),

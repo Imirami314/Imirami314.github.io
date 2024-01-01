@@ -3179,7 +3179,7 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = true
+    //dev = true
     curMap = droptonCity
     p.goTo(39 * 75, 5 * 75)
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.stormedsSword]
@@ -3340,7 +3340,7 @@ var gameInterval = setInterval(function() {
             if (!!curMap.solve) {
                 curMap.solve()
             }
-
+            
             // Default gone
             ctx.fillStyle = "rgb(0, 0, 0)"
             ctx.font = "20px serif"
@@ -3389,7 +3389,22 @@ var gameInterval = setInterval(function() {
                     playMusic("Dropton City") // changeme later when we make new music
                 }
             }
-        
+            
+            // Queen's Crown
+            if (p.hasEquipped(items.queenAlaskasCrown) && p.blockOn.name == "snow") {
+                if (p.moving) {
+                    playSound("Speedy Snow Walking", true)
+                }
+                for (var i = 0; i < 3; i ++) {
+                    for (var j = 0; j < 3; j ++) {
+                        if (getBlockInfoByCords(p.cords.x * 75 - 75 + (75 * i), p.cords.y * 75 - 75 + (75 * j)).id == "*") {
+                            ctx.drawImage(images.speedySnow, p.cords.x * 75 - 75 + (75 * i), p.cords.y * 75 - 75 + (75 * j), 75, 75) 
+                        }
+                    }
+                }
+                
+            }
+          
             for (var i in chests) {
                 if (curMap == chests[i].map) {
                     chests[i].draw()
