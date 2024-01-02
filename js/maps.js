@@ -1769,27 +1769,28 @@ var lochNessHouse = new Landscape([
 })
 
 var abandonedChannel = new Landscape([
-    'SSSSSSSSSSSSSSSSSSSS',
-    'SSS_____~~_____SSSSS',
-    'SSSSSSSS~~______SSSS',
-    'SSSSSSSS~~SSSSS__SSS',
-    'SSSSSSSS~~SSSSS__SSS',
-    'SSSSSSSS~~SSSSS__SSS',
-    'SSS~~~~~~~~~S..__SSS',
-    'SSS~~~~~~~~~S..SSSSS',
-    '~~~~~SSSSSSSS..S~~SS',
-    '~~~~~SSSSO....SS~~SS',
-    'SS~~SSSSS..SSSS~~SSS',
-    'SS~~SSS....S~~~~SSSS',
-    'SS~~SS...SSS~~~SSSSS',
-    'SS~~SS..SS~~~~SSSSSS',
-    'SS~~~S..S~~~~~SSSSSS',
-    'SSSSSS..S~~~~~SSSSSS',
-    'SSSS_$__$_SSSSSSSSSS',
-    'SSSS______SSSSSSSSSS',
-    'SSSS_$__$_SSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSS~~~~~~~~~~~~~SSSSSSSSSSSSSSSSS^^^^SSSSSSSSSSSSS',
+    'SSSSSSSS~~~~~~~~SSSSSSSSSSSSSSSSSSSS^SSSSSSSSSSSSS',
+    'SSSSSSSS~~SSSSS~~SSSSSSSSSS^^^^^SSSS^SSSSSSSSSSSSS',
+    'SSSSSSSS~~SSSSS~~SSSSSSSSSS^SSS^SSSS^^^^^SSSSSSSSS',
+    'SSSSSSSS~~SSSSS~~SSSSSSSSSS^SSS^^^^^^SSS^SSSSSSSSS',
+    'SSS~~~~~~~~~S~~~~SSSSSSSSSS^SSS^SSSSSSSS^SSSSSSSSS',
+    'SSS~~~~~~~~SS~~SSSSSSSSSSSS^SSS^SSSSSSSSSSSSSSSSSS',
+    '~~~~~SSSSSSS~~~S^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^',
+    '~~~~~SSSSO~~~SSS^^SSSSSSSSS^SSS^SSSSSSSSSSSSSSSSSS',
+    'SS~~SSSSS~~SSS^^^SSSSSSSSSS^SSS^SSSSSSSSSSSSSSSSSS',
+    'SS~~SSS~~~~S^^^^SSSSSSSSSSS^SSS^SS^SSSSSSSSSSSSSSS',
+    'SS~~SS~~~SSS^^^SSSSSSSSSSSS^^^^^^^^SSSSSSSSSSSSSSS',
+    'SS~~SS~~SS^^^^SSSSSSSSSSSSS^SSSSSSSSSSSSSSSSSSSSSS',
+    'SS~~~S~~S^^^^^SSSSSSSSSSSSS^SSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSS~~S^^^^^SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSS~$^^$^SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSS~~^^^^SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSS~$~^$^SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',
 ], null, null, null, null, "Abandoned Channel", function() {
+    lighting = 2000
     // Places to go
     if (keys.space) {
         // Exit
@@ -1812,8 +1813,11 @@ var abandonedChannel = new Landscape([
                 "Say, I could use a research partner. Want to\nhelp me learn about this place?",
                 "...",
                 "Perfect! Let's get started right away!",
-                "I'll explore this wooden passage here, and you\ncan take the stony one.",
-                "Good luck!"
+                "It looks like this channel is splitting into two parts.\nSuspensia and water.",
+                "This seems like a perfect time to try out my new Suspenia boots!\nLet's hope they work though...",
+                "Unfortunately, I only have one pair, so I'll go on my own while you\nexplore other parts of this place.",
+                "You can track the water portion. Let's see if we find anything.",
+                "I'll call out if I need anything. Good luck!"
             ]
 
             cascade.curPath = [
@@ -1831,6 +1835,11 @@ var abandonedChannel = new Landscape([
                     [10, 11],
                     [7, 11],
                     [7, 17],
+                    [9, 17],
+                    [9, 15],
+                    [10, 15],
+                    [17, 8],
+                    [27, 8],
                     function() {
                         cascade.dir = 'R'
                         cascade.lines = [
