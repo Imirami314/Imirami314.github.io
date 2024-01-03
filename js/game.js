@@ -2645,6 +2645,52 @@ var t19_26 = new Toggle(galeCave, 19, 26, function() {}, function() {})
 
 var t19_24 = new Toggle(galeCave, 19, 24, function() {}, function() {})
 
+// Howler Hollow
+
+var bw6_2 = new Breezeway(howlerHollow, 6, 2, 9, 2) // Pair up ones that connect to each other
+var bw9_2 = new Breezeway(howlerHollow, 9, 2, 6, 2)
+
+// Stormed Room
+
+var rd6_2 = new RaftDispenser(stormedRoom, 6 * 75, 2 * 75, 6 * 75 + 37.5, 3 * 75 + 37.5)
+var rd13_9 = new RaftDispenser(stormedRoom, 13 * 75, 9 * 75, 14 * 75 + 37.5, 9 * 75 + 37.5)
+var rd20_10 = new RaftDispenser(stormedRoom, 20 * 75, 10 * 75, 20 * 75 + 37.5, 11 * 75 + 37.5)
+var rd12_20 = new RaftDispenser(stormedRoom, 12 * 75, 20 * 75, 12 * 75 + 37.5, 21 * 75 + 37.5)
+
+// Encompassed forest
+
+var lostTogglePositions = [
+    [254, 49],
+    [253, 46],
+    [250, 47],
+    [251, 50]
+]
+var lostToggleCurPos = 0
+
+var lostTravelerToggle = new Toggle(mainMap, lostTogglePositions[lostToggleCurPos][0], lostTogglePositions[lostToggleCurPos][1],
+function() {
+    // changeme to add functionality
+}, function() {
+    // changeme to add functionality
+})
+
+// Encompassed Labyrinth
+var t16_4 = new Toggle(encompassedLabyrinth, 16, 4, function() {
+
+}, function() {
+
+})
+
+// Dropton City
+var rd2_2 = new RaftDispenser(droptonCity, 2 * 75, 2 * 75, 2 * 75 + 37.5, 3 * 75 + 37.5)
+
+// Abandoned Channel
+var t3_1 = new Toggle(abandonedChannel, 3, 1, function() {
+    
+}, function() {
+    
+}, 10 * 75 + 37.5, 17 * 75 + 37.5)
+
 // The Cryo Underground
 
 var t13_6 = new Toggle(cryoUnderground, 13, 6, function() {
@@ -2758,43 +2804,6 @@ var l48_22 = new LockToggle(cryoUnderground, 48, 22, function() {
 
 var rd48_32 = new RaftDispenser(cryoUnderground, 48 * 75, 32 * 75, 47 * 75 + 37.5, 32 * 75 + 37.5)
 
-// Stormed Room
-
-var rd6_2 = new RaftDispenser(stormedRoom, 6 * 75, 2 * 75, 6 * 75 + 37.5, 3 * 75 + 37.5)
-var rd13_9 = new RaftDispenser(stormedRoom, 13 * 75, 9 * 75, 14 * 75 + 37.5, 9 * 75 + 37.5)
-var rd20_10 = new RaftDispenser(stormedRoom, 20 * 75, 10 * 75, 20 * 75 + 37.5, 11 * 75 + 37.5)
-var rd12_20 = new RaftDispenser(stormedRoom, 12 * 75, 20 * 75, 12 * 75 + 37.5, 21 * 75 + 37.5)
-
-// Encompassed forest
-
-var lostTogglePositions = [
-    [254, 49],
-    [253, 46],
-    [250, 47],
-    [251, 50]
-]
-var lostToggleCurPos = 0
-
-var lostTravelerToggle = new Toggle(mainMap, lostTogglePositions[lostToggleCurPos][0], lostTogglePositions[lostToggleCurPos][1],
-function() {
-    // changeme to add functionality
-}, function() {
-    // changeme to add functionality
-})
-
-// Encompassed Labyrinth
-var t16_4 = new Toggle(encompassedLabyrinth, 16, 4, function() {
-
-}, function() {
-
-})
-
-// Dropton City
-var rd2_2 = new RaftDispenser(droptonCity, 2 * 75, 2 * 75, 2 * 75 + 37.5, 3 * 75 + 37.5)
-
-// Abandoned Channel
-
-
 
 /*
 t - Toggle
@@ -2828,6 +2837,14 @@ var interactives = [
     t27_23,
     t19_26,
     t19_24,
+    bw6_2,
+    bw9_2,
+    rd257_30,
+    rd256_66,
+    lostTravelerToggle,
+    t16_4,
+    rd2_2,
+    t3_1,
     t13_6,
     t21_4,
     raft12_20,
@@ -2848,11 +2865,6 @@ var interactives = [
     rd20_10,
     rd12_20,
     rd48_32,
-    rd257_30,
-    rd256_66,
-    lostTravelerToggle,
-    t16_4,
-    rd2_2,
 ]
 
 
@@ -3179,7 +3191,7 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    //dev = true
+    dev = true
     curMap = droptonCity
     p.goTo(39 * 75, 5 * 75)
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.stormedsSword]
@@ -4287,6 +4299,11 @@ var gameInterval = setInterval(function() {
                     monsters[i].draw(p)
                 }
             }
+
+            // Draw player at actual location, not just center
+            ctx.translate(p.x - width / 2, p.y - width / 2)
+            p.draw()
+            ctx.translate(- (p.x - width / 2), - (p.y - width / 2))
      
 			ctx.translate((-1 * curCX) + (width / 2), (-1 * curCY) + (height / 2))
 			ctx.restore()

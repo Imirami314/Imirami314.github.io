@@ -431,3 +431,56 @@ RaftDispenser.prototype.activate = function() {
 	// 	this.showAlert = false
 	// }
 }
+
+/**
+ * An interactive that quickly transports a player to another location
+ * @param {*} map Map that the Breezeway is in
+ * @param {*} x The x BLOCK coordinate that it is on
+ * @param {*} y The y BLOCK coordinate that it is on
+ * @param {*} tpx The x BLOCK coordinate to teleport to
+ * @param {*} tpy The y BLOCK coordinate to teleport to
+ */
+function Breezeway(map, x, y, tpx, tpy) {
+    this.map = map
+    this.x = x
+    this.y = y
+    this.tpx = tpx
+    this.tpy = tpy
+
+    this.centerRotation = 0
+
+    this.cooldown = 1
+}
+
+Breezeway.prototype.draw = function() {
+    this.centerRotation += Math.PI / 66.67
+
+    ctx.drawImage(images.breezewayBase, this.x * 75, this.y * 75, 75, 75)
+    ctx.drawImage(images.breezewayCenter, this.x * 75, this.y * 75, 75, 75)
+
+    // ctx.save()
+    // ctx.translate(this.x * 75 + 37.5, this.y * 75 + 37.5)
+    // ctx.rotate(this.centerRotation)
+    // ctx.drawImage(images.breezewayCenter, this.x * 75, this.y * 75, 75, 75)
+    // ctx.translate(- (this.x * 75 + 37.5), - (this.y * 75 + 37.5))
+    // ctx.restore()
+}
+
+Breezeway.prototype.update = function() {
+    this.cooldown -= 1 / 66.67
+}
+
+Breezeway.prototype.activate = function() {
+    if (keys.space && p.on(this.x, this.y) && this.cooldown <= 0) {
+        
+        setTimeout(() => {
+            p.goTo(this.tpx * 75 + 37.5, this.tpy * 75 + 37.5)
+        }, 3250)
+
+        cameraStart(this.tpx * 75 + 37.5, this.tpy * 75 + 37.5, 15, "MINI SCENE", {
+            time: 3250
+        })
+
+        this.cooldown = 1
+    }
+}

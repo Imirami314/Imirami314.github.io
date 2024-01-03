@@ -89,6 +89,10 @@ var images = {
     keyIcon: initImage('sprites/icons/key.png'),
     starIcon: initImage('sprites/icons/star.png'),
     questionMarkIcon: initImage('sprites/icons/questionMark.png'),
+
+    // Interactives
+    breezewayBase: initImage('sprites/interactives/breezeway/breezewayBase.png'),
+    breezewayCenter: initImage('sprites/interactives/breezeway/breezewayCenter.png'),
 }
 
 var blocks = [
@@ -1335,8 +1339,8 @@ galeCave.solve = function() {
 
     if (keys.space) {
         if (p.cords.x == 44 && p.cords.y == 35) {
-            // code to take you into Cryo Underground
-            curMap = cryoUnderground
+            // code to take you into Howler Hollow
+            curMap = howlerHollow
             p.x = 75 + 37.5
             p.y = 75 + 37.5
         }
@@ -1347,84 +1351,42 @@ galeCave.solve = function() {
     }
 }
 
-var cryoUnderground = new Landscape([
-    'WWWWWWWWWWWWWWWWWWWWWSSSSSSSSSSSWWWWWWWWWWWWWWWWWW',
-    'Wzzzzzz.OW..........WSSSSSSSSSSSSSSSSWzzzzzzzzzzzW',
-    'WWWWWWW..WWWWWWW..W.WSSWWWWWWWWSSSSSSWzzzzzzzzzzWW',
-    'W~~~~~W..W~~~~~WWWW.WWWW.!!!!!WWWWWWWWzzzzzzzzzzWW',
-    'W~~~~~W..W~~~~~)~~..WzzW.zzzzz!zzzzzzzzzzzzzzzzzWW',
-    'WWWWWWW..WW((WW)WWWWWzzW.^^^^^WWWWWWWWWW.WWWWW^^WW',
-    'W~~~~Wzzzzzzzz(~~)zzzzzW.^^^^^WSSSSSSSSWzzzzz!^^WW',
-    'W~~~~WWWWWWWzzW~WWWzzzzW.^^^^^WSSSSSSSSWzzzzz!WWWW',
-    'W~~~~W~~~~~WzzW~WzzzzzzWzzzzzzzWWWWWWSSWzzzzz!!!!W',
-    'WWWWWW~~~~~WzzW~WzWWWWWWzzzzzzz!!!!!WWWW^^^^^!^^^W',
-    'W...W~~~~~~WzzWWWzWzzzzzzzzzzzz!!!!!W^^^^^^^^!^^^W',
-    'W...WWWWWWWWzzWzzzWzzzzzzzzzzzW!!!!!W^^!!!!!!!^^^W',
-    'W..........zzzzzzWWWWWWWWWWWWWW!!!!!W^^!^^^^^^^^^W',
-    'W..........zzzWWWW~~zzzW~z~z~z~z~z~zW^^!!!!!!!!!^W',
-    'W:WWWWWWWWWWWWWzzz~~zzzWz!z!z!z!z!z!W^^^^^^^^^^!^W',
-    'WWWzzzzzzzzz!!!zzz~~zzzWWWWz~z~z~z~zW^!!!!!!!^^!^W',
-    'Wzzzzzzzzzzz!!!zzz~~zzz..Wz!z!z!z!z!W^!^^^^^!!!!^W',
-    'Wzzzzzzzzzzz!!!zz~zz~zz..W!WWWWWWWWWW^!^^^^^^^^^^W',
-    'Wzzzzzzzzzzz!!!zz~zz~zzW.W!WzzzzzzzzzzzWWWWWWWWWWW',
-    'Wzzzzzzzzzzz!!!zz~zz~zzW.W!WzWWWWWWWWWWWWWWWWzzWWW',
-    'Wzzzzzzzzzzz!!!zz~zz~zzW.W!Wzzzz^^^^^^^^~^^^!!!WWW',
-    'Wzzzzzzzzzzz!!!z~~zz~~zW.W!WzWWWWW.WWWWW.WWWWW.WWW',
-    'Wzzzzzzzzzzz!!!z~~zz~~zW.W!WzSzzzzz~zzzzz.zz!z...W',
-    'WWWWWWWWWWWWWWWWWW!!WWWW.W!WWWWWWWWWWWWWWWWWWWWWWW',
-    'OOOOOOOOOOOOOOWWWW!!WW~~~~~WOOOOOOOOOWIzzzzzzzWzzW',
-    'OOOOOOOOOOOOOOWWWW!!WW~~~~~WOOOOOOOOOWIWWWWWWzWzzW',
-    'OOOOOOOOOOOOOOWWWW!!WW~~~~~WOOOOOOOOOWIWzzzzWzWzzW',
-    'OOOOOOOOOOOOOOWzWWWWWW~~~~~WOOOOOOOOOWzWzWWzWzWzzW',
-    'OOOOOOOOOOOOOOWzzzzzzz~~~~~WOOOOOOOOOWzWzWOzWzWzzW',
-    'OOOOOOOOOOOOOOWzzzzzzz~~~~~WOOOOOOOOOWzWzWWWWzWzzW',
-    'OOOOOOOOOOOOOOWWWWWWWWWWWWWWOOOOOOOOOWzWzzzz.IWzzW',
-    'OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOWzWWWWWWWWzzW', // hello
-    'OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOWIIzzzzzzzzzW',
-    'OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOWWWWWWWWWWWWW'
-], 1 * 75 + 37.5, 1 * 75 + 37.5, 0, 0, "The Cryo Underground") // Don't enter from mainMap
+var howlerHollow = new Landscape([
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$.....*$$*...$$$$$$$$$$$$$$$$$',
+    '$.....*$$...*$$$$$$$$$$$$$$$$$',
+    '$**.**.$$....$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$*...$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$.*..$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+], 1 * 75 + 37.5, 1 * 75 + 37.5, null, null, "Howler Hollow")
 
-cryoUnderground.solve = function() {
+howlerHollow.solve = function() {
+    lighting = 2000
     this.temperature = -1
-    lighting = 1500
-
-    if (keys.space) {
-        if (p.on(8, 1)) { // Exit back to Gale Cave
-            curMap = galeCave
-            p.x = 44 * 75 + 37.5
-            p.y = 34 * 75 + 37.5
-        }
-
-        // if (p.on(42, 28)) {
-        //    // curMap = stormedRoom
-        //     //p.x = 13 * 75 + 37.5
-        //     //p.y = 23 * 75 + 37.5
-        //     //p.dir = "U"
-        // }
-    }
-
-	if (cryoUnderground.getBlock(44, 22) == '~') {
-		if (!!!cryoUnderground.intervalSet) {
-	        setInterval(function() {
-	            if (cryoUnderground.getBlock(34, 20) == '^') {
-	                cryoUnderground.changeBlock(34, 20, '!')
-	                cryoUnderground.changeBlock(35, 20, '!')
-	                cryoUnderground.changeBlock(36, 20, '!')
-	                cryoUnderground.changeBlock(37, 20, '!')
-					cryoUnderground.changeBlock(38, 20, '!')
-					cryoUnderground.changeBlock(39, 20, '!')
-	            } else {
-	                cryoUnderground.changeBlock(34, 20, '^')
-	                cryoUnderground.changeBlock(35, 20, '^')
-	                cryoUnderground.changeBlock(36, 20, '^')
-	                cryoUnderground.changeBlock(37, 20, '^')
-					cryoUnderground.changeBlock(38, 20, '^')
-					cryoUnderground.changeBlock(39, 20, '^')
-	            }
-	        }, 5000)
-	        cryoUnderground.intervalSet = true
-    	}	
-	}
 }
 
 var stormedRoom = new Landscape([
@@ -1854,6 +1816,86 @@ var abandonedChannel = new Landscape([
     }
 })
 
+var cryoUnderground = new Landscape([
+    'WWWWWWWWWWWWWWWWWWWWWSSSSSSSSSSSWWWWWWWWWWWWWWWWWW',
+    'Wzzzzzz.OW..........WSSSSSSSSSSSSSSSSWzzzzzzzzzzzW',
+    'WWWWWWW..WWWWWWW..W.WSSWWWWWWWWSSSSSSWzzzzzzzzzzWW',
+    'W~~~~~W..W~~~~~WWWW.WWWW.!!!!!WWWWWWWWzzzzzzzzzzWW',
+    'W~~~~~W..W~~~~~)~~..WzzW.zzzzz!zzzzzzzzzzzzzzzzzWW',
+    'WWWWWWW..WW((WW)WWWWWzzW.^^^^^WWWWWWWWWW.WWWWW^^WW',
+    'W~~~~Wzzzzzzzz(~~)zzzzzW.^^^^^WSSSSSSSSWzzzzz!^^WW',
+    'W~~~~WWWWWWWzzW~WWWzzzzW.^^^^^WSSSSSSSSWzzzzz!WWWW',
+    'W~~~~W~~~~~WzzW~WzzzzzzWzzzzzzzWWWWWWSSWzzzzz!!!!W',
+    'WWWWWW~~~~~WzzW~WzWWWWWWzzzzzzz!!!!!WWWW^^^^^!^^^W',
+    'W...W~~~~~~WzzWWWzWzzzzzzzzzzzz!!!!!W^^^^^^^^!^^^W',
+    'W...WWWWWWWWzzWzzzWzzzzzzzzzzzW!!!!!W^^!!!!!!!^^^W',
+    'W..........zzzzzzWWWWWWWWWWWWWW!!!!!W^^!^^^^^^^^^W',
+    'W..........zzzWWWW~~zzzW~z~z~z~z~z~zW^^!!!!!!!!!^W',
+    'W:WWWWWWWWWWWWWzzz~~zzzWz!z!z!z!z!z!W^^^^^^^^^^!^W',
+    'WWWzzzzzzzzz!!!zzz~~zzzWWWWz~z~z~z~zW^!!!!!!!^^!^W',
+    'Wzzzzzzzzzzz!!!zzz~~zzz..Wz!z!z!z!z!W^!^^^^^!!!!^W',
+    'Wzzzzzzzzzzz!!!zz~zz~zz..W!WWWWWWWWWW^!^^^^^^^^^^W',
+    'Wzzzzzzzzzzz!!!zz~zz~zzW.W!WzzzzzzzzzzzWWWWWWWWWWW',
+    'Wzzzzzzzzzzz!!!zz~zz~zzW.W!WzWWWWWWWWWWWWWWWWzzWWW',
+    'Wzzzzzzzzzzz!!!zz~zz~zzW.W!Wzzzz^^^^^^^^~^^^!!!WWW',
+    'Wzzzzzzzzzzz!!!z~~zz~~zW.W!WzWWWWW.WWWWW.WWWWW.WWW',
+    'Wzzzzzzzzzzz!!!z~~zz~~zW.W!WzSzzzzz~zzzzz.zz!z...W',
+    'WWWWWWWWWWWWWWWWWW!!WWWW.W!WWWWWWWWWWWWWWWWWWWWWWW',
+    'OOOOOOOOOOOOOOWWWW!!WW~~~~~WOOOOOOOOOWIzzzzzzzWzzW',
+    'OOOOOOOOOOOOOOWWWW!!WW~~~~~WOOOOOOOOOWIWWWWWWzWzzW',
+    'OOOOOOOOOOOOOOWWWW!!WW~~~~~WOOOOOOOOOWIWzzzzWzWzzW',
+    'OOOOOOOOOOOOOOWzWWWWWW~~~~~WOOOOOOOOOWzWzWWzWzWzzW',
+    'OOOOOOOOOOOOOOWzzzzzzz~~~~~WOOOOOOOOOWzWzWOzWzWzzW',
+    'OOOOOOOOOOOOOOWzzzzzzz~~~~~WOOOOOOOOOWzWzWWWWzWzzW',
+    'OOOOOOOOOOOOOOWWWWWWWWWWWWWWOOOOOOOOOWzWzzzz.IWzzW',
+    'OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOWzWWWWWWWWzzW', // hello
+    'OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOWIIzzzzzzzzzW',
+    'OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOWWWWWWWWWWWWW'
+], 1 * 75 + 37.5, 1 * 75 + 37.5, 0, 0, "The Cryo Underground") // Don't enter from mainMap
+
+cryoUnderground.solve = function() {
+    this.temperature = -1
+    lighting = 1500
+
+    if (keys.space) {
+        if (p.on(8, 1)) { // Exit back to Gale Cave
+            curMap = galeCave
+            p.x = 44 * 75 + 37.5
+            p.y = 34 * 75 + 37.5
+        }
+
+        // if (p.on(42, 28)) {
+        //    // curMap = stormedRoom
+        //     //p.x = 13 * 75 + 37.5
+        //     //p.y = 23 * 75 + 37.5
+        //     //p.dir = "U"
+        // }
+    }
+
+	if (cryoUnderground.getBlock(44, 22) == '~') {
+		if (!!!cryoUnderground.intervalSet) {
+	        setInterval(function() {
+	            if (cryoUnderground.getBlock(34, 20) == '^') {
+	                cryoUnderground.changeBlock(34, 20, '!')
+	                cryoUnderground.changeBlock(35, 20, '!')
+	                cryoUnderground.changeBlock(36, 20, '!')
+	                cryoUnderground.changeBlock(37, 20, '!')
+					cryoUnderground.changeBlock(38, 20, '!')
+					cryoUnderground.changeBlock(39, 20, '!')
+	            } else {
+	                cryoUnderground.changeBlock(34, 20, '^')
+	                cryoUnderground.changeBlock(35, 20, '^')
+	                cryoUnderground.changeBlock(36, 20, '^')
+	                cryoUnderground.changeBlock(37, 20, '^')
+					cryoUnderground.changeBlock(38, 20, '^')
+					cryoUnderground.changeBlock(39, 20, '^')
+	            }
+	        }, 5000)
+	        cryoUnderground.intervalSet = true
+    	}	
+	}
+}
+
 
 var areas = [
     imperilledPrison,
@@ -1874,7 +1916,7 @@ var areas = [
     lonzoHouse,
     queensCastle,
     galeCave,
-    cryoUnderground,
+    howlerHollow,
     stormedRoom,
     encompassedLabyrinth,
     droptonWaterWear,
@@ -1885,7 +1927,8 @@ var areas = [
     droptonTown,
     droptonResearchFacility,
     lochNessHouse,
-    abandonedChannel
+    abandonedChannel,
+    cryoUnderground,
 ]
 
 // for (var l in areas) {
