@@ -45,7 +45,7 @@ Toggle.prototype.draw = function() {
 Toggle.prototype.activate = function() {
     if (keys.space && this.toggleCooldown <= 0 && p.cords.x == this.x && p.cords.y == this.y) {
         if (!!this.cameraX && !!this.cameraY) {
-            cameraStart(this.cameraX, this.cameraY, 100, "MINI SCENE", {
+            cameraStart(this.cameraX, this.cameraY, 100, "AUTO", {
                 time: 3250
             })
             
@@ -477,7 +477,7 @@ Breezeway.prototype.activate = function() {
             p.goTo(this.tpx * 75 + 37.5, this.tpy * 75 + 37.5)
         }, 3250)
 
-        cameraStart(this.tpx * 75 + 37.5, this.tpy * 75 + 37.5, 15, "MINI SCENE", {
+        cameraStart(this.tpx * 75 + 37.5, this.tpy * 75 + 37.5, 15, "AUTO", {
             time: 3250
         })
 

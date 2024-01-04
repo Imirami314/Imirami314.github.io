@@ -1747,9 +1747,9 @@ var abandonedChannel = new Landscape([
     'S~~SSS~~SS^^^^SSSSSSSS~SSSS^SSSSSSSSS~SSSSS~SSSSSS',
     'S~~SSS~~S^^^^^SSSSSSSS~SSSS^SSSSSSSSS~~~~~~~SSSSSS',
     'S~~SSS~~S^^^^^SSSSSS~~~~~SSSSSSSS~~~SSSSSSS~SSSSSS',
-    'S~~S~$^^$^SSSSSSSSSSSSSS~SSSSSSSSSS~SSSSSSS~~~SSSS',
-    'SSSS~~^^^^SSSSSSS~~~~~SS~S~SSSSSSSS~~~~~~~S~SSSSSS',
-    'S~SS~$~^$^SSSSSSS~SSS~SS~S~SSS~~~SS~SSSS~SS~SS~~~S',
+    'S~~S^$__$^SSSSSSSSSSSSSS~SSSSSSSSSS~SSSSSSS~~~SSSS',
+    'SSSS^^^^^^SSSSSSS~~~~~SS~S~SSSSSSSS~~~~~~~S~SSSSSS',
+    'S~SS^$^^$^SSSSSSS~SSS~SS~S~SSS~~~SS~SSSS~SS~SS~~~S',
     'S~SSSSSSSSSSS~~~~~SSS~~~~~~SSSSS~SS~SSSS~SS~~~~~~S',
     'S~SSSSSSSSSSSSSSSSSSS~SSSSSSS~~~~~~~~~~S~SS~SS~~~S',
     'S~SSSSS~~~~~~~~~S~~~~~~~~~~SS~SS~SSSS~SS~SS~SSSSSS',
@@ -1760,7 +1760,11 @@ var abandonedChannel = new Landscape([
     'SSSSSSSSS~SS~SSSSSSSS~~~~~~SSSSSSS~~SSSS~SS~SSSSSS',
     'SSS~~~~SS~~~~~~~~~~~~~SSSSSSSSSSSSS~~~~~~SS~SSSSSS',
     'SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',
-], null, null, null, null, "Abandoned Channel", function() {
+], null, null, null, null, "Abandoned Channel")
+
+// var growInterval = 0
+// var allSuspensia = false
+abandonedChannel.solve = function() {
     lighting = 2000
     // Places to go
     if (keys.space) {
@@ -1823,7 +1827,12 @@ var abandonedChannel = new Landscape([
 
         cascadeEntered = true
     }
-})
+
+    if (getBlockInfoByCords(7 * 75, 16 * 75).id == "~") {
+    
+    
+    }
+}
 
 var cryoUnderground = new Landscape([
     'WWWWWWWWWWWWWWWWWWWWWSSSSSSSSSSSWWWWWWWWWWWWWWWWWW',

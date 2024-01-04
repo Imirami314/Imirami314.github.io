@@ -2800,13 +2800,14 @@ var rd48_32 = new RaftDispenser(cryoUnderground, 48 * 75, 32 * 75, 47 * 75 + 37.
 // Abandoned Channel
 var l1_16 = new LockToggle(abandonedChannel, 1, 16, function () {
     cascade.lines = ["Uh oh.", "Baba"]
-    cascade.lineNum = 0
-   
-    cameraStart(44 * 75, 8 * 75, 10, "NPC", {
-        lineStop: 1
-    })
-    //curMap.changeBlock(1, 17, '~')
-    
+    //cascade.lineNum = 0
+    cascade.action = function () {} // clears action
+    // cameraStart(44 * 75, 8 * 75, 10, "NPC", {
+    //     lineStop: 1
+    // })
+    curMap.changeBlock(6, 16, '~')
+    curMap.changeBlock(7, 16, '~')
+    curMap.changeBlock(1, 17, '~')
 
 })
 
