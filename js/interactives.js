@@ -147,7 +147,7 @@ LockToggle.prototype.draw = function() {
 }
 
 LockToggle.prototype.activate = function() {
-    if (keys.space && p.cords.x == this.x && p.cords.y == this.y) {
+    if (keys.space && p.cords.x == this.x && p.cords.y == this.y && !this.locked) {
         this.action()
 		
 		this.locked = true

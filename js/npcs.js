@@ -325,7 +325,7 @@ NPC.prototype.talk = function(p, npcs) {
                     this.lines[this.lineNum].update()
                 }
             }
-        } else {
+        } else if (!!this.curPath && this.curPath != 0) {
             this.lineNum = -1
             this.actionFinished = false
         }
@@ -397,6 +397,16 @@ NPC.prototype.runPath = function(path) {
     } else if (typeof path[this.pathPoint] == "function") {
         try {
             path[this.pathPoint]()
+            if (!!!path[this.pathPoint + 1]) {
+                this.curPath = 0
+                return
+            } else {
+                this.pathPoint ++
+                this.runPath(path)
+            }
+
+            
+
         } catch (e) {
             console.log(e)
         }

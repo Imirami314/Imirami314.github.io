@@ -743,8 +743,8 @@ Landscape.prototype.getDimensions = function() {
  * @param {*} cx Center x coordinate the camera should focus on
  * @param {*} cy Center y coordinate the camera should focus on
  * @param {*} cspeed Speed that the camera moves to the specified coordinates
- * @param {*} type Type of camera use: ("NPC", "MINI SCENE")
- * @param {*} config Variables specific to the camera type (e.g for "NPC" you would set lineStop or for "MINI SCENE" you would set time)
+ * @param {*} type Type of camera use: ("NPC", "AUTO")
+ * @param {*} config Variables specific to the camera type (e.g for "NPC" you would set lineStop or for "AUTO" you would set time)
  */
 function Camera(cx, cy, cspeed, type, config) {
 	this.cx = cx
@@ -996,7 +996,7 @@ imperilledPrison.solve = function () {
                 p.canMove = false
                 if (cutsceneFrame > 50) {
                     alerts.push(new GameAlert(165, 17, ["WHAT? The alarm turned on?", "That must be an error..."], imperilledPrison, "NPC Prison Guard"))
-                    cameraStart(19 * 75, 2 * 75, 10, "AUTO", {})
+                    cameraStart(19 * 75, 2 * 75, 10, "", {})
                     prisonGuard.lines = [
                         "WHAT?! You escaped?!",
                         "I don't have time to explain.\nNot that I could explain anyways...",

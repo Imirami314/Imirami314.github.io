@@ -2799,12 +2799,12 @@ var rd48_32 = new RaftDispenser(cryoUnderground, 48 * 75, 32 * 75, 47 * 75 + 37.
 
 // Abandoned Channel
 var l1_16 = new LockToggle(abandonedChannel, 1, 16, function () {
-    cascade.lines = ["Uh oh."]
+    cascade.lines = ["Uh oh.", "Baba"]
     cascade.lineNum = 0
    
-   // cameraStart(44 * 75, 8 * 75, 10, "AUTO", {
-    //    lineStop: 0
-   // })
+    cameraStart(44 * 75, 8 * 75, 10, "NPC", {
+        lineStop: 1
+    })
     //curMap.changeBlock(1, 17, '~')
     
 
@@ -4358,13 +4358,6 @@ var gameInterval = setInterval(function() {
                 curCY = camera.cy
 				cameraMoving = false
 			}
-            if (camera.type == "AUTO") {
-                if (cutsceneFrame < 500) {
-                    cutsceneFrame ++
-                } else {
-                    scene = "GAME"
-                }
-            }
 
             if (camera.type == "NPC") {
 				for (i in npcs) {
@@ -4377,7 +4370,7 @@ var gameInterval = setInterval(function() {
 				}
 			}
 
-            if (camera.type == "MINI SCENE") {
+            if (camera.type == "AUTO") {
                 if (!camera.stopTimerSet) {
                     setTimeout(() => {
                         scene = "GAME"
