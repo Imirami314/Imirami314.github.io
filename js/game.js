@@ -2684,13 +2684,6 @@ var t16_4 = new Toggle(encompassedLabyrinth, 16, 4, function() {
 // Dropton City
 var rd2_2 = new RaftDispenser(droptonCity, 2 * 75, 2 * 75, 2 * 75 + 37.5, 3 * 75 + 37.5)
 
-// Abandoned Channel
-var t3_1 = new Toggle(abandonedChannel, 3, 1, function() {
-    
-}, function() {
-    
-}, 10 * 75 + 37.5, 17 * 75 + 37.5)
-
 // The Cryo Underground
 
 var t13_6 = new Toggle(cryoUnderground, 13, 6, function() {
@@ -2804,6 +2797,19 @@ var l48_22 = new LockToggle(cryoUnderground, 48, 22, function() {
 
 var rd48_32 = new RaftDispenser(cryoUnderground, 48 * 75, 32 * 75, 47 * 75 + 37.5, 32 * 75 + 37.5)
 
+// Abandoned Channel
+var l1_16 = new LockToggle(abandonedChannel, 1, 16, function () {
+    cascade.lines = ["Uh oh."]
+    cascade.lineNum = 0
+   
+   // cameraStart(44 * 75, 8 * 75, 10, "AUTO", {
+    //    lineStop: 0
+   // })
+    //curMap.changeBlock(1, 17, '~')
+    
+
+})
+
 
 /*
 t - Toggle
@@ -2844,7 +2850,6 @@ var interactives = [
     lostTravelerToggle,
     t16_4,
     rd2_2,
-    t3_1,
     t13_6,
     t21_4,
     raft12_20,
@@ -2865,6 +2870,7 @@ var interactives = [
     rd20_10,
     rd12_20,
     rd48_32,
+    l1_16
 ]
 
 
@@ -4299,7 +4305,7 @@ var gameInterval = setInterval(function() {
                     monsters[i].draw(p)
                 }
             }
-
+            
             // Draw player at actual location, not just center
             ctx.translate(p.x - width / 2, p.y - width / 2)
             p.draw()
