@@ -220,6 +220,7 @@ function Player(x, y, npcs) {
     this.droptonDonations = 0 // Default 0
 
 	this.inRaft = false
+    //this.exitedRaft = false // short time after exiting raft
 
 	this.decipher = false
 
@@ -2708,7 +2709,7 @@ var t21_4 = new Toggle(cryoUnderground, 21, 4, function() {
 
 var raft12_20 = new Raft(cryoUnderground, 12 * 75, 20 * 75)
 
-var rd11_15 = new RaftDispenser(cryoUnderground, 11 * 75, 15 * 75, 11 * 75 + 37.5, 16 * 75 + 37.5)
+var rd1_22 = new RaftDispenser(cryoUnderground, 1 * 75, 22 * 75, 1 * 75 + 37.5, 21 * 75 + 37.5)
 
 var rd22_22 = new RaftDispenser(cryoUnderground, 22 * 75, 22 * 75, 22 * 75 + 37.5, 21 * 75 + 37.5)
 
@@ -2744,13 +2745,13 @@ var rd19_10 = new RaftDispenser(cryoUnderground, 19 * 75, 10 * 75, 20 * 75 + 37.
 
 var rd38_1 = new RaftDispenser(cryoUnderground, 38 * 75, 1 * 75, 39 * 75 + 37.5, 1 * 75 + 37.5)
 
-var t48_1 = new Toggle(cryoUnderground, 48, 1, function() {
-    curMap.changeBlock(47, 1, 'z')
-    curMap.changeBlock(41, 1, 'z')
-}, function() {
-    curMap.changeBlock(47, 1, 'W')
-    curMap.changeBlock(41, 1, 'W')
-})
+// var t48_1 = new Toggle(cryoUnderground, 48, 1, function() {
+//     curMap.changeBlock(47, 1, 'z')
+//     curMap.changeBlock(41, 1, 'z')
+// }, function() {
+//     curMap.changeBlock(47, 1, 'W')
+//     curMap.changeBlock(41, 1, 'W')
+// })
 
 var rd28_19 = new RaftDispenser(cryoUnderground, 28 * 75, 19 * 75, 28 * 75 + 37.5, 20 * 75 + 37.5)
 
@@ -2854,12 +2855,11 @@ var interactives = [
     t13_6,
     t21_4,
     raft12_20,
-    rd11_15,
+    rd1_22,
     rd22_22,
     t15_27,
     rd19_10,
     rd38_1,
-    t48_1,
     rd28_19,
     t46_19,
 	t28_22,
@@ -3198,9 +3198,9 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = true
-    curMap = droptonCity
-    p.goTo(39 * 75, 5 * 75)
+    //dev = true
+    curMap = cryoUnderground
+    p.goTo(1 * 75, 20 * 75)
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.stormedsSword]
     p.equipped = [items.aquaLung]
     p.droptonDonations = 100

@@ -43,7 +43,8 @@ Toggle.prototype.draw = function() {
 }
 
 Toggle.prototype.activate = function() {
-    if (keys.space && this.toggleCooldown <= 0 && p.cords.x == this.x && p.cords.y == this.y) {
+    if (!p.inRaft && keys.space && this.toggleCooldown <= 0 && p.cords.x == this.x && p.cords.y == this.y) {
+        
         if (!!this.cameraX && !!this.cameraY) {
             cameraStart(this.cameraX, this.cameraY, 100, "AUTO", {
                 time: 3250
@@ -286,6 +287,7 @@ Raft.prototype.activate = function() {
         } else if (this.hasPlayer && p.inRaft) {
             this.hasPlayer = false
             p.inRaft = false
+            
         }
         this.enterRaftCooldown = 1
     }
