@@ -76,7 +76,7 @@ function setLighting(value) {
         lighting -= 45
     }
     
-    if (Math.abs(lighting - value) < 15) {
+    if (Math.abs(lighting - value) <= 15) {
         lighting = value
         return
     }
@@ -2651,6 +2651,15 @@ var t19_24 = new Toggle(galeCave, 19, 24, function() {}, function() {})
 var bw6_2 = new Breezeway(howlerHollow, 6, 2, 9, 2) // Pair up ones that connect to each other
 var bw9_2 = new Breezeway(howlerHollow, 9, 2, 6, 2)
 
+var t12_2 = new Toggle(howlerHollow, 12, 2, function() {
+    howlerHollow.changeBlock(15, 2, '$')
+}, function() {
+    howlerHollow.changeBlock(15, 2, '.')
+})
+
+var bw12_3 = new Breezeway(howlerHollow, 12, 3, 15, 3)
+var bw15_3 = new Breezeway(howlerHollow, 15, 3, 12, 3)
+
 // Stormed Room
 
 var rd6_2 = new RaftDispenser(stormedRoom, 6 * 75, 2 * 75, 6 * 75 + 37.5, 3 * 75 + 37.5)
@@ -2812,6 +2821,17 @@ var l1_16 = new LockToggle(abandonedChannel, 1, 16, function () {
 
 })
 
+var t15_9 = new Toggle(howlerHollow, 15, 9, function() {
+    howlerHollow.changeBlock(15, 10, ')')
+    howlerHollow.changeBlock(16, 11, '(')
+}, function() {
+    howlerHollow.changeBlock(15, 10, '(')
+    howlerHollow.changeBlock(16, 11, ')')
+})
+
+var bw10_11 = new Breezeway(howlerHollow, 10, 11, 7, 11)
+var bw7_11 = new Breezeway(howlerHollow, 7, 11, 10, 11)
+
 
 /*
 t - Toggle
@@ -2845,8 +2865,17 @@ var interactives = [
     t27_23,
     t19_26,
     t19_24,
+
+    // Howler Hollow
     bw6_2,
     bw9_2,
+    t12_2,
+    bw12_3,
+    bw15_3,
+    t15_9,
+    bw10_11,
+    bw7_11,
+
     rd257_30,
     rd256_66,
     lostTravelerToggle,
@@ -2871,7 +2900,7 @@ var interactives = [
     rd20_10,
     rd12_20,
     rd48_32,
-    l1_16
+    l1_16,
 ]
 
 
@@ -3198,9 +3227,9 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    //dev = true
-    curMap = cryoUnderground
-    p.goTo(1 * 75, 20 * 75)
+    dev = true
+    curMap = droptonCity
+    p.goTo(39 * 75, 5 * 75)
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.stormedsSword]
     p.equipped = [items.aquaLung]
     p.droptonDonations = 100
@@ -4308,9 +4337,9 @@ var gameInterval = setInterval(function() {
             }
             
             // Draw player at actual location, not just center
-            ctx.translate(p.x - width / 2, p.y - width / 2)
+            ctx.translate(p.x - width / 2, p.y - height / 2)
             p.draw()
-            ctx.translate(- (p.x - width / 2), - (p.y - width / 2))
+            ctx.translate(- (p.x - width / 2), - (p.y - height / 2))
      
 			ctx.translate((-1 * curCX) + (width / 2), (-1 * curCY) + (height / 2))
 			ctx.restore()

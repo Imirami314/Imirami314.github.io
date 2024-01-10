@@ -477,7 +477,7 @@ Breezeway.prototype.activate = function() {
         
         setTimeout(() => {
             p.goTo(this.tpx * 75 + 37.5, this.tpy * 75 + 37.5)
-        }, 3250)
+        }, 1500)
 
         cameraStart(this.tpx * 75 + 37.5, this.tpy * 75 + 37.5, 15, "AUTO", {
             time: 3250
