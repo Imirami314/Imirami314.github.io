@@ -2718,6 +2718,8 @@ var t21_4 = new Toggle(cryoUnderground, 21, 4, function() {
 
 var raft12_20 = new Raft(cryoUnderground, 12 * 75, 20 * 75)
 
+var rd5_1 = new RaftDispenser(cryoUnderground, 5 * 75, 1 * 75, 6 * 75 + 37.5, 1 * 75 + 37.5)
+
 var rd1_22 = new RaftDispenser(cryoUnderground, 1 * 75, 22 * 75, 1 * 75 + 37.5, 21 * 75 + 37.5)
 
 var rd22_22 = new RaftDispenser(cryoUnderground, 22 * 75, 22 * 75, 22 * 75 + 37.5, 21 * 75 + 37.5)
@@ -2884,6 +2886,7 @@ var interactives = [
     t13_6,
     t21_4,
     raft12_20,
+    rd5_1,
     rd1_22,
     rd22_22,
     t15_27,
@@ -3025,6 +3028,10 @@ var c10_1 = new Chest(cryoUnderground, 10, 1, [
     })
 ])
 
+var c34_15 = new Chest(cryoUnderground, 34, 15, [
+    
+])
+
 var c4_41 = new Chest(droptonCity, 4, 41, [
     items.lightContainer
 ])
@@ -3039,6 +3046,7 @@ var chests = [
 
     // Cryo Underground
     c10_1,
+    c34_15,
     // Dropton City,
     c4_41,
 ]
@@ -3227,7 +3235,7 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = true
+    //dev = false
     curMap = droptonCity
     p.goTo(39 * 75, 5 * 75)
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.stormedsSword]

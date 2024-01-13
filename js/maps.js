@@ -1835,15 +1835,15 @@ abandonedChannel.solve = function() {
 }
 
 var cryoUnderground = new Landscape([
-    'WWWWWWWWWWWWWWWWWWWWWSSSSSSSSSSSWWWWWWWWWWWWWWWWWW',
-    'WIIii~~~OW~~~~~~~~~~WSSSSSSSSSSSSSSSSWii~~~~~~iiWW',
-    'WWWWWWW~iWWWWWWW~~W~WSSWWWWWWWWSSSSSSWii~~~~~~~iWW',
+    'WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW',
+    'WIIii~~~OW~~~~~~~~~~W^^^^^^^^^^^^^^^^W~~~~~~~~iiWW',
+    'WWWWWWW~iWWWWWWW~~W~W^^WWWWWWWW^^^^^^W~~~~~~~~~iWW',
     'WIIIIiW~iW~~~~~WWWW~WWWW.IIIIIWWWWWWWW~~~~~~~~~~WW',
-    'WIIIIiW~iW~~~~~)~~~~W~iW.zzzzI!~~~~~~~~~~~~~~~!!WW',
-    'WWWWWWW~iWW((WW)WWWWW~iW.^^^^^WWWWWWWWWW.WWWWW^^WW',
-    'W^^^^W~~~~~~~~(~~)~~~~iW.^^^^^WSSSSSSSSW~~~~~!^^WW',
-    'W^^^^WWWWWWW~~W~WW~~~~~W.^^^^^WSSSSSSSSW~~~~~!WWWW',
-    'W^^^^^^^^^^W~~W~W~~~~~~W.zzzzzzWWWWWWSSW!!!!!!!!!W',
+    'WIIIIiW~iW~~~~~)~~~~WIIW.zzzzI!~~~~~~~~~~~~~~~!!WW',
+    'WWWWWWW~iWW((WW)WWWWWiiW.^^^^^WWWWWWWWWW.WWWWW^^WW',
+    'W^^^^W~~~~~~~I(~~)~~~~iW.^^^^^W^^^^^^^^W~~~~~!^^WW',
+    'W^^^^WWWWWWW~~W~WW~~~~~W.^^^^^W^^^^^^^^W~~~~~!WWWW',
+    'W^^^^^^^^^^W~~W~W~~~~~~W.zzzzzzWWWWWW^^W!!!!!!!!!W',
     'W^^^^^^^^^^W~~W~W~WWWWWW~~~~~~~!!!!!WWWW^^^^^!^^^W',
     'W^^^^^^^^^^W~~WWW~W~~~~~~~~~~~~!!!!!W^^^^^^^^!^^^W',
     'W^^^WWWWWWWW~~~~~~W~~~~~~~~~~~W!!!!!W^^!!!!!!!^^^W',

@@ -35,10 +35,12 @@ function Toggle(map, x, y, action1, action2, cameraX, cameraY) {
 
 Toggle.prototype.draw = function() {
     this.toggleCooldown -= 1 / (66 + (2 / 3))
-    if (this.toggleState == 2) {
-        ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 55, 55, "rgb(100, 10, 175)")
-    } else {
-        ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 55, 55, "rgb(255, 255, 0)")
+    if (getBlockInfoByCords(this.x * 75, this.y * 75).id == '~') {
+        if (this.toggleState == 2) {
+            ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 55, 55, "rgb(100, 10, 175)")
+        } else {
+            ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 55, 55, "rgb(255, 255, 0)")
+        }
     }
 }
 

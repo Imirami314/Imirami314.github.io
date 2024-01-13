@@ -13,6 +13,7 @@ One Time
 - Fix rafting while talking to NPCS to prevent softlocks
 - Fix missions/mission saving
 - Fix queens crown speedy snow sound
+- Fix raft alert
 
 Continuous
 - Add sound effects for all blocks
