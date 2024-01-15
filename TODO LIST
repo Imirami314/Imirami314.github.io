@@ -14,6 +14,8 @@ One Time
 - Fix missions/mission saving
 - Fix queens crown speedy snow sound
 - Fix raft alert
+- move rafts to new array (not interactives) and fix saving
+once created
 
 Continuous
 - Add sound effects for all blocks

@@ -1327,11 +1327,11 @@ galeCave.solve = function() {
             lighting += 15
         }
         
-        if (t27_24.toggleState == 2 && t27_26.toggleState == 2 && t27_23.toggleState == 1 && t27_25.toggleState == 1) {
-            galeCave.changeBlock(28, 27, 'S')
-            galeCave.changeBlock(29, 27, 'z')
-            galeCave.changeBlock(30, 27, 'z')
-            galeCave.changeBlock(31, 27, 'S')
+        if (getInteractive(27, 24, galeCave).toggleState == 2 && getInteractive(27, 26, galeCave).toggleState == 2 && getInteractive(27, 23, galeCave).toggleState == 1 && getInteractive(27, 25, galeCave).toggleState == 1) {
+             galeCave.changeBlock(28, 27, 'S')
+             galeCave.changeBlock(29, 27, 'z')
+             galeCave.changeBlock(30, 27, 'z')
+             galeCave.changeBlock(31, 27, 'S')
         }
     } else {
         lighting = 450 // Default 450

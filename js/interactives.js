@@ -31,11 +31,18 @@ function Toggle(map, x, y, action1, action2, cameraX, cameraY) {
 
    //  this.cutscene = null
     this.toggleState = 1
+
+    this.cords = {
+        x: this.x,
+        y: this.y
+    }
 }
 
 Toggle.prototype.draw = function() {
+    this.cords.x = this.x // creating coords for consistency on finding toggles
+    this.cords.y = this.y
     this.toggleCooldown -= 1 / (66 + (2 / 3))
-    if (getBlockInfoByCords(this.x * 75, this.y * 75).id == '~') {
+    if (getBlockInfoByCords(this.x * 75, this.y * 75).id != 'I' && getBlockInfoByCords(this.x * 75, this.y * 75).id != 'i') {
         if (this.toggleState == 2) {
             ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 55, 55, "rgb(100, 10, 175)")
         } else {
@@ -107,9 +114,20 @@ function MultiToggle(map, x, y, changeX, changeY, blocks) {
 	this.changeY = changeY;
 	this.blocks = blocks;
 	this.toggleNum = 0 // Hasn't been pressed yet
+
+    this.cords = {
+        x: this.x,
+        y: this.y
+    }
+    
+
+    
 }
 
 MultiToggle.prototype.draw = function () {
+    this.cords.x = this.x // creating coords for consistency on finding toggles
+    this.cords.y = this.y
+
 	this.toggleCooldown -= 1 / (66 + (2 / 3))
 	ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 55, 55, "rgb(100, 10, 175)")
 	
@@ -138,10 +156,15 @@ function LockToggle(map, x, y, action) { // Can only press this toggle once
 	this.action = action
 	this.locked = false
 	
+    this.cords = {
+        x: this.x,
+        y: this.y
+    }
 }
 
 LockToggle.prototype.draw = function() {
-    
+    this.cords.x = this.x
+    this.cords.y = this.y
     if (!this.locked) {
         ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 55, 55, "rgb(255, 0, 0)")
     } else {
@@ -332,6 +355,8 @@ function RaftDispenser(map, x, y, dsx, dsy) {
     this.map = map
     this.x = x
     this.y = y
+
+    
     this.dsx = dsx // x cord where the raft is dispensed
     this.dsy = dsy // y cord where the raft is dispensed
 
@@ -350,7 +375,8 @@ function RaftDispenser(map, x, y, dsx, dsy) {
 }
 
 RaftDispenser.prototype.draw = function() {
-
+    this.cords.x = Math.floor(this.x / 75)
+    this.cords.y = Math.floor(this.y / 75)
     // Dispenser thing component
     ctx.fillStyle = "rgb(205, 125, 50)"
     ctx.fillRect(this.x, this.y, 75, 75)
@@ -454,9 +480,17 @@ function Breezeway(map, x, y, tpx, tpy) {
     this.centerRotation = 0
 
     this.cooldown = 1
+    this.cords = {
+        x: this.x,
+        y: this.y
+    }
 }
 
 Breezeway.prototype.draw = function() {
+
+    this.cords.x = this.x
+    this.cords.y = this.y
+
     this.centerRotation += Math.PI / 66.67
 
     ctx.drawImage(images.breezewayBase, this.x * 75, this.y * 75, 75, 75)

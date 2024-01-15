@@ -2172,7 +2172,7 @@ var blakeShop = [
 ]
 
 var blake = new NPC(8 * 75 + 37.5, 1 * 75 + 75 /* So he stands on the very edge of the block */, "Blake", droptonWaterWear, 'D', [
-    "Hello there!",
+    "Hi there!",
     "Welcome to Dropton Water Wear!",
     "You don't appear to be a resident of Dropton.",
     "Can I interest you in some gear? It can allow you to \n swim underneath some bodies of water.",
@@ -2480,193 +2480,15 @@ if (!!save) {
         npcs.searchByName(nm).curPath[nindex] = eval("(" + actn + ")")
     }    
 }
-
-// Main Map
-
-var t116_31 = new Toggle(mainMap, 116, 31, function() {
-    curMap.changeBlock(121, 27, ")")
-}, function() {
-    curMap.changeBlock(121, 27, "(")
-})
-
-var t102_3 = new Toggle(mainMap, 102, 3, function() {
-    curMap.changeBlock(121, 28, ")")
-}, function() {
-    curMap.changeBlock(121, 28, "(")
-}, 121 * 75 + 37.5, 28 * 75 + 37.5)
-
-var t77_5 = new Toggle(mainMap, 77, 5, function() {
-    curMap.changeBlock(121, 29, ")")
-}, function() {
-    curMap.changeBlock(121, 29, "(")
-}, 121 * 75 + 37.5, 29 * 75 + 37.5)
-
-var t97_11 = new Toggle(mainMap, 97, 11, function() {
-    curMap.changeBlock(121, 30, ")")
-}, function() {
-    curMap.changeBlock(121, 30, "(")
-}, 121 * 75 + 37.5, 30 * 75 + 37.5)
-
-var rd257_30 = new RaftDispenser(mainMap, 257 * 75, 30 * 75, 257 * 75 + 37.5, 29 * 75 + 37.5)
-
-var rd256_66 = new RaftDispenser(mainMap, 256 * 75, 66 * 75, 255 * 75 + 37.5, 66 * 75 + 37.5)
-
-// Confounded Cave
-
-var t5_18 = new Toggle(confoundedCave, 5, 18, function() {
-    curMap.changeBlock(9, 18, "S")
-    curMap.changeBlock(10, 18, "_")
-    curMap.changeBlock(9, 19, "_")
-    curMap.changeBlock(10, 19, "S")
-}, function() {
-    curMap.changeBlock(9, 18, "_")
-    curMap.changeBlock(10, 18, "S")
-    curMap.changeBlock(9, 19, "S")
-    curMap.changeBlock(10, 19, "_")
-})
-
-var t5_19 = new Toggle(confoundedCave, 5, 19, function() {
-    curMap.changeBlock(9, 19, "S")
-    curMap.changeBlock(10, 19, "_")
-    curMap.changeBlock(9, 20, "_")
-    curMap.changeBlock(10, 20, "S")
-}, function() {
-    curMap.changeBlock(9, 19, "_")
-    curMap.changeBlock(10, 19, "S")
-    curMap.changeBlock(9, 20, "S")
-    curMap.changeBlock(10, 20, "_")
-})
-
-var t6_19 = new Toggle(confoundedCave, 6, 19, function() {
-    curMap.changeBlock(10, 19, "S")
-    curMap.changeBlock(11, 19, "_")
-    curMap.changeBlock(10, 20, "_")
-    curMap.changeBlock(11, 20, "S")
-}, function() {
-    curMap.changeBlock(10, 19, "_")
-    curMap.changeBlock(11, 19, "S")
-    curMap.changeBlock(10, 20, "S")
-    curMap.changeBlock(11, 20, "_")
-})
-
-var t6_12 = new Toggle(confoundedCave, 6, 12, function() {
-    curMap.changeBlock(11, 22, ")")
-    curMap.changeBlock(5, 14, "_")
-    curMap.changeBlock(11, 16, ")")
-    
-}, function() {
-    curMap.changeBlock(11, 22, "(")
-    curMap.changeBlock(11, 16, "(")
-    curMap.changeBlock(5, 14, "S")
-}, 11 * 75 + 37.5, 19 * 75 + 37.5)
-
-var t14_12 = new Toggle(confoundedCave, 14, 12, function() {
-    curMap.changeBlock(39, 22, ")")
-}, function() {
-    curMap.changeBlock(39, 22, "(")
-}, 39 * 75 + 37.5, 22 * 75 + 37.5)
-
-var t15_8 = new Toggle(confoundedCave, 15, 8, function() {
-    curMap.changeBlock(20, 0, ")")
-}, function() {
-    curMap.changeBlock(20, 0, "(")
-}, 20 * 75 + 37.5, 0 * 75 + 37.5)
-
-// Queen's Castle
-
-var t2_2 = new Toggle(queensCastle, 2, 2, function() {
-    curMap.changeBlock(1, 3, "!")
-    curMap.changeBlock(3, 1, "~")
-}, function() {
-    curMap.changeBlock(1, 3, "~")
-    curMap.changeBlock(3, 1, "!")
-})
-
-var t2_4 = new Toggle(queensCastle, 2, 4, function() {
-    curMap.changeBlock(1, 3, "~")
-    curMap.changeBlock(3, 5, "!")
-}, function() {
-    curMap.changeBlock(1, 3, "!")
-    curMap.changeBlock(3, 5, "~")
-})
-
-var t4_4 = new Toggle(queensCastle, 4, 4, function() {
-    curMap.changeBlock(1, 3, "~")
-    curMap.changeBlock(3, 5, "~")
-    curMap.changeBlock(5, 3, "!")
-}, function() {
-    curMap.changeBlock(1, 3, "!")
-    curMap.changeBlock(3, 5, "!")
-    curMap.changeBlock(5, 3, "~")
-})
-
-var t4_2 = new Toggle(queensCastle, 4, 2, function() {
-    curMap.changeBlock(1, 3, "!")
-    curMap.changeBlock(5, 3, "!")
-}, function() {
-    curMap.changeBlock(1, 3, "~")
-    curMap.changeBlock(5, 3, "~")
-})
-
-
-// Gale Cave
-var mt49_19 = new MultiToggle(galeCave, 49, 19, 50, 19, ["!", "~", "_", ",", "z"]) // Fee toggle
-
-var mt2_18 = new MultiToggle(galeCave, 2, 18, 1, 18, ["!", "~", "_", ",", "z"]) // Fi toggle
-
-var mt11_10 = new MultiToggle(galeCave, 11, 10, 12, 10, ["!", "~", "_", ",", "z"]) // Fo toggle
-
-var mt40_3 = new MultiToggle(galeCave, 40, 3, 41, 3, ["!", "~", "_", ",", "z"]) // Fum toggle
-
-var t27_26 = new Toggle(galeCave, 27, 26, function() {
-    curMap.changeBlock(18, 26, "_")
-}, function() {
-    curMap.changeBlock(18, 26, "S")
-})
-
-var t27_25 = new Toggle(galeCave, 27, 25, function() {
-    curMap.changeBlock(18, 25, "_")
-}, function() {
-    curMap.changeBlock(18, 25, "S")
-})
-
-var t27_24 = new Toggle(galeCave, 27, 24, function() {
-    curMap.changeBlock(18, 24, "_")
-}, function() {
-    curMap.changeBlock(18, 24, "S")
-})
-
-var t27_23 = new Toggle(galeCave, 27, 23, function() {
-    curMap.changeBlock(18, 23, "_")
-}, function() {
-    curMap.changeBlock(18, 23, "S")
-})
-
-var t19_26 = new Toggle(galeCave, 19, 26, function() {}, function() {})
-
-var t19_24 = new Toggle(galeCave, 19, 24, function() {}, function() {})
-
-// Howler Hollow
-
-var bw6_2 = new Breezeway(howlerHollow, 6, 2, 9, 2) // Pair up ones that connect to each other
-var bw9_2 = new Breezeway(howlerHollow, 9, 2, 6, 2)
-
-var t12_2 = new Toggle(howlerHollow, 12, 2, function() {
-    howlerHollow.changeBlock(15, 2, '$')
-}, function() {
-    howlerHollow.changeBlock(15, 2, '.')
-})
-
-var bw12_3 = new Breezeway(howlerHollow, 12, 3, 15, 3)
-var bw15_3 = new Breezeway(howlerHollow, 15, 3, 12, 3)
-
-// Stormed Room
-
-var rd6_2 = new RaftDispenser(stormedRoom, 6 * 75, 2 * 75, 6 * 75 + 37.5, 3 * 75 + 37.5)
-var rd13_9 = new RaftDispenser(stormedRoom, 13 * 75, 9 * 75, 14 * 75 + 37.5, 9 * 75 + 37.5)
-var rd20_10 = new RaftDispenser(stormedRoom, 20 * 75, 10 * 75, 20 * 75 + 37.5, 11 * 75 + 37.5)
-var rd12_20 = new RaftDispenser(stormedRoom, 12 * 75, 20 * 75, 12 * 75 + 37.5, 21 * 75 + 37.5)
-
+// Get Interactive by coords
+var getInteractive = function (x, y, map) {
+    for (var i in interactives) {
+        if (interactives[i].cords.x == x && interactives[i].cords.y == y && interactives[i].map == map) {
+            return interactives[i]
+        }
+    }
+    return 
+}
 // Encompassed forest
 
 var lostTogglePositions = [
@@ -2684,156 +2506,348 @@ function() {
     // changeme to add functionality
 })
 
-// Encompassed Labyrinth
-var t16_4 = new Toggle(encompassedLabyrinth, 16, 4, function() {
+// Main Map
 
-}, function() {
+var interactives = [
+    new Toggle(mainMap, 116, 31, function() {
+        curMap.changeBlock(121, 27, ")")
+    }, function() {
+        curMap.changeBlock(121, 27, "(")
+    }),
 
-})
+    new Toggle(mainMap, 102, 3, function() {
+        curMap.changeBlock(121, 28, ")")
+    }, function() {
+        curMap.changeBlock(121, 28, "(")
+    }, 121 * 75 + 37.5, 28 * 75 + 37.5),
 
-// Dropton City
-var rd2_2 = new RaftDispenser(droptonCity, 2 * 75, 2 * 75, 2 * 75 + 37.5, 3 * 75 + 37.5)
+    new Toggle(mainMap, 77, 5, function() {
+        curMap.changeBlock(121, 29, ")")
+    }, function() {
+        curMap.changeBlock(121, 29, "(")
+    }, 121 * 75 + 37.5, 29 * 75 + 37.5),
 
-// The Cryo Underground
+    new Toggle(mainMap, 97, 11, function() {
+        curMap.changeBlock(121, 30, ")")
+    }, function() {
+        curMap.changeBlock(121, 30, "(")
+    }, 121 * 75 + 37.5, 30 * 75 + 37.5),
 
-var t13_6 = new Toggle(cryoUnderground, 13, 6, function() {
-    curMap.changeBlock(15, 4, ')')
-    curMap.changeBlock(15, 5, ')')
-    curMap.changeBlock(11, 5, '(')
-    curMap.changeBlock(12, 5, '(')
-    curMap.changeBlock(14, 6, '(')
-}, function() {
-    curMap.changeBlock(15, 4, '(')
-    curMap.changeBlock(15, 5, '(')
-    curMap.changeBlock(11, 5, ')')
-    curMap.changeBlock(12, 5, ')')
-    curMap.changeBlock(14, 6, ')')
-})
+    new RaftDispenser(mainMap, 257 * 75, 30 * 75, 257 * 75 + 37.5, 29 * 75 + 37.5),
 
-var t21_4 = new Toggle(cryoUnderground, 21, 4, function() {
-    curMap.changeBlock(17, 6, ')')
-}, function() {
-    curMap.changeBlock(17, 6, '(')
-})
+    new RaftDispenser(mainMap, 256 * 75, 66 * 75, 255 * 75 + 37.5, 66 * 75 + 37.5),
 
-var raft12_20 = new Raft(cryoUnderground, 12 * 75, 20 * 75)
+    // Confounded Cave
 
-var rd5_1 = new RaftDispenser(cryoUnderground, 5 * 75, 1 * 75, 6 * 75 + 37.5, 1 * 75 + 37.5)
+    new Toggle(confoundedCave, 5, 18, function() {
+        curMap.changeBlock(9, 18, "S")
+        curMap.changeBlock(10, 18, "_")
+        curMap.changeBlock(9, 19, "_")
+        curMap.changeBlock(10, 19, "S")
+    }, function() {
+        curMap.changeBlock(9, 18, "_")
+        curMap.changeBlock(10, 18, "S")
+        curMap.changeBlock(9, 19, "S")
+        curMap.changeBlock(10, 19, "_")
+    }),
 
-var rd1_22 = new RaftDispenser(cryoUnderground, 1 * 75, 22 * 75, 1 * 75 + 37.5, 21 * 75 + 37.5)
+    new Toggle(confoundedCave, 5, 19, function() {
+        curMap.changeBlock(9, 19, "S")
+        curMap.changeBlock(10, 19, "_")
+        curMap.changeBlock(9, 20, "_")
+        curMap.changeBlock(10, 20, "S")
+    }, function() {
+        curMap.changeBlock(9, 19, "_")
+        curMap.changeBlock(10, 19, "S")
+        curMap.changeBlock(9, 20, "S")
+        curMap.changeBlock(10, 20, "_")
+    }),
 
-var rd22_22 = new RaftDispenser(cryoUnderground, 22 * 75, 22 * 75, 22 * 75 + 37.5, 21 * 75 + 37.5)
+    new Toggle(confoundedCave, 6, 19, function() {
+        curMap.changeBlock(10, 19, "S")
+        curMap.changeBlock(11, 19, "_")
+        curMap.changeBlock(10, 20, "_")
+        curMap.changeBlock(11, 20, "S")
+    }, function() {
+        curMap.changeBlock(10, 19, "_")
+        curMap.changeBlock(11, 19, "S")
+        curMap.changeBlock(10, 20, "S")
+        curMap.changeBlock(11, 20, "_")
+    }),
 
-var t15_27 = new Toggle(cryoUnderground, 15, 27, function() {
-    curMap.changeBlock(18, 23, '!')
-    curMap.changeBlock(19, 23, '!')
-    
-    curMap.changeBlock(18, 27, 'W')
-    curMap.changeBlock(19, 27, 'W')
+    new Toggle(confoundedCave, 6, 12, function() {
+        curMap.changeBlock(11, 22, ")")
+        curMap.changeBlock(5, 14, "_")
+        curMap.changeBlock(11, 16, ")")
+        
+    }, function() {
+        curMap.changeBlock(11, 22, "(")
+        curMap.changeBlock(11, 16, "(")
+        curMap.changeBlock(5, 14, "S")
+    }, 11 * 75 + 37.5, 19 * 75 + 37.5),
 
-    curMap.changeBlock(18, 24, '!')
-    curMap.changeBlock(19, 24, '!')
-    curMap.changeBlock(18, 25, '!')
-    curMap.changeBlock(19, 25, '!')
-    curMap.changeBlock(18, 26, '!')
-    curMap.changeBlock(19, 26, '!')
-}, function() {
-    curMap.changeBlock(18, 23, 'W')
-    curMap.changeBlock(19, 23, 'W')
-    
-    curMap.changeBlock(18, 27, 'z')
-    curMap.changeBlock(19, 27, 'z')
+    new Toggle(confoundedCave, 14, 12, function() {
+        curMap.changeBlock(39, 22, ")")
+    }, function() {
+        curMap.changeBlock(39, 22, "(")
+    }, 39 * 75 + 37.5, 22 * 75 + 37.5),
 
-    curMap.changeBlock(18, 24, 'z')
-    curMap.changeBlock(19, 24, 'z')
-    curMap.changeBlock(18, 25, 'z')
-    curMap.changeBlock(19, 25, 'z')
-    curMap.changeBlock(18, 26, 'z')
-    curMap.changeBlock(19, 26, 'z')
-})
+    new Toggle(confoundedCave, 15, 8, function() {
+        curMap.changeBlock(20, 0, ")")
+    }, function() {
+        curMap.changeBlock(20, 0, "(")
+    }, 20 * 75 + 37.5, 0 * 75 + 37.5),
 
-var rd19_10 = new RaftDispenser(cryoUnderground, 19 * 75, 10 * 75, 20 * 75 + 37.5, 10 * 75 + 37.5)
+    // Queen's Castle
 
-var rd38_1 = new RaftDispenser(cryoUnderground, 38 * 75, 1 * 75, 39 * 75 + 37.5, 1 * 75 + 37.5)
+    new Toggle(queensCastle, 2, 2, function() {
+        curMap.changeBlock(1, 3, "!")
+        curMap.changeBlock(3, 1, "~")
+    }, function() {
+        curMap.changeBlock(1, 3, "~")
+        curMap.changeBlock(3, 1, "!")
+    }),
 
-// var t48_1 = new Toggle(cryoUnderground, 48, 1, function() {
-//     curMap.changeBlock(47, 1, 'z')
-//     curMap.changeBlock(41, 1, 'z')
-// }, function() {
-//     curMap.changeBlock(47, 1, 'W')
-//     curMap.changeBlock(41, 1, 'W')
-// })
+    new Toggle(queensCastle, 2, 4, function() {
+        curMap.changeBlock(1, 3, "~")
+        curMap.changeBlock(3, 5, "!")
+    }, function() {
+        curMap.changeBlock(1, 3, "!")
+        curMap.changeBlock(3, 5, "~")
+    }),
 
-var rd28_19 = new RaftDispenser(cryoUnderground, 28 * 75, 19 * 75, 28 * 75 + 37.5, 20 * 75 + 37.5)
+    new Toggle(queensCastle, 4, 4, function() {
+        curMap.changeBlock(1, 3, "~")
+        curMap.changeBlock(3, 5, "~")
+        curMap.changeBlock(5, 3, "!")
+    }, function() {
+        curMap.changeBlock(1, 3, "!")
+        curMap.changeBlock(3, 5, "!")
+        curMap.changeBlock(5, 3, "~")
+    }),
 
-var t46_19 = new Toggle(cryoUnderground, 46, 19, function() {
-    curMap.changeBlock(47, 23, 'W')
-    curMap.changeBlock(48, 23, 'W')
+    new Toggle(queensCastle, 4, 2, function() {
+        curMap.changeBlock(1, 3, "!")
+        curMap.changeBlock(5, 3, "!")
+    }, function() {
+        curMap.changeBlock(1, 3, "~")
+        curMap.changeBlock(5, 3, "~")
+    }),
 
-    curMap.changeBlock(46, 19, '!')
-    curMap.changeBlock(46, 20, '!')
-}, function() {
-    curMap.changeBlock(47, 23, 'z')
-    curMap.changeBlock(48, 23, 'z')
 
-    curMap.changeBlock(46, 19, 'z')
-    curMap.changeBlock(46, 20, 'z')
-})
+    // Gale Cave
+    new MultiToggle(galeCave, 49, 19, 50, 19, ["!", "~", "_", ",", "z"]), // Fee toggle
 
-var t28_22 = new Toggle(cryoUnderground, 28, 22, function () {
-	
-	curMap.changeBlock(29, 22, 'S')
-	curMap.changeBlock(35, 22, '~')
-}, function () {
-	
-	curMap.changeBlock(29, 22, '~')
-	curMap.changeBlock(35, 22, 'S')
+    new MultiToggle(galeCave, 2, 18, 1, 18, ["!", "~", "_", ",", "z"]), // Fi toggle
 
-})
+    new MultiToggle(galeCave, 11, 10, 12, 10, ["!", "~", "_", ",", "z"]), // Fo toggle
 
-var t34_21 = new Toggle(cryoUnderground, 34, 21, function () {
-	
-	curMap.changeBlock(29, 22, '~')
-	curMap.changeBlock(35, 22, 'S')
-}, function () {
-	curMap.changeBlock(29, 22, '!')
-	curMap.changeBlock(35, 22, '!')
-})
+    new MultiToggle(galeCave, 40, 3, 41, 3, ["!", "~", "_", ",", "z"]), // Fum toggle
 
-var m42_22 = new MultiToggle(cryoUnderground, 42, 22, 41, 22, ["!", "^", "~", ",", "."])
+    new Toggle(galeCave, 27, 26, function() {
+        curMap.changeBlock(18, 26, "_")
+    }, function() {
+        curMap.changeBlock(18, 26, "S")
+    }),
 
-var l48_22 = new LockToggle(cryoUnderground, 48, 22, function() {
-	curMap.changeBlock(44, 22, '~')
-	//curMap.changeBlock(34, 22, '.')
-})
+    new Toggle(galeCave, 27, 25, function() {
+        curMap.changeBlock(18, 25, "_")
+    }, function() {
+        curMap.changeBlock(18, 25, "S")
+    }),
 
-var rd48_32 = new RaftDispenser(cryoUnderground, 48 * 75, 32 * 75, 47 * 75 + 37.5, 32 * 75 + 37.5)
+    new Toggle(galeCave, 27, 24, function() {
+        curMap.changeBlock(18, 24, "_")
+    }, function() {
+        curMap.changeBlock(18, 24, "S")
+    }),
 
-// Abandoned Channel
-var l1_16 = new LockToggle(abandonedChannel, 1, 16, function () {
-    cascade.lines = ["Uh oh.", "Baba"]
-    //cascade.lineNum = 0
-    cascade.action = function () {} // clears action
-    // cameraStart(44 * 75, 8 * 75, 10, "NPC", {
-    //     lineStop: 1
+    new Toggle(galeCave, 27, 23, function() {
+        curMap.changeBlock(18, 23, "_")
+    }, function() {
+        curMap.changeBlock(18, 23, "S")
+    }),
+
+    new Toggle(galeCave, 19, 26, function() {}, function() {}),
+
+    new Toggle(galeCave, 19, 24, function() {}, function() {}),
+
+    // Encompassed Forst
+    lostTravelerToggle,
+
+    // Howler Hollow
+
+    new Breezeway(howlerHollow, 6, 2, 9, 2), // Pair up ones that connect to each other
+    new Breezeway(howlerHollow, 9, 2, 6, 2),
+
+    new Toggle(howlerHollow, 12, 2, function() {
+        howlerHollow.changeBlock(15, 2, '$')
+    }, function() {
+        howlerHollow.changeBlock(15, 2, '.')
+    }),
+
+    new Breezeway(howlerHollow, 12, 3, 15, 3),
+    new Breezeway(howlerHollow, 15, 3, 12, 3),
+
+    // Stormed Room
+
+    new RaftDispenser(stormedRoom, 6 * 75, 2 * 75, 6 * 75 + 37.5, 3 * 75 + 37.5),
+    new RaftDispenser(stormedRoom, 13 * 75, 9 * 75, 14 * 75 + 37.5, 9 * 75 + 37.5),
+    new RaftDispenser(stormedRoom, 20 * 75, 10 * 75, 20 * 75 + 37.5, 11 * 75 + 37.5),
+    new RaftDispenser(stormedRoom, 12 * 75, 20 * 75, 12 * 75 + 37.5, 21 * 75 + 37.5),
+
+
+
+    // Encompassed Labyrinth
+    new Toggle(encompassedLabyrinth, 16, 4, function() {
+
+    }, function() {
+
+    }),
+
+    // Dropton City
+    new RaftDispenser(droptonCity, 2 * 75, 2 * 75, 2 * 75 + 37.5, 3 * 75 + 37.5),
+
+    // The Cryo Underground
+
+    new Toggle(cryoUnderground, 13, 6, function() {
+        curMap.changeBlock(15, 4, ')')
+        curMap.changeBlock(15, 5, ')')
+        curMap.changeBlock(11, 5, '(')
+        curMap.changeBlock(12, 5, '(')
+        curMap.changeBlock(14, 6, '(')
+    }, function() {
+        curMap.changeBlock(15, 4, '(')
+        curMap.changeBlock(15, 5, '(')
+        curMap.changeBlock(11, 5, ')')
+        curMap.changeBlock(12, 5, ')')
+        curMap.changeBlock(14, 6, ')')
+    }),
+
+    new Toggle(cryoUnderground, 21, 4, function() {
+        curMap.changeBlock(17, 6, ')')
+    }, function() {
+        curMap.changeBlock(17, 6, '(')
+    }),
+
+    //var raft12_20 = new Raft(cryoUnderground, 12 * 75, 20 * 75)
+
+    new RaftDispenser(cryoUnderground, 5 * 75, 1 * 75, 6 * 75 + 37.5, 1 * 75 + 37.5),
+
+    new RaftDispenser(cryoUnderground, 1 * 75, 22 * 75, 1 * 75 + 37.5, 21 * 75 + 37.5),
+
+    new RaftDispenser(cryoUnderground, 22 * 75, 22 * 75, 22 * 75 + 37.5, 21 * 75 + 37.5),
+
+    new Toggle(cryoUnderground, 15, 27, function() {
+        curMap.changeBlock(18, 23, '!')
+        curMap.changeBlock(19, 23, '!')
+        
+        curMap.changeBlock(18, 27, 'W')
+        curMap.changeBlock(19, 27, 'W')
+
+        curMap.changeBlock(18, 24, '!')
+        curMap.changeBlock(19, 24, '!')
+        curMap.changeBlock(18, 25, '!')
+        curMap.changeBlock(19, 25, '!')
+        curMap.changeBlock(18, 26, '!')
+        curMap.changeBlock(19, 26, '!')
+    }, function() {
+        curMap.changeBlock(18, 23, 'W')
+        curMap.changeBlock(19, 23, 'W')
+        
+        curMap.changeBlock(18, 27, 'z')
+        curMap.changeBlock(19, 27, 'z')
+
+        curMap.changeBlock(18, 24, 'z')
+        curMap.changeBlock(19, 24, 'z')
+        curMap.changeBlock(18, 25, 'z')
+        curMap.changeBlock(19, 25, 'z')
+        curMap.changeBlock(18, 26, 'z')
+        curMap.changeBlock(19, 26, 'z')
+    }),
+
+    new RaftDispenser(cryoUnderground, 19 * 75, 10 * 75, 20 * 75 + 37.5, 10 * 75 + 37.5),
+
+    new RaftDispenser(cryoUnderground, 38 * 75, 1 * 75, 39 * 75 + 37.5, 1 * 75 + 37.5),
+
+    // var t48_1 = new Toggle(cryoUnderground, 48, 1, function() {
+    //     curMap.changeBlock(47, 1, 'z')
+    //     curMap.changeBlock(41, 1, 'z')
+    // }, function() {
+    //     curMap.changeBlock(47, 1, 'W')
+    //     curMap.changeBlock(41, 1, 'W')
     // })
-    curMap.changeBlock(6, 16, '~')
-    curMap.changeBlock(7, 16, '~')
-    curMap.changeBlock(1, 17, '~')
 
-})
+    new RaftDispenser(cryoUnderground, 28 * 75, 19 * 75, 28 * 75 + 37.5, 20 * 75 + 37.5),
 
-var t15_9 = new Toggle(howlerHollow, 15, 9, function() {
-    howlerHollow.changeBlock(15, 10, ')')
-    howlerHollow.changeBlock(16, 11, '(')
-}, function() {
-    howlerHollow.changeBlock(15, 10, '(')
-    howlerHollow.changeBlock(16, 11, ')')
-})
+    new Toggle(cryoUnderground, 46, 19, function() {
+        curMap.changeBlock(47, 23, 'W')
+        curMap.changeBlock(48, 23, 'W')
 
-var bw10_11 = new Breezeway(howlerHollow, 10, 11, 7, 11)
-var bw7_11 = new Breezeway(howlerHollow, 7, 11, 10, 11)
+        curMap.changeBlock(46, 19, '!')
+        curMap.changeBlock(46, 20, '!')
+    }, function() {
+        curMap.changeBlock(47, 23, 'z')
+        curMap.changeBlock(48, 23, 'z')
 
+        curMap.changeBlock(46, 19, 'z')
+        curMap.changeBlock(46, 20, 'z')
+    }),
+
+    new Toggle(cryoUnderground, 28, 22, function () {
+        
+        curMap.changeBlock(29, 22, 'S')
+        curMap.changeBlock(35, 22, '~')
+    }, function () {
+        
+        curMap.changeBlock(29, 22, '~')
+        curMap.changeBlock(35, 22, 'S')
+
+    }),
+
+    new Toggle(cryoUnderground, 34, 21, function () {
+        
+        curMap.changeBlock(29, 22, '~')
+        curMap.changeBlock(35, 22, 'S')
+    }, function () {
+        curMap.changeBlock(29, 22, '!')
+        curMap.changeBlock(35, 22, '!')
+    }),
+
+    new MultiToggle(cryoUnderground, 42, 22, 41, 22, ["!", "^", "~", ",", "."]),
+
+    new LockToggle(cryoUnderground, 48, 22, function() {
+        curMap.changeBlock(44, 22, '~')
+        //curMap.changeBlock(34, 22, '.')
+    }),
+
+    new RaftDispenser(cryoUnderground, 48 * 75, 32 * 75, 47 * 75 + 37.5, 32 * 75 + 37.5),
+
+    // Abandoned Channel
+    new LockToggle(abandonedChannel, 1, 16, function () {
+        cascade.lines = ["Uh oh.", "Baba"]
+        //cascade.lineNum = 0
+        cascade.action = function () {} // clears action
+        // cameraStart(44 * 75, 8 * 75, 10, "NPC", {
+        //     lineStop: 1
+        // })
+        curMap.changeBlock(6, 16, '~')
+        curMap.changeBlock(7, 16, '~')
+        curMap.changeBlock(1, 17, '~')
+
+    }),
+
+    new Toggle(howlerHollow, 15, 9, function() {
+        howlerHollow.changeBlock(15, 10, ')')
+        howlerHollow.changeBlock(16, 11, '(')
+    }, function() {
+        howlerHollow.changeBlock(15, 10, '(')
+        howlerHollow.changeBlock(16, 11, ')')
+    }),
+
+    new Breezeway(howlerHollow, 10, 11, 7, 11),
+    new Breezeway(howlerHollow, 7, 11, 10, 11)
+]
 
 /*
 t - Toggle
@@ -2842,70 +2856,72 @@ raft - Raft
 rd - Raft Dispenser
 */
 
-var interactives = [
-    t116_31,
-    t102_3,
-    t77_5,
-    t97_11,
-    t5_18,
-    t5_19,
-    t6_19,
-    t6_12,
-    t14_12,
-    t15_8,
-    t2_2,
-    t2_4,
-    t4_4,
-    t4_2,
-	mt49_19,
-	mt2_18,
-	mt11_10,
-	mt40_3,
-    t27_26,
-    t27_25,
-    t27_24,
-    t27_23,
-    t19_26,
-    t19_24,
+// var interactives = [
+//     t116_31,
+//     t102_3,
+//     t77_5,
+//     t97_11,
+//     t5_18,
+//     t5_19,
+//     t6_19,
+//     t6_12,
+//     t14_12,
+//     t15_8,
+//     t2_2,
+//     t2_4,
+//     t4_4,
+//     t4_2,
+// 	mt49_19,
+// 	mt2_18,
+// 	mt11_10,
+// 	mt40_3,
+//     t27_26,
+//     t27_25,
+//     t27_24,
+//     t27_23,
+//     t19_26,
+//     t19_24,
 
-    // Howler Hollow
-    bw6_2,
-    bw9_2,
-    t12_2,
-    bw12_3,
-    bw15_3,
-    t15_9,
-    bw10_11,
-    bw7_11,
+//     // Howler Hollow
+//     bw6_2,
+//     bw9_2,
+//     t12_2,
+//     bw12_3,
+//     bw15_3,
+//     t15_9,
+//     bw10_11,
+//     bw7_11,
 
-    rd257_30,
-    rd256_66,
-    lostTravelerToggle,
-    t16_4,
-    rd2_2,
-    t13_6,
-    t21_4,
-    raft12_20,
-    rd5_1,
-    rd1_22,
-    rd22_22,
-    t15_27,
-    rd19_10,
-    rd38_1,
-    rd28_19,
-    t46_19,
-	t28_22,
-	t34_21,
-	m42_22,
-	l48_22,
-    rd6_2,
-    rd13_9,
-    rd20_10,
-    rd12_20,
-    rd48_32,
-    l1_16,
+//     rd257_30,
+//     rd256_66,
+//     lostTravelerToggle,
+//     t16_4,
+//     rd2_2,
+//     t13_6,
+//     t21_4,
+//     rd5_1,
+//     rd1_22,
+//     rd22_22,
+//     t15_27,
+//     rd19_10,
+//     rd38_1,
+//     rd28_19,
+//     t46_19,
+// 	t28_22,
+// 	t34_21,
+// 	m42_22,
+// 	l48_22,
+//     rd6_2,
+//     rd13_9,
+//     rd20_10,
+//     rd12_20,
+//     rd48_32,
+//     l1_16,
+// ]
+
+var rafts = [
+    //raft12_20,
 ]
-
 
 // Load save for interactives
 if (!!save) {
