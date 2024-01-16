@@ -91,6 +91,8 @@ var images = {
     questionMarkIcon: initImage('sprites/icons/questionMark.png'),
 
     // Interactives
+    chestOpen: initImage('sprites/interactives/chest/chestOpen.png'),
+    chestClosed: initImage('sprites/interactives/chest/chestClosed.png'),
     breezewayBase: initImage('sprites/interactives/breezeway/breezewayBase.png'),
     breezewayCenter: initImage('sprites/interactives/breezeway/breezewayCenter.png'),
 }
@@ -728,6 +730,21 @@ Landscape.prototype.changeBlocks = function (a, b) {
 }
 
 /**
+ * Switches two types of blocks for each other
+ * @param {*} x Block coordinate x
+ * @param {*} y Block coordinate y
+ * @param {*} b1 Block type 1 (e.g. '~')
+ * @param {*} b2 Block type 2 (e.g. '!')
+ */
+Landscape.prototype.switch = function(x, y, b1, b2) {
+    if (this.getBlock(x, y) == b1) {
+        this.changeBlock(x, y, b2)
+    } else if (this.getBlock(x, y) == b2) {
+        this.changeBlock(x, y, b1)
+    }
+}
+
+/**
  * Gets the dimensions of the map
  * @returns Object containing .x and .y which give the lengths of the sides (in BLOCKS)
  */
@@ -1356,19 +1373,19 @@ var howlerHollow = new Landscape([
     '$.....*$$*...$$....$$$$$$$$$$$',
     '$.....*SS...*$$$$..$$$$$$$$$$$',
     '$**.**.$$....SS.$...$$$$$$$$$$',
-    '$$$$$$$$$*...$$$$...)$$$$$$$$$',
-    '$$$$$$$$$.*..$$$$...)$$$$$$$$$',
-    '$$$$$$$$$$$$$$$$....$$$$$$$$$$',
-    '$$$$$$......$$$....$$$$$$$$$$$',
-    '$$$$$$......$$....$$$$$$$$$$$$',
+    '$$$$))$$$*...$$$$...)$$$$$$$$$',
+    '$$$$..$$$.*..$$$$...)$$$$$$$$$',
+    '$$$$..$$$$$$$$$$....$$$$$$$$$$',
+    '$$$$........$$$....$$$$$$$$$$$',
+    '$$$$$.......$$....$$$$$$$$$$$$',
     '$$$$$$$$$$..$$...$$$$$$$$$$$$$',
     '$$$$$...$$....S)S.$$$$$$$$$$$$',
-    '$$$$$...$$....(_(.$$$$$$$$$$$$',
+    '$$$$$...SS....(_(.$$$$$$$$$$$$',
     '$$$$$...$$....S)S.$$$$$$$$$$$$',
-    '$$$$$$$$$$$$$$...$$$$$$$$$$$$$',
-    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
-    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
-    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$$$$$$..$$$$$$...$$$$$$$$$$$$$',
+    '$$$$$$..$$$$$$...$$$$$$$$$$$$$',
+    '$$$$$$............!~!~!~!_$$$$',
+    '$$$$$$...........$$$$$$$$$$$$$',
     '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
     '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
     '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
@@ -1387,6 +1404,22 @@ var howlerHollow = new Landscape([
 howlerHollow.solve = function() {
     lighting = 2000
     this.temperature = -1
+    if (!!!howlerHollow.intervalSet) {
+        setInterval(function() {
+            if (howlerHollow.getBlock(18, 15) == '!') {
+                howlerHollow.changeBlock(18, 15, '_')
+                howlerHollow.changeBlock(20, 15, '_')
+                howlerHollow.changeBlock(22, 15, '_')
+                howlerHollow.changeBlock(24, 15, '_')
+            } else {
+                howlerHollow.changeBlock(18, 15, '!')
+                howlerHollow.changeBlock(20, 15, '!')
+                howlerHollow.changeBlock(22, 15, '!')
+                howlerHollow.changeBlock(24, 15, '!')
+            }
+        }, 1000)
+        howlerHollow.intervalSet = true
+    }
 }
 
 var stormedRoom = new Landscape([

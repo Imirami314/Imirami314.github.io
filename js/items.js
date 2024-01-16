@@ -21,11 +21,14 @@ function Chest(map, cordX, cordY, items) {
 
 Chest.prototype.draw = function() {
     if (!this.opened) {
+        ctx.drawImage(images.chestClosed, this.cords.x * 75, this.cords.y * 75, 75, 75)
         ctx.fillStyle = "rgb(200, 200, 0)"
     } else {
+        ctx.drawImage(images.chestOpen, this.cords.x * 75, this.cords.y * 75, 75, 75)
         ctx.fillStyle = "rgb(0, 255, 0)"
     }
-    ctx.fillRect(this.cords.x * 75, this.cords.y * 75, 50, 50)
+    //ctx.fillRect(this.cords.x * 75, this.cords.y * 75, 50, 50)
+    
 }
 
 Chest.prototype.open = function(p) {

@@ -200,7 +200,6 @@ NPC.prototype.draw = function() {
 	} 
 	
     ctx.restore()
-    console.log(keys.space)
     if (Math.hypot((this.x - p.x), (this.y - p.y)) <= 100 && keys.space && this.lineNum < 0 && this.textCooldown <= 0) {
         this.lineNum = 0
         this.textCooldown = 1

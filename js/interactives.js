@@ -53,7 +53,7 @@ Toggle.prototype.draw = function() {
 
 Toggle.prototype.activate = function() {
     if (!p.inRaft && keys.space && this.toggleCooldown <= 0 && p.cords.x == this.x && p.cords.y == this.y) {
-        
+        playSound("Toggle")
         if (!!this.cameraX && !!this.cameraY) {
             cameraStart(this.cameraX, this.cameraY, 100, "AUTO", {
                 time: 3250

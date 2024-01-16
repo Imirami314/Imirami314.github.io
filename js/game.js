@@ -2689,6 +2689,36 @@ var interactives = [
     new Breezeway(howlerHollow, 12, 3, 15, 3),
     new Breezeway(howlerHollow, 15, 3, 12, 3),
 
+    new Toggle(howlerHollow, 15, 9, function() {
+        howlerHollow.changeBlock(15, 10, ')')
+        howlerHollow.changeBlock(16, 11, '(')
+    }, function() {
+        howlerHollow.changeBlock(15, 10, '(')
+        howlerHollow.changeBlock(16, 11, ')')
+    }),
+
+    new Breezeway(howlerHollow, 10, 11, 7, 11),
+    new Breezeway(howlerHollow, 7, 11, 10, 11),
+
+    new Toggle(howlerHollow, 6, 16, function() {
+        howlerHollow.switch(14, 11, '(', ')')
+        howlerHollow.switch(16, 11, '(', ')')
+
+        // howlerHollow.changeBlock(14, 11, '(')
+        // howlerHollow.changeBlock(16, 11, ')')
+    }, function() {
+        howlerHollow.switch(14, 11, '(', ')')
+        howlerHollow.switch(16, 11, '(', ')')
+    }, 15 * 75 + 37.5, 11 * 75 + 37.5),
+
+    new Toggle(howlerHollow, 25, 15, function() {
+        howlerHollow.changeBlock(4, 4, ')')
+        howlerHollow.changeBlock(5, 4, ')')
+    }, function() {
+        howlerHollow.changeBlock(4, 4, '(')
+        howlerHollow.changeBlock(5, 4, '(')
+    }, 4 * 75 + 37.5, 5 * 75),
+
     // Stormed Room
 
     new RaftDispenser(stormedRoom, 6 * 75, 2 * 75, 6 * 75 + 37.5, 3 * 75 + 37.5),
@@ -2836,17 +2866,6 @@ var interactives = [
         curMap.changeBlock(1, 17, '~')
 
     }),
-
-    new Toggle(howlerHollow, 15, 9, function() {
-        howlerHollow.changeBlock(15, 10, ')')
-        howlerHollow.changeBlock(16, 11, '(')
-    }, function() {
-        howlerHollow.changeBlock(15, 10, '(')
-        howlerHollow.changeBlock(16, 11, ')')
-    }),
-
-    new Breezeway(howlerHollow, 10, 11, 7, 11),
-    new Breezeway(howlerHollow, 7, 11, 10, 11)
 ]
 
 /*
@@ -3251,9 +3270,9 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    //dev = false
-    curMap = droptonCity
-    p.goTo(39 * 75, 5 * 75)
+    dev = true
+    curMap = howlerHollow
+    p.goTo(5 * 75, 5 * 75)
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.stormedsSword]
     p.equipped = [items.aquaLung]
     p.droptonDonations = 100
