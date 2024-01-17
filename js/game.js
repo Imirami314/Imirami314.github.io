@@ -467,6 +467,7 @@ Player.prototype.draw = function() {
 // full of chub
 
 Player.prototype.HUD = function() {
+    ctx.strokeStyle = "rgba(0, 0, 0, 0)"
     ctx.fillStyle = "rgb(255, 255, 255)"
     ctx.roundRect(40, 42.5, 120, 65, 10)
     ctx.fill()
@@ -475,6 +476,7 @@ Player.prototype.HUD = function() {
         ctx.fillStyle = "rgb(0, 200, 0)"
         ctx.roundRect(50, 50, this.animatedHealth * 10, 50, 10)
         ctx.fill()
+        ctx.stroke()
     }
 
     ctx.fillStyle = "rgb(255, 255, 255)"
@@ -490,18 +492,24 @@ Player.prototype.HUD = function() {
     } else {
         this.animatedHealth = this.health
     }
-    
+    ctx.save()
     ctx.translate(1365 - 100, 640 - 100)
     ctx.scale(0.1, 0.1)
     ctx.translate(-1 * p.x, -1 * p.y)
 
-    // tried adding a border but looks goofy fix
-    // ctx.fillStyle = 'rgb(0, 0, 0)'
-    // ctx.fillRect(this.x - 900, this.y - 900, 1800, 1800)
+    // Border
     curMap.draw(p, "Snippet View")
+    ctx.restore()
+
+    ctx.beginPath()
+    ctx.strokeStyle = "rgb(0, 0, 0)"
+    ctx.lineWidth = 8
+    ctx.rect(1192, 467, 153, 154)
+    ctx.stroke()
     
     
-    ellipse(this.x, this.y, 50, 50, "rgb(255, 0, 0)")
+    
+    //ellipse(this.x, this.y, 50, 50, "rgb(255, 0, 0)")
     for (var i = 0; i < monsters.length; i ++) {
         if (curMap.name == monsters[i].map && !monsters[i].dead) {
             if (monsters[i].playerDist < 750 && monsters[i].agro) {
@@ -3270,7 +3278,7 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = true
+    //dev = true
     curMap = howlerHollow
     p.goTo(5 * 75, 5 * 75)
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.stormedsSword]

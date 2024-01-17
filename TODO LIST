@@ -4,18 +4,14 @@ One Time
 - Fix speedy snow image to make the block consistent
 - Improve on health bar somehow
 - Come up with a better way to make cutscenes
-- Finish shop menus and allow you to actually buy stuff
 - Change old man's path to the sacred star location to fit the new changes made to the map
 - Make the old man not in a tree sometimes
 - Make wayne not in a tree sometimes
 - Add player sword attack animation
 - Make the storyline at the beginning better (it sucks)
 - Fix rafting while talking to NPCS to prevent softlocks
-- Fix missions/mission saving
 - Fix queens crown speedy snow sound
 - Fix raft alert
-- move rafts to new array (not interactives) and fix saving
-once created
 
 Continuous
 - Add sound effects for all blocks
@@ -62,3 +58,5 @@ Completed
 - Increase local storage space so it doesn't fill up
 - Fix event delay algorithm to make monsters turn red for 0.5 sec when hit
 - Make it so darkened doesn't keep shooting you after you beat him lol
+- Finish shop menus and allow you to actually buy stuff
+- Fix missions/mission saving
