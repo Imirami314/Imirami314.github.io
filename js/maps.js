@@ -55,6 +55,7 @@ var images = {
     stone: initImage('sprites/blocks/stone.png'),
     stoneWall: initImage('sprites/blocks/stone_wall.png'),
     tree: initImage('sprites/blocks/tree.png'),
+    tree2: initImage('sprites/blocks/tree2.png'),
     snow: initImage('sprites/blocks/snow.png'),
     leaf: initImage('sprites/blocks/leaf.png'),
     woodenWall: initImage('sprites/blocks/woodenWall.png'),
@@ -207,6 +208,13 @@ var blocks = [
     },
     {
         id: "T",
+        name: "tree",
+        through: false,
+        dps: 0,
+        speed: 3
+    },
+    {
+        id: "t",
         name: "tree",
         through: false,
         dps: 0,
@@ -583,7 +591,11 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
                         
                         ctx.drawImage(images.grass, j * this.blockSize, i * this.blockSize, 75, 75)
                         ctx.drawImage(images.tree, j * this.blockSize - 10, i * this.blockSize - 50, 95, 100)
-						
+                        break
+                    case 't': // Other tree (pine tree I think)
+                        
+                        ctx.drawImage(images.grass, j * this.blockSize, i * this.blockSize, 75, 75)
+                        //ctx.drawImage(images.tree2, j * this.blockSize + 7.5, i * this.blockSize - 70, 60, 120)
                         break
                     case ':': // Lock
 						var c = this.blockSize / 2 // c = center
@@ -666,12 +678,11 @@ Landscape.prototype.drawNextLayer = function(p) {
     for (var i = 0; i < this.arr.length; i ++) {
         for (var j = 0; j < this.arr[i].length; j ++) {
             var c = this.arr[i].charAt(j)
+            var treePulsation = Math.sin(elapsed / 15) * 3
             if (c == "T") { // Tree
-                // if (p.y < i * this.blockSize) {
-                    
-                    var treePulsation = Math.sin(elapsed / 15) * 3
-                    ctx.drawImage(images.tree, j * this.blockSize - 10, i * this.blockSize - 50 - treePulsation, 95, 100 + treePulsation)
-                // }
+                ctx.drawImage(images.tree, j * this.blockSize - 10, i * this.blockSize - 50 - treePulsation, 95, 100 + treePulsation)
+            } else if (c == "t") {
+                ctx.drawImage(images.tree2, j * this.blockSize + 7.5, i * this.blockSize - 70, 60, 120)
             }
         }
     }
@@ -849,14 +860,14 @@ var mainMap = new Landscape([
     '@@,,,@--@@T~~~~~~~~~~W--------------------------------------,,,,,,,,,,,,,,,,,_~~~~~~~~_,,,TT!!_S______!!__S___________S___________________S*******..........****zzWWW|WWW***********zzWWWWWWWW|WWWWWWWWzz**WWW|WWW*******WW!z!!!z!SS|SS!zW*********SSSSSSSSSSSSSSSSSSSSSS*****,,,,,,,,,,,,,,,,,,,,',
     '@T,,,@---@T~~~~~~~~~~W--W~~~~~~~TTTTTTTTTTTTTTTTTTTT~TTTTTT,@~~~~~@,,,,,,,,,,_~~~~~~~~_,,,TTSS___SS___!!__S___________S___________________SzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzW!!z!W!z!!!z!!!zW*********SSSS__S__SSSS__S__SSSS*****,,,,,,,,,,,,,,,,,,,,',
     'T,,,,@@--@@T~~~~~~~~~W--W~~~~~~~T~~~~~~~~~~~~~~~~~~T~T,,,,T,,@~~~@,,,,WWW,,,,_~~~~~~~~_,,,TT!!SSSSS___S___S__SSSSSSS__S_____$__!!____SSSSSSzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz~!W!z!!!~!zzzW*********SSSS__S__SSSS__S__SSSS*****,,,,,,,,,,,,,,,,,,,,',
-    'T,,,,,@---@T~~~~~~~~~W--W~~~~~~~T~~~~~~~~~~~~~~~~~~T~T,,,,TT,,@~@,,,,WWWWW,,,_~~~~~~~~_,,,TT__________S___S__S_____S__S____$$$_!!____SSSSSS*******************zz*TTTTTTTT*******zzTzzTTTTTTTTTTTTTTTTTTTTTTTTTT**********W!!!!W!~~zzz!WWWW*********SSSS__S__SSSS__S__SSSS*****,,,,,,,,,,,,,,,,,,,,',
-    'T,,,,,@@--@TTTTTTTTTTW--W@~~~~~~T~~~~~~~~~~~~~TTTT~T~TT,,,,T,,,,,,,WWWWWWWWW,_~~~~~~~~_,,,TT__________S___S__S___!!SSSS___$$$$$______SSSSSS*******************zzT~~~~~~~~T******zzTz,,,,,,T,,,,,,,,,,,,,,,,,,,T**********WWWWWW!!!!WW!W**W****TTSSSSSSSSSSSSSddSSSSSSSSSSSSSTT,,,,,,,,,,,,,,,,,,,,',
-    'T,,,,,,,T--,,,,,,,,,@W--W@~~~~~~TTTTTTTTTTTTTTT~~~~~~~TTTTT,,,@~@,,WWWWWWWWW,_~~~~~~~~_,,,TTSSSSSSSSSSSSSSS__S___!!S______$$$$$_____SSSSSSS*******zzzzz*******zzT~~~~~~~~T******zzT,,,T~,,~,,,~T,,,,~,T~,,,,,,T**********WWWWWWWWWWWWWWWWW************************************,,,,,,,,,,,,,,,,,,,,',
-    'T,,,,,,,T--,,,,,,,,,,,--TTTTTTTTT-------------TTTTTTT~~~~~~,,@~~~@,WWWW|WWWW,_~~~~~~~~_,,,TT____!!___S_______S_____S______$$|$$_____SSSSSSS******zzzzzzz******zzT~~~~~~~~T******zzT,,,,,,,,,,,,,,,,,T,,,,,,,,,T***************************************************************,,,,,,,,,,,,,,,,,,,,',
-    'T,,,,,,,T-------------------------------------------TTTTTTT,@~~~~~@,,,---,,,,_~~~~~~~~_,,,TT____!!___S_____________S________________S!SS|SS*****zzzzzzzzz*****zzT~~~~~~~~T******zzTTTTTTTTTTTT,,,,,,,,,,,,T,,,T***************************************************************,,,,,,,,,,,,,,,,,,,,',
-    'T,,,,,,,T--,,B,,T,,W,,--T~~~~~~~TT@@BBBBB@@-----------------------------------________,,,,TT_________SSSS_SSSS_____S________!!______SSS___S*****zzzzzzzzz*****zzT~~~~~~~~T******zz***********TTTTTTT,,,,,,,,,,T***********************************************zzzz************,,,,,,,,,,,,,,,,,,,,',
-    'TTTT,TTTT--,BBB,T,WWW,--T~~~~~~~--@BBBBBBB@---@TTTT---------------------------,,,,,,,,,,,,TT____________S____SS____SSSSSSSS_!!______S!S___S*****zzzzzzzzz*****zzT~~~~~~~~T**SSSSzzSSSS*************TTTTTTTTTTTT*******************TTTTTTTTTTTTTTTTTTTTTTTTTTTT~~Tz************,,,,,,,,,,,,,,,,,,,,',
-    'T///,///T--BBBBBTWWWWW--T~~~~~~~--BBBBBBBBB---@T,,,,,,,,,,,,,,,,,,,,,,,,,,,,--,,,,,,,,,,,,TTSSSSSSSSSSSS_______SSS_S______S_________SSS___S*****zzzzzzzzz*****zz*TTTTTTTT***S~~SzzS~~S*******************************************TT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Tz************,,,,,,,,,,,,,,,,,,,,',
+    'T,,,,,@---@T~~~~~~~~~W--W~~~~~~~T~~~~~~~~~~~~~~~~~~T~T,,,,TT,,@~@,,,,WWWWW,,,_~~~~~~~~_,,,TT__________S___S__S_____S__S____$$$_!!____SSSSSS*******************zz*tttttttt*******zzTzzTTTTTTTTTTTTTTTTTTTTTTTTTT**********W!!!!W!~~zzz!WWWW*********SSSS__S__SSSS__S__SSSS*****,,,,,,,,,,,,,,,,,,,,',
+    'T,,,,,@@--@TTTTTTTTTTW--W@~~~~~~T~~~~~~~~~~~~~TTTT~T~TT,,,,T,,,,,,,WWWWWWWWW,_~~~~~~~~_,,,TT__________S___S__S___!!SSSS___$$$$$______SSSSSS*******************zzt~~~~~~~~t******zzTz,,,,,,T,,,,,,,,,,,,,,,,,,,T**********WWWWWW!!!!WW!W**W****TTSSSSSSSSSSSSSddSSSSSSSSSSSSSTT,,,,,,,,,,,,,,,,,,,,',
+    'T,,,,,,,T--,,,,,,,,,@W--W@~~~~~~TTTTTTTTTTTTTTT~~~~~~~TTTTT,,,@~@,,WWWWWWWWW,_~~~~~~~~_,,,TTSSSSSSSSSSSSSSS__S___!!S______$$$$$_____SSSSSSS*******zzzzz*******zzt~~~~~~~~t******zzT,,,T~,,~,,,~T,,,,~,T~,,,,,,T**********WWWWWWWWWWWWWWWWW************************************,,,,,,,,,,,,,,,,,,,,',
+    'T,,,,,,,T--,,,,,,,,,,,--TTTTTTTTT-------------TTTTTTT~~~~~~,,@~~~@,WWWW|WWWW,_~~~~~~~~_,,,TT____!!___S_______S_____S______$$|$$_____SSSSSSS******zzzzzzz******zzt~~~~~~~~t******zzT,,,,,,,,,,,,,,,,,T,,,,,,,,,T***************************************************************,,,,,,,,,,,,,,,,,,,,',
+    'T,,,,,,,T-------------------------------------------TTTTTTT,@~~~~~@,,,---,,,,_~~~~~~~~_,,,TT____!!___S_____________S________________S!SS|SS*****zzzzzzzzz*****zzt~~~~~~~~t******zzTTTTTTTTTTTT,,,,,,,,,,,,T,,,T***************************************************************,,,,,,,,,,,,,,,,,,,,',
+    'T,,,,,,,T--,,B,,T,,W,,--T~~~~~~~TT@@BBBBB@@-----------------------------------________,,,,TT_________SSSS_SSSS_____S________!!______SSS___S*****zzzzzzzzz*****zzt~~~~~~~~t******zz***********TTTTTTT,,,,,,,,,,T***********************************************zzzz************,,,,,,,,,,,,,,,,,,,,',
+    'TTTT,TTTT--,BBB,T,WWW,--T~~~~~~~--@BBBBBBB@---@TTTT---------------------------,,,,,,,,,,,,TT____________S____SS____SSSSSSSS_!!______S!S___S*****zzzzzzzzz*****zzt~~~~~~~~t**SSSSzzSSSS*************TTTTTTTTTTTT*******************TTTTTTTTTTTTTTTTTTTTTTTTTTTT~~Tz************,,,,,,,,,,,,,,,,,,,,',
+    'T///,///T--BBBBBTWWWWW--T~~~~~~~--BBBBBBBBB---@T,,,,,,,,,,,,,,,,,,,,,,,,,,,,--,,,,,,,,,,,,TTSSSSSSSSSSSS_______SSS_S______S_________SSS___S*****zzzzzzzzz*****zz*tttttttt***S~~SzzS~~S*******************************************TT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Tz************,,,,,,,,,,,,,,,,,,,,',
     'T/,,,,,/T--BB|BBTWWWWW--T~~~~~~~TTBBBB|BBBB---@T,,,,,,,,,,,,,,,,,,,,,,,,,,,,--,,,,,,,,,,,,TT_S_____S_S_S_SS!!!__SS_S_SSSS)S______________SS*****zzzzzzzzz*****zz************S~~SzzS~~S*******************************************T~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Tz************,,,,,,,,,,,,,,,,,,,,',
     'T/,,,,,/T-------TWW|WW--TTTTTTTTTT------------@T,,,,,,,,,,,,,,,@@@,,,,,,,,,,--,,,,,,,,,,,,TT_!_____S_S_!_S___!_______S!!S)S______________SS******zzzzzzz******zz************SSSSzzS~~S*******************************************TIIITTTTTTTTTTTTTTTTTTTTTTTTTTTTz************,,,,,,,,,,,,,,,,,,,,',
     'T/,,,,//T-TTTTT-T----------------TTTTTTTTT@---@T,,,,,,,,,,,,,,,@@@,,,,,,,,,,--,,,,,,,,,,,,TT_SSSSSSS_SS!_S___SSSSS_S_S!!S)S_______$______SS*******zzzzz*******zzzzzzzzzzzzzzzzzzzzS~~S*******************************************T~~~~~~~~~~~~~~~~~~~~~~~~~~~~TTTS************,,,,,,,,,,,,,,,,,,,,',
@@ -1440,24 +1451,24 @@ howlerHollow.solve = function() {
 
 var stormedRoom = new Landscape([
     'WWWWWWWWWWWWWWWWWWWWWWWWW',
-    'WzzzzzWzzzzzzzzzzzzzzzzzW',
-    'WzzzzWzWzzzzzzzzzzzWzWzzW',
+    'Wzz!zzWzzzzzzzz!zzzzzzzzW',
+    'WzzzzWzWzzz!zzzzzzzWzWzzW',
     'WzzzWzzzzzzzzzzzzzzzWzzzW',
-    'WzzzWzzzzzzzzWzzzzzzzzzzW',
-    'WzzzzzzzzzzzWzzzzzzzzzzzW',
-    'WzzzzzWzzzzzzWzzzzzWzzzzW',
+    'WzzzWzz!zzWWWWWzzz!zzzzzW',
+    'WzzzzzzzzzWWWzWzzzzzzzzzW',
+    'Wzz!zzWzzzWWWWWzzzzWzzzzW',
     'WzzzzWzWzzzzzzzzzzWzzzzzW',
-    'WzzzzzzzzzWzzzWzzzzWzzzzW',
-    'WzzzzzzzzWzzzzzWzzzzzzzzW',
-    'WzzzzWzzzzzzzzzzzzzzzzzzW',
-    'WzzzWzzzzzzzzzzzzWzzzzzzW',
-    'WzzzzzzzzzWzzzzzzzWzzzzzW',
-    'WzWzzzzzWzzzzzWzzzzWzzzzW',
+    'Wz!zzzzzzzWzzzWzzzzWzzzzW',
+    'WzzzzzzzzWzzzzzWzzzzz!zzW',
+    'WzzzzWzzzzz!zzzzzzzzzzzzW',
+    'Wzz!WzzzzzzzzzzzzWzz!zzzW',
+    'WzzzzzzzzzWzzzz!zzWzzzzzW',
+    'WzWzz!zzWzzzzzWzzzzWzz!zW',
     'WzzWzzzWzzzzzWzzzzzzzzzzW',
-    'WzzzzWzzzzzzzzzzzzzWzzzzW',
-    'WzzzWzzzzzzWzzzzzzWzzzzzW',
-    'WzzzzzzzzzzzWzzzWzzzzzzzW',
-    'WzzzzzWzzzzzzzzWzzzzzzzzW',
+    'W!zzzWzzzzWzzz!zzzzWzzzzW',
+    'WzzzW!zzzzzWzzzzzzWzzzzzW',
+    'WzzzzzzzzzzzzzzzWzzzzzzzW',
+    'WzzzzzWzz!zzzzzWzzzz!zzzW',
     'WzzzzzzWzzzzzzzzzzWzzzzzW',
     'WzzzWzzzzzzzzWzzzzzWzzWzW',
     'WzzWzzzzzzzzWzzzzzWzzWzzW',

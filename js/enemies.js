@@ -419,8 +419,8 @@ function Stormed(map, spawnX, spawnY) {
     this.scaleShift = 1
     this.swordRotation = 0
 
-    this.phase = 2 // Default 1
-    this.windMode = true // Default false
+    this.phase = 1 // Default 1
+    this.windMode = false // Default false
     this.windModeTimer = 20 // Countdown until windMode begins
     this.windPull = 0.1 // How fast the wind pulls the player towards the boss
 
@@ -430,12 +430,12 @@ function Stormed(map, spawnX, spawnY) {
     this.beingHit = false // Is boss being hit
     this.hitRegistered = false // Keeps track of whether damage has already been dealth
 
-	this.phase2Played = true // Check if phase 2 cutscene has played, Default false
+	this.phase2Played = false // Check if phase 2 cutscene has played, Default false
 
     //Unused
     this.phase2MapChanged = false // Check if Stormed changed the landscape so he doesn't do it over and over again in phase 2, Default false
 
-    this.hasBuiltIceWalls = false // Default false, keeps track of whether the phase 2 ice walls have been built yet
+    this.hasBuiltLavaWalls = false // Default false, keeps track of whether the phase 2 ice walls have been built yet
     this.isStunned = false // Default false
 
 	this.absorbX = 0
@@ -569,6 +569,13 @@ Stormed.prototype.update = function() {
     }
 
     if (this.phase == 1 || this.phase == 3) {
+        if (this.phase == 3) {
+            if (this.scaleFactor < 1) {
+                this.scaleFactor += 0.01
+            } else {
+                this.scaleFactor = 1
+            }
+        }
         if (!this.hitting) { // Makes Stormed always face towards the player, but freeze when hitting
             this.bodyAngle = this.playerAngle
         }
@@ -577,11 +584,13 @@ Stormed.prototype.update = function() {
         if (!this.hitting && this.playerDist > 100) {
             this.moving = true
             if (Math.abs(this.pdx) >= 10) {
-                this.move(this.dirCoefX * this.speed, 0)
+                this.x += this.dirCoefX * this.speed // Don't use move function so he can go through blocks
+                // this.move(this.dirCoefX * this.speed, 0)
             }
     
             if (Math.abs(this.pdy) >= 10) {
-                this.move(0, this.dirCoefY * this.speed)
+                this.y += this.dirCoefY * this.speed
+                // this.move(0, this.dirCoefY * this.speed)
             }
         } else {
             this.moving = false
@@ -601,24 +610,31 @@ Stormed.prototype.update = function() {
     } else if (this.phase == 2) {
         if (this.phase2Played) {
             if (!this.windMode) {
+                this.scaleFactor -= 0.01
+                if (this.scaleFactor <= 0) {
+                    this.x = 17 * 75 + 37.5
+                    this.y = 17 * 75 + 37.5
+                    this.phase = 3
+                }
                 
             } else if (this.windMode) {
+                this.x = 13 * 75 + 37.5
+                this.y = 17 * 75 + 37.5
                 this.doWindMode()
-
             }
         } else {
             scene = "STORMED BOSS CUTSCENE PHASE 2"
             this.phase2Played = true
             this.windMode = true
             this.x = 13 * 75 + 37.5
-            this.y = 15 * 75 + 37.5
+            this.y = 17 * 75 + 37.5
             p.goTo(13 * 75 + 37.5, 21 * 75 + 37.5)
         }
     }
 }
 
 Stormed.prototype.doWindMode = function() {
-    if (!this.hasBuiltIceWalls) {
+    if (!this.hasBuiltLavaWalls) {
         // Builds ice wall around Stormed at the start of windMode
         // curMap.changeBlock(this.cords.x - 1, this.cords.y - 1, 'I')
         // curMap.changeBlock(this.cords.x, this.cords.y - 1, 'I')
@@ -628,7 +644,13 @@ Stormed.prototype.doWindMode = function() {
         // curMap.changeBlock(this.cords.x - 1, this.cords.y + 1, 'I')
         // curMap.changeBlock(this.cords.x, this.cords.y + 1, 'I')
         // curMap.changeBlock(this.cords.x + 1, this.cords.y + 1, 'I')
-        // this.hasBuiltIceWalls = true
+        stormedRoom.changeBlocks([
+            [11, 15], [11, 16], [11, 17], [11, 18], [11, 19],
+            [12, 19], [13, 19], [14, 19], [15, 19],
+            [15, 18], [15, 17], [15, 16], [15, 15],
+            [12, 15], [13, 15], [14, 15],
+        ], '!')
+        this.hasBuiltLavaWalls = true
     } else {
         // Check if any of the walls are broken
         // if (curMap.getBlock(this.cords.x - 1, this.cords.y - 1) == '~' ||
@@ -648,10 +670,6 @@ Stormed.prototype.doWindMode = function() {
     p.manualMove(-1 * Math.cos(this.playerAngle - Math.PI / 2) * this.windPull, -1 * Math.sin(this.playerAngle - Math.PI / 2) * this.windPull) // Pulls the player towards Stormed
     if (this.windPull <= 8) { // Accelerate speed that player gets pulled in, caps at 8 pixels/frame
         this.windPull *= 1.01
-    }
-
-    if (this.playerDist <= 85) { // If the player gets sucked in too much, they take damage
-        p.health -= 1 / 6.66 // (10dps)
     }
 
     if (this.windModeTimer <= -10) { // Wind mode lasts for 10 seconds

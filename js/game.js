@@ -517,6 +517,7 @@ Player.prototype.HUD = function() {
 
     // Border
     curMap.draw(p, "Snippet View")
+    ellipse(this.x, this.y, 50, 50, "rgb(255, 0, 0)")
     ctx.restore()
 
     ctx.beginPath()
@@ -525,7 +526,7 @@ Player.prototype.HUD = function() {
     ctx.rect(1192, 467, 153, 154)
     ctx.stroke()
     
-    //ellipse(this.x, this.y, 50, 50, "rgb(255, 0, 0)")
+    //
     for (var i = 0; i < monsters.length; i ++) {
         if (curMap.name == monsters[i].map && !monsters[i].dead) {
             if (monsters[i].playerDist < 750 && monsters[i].agro) {
@@ -704,6 +705,11 @@ Player.prototype.move = function() {
             switch (b.name) {
                 case "Darkened":
                     b.tpHitCount ++
+                    break
+                case "Stormed":
+                    if (b.phase == 2) {
+                        b.windMode = false
+                    }
                     break
             }
         }
@@ -2144,7 +2150,9 @@ var drQua = new NPC(69420 * 75, 42069 * 75, "Dr. Qua", mainMap, 'L', [
     "Unfortunately they got lost and have been missing for a few days now.",
     "We've closed off the forest since then.\nWe don't want to lose anyone else.",
     "We need a way to go into the forest safely, and bring back our captains!\nThey'll know what to do!",
-    "In the forest's west entrance, you'll meet a guard.\nYou should talk to her.",
+    "Not only that, but the forest is the only way to\nreach Dropton from here!",
+    "You'll be able to enter it at it's north end, and\nexit at it's south end. But be very careful!",
+    "The forest has been known to mess with people's\nsenses of direction...",
     "Good luck, and stay safe out there."
 ], "[insert description]", function() {
     p.questPoint = {
@@ -2744,7 +2752,21 @@ var interactives = [
 
     // Stormed Room
 
+    new LockToggle(stormedRoom, 6, 7, function() {
+        stormedRoom.changeBlock(10, 5, 'z')
+    }),
 
+    new LockToggle(stormedRoom, 20, 2, function() {
+        stormedRoom.changeBlock(11, 5, 'z')
+    }),
+
+    new LockToggle(stormedRoom, 18, 11, function() {
+        stormedRoom.changeBlock(12, 5, 'z')
+    }),
+
+     // Stormed Phase 2 Breezeways
+    new Breezeway(stormedRoom, 13, 5, 12, 17),
+    new Breezeway(stormedRoom, 12, 17, 13, 5),
 
     // Encompassed Labyrinth
     new Toggle(encompassedLabyrinth, 16, 4, function() {
@@ -3321,9 +3343,9 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = true
-    curMap = mainMap
-    p.goTo(215 * 75, 50 * 75)
+    dev = false
+    curMap = stormedRoom
+    p.goTo(5 * 75, 5 * 75)
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.stormedsSword]
     p.equipped = [items.aquaLung]
     p.droptonDonations = 100
@@ -3365,7 +3387,7 @@ function startPos() {
         "Now, Do you mind speaking with Dr. Qua?\nHe has some important intel."
     ]
     queenAlaska.action = function() {
-        p.giveItem(items.queenAlaskasCrown)
+        p.giveItem(items.queenAlaskasCrown, true)
     }
     queenAlaska.actionLine = "after"
 
@@ -3608,6 +3630,7 @@ var gameInterval = setInterval(function() {
 
             
             if (curBoss.health <= 0) {
+                bossfight = false
                 if (curMap == darkenedRoom) {
                     Screen.fadeOut(0.005, function() {
                         darkenedScale = 1
