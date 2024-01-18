@@ -74,6 +74,9 @@ var images = {
     stormedPhase1: initImage('sprites/enemies/stormed-phase-1.png'),
     stormedPhase2: initImage('sprites/enemies/stormed-phase-2.png'),
 
+    // Food
+    apple: initImage('sprites/food/apple.png'),
+
     // Items
     steelFieldKey: initImage('sprites/items/steelFieldKey.png'),
     steelSword: initImage('sprites/items/steelSword.png'),
@@ -1476,6 +1479,7 @@ var stormedRoom = new Landscape([
     'WzzzzzzzzzWzzzzzWzzzzzzzW',
     'WWWWWWWWWWWWWWWWWWWWWWWWW'
 ], 13 * 75 + 37.5, 23 * 75 + 37.5, 0, 0, "Stormed Room", function() {
+    lighting = 2500
     if (bosses[1].health > 0) {
         bossfight = true
     } else {

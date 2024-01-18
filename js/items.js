@@ -327,7 +327,7 @@ function Food(name, img, health, secs) {
 
 Food.prototype.draw = function(x, y) {
     if (this.img != "") {
-
+        ctx.drawImage(this.img, x - 15, y - 15, 40, 50)
     } else {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
     }
@@ -339,7 +339,7 @@ Food.prototype.use = function(p) {
 
 var food = {
     apple: function() {
-        return new Food("Apple", "", 3, 15)
+        return new Food("Apple", images.apple, 3, 15)
     },
     steak: function() {
         return new Food("Steak", "", 7, 60)

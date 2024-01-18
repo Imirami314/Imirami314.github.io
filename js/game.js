@@ -176,6 +176,7 @@ function Player(x, y, npcs) {
     this.moving = false
 
     this.curEating = []
+    this.eatCooldown = 0.5
 
     this.inventoryDisplay = false
     this.newItemAlert = false
@@ -248,6 +249,7 @@ Player.prototype.draw = function() {
     this.particle = new Particle(this.blockOn.name, this.dir)
     this.doorCooldown -= 1 / (66 + (2 / 3))
     this.hitCooldown -= 1 / (66 + (2 / 3))
+    this.eatCooldown -= 1 / (66 + (2 / 3))
     this.cords.x = Math.floor(this.x / 75) // This regulates it, because you don't start at x-cord 0, you start at x-cord 10
     this.cords.y = Math.floor(this.y / 75) // Same thing as x-cord, but height / 2 is about half of width / 2, so it's 5 instead of 10
 
@@ -919,13 +921,17 @@ Player.prototype.removeItem = function(item) {
 }
 
 Player.prototype.eat = function(foodItem) {
-    for (var i in this.inventory) {
-        var f = this.inventory[i]
-        if (f == foodItem) {
-            this.curEating.push(foodItem)
-            this.inventory.splice(i, 1)
-            break
+    if (this.eatCooldown <= 0) {
+        for (var i in this.inventory) {
+            var f = this.inventory[i]
+            if (f == foodItem) {
+                this.curEating.push(foodItem)
+                this.inventory.splice(i, 1)
+                break
+            }
         }
+
+        this.eatCooldown = 0.5
     }
 
     // this.eatInterval = setInterval(() => {
