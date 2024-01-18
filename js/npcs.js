@@ -151,6 +151,11 @@ NPC.prototype.draw = function() {
             this.properties.skinColor = "rgb(225, 225, 225)"
             this.properties.eyeColor = "rgb(200, 200, 255)"
             break
+        case "Blanche":
+            this.properties.skinColor = "rgb(200, 200, 200)"
+            this.properties.eyeColor = "rgb(0, 0, 0)"
+            triangle(this.x - 15, this.y - 20, this.x + 15, this.y - 20, this.x, this.y - 60, "rgb(160, 255, 255)")
+            break
         case "Lonzo":
             this.properties.skinColor = "rgb(245, 0, 245)"
             this.properties.eyeColor = "rgb(255, 255, 0)"

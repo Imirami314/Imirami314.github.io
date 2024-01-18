@@ -23,6 +23,7 @@ var alerts = [
     new GameAlert(28, 23, ["Find the four brothers, have no fears,\nAs the light shines through, the answer appears.", "When a button is found, a brother is near.\nOnce you're finished, come back here."], galeCave, "SIGN"),
     new GameAlert(35, 11, ["Press space at the center, prepare for a fight,\nFor you're about to meet the Master of Night."], confoundedCave, "SIGN"),
     new GameAlert(44, 33, ["Warning: very cold past this point!", "Auras are recommended."], galeCave, "SIGN"),
+    new GameAlert(1, 7, ["Caution: Strong wind!"], howlerHollow, "SIGN"),
 	new GameAlert(10, 7, ["BOW??20! hSHDs1@???:\n?fdkj2!","SDHG9 dahf!!01 fdhk!@8 d,\nhjfdj sh>9 /rhd9:f hfu???jfnvjejdj..??."], mainMap, "DECIPHER", null, ["Chard Town's Secret:\nPART 2","Chard Town possesses an unfinished letter,\nPress the right key to make everything better..."]),
 	new GameAlert(24, 8, ["This mysterious substance will come with a curse,\nThe player will perish, the raft alone may traverse."], cryoUnderground, "SIGN"),
     new GameAlert(252, 67, ["Welcome to the Dropton Drylands!", "Not that it's dry here, it's just dry compared to being underwater..."], mainMap, "SIGN"),
@@ -113,6 +114,19 @@ var bossDoors = [
             scene = "DARKENED BOSS CUTSCENE"
         }
     },
+    {
+		x: 11,
+		y: 24,
+		map: howlerHollow,
+		enterFunction: function(p) {
+			saveGame()
+			
+			p.goTo(stormedRoom.enterX, stormedRoom.enterY)
+			curMap = stormedRoom
+			cutsceneFrame = 0
+			scene = "STORMED BOSS CUTSCENE"
+		}
+	},
 	{
 		x: 42,
 		y: 28,
@@ -120,11 +134,11 @@ var bossDoors = [
 		enterFunction: function(p) {
 			saveGame()
 			
-			p.x = stormedRoom.enterX
-			p.y = stormedRoom.enterY
-			curMap = stormedRoom
-			cutsceneFrame = 0
-			scene = "STORMED BOSS CUTSCENE"
+			// p.x = stormedRoom.enterX
+			// p.y = stormedRoom.enterY
+			// curMap = stormedRoom
+			// cutsceneFrame = 0
+			// scene = "STORMED BOSS CUTSCENE"
 		}
 	}
 ]
@@ -485,6 +499,10 @@ Player.prototype.HUD = function() {
 
     // ctx.fillStyle = "rgb(0, 0, 0)"
     // ctx.fillRect(1285, 530, 100, 100)
+
+    // Black backdrop for border
+    ctx.fillStyle = "rgb(0, 0, 0)"
+    ctx.fillRect(1192, 467, 153, 154)
     
     ctx.save()
     if (this.health < this.animatedHealth) {
@@ -506,8 +524,6 @@ Player.prototype.HUD = function() {
     ctx.lineWidth = 8
     ctx.rect(1192, 467, 153, 154)
     ctx.stroke()
-    
-    
     
     //ellipse(this.x, this.y, 50, 50, "rgb(255, 0, 0)")
     for (var i = 0; i < monsters.length; i ++) {
@@ -557,6 +573,23 @@ Player.prototype.on = function(x, y) {
     if (this.cords.x == x && this.cords.y == y) {
         return true
     }
+}
+
+
+/**
+ * Checks if player is within a specific area
+ * @param {*} x1 X Block coordinate of top left corner
+ * @param {*} y1 Y Block coordinate of top left corner
+ * @param {*} x2 X Block coordinate of bottom right corner
+ * @param {*} y2 Y Block coordinate of bottom right corner
+ * @returns 
+ */
+Player.prototype.in = function(x1, y1, x2, y2) {
+    if (this.cords.x >= x1 && this.cords.x <= x2 && this.cords.y >= y1 && this.cords.y <= y2) {
+        return true
+    }
+
+    return false
 }
 
 /**
@@ -1036,50 +1069,6 @@ Player.prototype.displayInventory = function() {
     ctx.roundRect(width / 8, height / 8, width * 3 / 4, height * 3 / 4, 10)
     ctx.fill()
 
-    // if (this.itemsMode == 'ALL') {
-    //     for (var i in this.inventory) {
-    //         try {
-    //             var item = this.inventory[i]
-    //             var mouseItemDist = Math.hypot(mouseX - ((i % 8) * 100 + width / 8 + 100), mouseY - (height / 8 + 100 * (Math.floor(i / 8) + 1)))
-    //             item.draw((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1))
-    //             if (mouseItemDist < 50) {
-    //                 ctx.fillStyle = "rgb(0, 0, 0)"
-    //                 ctx.textAlign = "center"
-    //                 ctx.font = "50px serif"
-    //                 ctx.fillText(item.name, width / 2, height / 2 + 120)
-    //                 ctx.font = "15px serif"
-    //                 fillTextMultiLine(item.desc + "\nDamage: " + item.damage, width / 2, height / 2 + 150)
-    //                 if (mouseIsDown) {
-    //                     this.weaponIndex = i
-    //                 }
-    //             }
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     }
-    // } else if (this.itemsMode == 'FOOD') {
-    //     for (var i in this.basket) {
-    //         try {
-    //             var foodItem = this.basket[i]
-    //             var mouseItemDist = Math.hypot(mouseX - ((i % 8) * 100 + width / 8 + 100), mouseY - (height / 8 + 100 * (Math.floor(i / 8) + 1)))
-    //             foodItem.draw((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1))
-    //             if (mouseItemDist < 50) {
-    //                 ctx.fillStyle = "rgb(0, 0, 0)"
-    //                 ctx.textAlign = "center"
-    //                 ctx.font = "50px serif"
-    //                 ctx.fillText(foodItem.name, width / 2, height / 2 + 120)
-    //                 // ctx.font = "15px serif"
-    //                 // ctx.fillText(foodItem.desc + "\nDamage: " + item.damage, width / 2, height / 2 + 150)
-    //                 if (mouseIsDown) {
-    //                     this.eat(foodItem)
-    //                 }
-    //             }
-    //         } catch (error) {
-    //             console.log(error)
-    //         }
-    //     }
-    // }
-
     var subcategory = []
 
     for (var i in this.inventory) {
@@ -1153,10 +1142,12 @@ Player.prototype.displayInventory = function() {
             ctx.fillStyle = "rgb(50, 50, 255)"
         }
 
+        ctx.beginPath()
         ctx.lineWidth = 4
+        ctx.strokeStyle = "rgb(0, 0, 0)"
         ctx.roundRect(width * 3 / 4 - 60 - i * 60, height / 8, 50, 50, 5)
-        ctx.fill()
         ctx.stroke()
+        ctx.fill()
         ctx.drawImage(invCat.img, width * 3 / 4 - 50 - i * 60, height / 8 + 10, 30, 30)
 
         if (mouseIsDown && mouseRect(width * 3 / 4 - 60 - i * 60, height / 8, 50, 50)) {
@@ -1946,6 +1937,19 @@ var isa = new NPC(2 * 75 + 75, 7 * 75, "Isa", glaciaCenter, "R", [
     "Everybody thinks he's crazy, but uh, I would ask him.\nSee you later."
 ], "hi")
 
+var blanche = new NPC(180 * 75 + 37.5, 19 * 75 + 37.5, "Blanche", mainMap, "D", [
+    "Oh, hello...",
+    "Sorry, I'm just really worried.",
+    "I was hanging out with my friend, Bianca, in the\nforest southeast of here.",
+    "It's not this tiny little one here, it's a bigger\none that's further away.",
+    "When we left, I thought she was following behind\nme, but she wasn't.",
+    "Now I don't know where she is or if she's coming back...",
+    "Hey, could you help me? All you'd have to do is\ngo into the forest and find her.",
+    "I'm too scared to go again...\nBianca is much braver than I am."
+], "Resident - Glacia Village", function() {
+    curMissions.push(blancheAndBianca)
+}, "after")
+
 var lonzo = new NPC(3 * 75 + 37.5, 1 * 75 + 37.5, "Lonzo", lonzoHouse, "D", [
     "*cough",
     "Hello. Who might you be?",
@@ -2462,7 +2466,7 @@ var cascade = new NPC(6 * 75 + 75, 2 * 75 + 37.5, "Dr. Cascade", droptonResearch
 
 }, "after")
 
-var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, sarah, rowan, wayne, smith, rick, rocky, kori, isa, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, coral, blake, ness, bay, tyde, walter, marina, ariel, raine, rainesDad, caspian, loch, delta, presidentWells, cascade]
+var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, sarah, rowan, wayne, smith, rick, rocky, kori, isa, blanche, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, coral, blake, ness, bay, tyde, walter, marina, ariel, raine, rainesDad, caspian, loch, delta, presidentWells, cascade]
 var shopMenus = [muhammadShop, blakeShop, caspianShop]
 
 npcs.searchByName = function(name) {
@@ -2688,21 +2692,17 @@ var interactives = [
     new Breezeway(howlerHollow, 6, 2, 9, 2), // Pair up ones that connect to each other
     new Breezeway(howlerHollow, 9, 2, 6, 2),
 
-    new Toggle(howlerHollow, 12, 2, function() {
-        howlerHollow.changeBlock(15, 2, '$')
-    }, function() {
-        howlerHollow.changeBlock(15, 2, '.')
-    }),
+    new MultiToggle(howlerHollow, 12, 2, 15, 2, ['S', '!', '~', '$']),
 
     new Breezeway(howlerHollow, 12, 3, 15, 3),
     new Breezeway(howlerHollow, 15, 3, 12, 3),
 
     new Toggle(howlerHollow, 15, 9, function() {
-        howlerHollow.changeBlock(15, 10, ')')
-        howlerHollow.changeBlock(16, 11, '(')
+        howlerHollow.switch(15, 10, '(', ')')
+        howlerHollow.switch(16, 11, '(', ')')
     }, function() {
-        howlerHollow.changeBlock(15, 10, '(')
-        howlerHollow.changeBlock(16, 11, ')')
+        howlerHollow.switch(15, 10, '(', ')')
+        howlerHollow.switch(16, 11, '(', ')')
     }),
 
     new Breezeway(howlerHollow, 10, 11, 7, 11),
@@ -2727,12 +2727,22 @@ var interactives = [
         howlerHollow.changeBlock(5, 4, '(')
     }, 4 * 75 + 37.5, 5 * 75),
 
-    // Stormed Room
+    new Breezeway(howlerHollow, 24, 10, 24, 6),
+    new Breezeway(howlerHollow, 24, 6, 24, 10),
 
-    new RaftDispenser(stormedRoom, 6 * 75, 2 * 75, 6 * 75 + 37.5, 3 * 75 + 37.5),
-    new RaftDispenser(stormedRoom, 13 * 75, 9 * 75, 14 * 75 + 37.5, 9 * 75 + 37.5),
-    new RaftDispenser(stormedRoom, 20 * 75, 10 * 75, 20 * 75 + 37.5, 11 * 75 + 37.5),
-    new RaftDispenser(stormedRoom, 12 * 75, 20 * 75, 12 * 75 + 37.5, 21 * 75 + 37.5),
+    new Breezeway(howlerHollow, 28, 1, 22, 1),
+    new Breezeway(howlerHollow, 22, 1, 28, 1),
+
+    new Breezeway(howlerHollow, 22, 8, 18, 20),
+    new Breezeway(howlerHollow, 18, 20, 22, 8),
+
+    new Toggle(howlerHollow, 18, 19, function() {
+        howlerHollow.changeBlock(17, 20, ')')
+    }, function() {
+        howlerHollow.changeBlock(17, 20, '(')
+    }),
+
+    // Stormed Room
 
 
 
@@ -3036,6 +3046,42 @@ var c92_37 = new Chest(mainMap, 92, 37, [
     items.confoundedCaveKey
 ])
 
+var c24_2 = new Chest(howlerHollow, 24, 2, [
+    new Item("Puzzle Key", 0, function(x, y) {
+        ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
+    }, function(p) {
+            
+        if (p.on(15, 20) && curMap == howlerHollow) {
+            curMap.changeBlock(14, 20, '_')
+            
+            for (var i in p.inventory) {
+                var item = p.inventory[i]
+                if (item.name == this.name) {
+                    p.inventory.splice(i, 1)
+                }
+            }
+        }
+    })
+])
+
+var c5_18 = new Chest(howlerHollow, 5, 18, [
+    new Item("Puzzle Key", 0, function(x, y) {
+        ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
+    }, function(p) {
+            
+        if (p.on(16, 15) && curMap == howlerHollow) {
+            curMap.changeBlock(17, 15, '_')
+            
+            for (var i in p.inventory) {
+                var item = p.inventory[i]
+                if (item.name == this.name) {
+                    p.inventory.splice(i, 1)
+                }
+            }
+        }
+    })
+])
+
 var c14_3 = new Chest(confoundedCave, 14, 3, [
     new Item("Puzzle Key", 0, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
@@ -3086,6 +3132,10 @@ var chests = [
     
     // Confounded Cave
     c14_3, // Puzzle Key
+
+    // Howler Hollow
+    c24_2,
+    c5_18,
 
     // Cryo Underground
     c10_1,
@@ -3268,22 +3318,16 @@ if (!!save) {
 // ONLY TURN THIS ON USING CONSOLE
 // TO TURN DEV OFF, RELOAD
 
-// var chung = finder.findPath(153, 45, 185, 48, mainMap.grid)
-
-// for (var i in chung) {
-//     var ch = chung[i]
-//     mainMap.changeBlock(ch[0], ch[1], ",")
-// }
-
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    //dev = true
-    curMap = howlerHollow
-    p.goTo(5 * 75, 5 * 75)
+    dev = true
+    curMap = mainMap
+    p.goTo(215 * 75, 50 * 75)
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.stormedsSword]
     p.equipped = [items.aquaLung]
     p.droptonDonations = 100
+    p.resistances.cold = 1
 
     lonzo.map = mainMap
     lonzo.x = 158 * 75 + 37.5

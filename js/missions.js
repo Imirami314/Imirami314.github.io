@@ -129,6 +129,10 @@ leysGreatFear.solve = function () {
 
 var davidsDreamPond = new Mission("David's Dream Pond", "Reward", null, 0)
 
+var blancheAndBianca = new Mission("Blanche and Bianca", "Reward", null, 0, function() {
+
+})
+
 var theBlockedEntrance = new Mission("The Blocked Entrance", "Reward", null, 0)
 
 theBlockedEntrance.solve = function () {
@@ -212,5 +216,5 @@ var deltasLostTreasure = new Mission("Delta's Lost Treasure", "Reward", null, 0,
 })
 
 
-var missions = [theWanderersRiddles, leysGreatFear, davidsDreamPond, theBlockedEntrance, deltasLostTreasure]
+var missions = [theWanderersRiddles, leysGreatFear, davidsDreamPond, blancheAndBianca, theBlockedEntrance, deltasLostTreasure]
 var curMissions = []

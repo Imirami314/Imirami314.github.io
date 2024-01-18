@@ -395,7 +395,6 @@ Darkened.prototype.healthBar = function() {
 	} else {
         this.beingHit = false
     }
-		
 }
 
 function Stormed(map, spawnX, spawnY) {
@@ -420,8 +419,8 @@ function Stormed(map, spawnX, spawnY) {
     this.scaleShift = 1
     this.swordRotation = 0
 
-    this.phase = 1 // Default 1
-    this.windMode = false // Default false
+    this.phase = 2 // Default 1
+    this.windMode = true // Default false
     this.windModeTimer = 20 // Countdown until windMode begins
     this.windPull = 0.1 // How fast the wind pulls the player towards the boss
 
@@ -431,7 +430,7 @@ function Stormed(map, spawnX, spawnY) {
     this.beingHit = false // Is boss being hit
     this.hitRegistered = false // Keeps track of whether damage has already been dealth
 
-	this.phase2Played = false // Check if phase 2 cutscene has played, Default false
+	this.phase2Played = true // Check if phase 2 cutscene has played, Default false
 
     //Unused
     this.phase2MapChanged = false // Check if Stormed changed the landscape so he doesn't do it over and over again in phase 2, Default false
@@ -551,7 +550,7 @@ Stormed.prototype.update = function() {
         // If sword even touches player at all, it deals damage
         if (Math.abs((this.playerAngle) - (this.bodyAngle + this.swordRotation + Math.PI / 2)) <= Math.PI / 10 && this.playerDist <= 150) {
             if (!this.hitRegistered) { // Prevents damage from being dealt more than once
-                p.getHit(5)
+                p.getHit(3)
                 this.hitRegistered = true
             }
         }
@@ -621,29 +620,29 @@ Stormed.prototype.update = function() {
 Stormed.prototype.doWindMode = function() {
     if (!this.hasBuiltIceWalls) {
         // Builds ice wall around Stormed at the start of windMode
-        curMap.changeBlock(this.cords.x - 1, this.cords.y - 1, 'I')
-        curMap.changeBlock(this.cords.x, this.cords.y - 1, 'I')
-        curMap.changeBlock(this.cords.x + 1, this.cords.y - 1, 'I')
-        curMap.changeBlock(this.cords.x - 1, this.cords.y, 'I')
-        curMap.changeBlock(this.cords.x + 1, this.cords.y, 'I')
-        curMap.changeBlock(this.cords.x - 1, this.cords.y + 1, 'I')
-        curMap.changeBlock(this.cords.x, this.cords.y + 1, 'I')
-        curMap.changeBlock(this.cords.x + 1, this.cords.y + 1, 'I')
-        this.hasBuiltIceWalls = true
+        // curMap.changeBlock(this.cords.x - 1, this.cords.y - 1, 'I')
+        // curMap.changeBlock(this.cords.x, this.cords.y - 1, 'I')
+        // curMap.changeBlock(this.cords.x + 1, this.cords.y - 1, 'I')
+        // curMap.changeBlock(this.cords.x - 1, this.cords.y, 'I')
+        // curMap.changeBlock(this.cords.x + 1, this.cords.y, 'I')
+        // curMap.changeBlock(this.cords.x - 1, this.cords.y + 1, 'I')
+        // curMap.changeBlock(this.cords.x, this.cords.y + 1, 'I')
+        // curMap.changeBlock(this.cords.x + 1, this.cords.y + 1, 'I')
+        // this.hasBuiltIceWalls = true
     } else {
         // Check if any of the walls are broken
-        if (curMap.getBlock(this.cords.x - 1, this.cords.y - 1) == '~' ||
-                curMap.getBlock(this.cords.x, this.cords.y - 1) == '~' ||
-                curMap.getBlock(this.cords.x + 1, this.cords.y - 1) == '~' ||
-                curMap.getBlock(this.cords.x - 1, this.cords.y) == '~' ||
-                curMap.getBlock(this.cords.x + 1, this.cords.y) == '~' ||
-                curMap.getBlock(this.cords.x - 1, this.cords.y + 1) == '~' ||
-                curMap.getBlock(this.cords.x, this.cords.y + 1) == '~' ||
-                curMap.getBlock(this.cords.x + 1, this.cords.y + 1) == '~') {
-            // this.beStunned()
-            this.phase = 3
-            this.windMode = false
-        }
+        // if (curMap.getBlock(this.cords.x - 1, this.cords.y - 1) == '~' ||
+        //         curMap.getBlock(this.cords.x, this.cords.y - 1) == '~' ||
+        //         curMap.getBlock(this.cords.x + 1, this.cords.y - 1) == '~' ||
+        //         curMap.getBlock(this.cords.x - 1, this.cords.y) == '~' ||
+        //         curMap.getBlock(this.cords.x + 1, this.cords.y) == '~' ||
+        //         curMap.getBlock(this.cords.x - 1, this.cords.y + 1) == '~' ||
+        //         curMap.getBlock(this.cords.x, this.cords.y + 1) == '~' ||
+        //         curMap.getBlock(this.cords.x + 1, this.cords.y + 1) == '~') {
+        //     // this.beStunned()
+        //     this.phase = 3
+        //     this.windMode = false
+        // }
     }
     this.bodyAngle += Math.PI / 25
     p.manualMove(-1 * Math.cos(this.playerAngle - Math.PI / 2) * this.windPull, -1 * Math.sin(this.playerAngle - Math.PI / 2) * this.windPull) // Pulls the player towards Stormed
@@ -834,5 +833,5 @@ var monsters = [
 
 var bosses = [
     new Darkened("Darkened Room", 712.5, 100),
-    new Stormed("Stormed Room", 13 * 75 + 37.5, 19 * 75 + 37.5)
+    new Stormed("Stormed Room", 13 * 75 + 37.5, 17 * 75 + 37.5)
 ]
