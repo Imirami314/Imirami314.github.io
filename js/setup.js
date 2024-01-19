@@ -386,6 +386,10 @@ var music = [
 		name: "Cryo Underground",
         audio: new Audio('audio/cryo_underground.mp3')
 	},
+    {
+        name: "Lonzo House",
+        audio: new Audio('audio/lonzoHouse.mp3')
+    },
 	{
 		name: "Queen's Castle",
         audio: new Audio('audio/queens_castle.mp3')

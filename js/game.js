@@ -3575,6 +3575,8 @@ var gameInterval = setInterval(function() {
                     }
                 } else if (curMap == confoundedCave) {
                     playMusic("Puzzle")
+                } else if (curMap == lonzoHouse) {
+                    playMusic("Lonzo House")
                 } else if (curMap == queensCastle) {
                     playMusic("Queen's Castle")
                 } else if (curMap == galeCave) {

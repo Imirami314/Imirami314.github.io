@@ -203,7 +203,7 @@ var items = {
     
 	auraOfWarmth: new Item("Aura of Warmth", 0,
     function(x, y) {
-        ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
+        ctx.drawImage(images.auraOfWarmth, x - 20, y - 20, 40, 40)
     },
     function(p) {
         p.speedMultiplier = 0.75
@@ -327,7 +327,7 @@ function Food(name, img, health, secs) {
 
 Food.prototype.draw = function(x, y) {
     if (this.img != "") {
-        ctx.drawImage(this.img, x - 15, y - 15, 40, 50)
+        ctx.drawImage(this.img, x - 20, y - 25, 40, 50)
     } else {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
     }
