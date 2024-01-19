@@ -3470,25 +3470,32 @@ function startPos() {
 
 startPos()
 
-var suspensiaInterval = setInterval(function() {
+var suspensiaInterval = setInterval(function() { // Makes suspensia spread into water
     var w = []
     
     for (var i = 1; i < curMap.arr.length; i ++) {
         for (var j = 1; j < curMap.arr[i].length; j ++) {
-            if (i != 0 && j != 0 && i != curMap.arr.length && j != curMap.arr[i].length) {
+            if (i != 0 && j != 0 && i < curMap.arr.length - 1 && j < curMap.arr[i].length - 1) {
                 var char = curMap.getBlock(j, i)
                 
                 if (char == '~') {
-                    if (curMap.getBlock(j + 1, i) == '^' ||
-                    curMap.getBlock(j - 1, i) == '^' ||
-                    curMap.getBlock(j, i + 1) == '^' ||
-                    curMap.getBlock(j, i - 1) == '^') {
-                        w.push([j, i])    
+                    try {
+                        if (curMap.getBlock(j + 1, i) == '^' ||
+                        curMap.getBlock(j - 1, i) == '^' ||
+                        curMap.getBlock(j, i + 1) == '^' ||
+                        curMap.getBlock(j, i - 1) == '^') {
+                            w.push([j, i])    
+                        }
+                    } catch (e) {
+                        console.log("Spread failed")
+                        console.log(i + 1)
                     }
                 }
             }
         }
     }
+    // console.log("Amount of water blocks infected: " + w.length)
+    console.log(w)
     curMap.changeBlocks(w, '^')
 }, 2000)
 
