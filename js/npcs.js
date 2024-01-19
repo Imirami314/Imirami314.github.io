@@ -45,6 +45,9 @@ function NPC(x, y, name, map, dir, lines, desc, action, actionLine, shopMenu) {
     this.curPath = 0
     this.speed = 2 // Default 2
 
+    this.remote = false
+    this.remoteSpeak = false
+
 	this.firstInteraction = true
 
 	this.cameraOn = false
@@ -208,6 +211,11 @@ NPC.prototype.draw = function() {
     if (Math.hypot((this.x - p.x), (this.y - p.y)) <= 100 && keys.space && this.lineNum < 0 && this.textCooldown <= 0) {
         this.lineNum = 0
         this.textCooldown = 1
+    } else if (this.remote) {
+        this.remoteSpeak = true
+        this.lineNum = 0
+        this.textCooldown = 1
+        this.remote = false
     }
 
 	if (this.showName) {
@@ -250,10 +258,10 @@ NPC.prototype.talk = function(p, npcs) {
 		
 	}
 	
-	
+
     if (this.lineNum >= 0) {
 		
-        if (playerDist <= 100) {
+        if (playerDist <= 100 || this.remoteSpeak) {
 			
             if (this.actionLine == this.lineNum && !this.actionFinished) {
                 this.action(p)
@@ -264,7 +272,7 @@ NPC.prototype.talk = function(p, npcs) {
 				this.nextIndicator = true
 				if (this.nextIndicatorDir == "D") {
 					this.nextIndicatorY += 1
-				} else    {
+				} else {
 					this.nextIndicatorY -= 1
 				}
 				
@@ -285,6 +293,7 @@ NPC.prototype.talk = function(p, npcs) {
 	                    this.lineNum = -1
                         this.actionFinished = false
 						this.talkedTo = true
+                        this.remoteSpeak = false
 	                } else {
 	                    this.lineNum ++
 						this.nextIndicatorY = 0
@@ -346,7 +355,13 @@ NPC.prototype.talk = function(p, npcs) {
 		} else {
 			p.canMove = false
 		}
-	}
+	} else if (this.remoteSpeak) {
+        p.canMove = false
+    } else {
+        p.canMove = true
+    }
+
+    
 
 	
 }

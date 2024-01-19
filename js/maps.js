@@ -1798,7 +1798,7 @@ var abandonedChannel = new Landscape([
     'SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',
     'SSS~~~~~~~~~~~~~SSSSSSSSSSSSSSSSS^^^^SSSSSSSSSSSSS',
     'SSSSSSSS~~~~~~~~SSSSSSSSSSSSSSSSSSSS^SSSSSSSSSSSSS',
-    'SSSSSSSS~~SSSSS~~SSSSSSSSSS^^^^^SSSS^SSSSSSSSSSSSS',
+    'SSSSSSSS~~SSSSSSSSSSSSSSSSS^^^^^SSSS^SSSSSSSSSSSSS',
     'SSSSSSSS~~SSSSS~~SSSSSSSSSS^SSS^SSSS^^^^^SSSSSSSSS',
     'SSSSSSSS~~SSSSS~~SSSSSSSSSS^SSS^^^^^^SSS^SSSSSSSSS',
     'SSS~~~~~~~~~S~~~~SSSSSSSSSS^SSS^SSSSSSSS^SSSSSSSSS',
@@ -1868,7 +1868,8 @@ abandonedChannel.solve = function() {
                     "Please explore the stone passage while I investigate this one.",
                     "I already told you once, we haven't got time for dillydallying!"
                 ]
-
+                curMap.changeBlocks([[15, 3], [16,3]], '~')
+                
                 cascade.curPath = [
                     [10, 9],
                     [10, 11],

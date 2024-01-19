@@ -2901,12 +2901,18 @@ var interactives = [
 
     // Abandoned Channel
     new LockToggle(abandonedChannel, 1, 16, function () {
-        cascade.lines = ["Uh oh.", "Baba"]
-        //cascade.lineNum = 0
+       // cascade.lines = ["Uh oh.", "Baba"]
+       // cascade.remote = true
+        
+        
+
         cascade.action = function () {} // clears action
-        // cameraStart(44 * 75, 8 * 75, 10, "NPC", {
-        //     lineStop: 1
+        
+        // cameraStart(44 * 75, 8 * 75, 100, "NPC", {
+        //     lineStop: 1 // finishes when cascade stops talking
         // })
+
+        
         curMap.changeBlock(6, 16, '~')
         curMap.changeBlock(7, 16, '~')
         curMap.changeBlock(1, 17, '~')
@@ -3350,8 +3356,9 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = false
-    curMap = stormedRoom
-    p.goTo(5 * 75, 5 * 75)
+    curMap = droptonCity
+    p.goTo(5 * 75, 7 * 75)
+    bossfight = false
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.stormedsSword]
     p.equipped = [items.aquaLung]
     p.droptonDonations = 100
@@ -3463,6 +3470,27 @@ function startPos() {
 
 startPos()
 
+var suspensiaInterval = setInterval(function() {
+    var w = []
+    
+    for (var i = 1; i < curMap.arr.length; i ++) {
+        for (var j = 1; j < curMap.arr[i].length; j ++) {
+            if (i != 0 && j != 0 && i != curMap.arr.length && j != curMap.arr[i].length) {
+                var char = curMap.getBlock(j, i)
+                
+                if (char == '~') {
+                    if (curMap.getBlock(j + 1, i) == '^' ||
+                    curMap.getBlock(j - 1, i) == '^' ||
+                    curMap.getBlock(j, i + 1) == '^' ||
+                    curMap.getBlock(j, i - 1) == '^') {
+                        w.push([j, i])    
+                    }
+                }
+            }
+        }
+    }
+    curMap.changeBlocks(w, '^')
+}, 2000)
 
 var gameInterval = setInterval(function() {
     if (tabIsActive) {
@@ -4517,6 +4545,7 @@ var gameInterval = setInterval(function() {
 				for (i in npcs) {
 					if (npcs[i].lineNum == camera.lineStop) {
 						if (keys.space) {
+                            
 							scene = "GAME"
                             cameraEnd()
 						}
