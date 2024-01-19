@@ -6,15 +6,22 @@ var saveLoaded = false
 
 var alerts = [
     new GameAlert(0, 0, ["WASD To Move\n[Space] To Continue"], imperilledPrison, "MESSAGE"),
+
+    // Chard Region
     new GameAlert(9, 53, ["Confounded Cave\nKEEP OUT!"], mainMap, "SIGN"),
     new GameAlert(1, 44, ["Got you! - Mike"], mainMap, "SIGN"),
     new GameAlert(70, 23, ["Sarah's Shop:\nOfficially open for business!"], mainMap, "SIGN"),
     new GameAlert(79, 43, ["Rowan's Dojo:\nNow accepting students!"], mainMap, "SIGN"),
-    new GameAlert(182, 3, ["Glacia Village ---------->\n<---------- Steel Field\nIf text on the signs confuse and confound, it all becomes clearer if you flip it around."], mainMap, "SIGN"),
+    new GameAlert(10, 7, ["BOW??20! hSHDs1@???:\n?fdkj2!","SDHG9 dahf!!01 fdhk!@8 d,\nhjfdj sh>9 /rhd9:f hfu???jfnvjejdj..??."], mainMap, "DECIPHER", null, ["Chard Town's Secret:\nPART 2","Chard Town possesses an unfinished letter,\nPress the right key to make everything better..."]),
     new GameAlert(66, 10, ["Huh? It's locked.\nYou need the 'Steel Field Key'."], mainMap, "KEY", "Map Key"),
+
+    // Confounded Cave
     new GameAlert(6, 53, ["Huh? It's locked.\nYou need the 'Confounded Cave Key'."], mainMap, "KEY", "Confounded Cave Key"),
     new GameAlert(6, 21, ["The buttons above will alter the walls,\nPress them correctly to open both halls..."], confoundedCave, "SIGN"),
     new GameAlert(28, 11, ["Huh? It's locked.\nYou need the 'Puzzle Key'."], confoundedCave, "KEY", "Puzzle Key"),
+
+    // Glacia Region
+    new GameAlert(182, 3, ["Glacia Village ---------->\n<---------- Steel Field\nIf text on the signs confuse and confound, it all becomes clearer if you flip it around."], mainMap, "SIGN"),
     new GameAlert(253, 21, ["The queen does not wish to speak with commoners at this time.", "If you must enter the castle, this riddle you must use,\nthe entrance is at the entrance, between red and blue."], mainMap, "SIGN"),
     new GameAlert(230, 18, ["If you've found the secret, but do not know how to go through,\ndo not be afraid to simply press 'q'."], mainMap, "SIGN"),
     new GameAlert(23, 5, ["The castle exit can be found at the bottom of the lowest floor."], queensCastle, "SIGN"),
@@ -24,13 +31,22 @@ var alerts = [
     new GameAlert(35, 11, ["Press space at the center, prepare for a fight,\nFor you're about to meet the Master of Night."], confoundedCave, "SIGN"),
     new GameAlert(44, 33, ["Warning: very cold past this point!", "Auras are recommended."], galeCave, "SIGN"),
     new GameAlert(1, 7, ["Caution: Strong wind!"], howlerHollow, "SIGN"),
-	new GameAlert(10, 7, ["BOW??20! hSHDs1@???:\n?fdkj2!","SDHG9 dahf!!01 fdhk!@8 d,\nhjfdj sh>9 /rhd9:f hfu???jfnvjejdj..??."], mainMap, "DECIPHER", null, ["Chard Town's Secret:\nPART 2","Chard Town possesses an unfinished letter,\nPress the right key to make everything better..."]),
+	
+
+    // Cryo Underground
 	new GameAlert(24, 8, ["This mysterious substance will come with a curse,\nThe player will perish, the raft alone may traverse."], cryoUnderground, "SIGN"),
+
+    // Dropton Drylands
     new GameAlert(252, 67, ["Welcome to the Dropton Drylands!", "Not that it's dry here, it's just dry compared to being underwater..."], mainMap, "SIGN"),
     new GameAlert(79, 43, ["Dropton Water Wear:\nDropton's official partner for all water-related gear!"], mainMap, "SIGN"),
+
+    // Dropton City/Town
     new GameAlert(38, 16, ["House under repair due to mysterious current...", "KEEP OUT!"], droptonCity, "SIGN"),
     new GameAlert(22, 34, ["Full Pass required for entry to Dropton Hall."], droptonCity, "SIGN"),
-    new GameAlert(37, 21, ["Full Pass required for entry to Dropton Research Facility."], droptonTown, "SIGN")
+    new GameAlert(37, 21, ["Full Pass required for entry to Dropton Research Facility."], droptonTown, "SIGN"),
+
+    // Abandoned Channel
+    new GameAlert(2, 16, ["[riddle]", abandonedChannel, "SIGN"])
 ]
 
 var teleports = [
@@ -2918,6 +2934,10 @@ var interactives = [
         curMap.changeBlock(1, 17, '~')
 
     }),
+
+    new LockToggle(abandonedChannel, 18, 11, function () {
+        curMap.changeBlock(43, 19, '_')
+    }, 43 * 75, 19 * 75)
 ]
 
 /*
@@ -3497,7 +3517,7 @@ var suspensiaInterval = setInterval(function() { // Makes suspensia spread into 
     // console.log("Amount of water blocks infected: " + w.length)
     console.log(w)
     curMap.changeBlocks(w, '^')
-}, 2000)
+}, 750)
 
 var gameInterval = setInterval(function() {
     if (tabIsActive) {
