@@ -2935,9 +2935,25 @@ var interactives = [
 
     }),
 
-    new LockToggle(abandonedChannel, 18, 11, function () {
-        curMap.changeBlock(43, 19, '_')
-    }, 43 * 75, 19 * 75)
+    new LockToggle(abandonedChannel, 17, 13, function () {
+        //curMap.changeBlock(43, 19, '_')
+    }, 43 * 75, 19 * 75),
+
+    new LockToggle(abandonedChannel, 15, 21, function () {
+        //curMap.changeBlock(43, 19, '_')
+    }, 43 * 75, 19 * 75),
+
+    new MultiToggle(abandonedChannel, 17, 21, 14, 21, ['S', 'W', '~', '_', '!']),
+
+    new RaftDispenser(abandonedChannel, 6 * 75, 27 * 75, 5 * 75 + 37.5, 27 * 75 + 37.5),
+
+    new LockToggle(abandonedChannel, 26, 21, function () {
+        //curMap.changeBlock(43, 19, '_')
+    }, 43 * 75, 19 * 75),
+
+    new LockToggle(abandonedChannel, 44, 11, function () {
+        //curMap.changeBlock(43, 19, '_')
+    }, 43 * 75, 19 * 75),
 ]
 
 /*
@@ -3375,7 +3391,7 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = false
+   // dev = false
     curMap = droptonCity
     p.goTo(5 * 75, 7 * 75)
     bossfight = false
@@ -3517,7 +3533,7 @@ var suspensiaInterval = setInterval(function() { // Makes suspensia spread into 
     // console.log("Amount of water blocks infected: " + w.length)
     console.log(w)
     curMap.changeBlocks(w, '^')
-}, 750)
+}, 1000)
 
 var gameInterval = setInterval(function() {
     if (tabIsActive) {

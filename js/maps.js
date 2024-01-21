@@ -1796,35 +1796,35 @@ var lochNessHouse = new Landscape([
 })
 
 var abandonedChannel = new Landscape([
-    'SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSS~~~~~~~~~~~~~SSSSSSSSSSSSSSSSS^^^^SSSSSSSSSSSSS',
-    'SSSSSSSS~~~~~~~~SSSSSSSSSSSSSSSSSSSS^SSSSSSSSSSSSS',
-    'SSSSSSSS~~SSSSS~~SSSSSSSSSS^^^^^SSSS^SSSSSSSSSSSSS',
-    'SSSSSSSS~~SSSSS~~SSSSSSSSSS^SSS^SSSS^^^^^SSSSSSSSS',
-    'SSSSSSSS~~SSSSS~~SSSSSSSSSS^SSS^^^^^^SSS^SSSSSSSSS',
-    'SSS~~~~~~~~~S~~~~SSSSSSSSSS^SSS^SSSSSSSS^SSSSSSSSS',
-    'SSS~~~~~~~~SS~~SSSSSSSSSSSS^SSS^SSSSSSSSSSSSSSSSSS',
-    '~~~~~SSSSSSS~~~S^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^',
-    '~~~~~SSSSO~~~SSS^^SSSSSSSSS^SSS^SSSSSSSSSSSSSSSSSS',
-    'S~~SSSSSS~~SSS^^^SSSSSSSSSS^SSS^SSSSSSSSSSSSSSSSSS',
-    'S~~SSSS~~~~S^^^^SS~~~~~~SSS^SSS^SS^SS~~~SSSSSSSSSS',
-    'S~~SSS~~~SSS^^^SSSSSSS~SSSS^^^^^^^^SS~SSSSSSSSSSSS',
-    'S~~SSS~~SS^^^^SSSSSSSS~SSSS^SSSSSSSSS~SSSSS~SSSSSS',
-    'S~~SSS~~S^^^^^SSSSSSSS~SSSS^SSSSSSSSS~~~~~~~SSSSSS',
-    'S~~SSS~~S^^^^^SSSSSS~~~~~SSSSSSSS~~~SSSSSSS~SSSSSS',
-    'S~~S^$__$^SSSSSSSSSSSSSS~SSSSSSSSSS~SSSSSSS~~~SSSS',
-    'SSSS^^^^^^SSSSSSS~~~~~SS~S~SSSSSSSS~~~~~~~S~SSSSSS',
-    'S~SS^$^^$^SSSSSSS~SSS~SS~S~SSS~~~SS~SSSS~SS~SS~~~S',
-    'S~SSSSSSSSSSS~~~~~SSS~~~~~~SSSSS~SS~SSSS~SS~~~~~~S',
-    'S~SSSSSSSSSSSSSSSSSSS~SSSSSSS~~~~~~~~~~S~SS~SS~~~S',
-    'S~SSSSS~~~~~~~~~S~~~~~~~~~~SS~SS~SSSS~SS~SS~SSSSSS',
-    'S~SSSSS~SSSSSSSSS~SSS~SSSSSSS~~~~SSSS~SS~SS~SSSSSS',
-    'S~~~~~~~~~~~SSS~~~SSS~~~~~~~~~SS~SSSS~SS~SS~SSSSSS',
-    'SSS~SSSSS~SSSSSSS~SSSSSSSSSSSSSSSSS~~~SS~~~~SSSSSS',
-    'SSS~SSSSS~SS~~~~~~SSS~SSSS~~~~~SSSSSS~SS~SS~SSSSSS',
-    'SSSSSSSSS~SS~SSSSSSSS~~~~~~SSSSSSS~~SSSS~SS~SSSSSS',
-    'SSS~~~~SS~~~~~~~~~~~~~SSSSSSSSSSSSS~~~~~~SS~SSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSS~~~~~~~~~~~~~SSSSSSSSSSSSSSSSS^^^^SSSSSSSSSSSSSS',
+    'SSSSSSSS~~~~~~~~SSSSSSSSSSSSSSSSSSSS^SSSSSSSSSSSSSS',
+    'SSSSSSSS~~SSSSS~~SSSSSSSSSS^^^^^SSSS^SSSSSSSSSSSSSS',
+    'SSSSSSSS~~SSSSS~~SSSSSSSSSS^SSS^SSSS^^^^^SSSSSSSSSS',
+    'SSSSSSSS~~SSSSS~~SSSSSSSSSS^SSS^^^^^^SSS^SSSSSSSSSS',
+    'SSS~~~~~~~~~S~~~~SSSSSSSSSS^SSS^SSSSSSSS^SSSSSSSSSS',
+    'SSS~~~~~~~~SS~~SSSSSSSSSSSS^SSS^SSSSSSSSSSSSSSSSSSS',
+    '~~~~~SSSSSSS~~~S^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^S',
+    '~~~~~SSSSO~~~SSS^^SSSSSSSSS^SSS^SSSSSSSSSSSSSSSSSSS',
+    'S~~SSSSSS~~SSS^^^SSSSSSSSSS^SSS^SSSSS!~!~!~!SSSSSSS',
+    'S~~SSSS~~~~S^^^^SSSSSSSSSSS^SSS^SS^SS~~~~~~~_SSSSSS',
+    'S~~SSS~~~SSS^^^SSSSSSS~SSSS^^^^^^^^SS~SSSSSSSSSSSSS',
+    'S~~SSS~~SS^^^^SSS~SSSS~SSSS^SSSSSSSSS~SSSSS~SSSSSSS',
+    'S~~SSS~~S^^^^^SSS~SSSS~SSSS^SSSSSSSSS~~~~~~~SSSSSSS',
+    'S~~SSS~~S^^^^^SSS~SS~~~~~SSSSSSSS~~~SSSSSSS~SSSSSSS',
+    'S~~S^$__$^SSSSSSS~SSSSSS~SSSSSSSSSS~SSSSSSS~~~SSSSS',
+    'SSSS^^^^^^SSSSSSS~~~~~SS~S~SSSSSSSS~~~~~~~S~SSSSSSS',
+    'S~SS^$^^$^SSSSSSS~SSS~SS~S~~~~~~~SS~SSSS~SS~SS~~~SS',
+    'S~SSSSSSSSSSS~~~~~SSS~~~~~~SSSSS~SS~SSSS~SS~~~~~~SS',
+    'S~SSSSSSSSSSSS_SSSSSS~SSSSSSS~~~~~~~~~~S~SS~SS~~~SS',
+    'S~SSSSS~~~~~~_!~S~~~~~i~~~~SS~SS~SSSS~SS~SS~SSSSSSS',
+    'S~SSSSS~SSSSSSSSS~SSS~SSSSSSS~~~~SSSS~SS~SS~SSSSSSS',
+    'S~~~~~~~~~~~SSS~~~SSS~~~~~~~~~SS~SSSS~SS~SS~SSSSSSS',
+    'SSS~SSSSS~SSSSSSS~SSSSSSSSSSSSSSSSS~~~SS~~~~SSSSSSS',
+    'SSS~SSSSSiSS~~~~~~SSS~SSSS~~~~~SSSSSS~SS~SS~SSSSSSS',
+    'SSS~SSSSSiSS~SSSSSSSS~~~~~~SSSSSSS~~SSSS~SS~SSSSSSS',
+    'SSS~~~~SS~~~~~~~~~~~~~SSSSSSSSSSSSS~~~~~~SS~SSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',
 ], null, null, null, null, "Abandoned Channel")
 
 // var growInterval = 0
@@ -1894,9 +1894,19 @@ abandonedChannel.solve = function() {
         cascadeEntered = true
     }
 
-    if (getBlockInfoByCords(7 * 75, 16 * 75).id == "~") {
-    
-    
+
+    if (!!!abandonedChannel.intervalSet) {
+        setInterval(function() {
+            if (abandonedChannel.getBlock(37, 11) == '~') {
+                abandonedChannel.changeBlocks([[37, 11], [39, 11], [41, 11], [43, 11]], '!')
+                abandonedChannel.changeBlocks([[37, 10], [39, 10], [41, 10], [43, 10]], '~')
+                
+            } else {
+                abandonedChannel.changeBlocks([[37, 11], [39, 11], [41, 11], [43, 11]], '~')
+                abandonedChannel.changeBlocks([[37, 10], [39, 10], [41, 10], [43, 10]], '!')
+            }
+        }, 1000)
+        abandonedChannel.intervalSet = true
     }
 }
 

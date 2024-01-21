@@ -129,9 +129,9 @@ MultiToggle.prototype.draw = function () {
     this.cords.y = this.y
 
 	this.toggleCooldown -= 1 / (66 + (2 / 3))
-	ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 55, 55, "rgb(100, 10, 175)")
+	ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 55, 55, "rgb(66, 135, 245)")
 	
-	if (this.toggleNum != 0) {
+	if (this.toggleNum != 0 && this.toggleNum != this.blocks.length) {
 		ctx.fillStyle = 'rgb(0, 0, 0)'
 		ctx.fillText(this.toggleNum, this.x * 75 + 37.5, this.y * 75 + 37.5)
 	}
