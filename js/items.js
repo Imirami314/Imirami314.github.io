@@ -205,7 +205,9 @@ var items = {
     function(x, y) {
         ctx.drawImage(images.auraOfWarmth, x - 20, y - 20, 40, 40)
     },
-    function(p) {
+    function() {
+        p.equip(this)
+
         p.speedMultiplier = 0.75
         p.resistances.cold = 1
     }, "A mysterious item that grants you a moderate resistance to cold places, but at the cost of some of your speed.", "MISC"),

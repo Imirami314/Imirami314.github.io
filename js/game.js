@@ -31,10 +31,6 @@ var alerts = [
     new GameAlert(35, 11, ["Press space at the center, prepare for a fight,\nFor you're about to meet the Master of Night."], confoundedCave, "SIGN"),
     new GameAlert(44, 33, ["Warning: very cold past this point!", "Auras are recommended."], galeCave, "SIGN"),
     new GameAlert(1, 7, ["Caution: Strong wind!"], howlerHollow, "SIGN"),
-	
-
-    // Cryo Underground
-	new GameAlert(24, 8, ["This mysterious substance will come with a curse,\nThe player will perish, the raft alone may traverse."], cryoUnderground, "SIGN"),
 
     // Dropton Drylands
     new GameAlert(252, 67, ["Welcome to the Dropton Drylands!", "Not that it's dry here, it's just dry compared to being underwater..."], mainMap, "SIGN"),
@@ -46,7 +42,12 @@ var alerts = [
     new GameAlert(37, 21, ["Full Pass required for entry to Dropton Research Facility."], droptonTown, "SIGN"),
 
     // Abandoned Channel
-    new GameAlert(2, 16, ["[riddle]", abandonedChannel, "SIGN"])
+    new GameAlert(2, 16, ["[riddle]", abandonedChannel, "SIGN"]),
+
+    // Cryo Underground
+	new GameAlert(24, 8, ["This mysterious substance will come with a curse,\nThe player will perish, the raft alone may traverse."], cryoUnderground, "SIGN"),
+
+    // Drowned Room
 ]
 
 var teleports = [
@@ -2800,7 +2801,47 @@ var interactives = [
     // Dropton City
     new RaftDispenser(droptonCity, 2 * 75, 2 * 75, 2 * 75 + 37.5, 3 * 75 + 37.5),
 
-    // The Cryo Underground
+    // Abandoned Channel
+    new LockToggle(abandonedChannel, 1, 16, function () {
+       // cascade.lines = ["Uh oh.", "Baba"]
+       // cascade.remote = true
+        
+        
+
+        cascade.action = function () {} // clears action
+        
+        // cameraStart(44 * 75, 8 * 75, 100, "NPC", {
+        //     lineStop: 1 // finishes when cascade stops talking
+        // })
+
+        
+        curMap.changeBlock(6, 16, '~')
+        curMap.changeBlock(7, 16, '~')
+        curMap.changeBlock(1, 17, '~')
+
+    }),
+
+    new LockToggle(abandonedChannel, 17, 13, function () {
+        //curMap.changeBlock(43, 19, '_')
+    }, 43 * 75, 19 * 75),
+
+    new LockToggle(abandonedChannel, 15, 21, function () {
+        //curMap.changeBlock(43, 19, '_')
+    }, 43 * 75, 19 * 75),
+
+    new MultiToggle(abandonedChannel, 17, 21, 14, 21, ['S', 'W', '~', '_', '!']),
+
+    new RaftDispenser(abandonedChannel, 6 * 75, 27 * 75, 5 * 75 + 37.5, 27 * 75 + 37.5),
+
+    new LockToggle(abandonedChannel, 26, 21, function () {
+        //curMap.changeBlock(43, 19, '_')
+    }, 43 * 75, 19 * 75),
+
+    new LockToggle(abandonedChannel, 44, 11, function () {
+        //curMap.changeBlock(43, 19, '_')
+    }, 43 * 75, 19 * 75),
+
+    // Cryo Underground
 
     new Toggle(cryoUnderground, 13, 6, function() {
         curMap.changeBlock(15, 4, ')')
@@ -2821,8 +2862,6 @@ var interactives = [
     }, function() {
         curMap.changeBlock(17, 6, '(')
     }),
-
-    //var raft12_20 = new Raft(cryoUnderground, 12 * 75, 20 * 75)
 
     new RaftDispenser(cryoUnderground, 5 * 75, 1 * 75, 6 * 75 + 37.5, 1 * 75 + 37.5),
 
@@ -2861,14 +2900,6 @@ var interactives = [
     new RaftDispenser(cryoUnderground, 19 * 75, 10 * 75, 20 * 75 + 37.5, 10 * 75 + 37.5),
 
     new RaftDispenser(cryoUnderground, 38 * 75, 1 * 75, 39 * 75 + 37.5, 1 * 75 + 37.5),
-
-    // var t48_1 = new Toggle(cryoUnderground, 48, 1, function() {
-    //     curMap.changeBlock(47, 1, 'z')
-    //     curMap.changeBlock(41, 1, 'z')
-    // }, function() {
-    //     curMap.changeBlock(47, 1, 'W')
-    //     curMap.changeBlock(41, 1, 'W')
-    // })
 
     new RaftDispenser(cryoUnderground, 28 * 75, 19 * 75, 28 * 75 + 37.5, 20 * 75 + 37.5),
 
@@ -2915,45 +2946,24 @@ var interactives = [
 
     new RaftDispenser(cryoUnderground, 48 * 75, 32 * 75, 47 * 75 + 37.5, 32 * 75 + 37.5),
 
-    // Abandoned Channel
-    new LockToggle(abandonedChannel, 1, 16, function () {
-       // cascade.lines = ["Uh oh.", "Baba"]
-       // cascade.remote = true
-        
-        
+    // Drowned Room
+    new RaftDispenser(drownedRoom, 15 * 75, 25 * 75, 15 * 75 + 37.5, 24 * 75 + 37.5),
 
-        cascade.action = function () {} // clears action
-        
-        // cameraStart(44 * 75, 8 * 75, 100, "NPC", {
-        //     lineStop: 1 // finishes when cascade stops talking
-        // })
+    new RaftDispenser(drownedRoom, 5 * 75, 25 * 75, 5 * 75 + 37.5, 24 * 75 + 37.5),
 
-        
-        curMap.changeBlock(6, 16, '~')
-        curMap.changeBlock(7, 16, '~')
-        curMap.changeBlock(1, 17, '~')
+    new RaftDispenser(drownedRoom, 25 * 75, 25 * 75, 25 * 75 + 37.5, 24 * 75 + 37.5),
 
-    }),
+    new RaftDispenser(drownedRoom, 5 * 75, 15 * 75, 6 * 75 + 37.5, 15 * 75 + 37.5),
 
-    new LockToggle(abandonedChannel, 17, 13, function () {
-        //curMap.changeBlock(43, 19, '_')
-    }, 43 * 75, 19 * 75),
+    new RaftDispenser(drownedRoom, 25 * 75, 15 * 75, 24 * 75 + 37.5, 15 * 75 + 37.5),
 
-    new LockToggle(abandonedChannel, 15, 21, function () {
-        //curMap.changeBlock(43, 19, '_')
-    }, 43 * 75, 19 * 75),
+    new RaftDispenser(drownedRoom, 5 * 75, 5 * 75, 5 * 75 + 37.5, 6 * 75 + 37.5),
 
-    new MultiToggle(abandonedChannel, 17, 21, 14, 21, ['S', 'W', '~', '_', '!']),
+    new RaftDispenser(drownedRoom, 15 * 75, 5 * 75, 15 * 75 + 37.5, 6 * 75 + 37.5),
 
-    new RaftDispenser(abandonedChannel, 6 * 75, 27 * 75, 5 * 75 + 37.5, 27 * 75 + 37.5),
+    new RaftDispenser(drownedRoom, 25 * 75, 5 * 75, 25 * 75 + 37.5, 6 * 75 + 37.5),
 
-    new LockToggle(abandonedChannel, 26, 21, function () {
-        //curMap.changeBlock(43, 19, '_')
-    }, 43 * 75, 19 * 75),
 
-    new LockToggle(abandonedChannel, 44, 11, function () {
-        //curMap.changeBlock(43, 19, '_')
-    }, 43 * 75, 19 * 75),
 ]
 
 /*
@@ -3391,10 +3401,9 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-   // dev = false
-    curMap = droptonCity
+    dev = true
+    curMap = drownedRoom
     p.goTo(5 * 75, 7 * 75)
-    bossfight = false
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.stormedsSword]
     p.equipped = [items.aquaLung]
     p.droptonDonations = 100
