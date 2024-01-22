@@ -3547,7 +3547,7 @@ var suspensiaInterval = setInterval(function() { // Makes suspensia spread into 
 var gameInterval = setInterval(function() {
     if (tabIsActive) {
         if (dev) {
-            p.health = 100 // Constantly resets player health to 100
+            p.health = 15 // Constantly resets player health to 100
             for (var i in blocks) { 
                 blocks[i].through = true
                 blocks[i].speed = 25

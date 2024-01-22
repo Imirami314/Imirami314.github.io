@@ -711,6 +711,151 @@ Stormed.prototype.healthBar = function() {
 		
 }
 
+
+
+function Drowned(map, spawnX, spawnY) {
+    Enemy.call(this, map, spawnX, spawnY)
+    this.name = "Drowned"
+    this.damage = 10
+    this.maxHealth = 750
+    this.health = 750 // Default 750
+	this.animatedHealth = 750
+	
+    this.cords = {
+        x: 0,
+        y: 0
+    }
+
+    this.speed = 2
+    this.moving = false
+    
+    this.playerDist = 69420 // Direct distance from player (I set it to 69420 because it gets updated anyway)
+    this.playerAngle = 0
+    this.bodyAngle = 0
+    this.scaleFactor = 1
+    this.scaleShift = 1
+    this.swordRotation = 0
+
+    this.phase = 1 // Default 1
+
+    this.hitCooldown = 1
+    this.hitting = false
+    this.hittable = true // Can boss be hit
+    this.beingHit = false // Is boss being hit
+    this.hitRegistered = false // Keeps track of whether damage has already been dealth
+
+	this.phase2Played = false // Check if phase 2 cutscene has played, Default false
+}
+
+Drowned.prototype = Object.create(Enemy.prototype)
+
+Drowned.prototype.draw = function() {
+	
+	this.playerDist = Math.hypot((this.x - p.x), (this.y - p.y))
+    if (this.map == curMap.name) {
+        ctx.save()
+        ctx.translate(this.x, this.y)
+        ctx.rotate(this.bodyAngle) // DEFAULT ON
+        ctx.scale(this.scaleFactor * this.scaleShift, this.scaleFactor * this.scaleShift)
+        ctx.translate(-1 * this.x, -1 * this.y)
+
+        // Body
+        if (this.phase == 1) {
+            if (this.beingHit) {
+                ctx.save()
+                // ctx.drawImage(images.stormedPhase2, this.x - 75, this.y - 75, 150, 150)
+                ctx.restore()
+            } else {
+                ctx.drawImage(images.drownedPhase1, this.x - 75, this.y - 75, 150, 150)
+            }
+        }
+
+        if (this.hitting) {
+            ctx.save()
+            ctx.translate(this.x, this.y)
+            ctx.translate(Math.random() * 5, Math.random() * 5)
+            ctx.rotate(this.swordRotation)
+            ctx.translate(- (this.x), - (this.y))
+            ellipse(this.x + 75, this.y, 40, 40, "rgb(60, 245, 245)") // Right arm
+            
+            ctx.translate(this.x + 75, this.y)
+            ctx.rotate(Math.PI / 2)
+            ctx.translate(- (this.x + 75), - (this.y))
+            // ctx.drawImage(images.stormedSword, this.x + 50, this.y - 150, 50, 150) // Sword
+            ctx.restore()
+        } else {
+            ellipse(this.x - 85, this.y, 40, 40, "rgb(0, 50, 150)") // Left arm
+            ellipse(this.x + 85, this.y, 40, 40, "rgb(0, 50, 150)") // Right arm
+            // ctx.drawImage(images.stormedSword, this.x + 50, this.y - 150, 50, 150) // Sword
+        }
+        
+        ctx.restore()
+        ctx.fillStyle = "rgb(0, 0, 0)"
+    }
+}
+
+Drowned.prototype.update = function() {
+    this.draw()
+	
+    // Makes it so the calculations don't divide by 0
+    if ((p.x - this.x) == 0) {
+        this.x -= 0.5
+    }
+    
+    if ((p.y - this.y) == 0) {
+        this.y -= 0.5
+    }
+
+    // Update information for the boss
+    this.hitCooldown -= 1 / 66.67
+    if (this.phase == 2) {
+        this.windModeTimer -= 1 / 66.67
+    }
+    this.cords.x = Math.floor(this.x / 75)
+    this.cords.y = Math.floor(this.y / 75)
+    this.pdx = p.x - this.x
+    this.pdy = p.y - this.y
+    this.dirCoefX = (this.pdx / Math.abs(this.pdx)) // Gives 1 or -1 depending on whether the player is to the left or right
+    this.dirCoefY = (this.pdy / Math.abs(this.pdy)) // Gives 1 or -1 depending on whether the player is above or below
+    this.playerDist = Math.hypot((p.x - this.x), (p.y - this.y))
+    this.playerAngle = Math.atan2((p.y - this.y), (p.x - this.x)) + (Math.PI) / 2 // Gives angle direction of player
+    
+    // Makes the angle pi instead of like 1835pi
+    this.bodyAngle = this.bodyAngle % (Math.PI * 2)
+    
+    // Amount x and y to move at a certain angle
+    this.xFactor = Math.cos(this.playerAngle)
+    this.yFactor = Math.sin(this.playerAngle)
+
+    if (this.hitting) { // Attack animation
+
+    }
+}
+
+Drowned.prototype.healthBar = function() {
+	ctx.fillStyle = "rgb(150, 0, 0)"
+	ctx.font = "70px serif"
+    ctx.textAlign = "center"
+    ctx.fillText("Drowned", width / 2, height / 9)
+	
+    ctx.fillStyle = "rgb(100, 100, 100)"
+    ctx.roundRect(width / 8, height / 8, width * 3 / 4, 25, 10)
+	ctx.fill()
+    if (this.health > 0) {
+        ctx.fillStyle = "rgb(150, 0, 0)"
+        ctx.roundRect(width / 8, height / 8, (width * 3 / 4) * (this.animatedHealth / this.maxHealth), 25, 5)
+    	ctx.fill()
+    }
+
+	if (this.health < this.animatedHealth && this.health > 0) {
+		this.animatedHealth --
+        this.beingHit = true
+	} else {
+        this.beingHit = false
+    }
+		
+}
+
 // Monsters
 
 function Splint(map, spawnX, spawnY) { // Idk what to call it man
@@ -851,5 +996,6 @@ var monsters = [
 
 var bosses = [
     new Darkened("Darkened Room", 712.5, 100),
-    new Stormed("Stormed Room", 13 * 75 + 37.5, 17 * 75 + 37.5)
+    new Stormed("Stormed Room", 13 * 75 + 37.5, 17 * 75 + 37.5),
+    new Drowned("Drowned Room", 15 * 75 + 37.5, 19 * 75 + 37.5),
 ]
