@@ -732,6 +732,7 @@ function Drowned(map, spawnX, spawnY) {
     this.playerDist = 69420 // Direct distance from player (I set it to 69420 because it gets updated anyway)
     this.playerAngle = 0
     this.bodyAngle = 0
+    this.bodyAngleChangeCounter = 0
     this.scaleFactor = 1
     this.scaleShift = 1
     this.swordRotation = 0
@@ -745,6 +746,9 @@ function Drowned(map, spawnX, spawnY) {
     this.hitRegistered = false // Keeps track of whether damage has already been dealth
 
 	this.phase2Played = false // Check if phase 2 cutscene has played, Default false
+
+    this.ringSize = 10
+    this.ringOpacity = 1
 }
 
 Drowned.prototype = Object.create(Enemy.prototype)
@@ -766,23 +770,22 @@ Drowned.prototype.draw = function() {
                 ctx.drawImage(images.drownedHurt, this.x - 75, this.y - 75, 150, 150)
                 ctx.restore()
             } else {
+                // Ring
+                ctx.beginPath()
+                ctx.strokeStyle = "rgba(0, 255, 255, " + this.ringOpacity + ")"
+                ctx.arc(this.x, this.y, this.ringSize / 2, 0, 2 * Math.PI, true)
+                ctx.lineWidth = 15
+                ctx.stroke()
+
                 ctx.drawImage(images.drownedPhase1, this.x - 75, this.y - 75, 150, 150)
             }
         }
 
         if (this.hitting) {
-            ctx.save()
-            ctx.translate(this.x, this.y)
-            ctx.translate(Math.random() * 5, Math.random() * 5)
-            ctx.rotate(this.swordRotation)
-            ctx.translate(- (this.x), - (this.y))
-            ellipse(this.x + 75, this.y, 40, 40, "rgb(60, 245, 245)") // Right arm
-            
-            ctx.translate(this.x + 75, this.y)
-            ctx.rotate(Math.PI / 2)
-            ctx.translate(- (this.x + 75), - (this.y))
-            ctx.drawImage(images.drownedScythe, this.x + 50, this.y - 150, 105, 150) // Scythe
-            ctx.restore()
+            // Arms and weapons
+            ctx.drawImage(images.drownedScythe, this.x, this.y - 150, 105, 150) // Scythe
+            ellipse(this.x - 85, this.y, 40, 40, "rgb(0, 50, 150)") // Left arm
+            ellipse(this.x + 85, this.y, 40, 40, "rgb(0, 50, 150)") // Right arm
         } else {
             ctx.drawImage(images.drownedScythe, this.x, this.y - 150, 105, 150) // Scythe
             ellipse(this.x - 85, this.y, 40, 40, "rgb(0, 50, 150)") // Left arm
@@ -827,12 +830,30 @@ Drowned.prototype.update = function() {
     this.xFactor = Math.cos(this.playerAngle)
     this.yFactor = Math.sin(this.playerAngle)
 
-    if (!this.hitting) { // Stare at player
+    if (this.hitting) { // Attack animation
+        this.ringSize += 25
+        if (this.ringOpacity > 0) {
+            this.ringOpacity -= 2 / 66.67
+        }
+        
+        if (this.bodyAngleChangeCounter < Math.PI * 2) {
+            this.bodyAngle -= Math.PI / 10
+            this.bodyAngleChangeCounter += Math.PI / 10
+        }
+    } else {
+        // Stare at player
         this.bodyAngle = this.playerAngle
+        this.bodyAngleChangeCounter  = 0
     }
 
-    if (this.hitting) { // Attack animation
-
+    if (this.playerDist <= 200) {
+        this.hitting = true
+    } else {
+        if (this.ringOpacity <= 0) {
+            this.hitting = false
+            this.ringSize = 10
+            this.ringOpacity = 1
+        }
     }
 }
 
