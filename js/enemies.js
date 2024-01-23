@@ -781,12 +781,12 @@ Drowned.prototype.draw = function() {
             ctx.translate(this.x + 75, this.y)
             ctx.rotate(Math.PI / 2)
             ctx.translate(- (this.x + 75), - (this.y))
-            // ctx.drawImage(images.stormedSword, this.x + 50, this.y - 150, 50, 150) // Sword
+            ctx.drawImage(images.drownedScythe, this.x + 50, this.y - 150, 105, 150) // Scythe
             ctx.restore()
         } else {
+            ctx.drawImage(images.drownedScythe, this.x, this.y - 150, 105, 150) // Scythe
             ellipse(this.x - 85, this.y, 40, 40, "rgb(0, 50, 150)") // Left arm
             ellipse(this.x + 85, this.y, 40, 40, "rgb(0, 50, 150)") // Right arm
-            // ctx.drawImage(images.stormedSword, this.x + 50, this.y - 150, 50, 150) // Sword
         }
         
         ctx.restore()

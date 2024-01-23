@@ -88,6 +88,7 @@ var images = {
     oldMansGlasses: initImage('sprites/items/oldMansGlasses.png'),
 	speedySnowPath: initImage('sprites/items/speedySnowPath.png'),
     auraOfWarmth: initImage('sprites/items/auraOfWarmth.png'),
+    drownedScythe: initImage('sprites/items/drownedScythe.png'),
 
     // Icons
     sacredStar: initImage('sprites/icons/sacredStar.png'),
