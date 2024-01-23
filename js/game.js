@@ -2861,7 +2861,7 @@ var interactives = [
         curMap.changeBlock(17, 6, ')')
     }, function() {
         curMap.changeBlock(17, 6, '(')
-    }),
+    }, 17 * 75 + 37.5, 6 * 75 + 37.5),
 
     new RaftDispenser(cryoUnderground, 5 * 75, 1 * 75, 6 * 75 + 37.5, 1 * 75 + 37.5),
 
@@ -2915,7 +2915,7 @@ var interactives = [
 
         curMap.changeBlock(46, 19, 'z')
         curMap.changeBlock(46, 20, 'z')
-    }),
+    }, 48 * 75, 23 * 75 + 37.5),
 
     new Toggle(cryoUnderground, 28, 22, function () {
         
@@ -2937,7 +2937,7 @@ var interactives = [
         curMap.changeBlock(35, 22, '!')
     }),
 
-    new MultiToggle(cryoUnderground, 42, 22, 41, 22, ["!", "^", "~", ",", "."]),
+    new MultiToggle(cryoUnderground, 42, 22, 41, 22, ["!", "~", ",", "."]),
 
     new LockToggle(cryoUnderground, 48, 22, function() {
         curMap.changeBlock(44, 22, '~')
@@ -3401,7 +3401,6 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = true
     curMap = drownedRoom
     p.goTo(5 * 75, 7 * 75)
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.stormedsSword]

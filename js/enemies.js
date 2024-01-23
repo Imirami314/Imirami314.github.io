@@ -747,6 +747,7 @@ function Drowned(map, spawnX, spawnY) {
 
 	this.phase2Played = false // Check if phase 2 cutscene has played, Default false
 
+    this.prepAngleCounter = 0 // Angle for where Drowned pulls back for a bit before hitting
     this.ringSize = 10
     this.ringOpacity = 1
 }
@@ -830,12 +831,40 @@ Drowned.prototype.update = function() {
     this.xFactor = Math.cos(this.playerAngle)
     this.yFactor = Math.sin(this.playerAngle)
 
-    if (this.hitting) { // Attack animation
-        this.ringSize += 25
-        if (this.ringOpacity > 0) {
-            this.ringOpacity -= 2 / 66.67
+    if (!this.hitting && this.playerDist > 100) {
+        this.moving = true
+        if (Math.abs(this.pdx) >= 10) {
+            this.move(this.dirCoefX * this.speed, 0)
         }
-        
+
+        if (Math.abs(this.pdy) >= 10) {
+            this.move(0, this.dirCoefY * this.speed)
+        }
+    }
+    
+    
+
+    if (this.playerDist <= 200) {
+        this.hitting = true
+        // if (this.prepAngleCounter < Math.PI / 6) {
+        //     this.bodyAngle += (Math.PI / 66.67) * (1 / 3)
+        //     this.prepAngleCounter += (Math.PI / 66.67) * (1 / 3)
+        // } else {
+        //     this.hitting = true
+        //     this.prepAngleCounter = 0
+        // }
+    }
+
+    if (this.hitting) { // Attack animation
+        if (this.ringOpacity > 0) {
+            this.ringSize += 25
+            this.ringOpacity -= 2 / 66.67
+        } else {
+            this.hitting = false
+            this.ringSize = 10
+            this.ringOpacity = 1
+        }
+
         if (this.bodyAngleChangeCounter < Math.PI * 2) {
             this.bodyAngle -= Math.PI / 10
             this.bodyAngleChangeCounter += Math.PI / 10
@@ -844,16 +873,6 @@ Drowned.prototype.update = function() {
         // Stare at player
         this.bodyAngle = this.playerAngle
         this.bodyAngleChangeCounter  = 0
-    }
-
-    if (this.playerDist <= 200) {
-        this.hitting = true
-    } else {
-        if (this.ringOpacity <= 0) {
-            this.hitting = false
-            this.ringSize = 10
-            this.ringOpacity = 1
-        }
     }
 }
 
