@@ -2820,7 +2820,7 @@ var interactives = [
 
     }),
 
-    new LockToggle(abandonedChannel, 17, 13, function () {
+    new LockToggle(abandonedChannel, 22, 12, function () {
         //curMap.changeBlock(43, 19, '_')
     }, 43 * 75, 19 * 75),
 

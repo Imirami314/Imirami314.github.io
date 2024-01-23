@@ -1822,7 +1822,7 @@ var abandonedChannel = new Landscape([
     'S~~S^$__$^SSSSSSS~SSSSSS~SSSSSSSSSS~SSSSSSS~~~SSSSS',
     'SSSS^^^^^^SSSSSSS~~~~~SS~S~SSSSSSSS~~~~~~~S~SSSSSSS',
     'S~SS^$^^$^SSSSSSS~SSS~SS~S~~~~~~~SS~SSSS~SS~SS~~~SS',
-    'S~SSSSSSSSSSS~~~~~SSS~~~~~~SSSSS~SS~SSSS~SS~~~~~~SS',
+    'S~SSSSSSSSSSS~~~~~SSS~~~~~~SSSSS~SS~SSSS~SS~~~~~OSS',
     'S~SSSSSSSSSSSS_SSSSSS~SSSSSSS~~~~~~~~~~S~SS~SS~~~SS',
     'S~SSSSS~~~~~~_!~S~~~~~i~~~~SS~SS~SSSS~SS~SS~SSSSSSS',
     'S~SSSSS~SSSSSSSSS~SSS~SSSSSSS~~~~SSSS~SS~SS~SSSSSSS',
@@ -1915,6 +1915,13 @@ abandonedChannel.solve = function() {
         }, 1000)
         abandonedChannel.intervalSet = true
     }
+
+    if (keys.space) {
+        if (p.on(48, 19)) {
+            curMap = cryoUnderground
+            p.goTo(ctr(7), ctr(1))
+        }
+    }
 }
 
 var cryoUnderground = new Landscape([
@@ -1959,10 +1966,10 @@ cryoUnderground.solve = function() {
     lighting = 1500
 
     if (keys.space) {
-        if (p.on(8, 1)) { // Exit back to Gale Cave
-            curMap = galeCave
-            p.x = 44 * 75 + 37.5
-            p.y = 34 * 75 + 37.5
+        if (p.on(8, 1)) { // Exit to Abandoned Channel
+            p.goTo(47 * 75 + 37.5, 19 * 75 + 37.5)
+            curMap = abandonedChannel
+            
         }
 
         // if (p.on(42, 28)) {
