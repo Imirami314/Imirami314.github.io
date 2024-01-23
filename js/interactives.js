@@ -205,22 +205,22 @@ Raft.prototype.move = function() {
     if (this.hasPlayer) {
         if (keys.w) {
             p.dir = 'U'
-            this.velocity.y -= 2 / 66.67
+            this.velocity.y -= 3 / 66.67
         }
         
         if (keys.a) {
             p.dir = 'L'
-            this.velocity.x -=    2 / 66.67
+            this.velocity.x -= 3 / 66.67
         }
         
         if (keys.s) {
             p.dir = 'D'
-            this.velocity.y += 2 / 66.67
+            this.velocity.y += 3 / 66.67
         }
         
         if (keys.d) {
             p.dir = 'R'
-            this.velocity.x += 2 / 66.67
+            this.velocity.x += 3 / 66.67
         }
 
         // Put a cap on velocity so it doesn't get too fast
@@ -254,29 +254,27 @@ Raft.prototype.move = function() {
     
 
     // Check if block is solid, bounces if so
-    if (/*!getBlockInfoByCords(this.x - this.velocity.x, this.y).through ||
-     */!getBlockInfoByCords(this.x + this.velocity.x, this.y).through) {
+    if (!getBlockInfoByCords(this.x + this.velocity.x, this.y).through) {
         console.log("raft bounce x")
         this.hitIce()
         this.x -= this.velocity.x * 2
-        this.velocity.x *= -0.75
+        this.velocity.x *= -0.6
     }
     
-    if (/*!getBlockInfoByCords(this.x, this.y - this.velocity.y).through ||
-     */!getBlockInfoByCords(this.x, this.y + this.velocity.y).through) {
+    if (!getBlockInfoByCords(this.x, this.y + this.velocity.y).through) {
         console.log("raft bounce y")
         this.hitIce()
         this.y -= this.velocity.y * 2
-        this.velocity.y *= -0.75
+        this.velocity.y *= -0.6
     }
 
-    // Make sure raft is on water or lava
+    // Make sure raft is on water, lava, or speedy snow
     if (getBlockInfoByCords(this.x, this.y).id != "~" &&
             getBlockInfoByCords(this.x, this.y).id != "!" &&
             getBlockInfoByCords(this.x, this.y).id != "^") {
         if (getBlockInfoByCords(this.x, this.y).id != "z") {
-            this.x -= this.velocity.x * 2
-            this.y -= this.velocity.y * 2
+            this.x -= this.velocity.x * 2.5
+            this.y -= this.velocity.y * 2.5
 
             this.velocity.x = 0
             this.velocity.y = 0

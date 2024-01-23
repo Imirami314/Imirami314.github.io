@@ -1035,7 +1035,13 @@ var monsters = [
     new Splint("Main Map", 46 * 75, 18 * 75),
     new Splint("Main Map", 47 * 75, 18 * 75),
     new Splint("Main Map", 48 * 75, 18 * 75),
-    new Splint("Gale Cave", 50 * 75, 33 * 75)
+    new Splint("Gale Cave", 50 * 75, 33 * 75),
+    new Splint("The Cryo Underground", 17 * 75, 1 * 75),
+    new Splint("The Cryo Underground", 18 * 75, 22 * 75),
+    new Splint("The Cryo Underground", 22 * 75, 11 * 75),
+    new Splint("The Cryo Underground", 43 * 75, 1 * 75),
+    new Splint("The Cryo Underground", 45 * 75, 1 * 75),
+    new Splint("The Cryo Underground", 28 * 75, 18 * 75),
 ]
 
 var bosses = [
