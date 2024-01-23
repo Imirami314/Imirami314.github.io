@@ -3630,8 +3630,8 @@ var gameInterval = setInterval(function() {
                     } else {
                         playMusic("Gale Cave Light")
                     }
-                } else if (curMap == cryoUnderground) {
-                    playMusic("Cryo Underground")
+                } else if (curMap == howlerHollow) {
+                    // playMusic("Howler Hollow") No howler hollow music yet
                 } else if (curMap == stormedRoom) {
                     playMusic("Darkened Battle") // Default ??? Need to make music for Stormed
                 } else if (curMap == droptonTunnels) {
@@ -3640,6 +3640,10 @@ var gameInterval = setInterval(function() {
                     playMusic("Dropton City")
                 } else if (curMap == droptonTown) {
                     playMusic("Dropton City") // changeme later when we make new music
+                } else if (curMap == cryoUnderground) {
+                    playMusic("Cryo Underground")
+                } else if (curMap == drownedRoom) {
+                    playMusic("Darkened Battle")
                 }
             }
             

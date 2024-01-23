@@ -74,6 +74,7 @@ var images = {
     stormedPhase1: initImage('sprites/enemies/stormed-phase-1.png'),
     stormedPhase2: initImage('sprites/enemies/stormed-phase-2.png'),
     drownedPhase1: initImage('sprites/enemies/drowned-phase-1.png'),
+    drownedHurt: initImage('sprites/enemies/drowned-hurt.png'),
 
     // Food
     apple: initImage('sprites/food/apple.png'),

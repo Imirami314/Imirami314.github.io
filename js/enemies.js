@@ -763,7 +763,7 @@ Drowned.prototype.draw = function() {
         if (this.phase == 1) {
             if (this.beingHit) {
                 ctx.save()
-                // ctx.drawImage(images.stormedPhase2, this.x - 75, this.y - 75, 150, 150)
+                ctx.drawImage(images.drownedHurt, this.x - 75, this.y - 75, 150, 150)
                 ctx.restore()
             } else {
                 ctx.drawImage(images.drownedPhase1, this.x - 75, this.y - 75, 150, 150)
@@ -826,6 +826,10 @@ Drowned.prototype.update = function() {
     // Amount x and y to move at a certain angle
     this.xFactor = Math.cos(this.playerAngle)
     this.yFactor = Math.sin(this.playerAngle)
+
+    if (!this.hitting) { // Stare at player
+        this.bodyAngle = this.playerAngle
+    }
 
     if (this.hitting) { // Attack animation
 
