@@ -177,6 +177,10 @@ function triangle(x1, y1, x2, y2, x3, y3, color) {
 	
 }
 
+function c(n) {
+    return n * 75 + 37.5
+}
+
 var eventDelays = []
 
 function eventsDelay(f1, f2, delay) { // Must occur in animation loop

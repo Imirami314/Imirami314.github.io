@@ -1513,7 +1513,11 @@ var encompassedLabyrinth = new Landscape([
     'S,_________________S',
     'SSSSSSSSSSSSSSSSSSSS',
 ], 10 * 75, 10 * 75, 252, 48, "Encompassed Labyrinth", function() {
-    lighting = 500
+    if (encompassedLabyrinth.bright) {
+        lighting = 1500
+    } else {
+        lighting = 500
+    }
 })
 
 var droptonWaterWear = new Landscape([

@@ -2792,10 +2792,9 @@ var interactives = [
     new Breezeway(stormedRoom, 12, 17, 13, 5),
 
     // Encompassed Labyrinth
-    new Toggle(encompassedLabyrinth, 16, 4, function() {
-
-    }, function() {
-
+    new LockToggle(encompassedLabyrinth, 16, 4, function() {
+        Screen.shake(5, 5)
+        encompassedLabyrinth.bright = true
     }),
 
     // Dropton City
@@ -3531,15 +3530,13 @@ var suspensiaInterval = setInterval(function() { // Makes suspensia spread into 
                             w.push([j, i])    
                         }
                     } catch (e) {
-                        console.log("Spread failed")
-                        console.log(i + 1)
+
                     }
                 }
             }
         }
     }
-    // console.log("Amount of water blocks infected: " + w.length)
-    console.log(w)
+    
     curMap.changeBlocks(w, '^')
 }, 1000)
 
