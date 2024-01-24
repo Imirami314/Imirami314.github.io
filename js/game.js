@@ -1013,6 +1013,10 @@ Player.prototype.getHit = function(dmg) {
     this.health -= dmg
 }
 
+Player.prototype.isDead = function() {
+    return (this.health <= 0);
+}
+
 Player.prototype.displayMap = function() {
     if (this.mapOn) {
         ctx.fillStyle = "rgb(0, 0, 0)"
@@ -3816,9 +3820,11 @@ var gameInterval = setInterval(function() {
                 }
             }
             
-            p.move()
-            p.collide()
-            p.hitEnemies()
+            if (!p.isDead()) {
+                p.move()
+                p.collide()
+                p.hitEnemies()
+            }
             
     
             // DEFAULT ON

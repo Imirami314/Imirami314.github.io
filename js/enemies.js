@@ -817,6 +817,7 @@ Drowned.prototype.update = function() {
     }
     this.cords.x = Math.floor(this.x / 75)
     this.cords.y = Math.floor(this.y / 75)
+    this.blockOn = curMap.getBlock(this.cords.x, this.cords.y)
     this.pdx = p.x - this.x
     this.pdy = p.y - this.y
     this.dirCoefX = (this.pdx / Math.abs(this.pdx)) // Gives 1 or -1 depending on whether the player is to the left or right
@@ -845,7 +846,10 @@ Drowned.prototype.update = function() {
     
 
     if (this.playerDist <= 200) {
-        this.hitting = true
+        setTimeout(() => {
+            this.hitting = true
+        }, 1500)
+
         // if (this.prepAngleCounter < Math.PI / 6) {
         //     this.bodyAngle += (Math.PI / 66.67) * (1 / 3)
         //     this.prepAngleCounter += (Math.PI / 66.67) * (1 / 3)
@@ -857,7 +861,10 @@ Drowned.prototype.update = function() {
 
     if (this.hitting) { // Attack animation
         if (this.ringOpacity > 0) {
-            this.ringSize += 25
+            this.ringSize += 20
+            if (Math.abs(this.ringSize / 2 - this.playerDist) <= 10) {
+                p.getHit(1)
+            }
             this.ringOpacity -= 2 / 66.67
         } else {
             this.hitting = false
@@ -873,6 +880,14 @@ Drowned.prototype.update = function() {
         // Stare at player
         this.bodyAngle = this.playerAngle
         this.bodyAngleChangeCounter  = 0
+    }
+
+    if (this.blockOn == '!') {
+        this.stunned = true
+    }
+
+    if (this.stunned) {
+        
     }
 }
 
