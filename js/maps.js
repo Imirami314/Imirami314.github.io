@@ -69,12 +69,13 @@ var images = {
     teleport: initImage('sprites/blocks/teleport.png'),
      
     // Enemies
-    splint: initImage('sprites/enemies/splint.png'),
-    splintHurt: initImage('sprites/enemies/splint-hurt.png'),
-    stormedPhase1: initImage('sprites/enemies/stormed-phase-1.png'),
-    stormedPhase2: initImage('sprites/enemies/stormed-phase-2.png'),
-    drownedPhase1: initImage('sprites/enemies/drowned-phase-1.png'),
-    drownedHurt: initImage('sprites/enemies/drowned-hurt.png'),
+    splint: initImage('sprites/enemies/splint/splint.png'),
+    splintHurt: initImage('sprites/enemies/splint/splint-hurt.png'),
+    stormedPhase1: initImage('sprites/enemies/stormed/stormed-phase-1.png'),
+    stormedPhase2: initImage('sprites/enemies/stormed/stormed-phase-2.png'),
+    drownedPhase1: initImage('sprites/enemies/drowned/drowned-phase-1.png'),
+    drownedHurt: initImage('sprites/enemies/drowned/drowned-hurt.png'),
+    drownedStunned: initImage('sprites/enemies/drowned/drowned-stunned.png'),
 
     // Food
     apple: initImage('sprites/food/apple.png'),
@@ -1514,7 +1515,7 @@ var encompassedLabyrinth = new Landscape([
     'SSSSSSSSSSSSSSSSSSSS',
 ], 10 * 75, 10 * 75, 252, 48, "Encompassed Labyrinth", function() {
     if (encompassedLabyrinth.bright) {
-        lighting = 1500
+        setLighting(2500)
     } else {
         lighting = 500
     }

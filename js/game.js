@@ -2798,7 +2798,9 @@ var interactives = [
     // Encompassed Labyrinth
     new LockToggle(encompassedLabyrinth, 16, 4, function() {
         Screen.shake(5, 5)
-        encompassedLabyrinth.bright = true
+        setTimeout(() => {
+            encompassedLabyrinth.bright = true
+        }, 5000)
     }),
 
     // Dropton City
@@ -3540,7 +3542,7 @@ var suspensiaInterval = setInterval(function() { // Makes suspensia spread into 
             }
         }
     }
-    
+
     curMap.changeBlocks(w, '^')
 }, 1000)
 

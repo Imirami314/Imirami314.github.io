@@ -744,6 +744,7 @@ function Drowned(map, spawnX, spawnY) {
     this.hittable = true // Can boss be hit
     this.beingHit = false // Is boss being hit
     this.hitRegistered = false // Keeps track of whether damage has already been dealth
+    this.preppingAttack = false
 
 	this.phase2Played = false // Check if phase 2 cutscene has played, Default false
 
@@ -778,7 +779,11 @@ Drowned.prototype.draw = function() {
                 ctx.lineWidth = 15
                 ctx.stroke()
 
-                ctx.drawImage(images.drownedPhase1, this.x - 75, this.y - 75, 150, 150)
+                if (!this.stunned) {
+                    ctx.drawImage(images.drownedPhase1, this.x - 75, this.y - 75, 150, 150)
+                } else {
+                    ctx.drawImage(images.drownedStunned, this.x - 75, this.y - 75, 150, 150)
+                }
             }
         }
 
@@ -789,8 +794,13 @@ Drowned.prototype.draw = function() {
             ellipse(this.x + 85, this.y, 40, 40, "rgb(0, 50, 150)") // Right arm
         } else {
             ctx.drawImage(images.drownedScythe, this.x, this.y - 150, 105, 150) // Scythe
-            ellipse(this.x - 85, this.y, 40, 40, "rgb(0, 50, 150)") // Left arm
-            ellipse(this.x + 85, this.y, 40, 40, "rgb(0, 50, 150)") // Right arm
+            if (!this.stunned) {
+                ellipse(this.x - 85, this.y, 40, 40, "rgb(0, 50, 150)") // Left arm
+                ellipse(this.x + 85, this.y, 40, 40, "rgb(0, 50, 150)") // Right arm
+            } else {
+                ellipse(this.x - 85, this.y, 40, 40, "rgb(150, 150, 150)") // Left arm
+                ellipse(this.x + 85, this.y, 40, 40, "rgb(150, 150, 150)") // Right arm
+            }
         }
         
         ctx.restore()
@@ -832,34 +842,39 @@ Drowned.prototype.update = function() {
     this.xFactor = Math.cos(this.playerAngle)
     this.yFactor = Math.sin(this.playerAngle)
 
-    if (!this.hitting && this.playerDist > 100) {
-        this.moving = true
-        if (Math.abs(this.pdx) >= 10) {
-            this.move(this.dirCoefX * this.speed, 0)
-        }
+    if (!this.stunned) {
+        if (!this.hitting && this.playerDist > 100 && !this.preppingAttack) {
+            this.moving = true
+            if (Math.abs(this.pdx) >= 10) {
+                this.move(this.dirCoefX * this.speed, 0)
+            }
 
-        if (Math.abs(this.pdy) >= 10) {
-            this.move(0, this.dirCoefY * this.speed)
+            if (Math.abs(this.pdy) >= 10) {
+                this.move(0, this.dirCoefY * this.speed)
+            }
+        }
+        
+        
+
+        if (this.playerDist <= 200) {
+            setTimeout(() => {
+                this.hitting = true
+                this.preppingAttack = false
+            }, 1500)
+
+            this.preppingAttack = true
+
+            // if (this.prepAngleCounter < Math.PI / 6) {
+            //     this.bodyAngle += (Math.PI / 66.67) * (1 / 3)
+            //     this.prepAngleCounter += (Math.PI / 66.67) * (1 / 3)
+            // } else {
+            //     this.hitting = true
+            //     this.prepAngleCounter = 0
+            // }
         }
     }
-    
-    
 
-    if (this.playerDist <= 200) {
-        setTimeout(() => {
-            this.hitting = true
-        }, 1500)
-
-        // if (this.prepAngleCounter < Math.PI / 6) {
-        //     this.bodyAngle += (Math.PI / 66.67) * (1 / 3)
-        //     this.prepAngleCounter += (Math.PI / 66.67) * (1 / 3)
-        // } else {
-        //     this.hitting = true
-        //     this.prepAngleCounter = 0
-        // }
-    }
-
-    if (this.hitting) { // Attack animation
+    if (this.hitting && !this.stunned) { // Attack animation
         if (this.ringOpacity > 0) {
             this.ringSize += 20
             if (Math.abs(this.ringSize / 2 - this.playerDist) <= 10) {
@@ -878,17 +893,26 @@ Drowned.prototype.update = function() {
         }
     } else {
         // Stare at player
-        this.bodyAngle = this.playerAngle
+        if (!this.stunned) {
+            this.bodyAngle = this.playerAngle
+        }
         this.bodyAngleChangeCounter  = 0
     }
 
     if (this.blockOn == '!') {
-        this.stunned = true
+        this.getStunned()
     }
+}
 
-    if (this.stunned) {
-        
-    }
+Drowned.prototype.getStunned = function() {
+    this.stunned = true
+    this.stun()
+}
+
+Drowned.prototype.stun = function() {
+    setTimeout(() => {
+        this.stunned = false
+    }, 3000)
 }
 
 Drowned.prototype.healthBar = function() {
