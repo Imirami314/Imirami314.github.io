@@ -661,16 +661,16 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
 					case "+": // Teleport
 						ctx.drawImage(images.teleport, j * this.blockSize, i * this.blockSize, 75, 75)
 						break
-                    case ";":
+                    case ";": // Stun
                         ctx.fillStyle = 'rgb(79, 13, 13)'
                         ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
                         break
-                    case 'I': 
+                    case 'I': // Ice Wall
                         // ctx.fillStyle = 'rgb(0, 255, 255)'
                         // ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
                         ctx.drawImage(images.iceWall, j * this.blockSize, i * this.blockSize, 75, 75)
                         break
-                    case 'i':
+                    case 'i': // Cracked Ice Wall
                         // ctx.fillStyle = 'rgb(0, 200, 200)'
                         // ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
                         ctx.drawImage(images.crackedIceWall, j * this.blockSize, i * this.blockSize, 75, 75)
@@ -821,7 +821,7 @@ Camera.prototype.move = function () {
 
 
 
-/*
+/* Map Legend
 Grass ,
 Water ~
 Stone _
@@ -845,6 +845,10 @@ Stone Wall $
 Concrete (light gray) c
 Snow *
 Speedy Snow z
+Suspensia ^
+Teleport +
+Ice Wall/Cracked Ice Wall I/i
+Stun ;
 */
 
 var mainMap = new Landscape([
