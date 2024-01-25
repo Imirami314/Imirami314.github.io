@@ -205,22 +205,22 @@ Raft.prototype.move = function() {
     if (this.hasPlayer) {
         if (keys.w) {
             p.dir = 'U'
-            this.velocity.y -= 3 / 66.67
+            this.velocity.y -= 4 / 66.67
         }
         
         if (keys.a) {
             p.dir = 'L'
-            this.velocity.x -= 3 / 66.67
+            this.velocity.x -= 4 / 66.67
         }
         
         if (keys.s) {
             p.dir = 'D'
-            this.velocity.y += 3 / 66.67
+            this.velocity.y += 4 / 66.67
         }
         
         if (keys.d) {
             p.dir = 'R'
-            this.velocity.x += 3 / 66.67
+            this.velocity.x += 4 / 66.67
         }
 
         // Put a cap on velocity so it doesn't get too fast

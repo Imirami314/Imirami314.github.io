@@ -15,6 +15,19 @@ function Enemy(map, spawnX, spawnY) {
     this.curAngle = 0
 }
 
+Enemy.prototype.on = function(x, y) {
+    if (Math.floor(this.x / 75) == x && Math.floor(this.y / 75) == y) {
+        return true
+    }
+
+    return false
+}
+
+Enemy.prototype.goTo = function(x, y) {
+    this.x = x
+    this.y = y
+}
+
 Enemy.prototype.move = function(dx, dy) {
     this.cords.x = Math.floor(this.x / 75)
     this.cords.y = Math.floor(this.y / 75)
@@ -717,16 +730,16 @@ function Drowned(map, spawnX, spawnY) {
     Enemy.call(this, map, spawnX, spawnY)
     this.name = "Drowned"
     this.damage = 10
-    this.maxHealth = 750
-    this.health = 750 // Default 750
-	this.animatedHealth = 750
+    this.maxHealth = 900
+    this.health = 450 // Default 900
+	this.animatedHealth = 450
 	
     this.cords = {
         x: 0,
         y: 0
     }
 
-    this.speed = 2
+    this.speed = 1.5
     this.moving = false
     
     this.playerDist = 69420 // Direct distance from player (I set it to 69420 because it gets updated anyway)
@@ -751,6 +764,9 @@ function Drowned(map, spawnX, spawnY) {
     this.prepAngleCounter = 0 // Angle for where Drowned pulls back for a bit before hitting
     this.ringSize = 10
     this.ringOpacity = 1
+
+    this.minions = []
+    this.minionSummonTimer = 1
 }
 
 Drowned.prototype = Object.create(Enemy.prototype)
@@ -785,21 +801,41 @@ Drowned.prototype.draw = function() {
                     ctx.drawImage(images.drownedStunned, this.x - 75, this.y - 75, 150, 150)
                 }
             }
+        } else if (this.phase == 2) {
+            if (this.beingHit) {
+                ctx.save()
+                ctx.drawImage(images.drownedHurt, this.x - 75, this.y - 75, 150, 150)
+                ctx.restore()
+            } else {
+                // Ring
+                ctx.beginPath()
+                ctx.strokeStyle = "rgba(0, 255, 255, " + this.ringOpacity + ")"
+                ctx.arc(this.x, this.y, this.ringSize / 2, 0, 2 * Math.PI, true)
+                ctx.lineWidth = 15
+                ctx.stroke()
+
+                ctx.drawImage(images.drownedPhase2, this.x - 75, this.y - 75, 150, 150)
+            }
         }
 
         if (this.hitting) {
             // Arms and weapons
             ctx.drawImage(images.drownedScythe, this.x, this.y - 150, 105, 150) // Scythe
-            ellipse(this.x - 85, this.y, 40, 40, "rgb(0, 50, 150)") // Left arm
-            ellipse(this.x + 85, this.y, 40, 40, "rgb(0, 50, 150)") // Right arm
-        } else {
-            ctx.drawImage(images.drownedScythe, this.x, this.y - 150, 105, 150) // Scythe
-            if (!this.stunned) {
+            if (this.phase == 1) {
                 ellipse(this.x - 85, this.y, 40, 40, "rgb(0, 50, 150)") // Left arm
                 ellipse(this.x + 85, this.y, 40, 40, "rgb(0, 50, 150)") // Right arm
-            } else {
-                ellipse(this.x - 85, this.y, 40, 40, "rgb(150, 150, 150)") // Left arm
-                ellipse(this.x + 85, this.y, 40, 40, "rgb(150, 150, 150)") // Right arm
+            } else if (this.phase == 2) {
+                ellipse(this.x - 85, this.y, 40, 40, "rgb(150, 50, 150)") // Left arm
+                ellipse(this.x + 85, this.y, 40, 40, "rgb(150, 50, 150)") // Right arm
+            }
+        } else {
+            ctx.drawImage(images.drownedScythe, this.x, this.y - 150, 105, 150) // Scythe
+            if (this.phase == 1) {
+                ellipse(this.x - 85, this.y, 40, 40, "rgb(0, 50, 150)") // Left arm
+                ellipse(this.x + 85, this.y, 40, 40, "rgb(0, 50, 150)") // Right arm
+            } else if (this.phase == 2) {
+                ellipse(this.x - 85, this.y, 40, 40, "rgb(150, 50, 150)") // Left arm
+                ellipse(this.x + 85, this.y, 40, 40, "rgb(150, 50, 150)") // Right arm
             }
         }
         
@@ -906,10 +942,73 @@ Drowned.prototype.phase1 = function() {
     if (this.blockOn == '!') {
         this.getStunned()
     }
+
+    if (this.health <= this.maxHealth / 2) {
+        this.phase = 2
+        this.goTo(ctr(15), ctr(15))
+
+        // Remove later when adding phase 2 cutscene
+        curMap.changeBlocks([
+            [14, 15],
+            [15, 14],
+            [16, 15],
+            [15, 16]
+        ], '~')
+    }
 }
 
 Drowned.prototype.phase2 = function() {
-    
+    if (this.on(15, 15) && this.minions.length < 5) {
+        this.minionSummonTimer -= 1 / 66.67
+        this.bodyAngle += Math.PI * 2 / 66.67
+        if (this.minionSummonTimer <= 0) {
+            this.summonMinion(this.x - 150 + this.minions.length * 75, this.y + 100)
+            this.minionSummonTimer = 1
+        }
+    } else {
+        this.bodyAngle = this.playerAngle
+        if (!this.hitting && this.playerDist > 100 && !this.preppingAttack) {
+            this.moving = true
+            if (Math.abs(this.pdx) >= 10) {
+                this.move(this.dirCoefX * this.speed, 0)
+            }
+
+            if (Math.abs(this.pdy) >= 10) {
+                this.move(0, this.dirCoefY * this.speed)
+            }
+        }
+
+        this.activateMinions()
+    }
+
+    this.displayMinions()
+}
+
+Drowned.prototype.summonMinion = function(x, y) {
+    // this.minions.push({
+    //     x: x,
+    //     y: y,
+    //     health: 50,
+    // })
+    var minion = new DrownedMinion(drownedRoom, x, y)
+    // this.minions.push(minion)
+    monsters.push(minion)
+}
+
+Drowned.prototype.displayMinions = function() {
+    this.minions.forEach((m) => {
+        if (m instanceof DrownedMinion) {
+            m.draw()
+        }
+    })
+}
+
+Drowned.prototype.activateMinions = function() {
+    this.minions.forEach((m) => {
+        if (m instanceof DrownedMinion) {
+            m.update()
+        }
+    })
 }
 
 Drowned.prototype.getStunned = function() {
@@ -1074,6 +1173,54 @@ Splint.prototype.hit = function() {
                 }
             }
         }
+    }
+}
+
+function DrownedMinion(map, spawnX, spawnY) { // Idk what to call it man
+    Enemy.call(this, map, spawnX, spawnY)
+    this.damage = 1
+    this.maxHealth = 50
+    this.health = 50
+    this.cords = {
+        x: 0,
+        y: 0
+    }
+    this.speed = 2
+    this.playerDist = 10000 // Gets updated by the draw method
+    
+    this.weaponPos = 0
+    this.hitting = false
+    this.isHit = false
+    this.hitCooldown = 1
+
+    this.dead = false
+}
+
+DrownedMinion.prototype = Object.create(Enemy.prototype)
+
+DrownedMinion.prototype.draw = function() {
+    ctx.save()
+    ctx.translate(this.x, this.y)
+    ctx.rotate(this.playerAngle)
+    ctx.translate(- (this.x), - (this.y))
+    ctx.drawImage(images.drownedMinion, this.x - 25, this.y - 27.25, 50, 54.5)
+    ctx.restore()
+}
+
+DrownedMinion.prototype.update = function() {
+    this.playerAngle = Math.atan2((p.y - this.y), (p.x - this.x)) + (Math.PI) / 2 // Gives angle direction of player
+    this.pdx = p.x - this.x
+    this.pdy = p.y - this.y
+    this.dirCoefX = (this.pdx / Math.abs(this.pdx)) // Gives 1 or -1 depending on whether the player is to the left or right
+    this.dirCoefY = (this.pdy / Math.abs(this.pdy)) // Gives 1 or -1 depending on whether the player is above or below
+    
+
+    if (Math.abs(this.pdx) >= 10) {
+        this.move(this.dirCoefX * this.speed, 0)
+    }
+
+    if (Math.abs(this.pdy) >= 10) {
+        this.move(0, this.dirCoefY * this.speed)
     }
 }
 

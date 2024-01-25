@@ -3407,7 +3407,7 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     curMap = drownedRoom
-    p.goTo(5 * 75, 7 * 75)
+    p.goTo(ctr(15), 23 * 75)
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.stormedsSword]
     p.equipped = [items.aquaLung]
     p.droptonDonations = 100

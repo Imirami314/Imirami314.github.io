@@ -74,8 +74,10 @@ var images = {
     stormedPhase1: initImage('sprites/enemies/stormed/stormed-phase-1.png'),
     stormedPhase2: initImage('sprites/enemies/stormed/stormed-phase-2.png'),
     drownedPhase1: initImage('sprites/enemies/drowned/drowned-phase-1.png'),
+    drownedPhase2: initImage('sprites/enemies/drowned/drowned-phase-2.png'),
     drownedHurt: initImage('sprites/enemies/drowned/drowned-hurt.png'),
     drownedStunned: initImage('sprites/enemies/drowned/drowned-stunned.png'),
+    drownedMinion: initImage('sprites/enemies/drowned/drowned-minion.png'),
 
     // Food
     apple: initImage('sprites/food/apple.png'),
@@ -296,7 +298,7 @@ var blocks = [
         id: "^",
         name: "suspensia",
         through: true,
-        dps: 75, // Default (change) 75
+        dps: 0, // Default (change) 75
         speed: 0.5 // Default (change) 0.5
     },
 	{
