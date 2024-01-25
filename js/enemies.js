@@ -382,8 +382,6 @@ Darkened.prototype.update = function() {
                 }
             }
         }
-        
-        // alert(this.spikes.length)
     }
 }
 
@@ -765,7 +763,8 @@ function Drowned(map, spawnX, spawnY) {
     this.ringSize = 10
     this.ringOpacity = 1
 
-    this.minions = []
+    this.hasSummonedMinions = false
+    this.numMinions = 0
     this.minionSummonTimer = 1
 }
 
@@ -958,14 +957,15 @@ Drowned.prototype.phase1 = function() {
 }
 
 Drowned.prototype.phase2 = function() {
-    if (this.on(15, 15) && this.minions.length < 5) {
+    if (this.on(15, 15) && this.numMinions < 5 && !this.hasSummonedMinions) {
         this.minionSummonTimer -= 1 / 66.67
         this.bodyAngle += Math.PI * 2 / 66.67
         if (this.minionSummonTimer <= 0) {
-            this.summonMinion(this.x - 150 + this.minions.length * 75, this.y + 100)
+            this.summonMinion(this.x - 150 + this.numMinions * 75, this.y + 100)
             this.minionSummonTimer = 1
         }
     } else {
+        this.hasSummonedMinions = true
         this.bodyAngle = this.playerAngle
         if (!this.hitting && this.playerDist > 100 && !this.preppingAttack) {
             this.moving = true
@@ -981,22 +981,17 @@ Drowned.prototype.phase2 = function() {
         this.activateMinions()
     }
 
-    this.displayMinions()
+    // this.displayMinions()
 }
 
 Drowned.prototype.summonMinion = function(x, y) {
-    // this.minions.push({
-    //     x: x,
-    //     y: y,
-    //     health: 50,
-    // })
-    var minion = new DrownedMinion(drownedRoom, x, y)
-    // this.minions.push(minion)
+    var minion = new DrownedMinion("Drowned Room", x, y)
     monsters.push(minion)
+    this.numMinions ++
 }
 
 Drowned.prototype.displayMinions = function() {
-    this.minions.forEach((m) => {
+    monsters.forEach((m) => {
         if (m instanceof DrownedMinion) {
             m.draw()
         }
@@ -1004,8 +999,8 @@ Drowned.prototype.displayMinions = function() {
 }
 
 Drowned.prototype.activateMinions = function() {
-    this.minions.forEach((m) => {
-        if (m instanceof DrownedMinion) {
+    monsters.forEach((m) => {
+        if (m instanceof DrownedMinion && !m.dead) {
             m.update()
         }
     })
@@ -1208,6 +1203,10 @@ DrownedMinion.prototype.draw = function() {
 }
 
 DrownedMinion.prototype.update = function() {
+    if (this.health <= 0) {
+        this.dead = true
+    }
+
     this.playerAngle = Math.atan2((p.y - this.y), (p.x - this.x)) + (Math.PI) / 2 // Gives angle direction of player
     this.pdx = p.x - this.x
     this.pdy = p.y - this.y
