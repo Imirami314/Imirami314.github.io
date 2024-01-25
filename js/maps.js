@@ -298,7 +298,7 @@ var blocks = [
         id: "^",
         name: "suspensia",
         through: true,
-        dps: 0, // Default (change) 75
+        dps: 75, // Default (change) 75
         speed: 0.5 // Default (change) 0.5
     },
 	{

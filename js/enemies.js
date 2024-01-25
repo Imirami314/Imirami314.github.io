@@ -729,8 +729,8 @@ function Drowned(map, spawnX, spawnY) {
     this.name = "Drowned"
     this.damage = 10
     this.maxHealth = 900
-    this.health = 450 // Default 900
-	this.animatedHealth = 450
+    this.health = 900 // Default 900
+	this.animatedHealth = 900
 	
     this.cords = {
         x: 0,
