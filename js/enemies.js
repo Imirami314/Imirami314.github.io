@@ -842,6 +842,14 @@ Drowned.prototype.update = function() {
     this.xFactor = Math.cos(this.playerAngle)
     this.yFactor = Math.sin(this.playerAngle)
 
+    if (this.phase == 1) {
+        this.phase1()
+    } else if (this.phase == 2) {
+        this.phase2()
+    }
+}
+
+Drowned.prototype.phase1 = function() {
     if (!this.stunned) {
         if (!this.hitting && this.playerDist > 100 && !this.preppingAttack) {
             this.moving = true
@@ -863,18 +871,10 @@ Drowned.prototype.update = function() {
             }, 1500)
 
             this.preppingAttack = true
-
-            // if (this.prepAngleCounter < Math.PI / 6) {
-            //     this.bodyAngle += (Math.PI / 66.67) * (1 / 3)
-            //     this.prepAngleCounter += (Math.PI / 66.67) * (1 / 3)
-            // } else {
-            //     this.hitting = true
-            //     this.prepAngleCounter = 0
-            // }
         }
     }
 
-    if (this.preppingAttack) {
+    if (this.preppingAttack) { // Slowly turn to indicate charging up attack
         this.bodyAngle += (Math.PI / 66.67) / 5
     }
 
@@ -906,6 +906,10 @@ Drowned.prototype.update = function() {
     if (this.blockOn == '!') {
         this.getStunned()
     }
+}
+
+Drowned.prototype.phase2 = function() {
+    
 }
 
 Drowned.prototype.getStunned = function() {
