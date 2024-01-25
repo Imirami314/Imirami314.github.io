@@ -856,7 +856,7 @@ Drowned.prototype.update = function() {
         
         
 
-        if (this.playerDist <= 200) {
+        if (this.playerDist <= 200 && !this.preppingAttack) {
             setTimeout(() => {
                 this.hitting = true
                 this.preppingAttack = false
@@ -872,6 +872,10 @@ Drowned.prototype.update = function() {
             //     this.prepAngleCounter = 0
             // }
         }
+    }
+
+    if (this.preppingAttack) {
+        this.bodyAngle += (Math.PI / 66.67) / 5
     }
 
     if (this.hitting && !this.stunned) { // Attack animation
@@ -893,7 +897,7 @@ Drowned.prototype.update = function() {
         }
     } else {
         // Stare at player
-        if (!this.stunned) {
+        if (!this.stunned && !this.preppingAttack) {
             this.bodyAngle = this.playerAngle
         }
         this.bodyAngleChangeCounter  = 0
