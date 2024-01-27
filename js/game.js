@@ -3778,6 +3778,11 @@ var gameInterval = setInterval(function() {
                         mainMap.changeBlock(257, 29, 'z')
                         alerts.push(new GameAlert(258, 29, ["SEGREME DNIW FO RETSAM WEN A SA SKAERB LLAW EHT"], mainMap, "SIGN"))
                     })
+                } else if (curMap == drownedRoom) {
+                    Screen.fadeOut(0.005, function() {
+                        curMap = abandonedChannel
+                        p.goTo(ctr(47), ctr(19))
+                    })
                 }
             }
         

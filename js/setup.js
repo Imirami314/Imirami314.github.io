@@ -189,11 +189,7 @@ function eventsDelay(f1, f2, delay) { // Must occur in animation loop
 
 function entityDistance(entity1, entity2) {
     if (!!entity1.x && !!entity1.y && !!entity2.x && !!entity2.y) {
-        if (entity1.map == entity2.map) {
-            return Math.hypot((entity1.x - entity2.x), (entity1.y - entity2.y))
-        } else {
-            return 214783648
-        }
+        return Math.hypot((entity1.x - entity2.x), (entity1.y - entity2.y))
     }
 }
 

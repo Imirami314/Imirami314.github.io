@@ -772,8 +772,8 @@ function Drowned(map, spawnX, spawnY) {
     this.name = "Drowned"
     this.damage = 10
     this.maxHealth = 900
-    this.health = 450 // Default 900
-	this.animatedHealth = 450
+    this.health = 900 // Default 900
+	this.animatedHealth = 900
 	
     this.cords = {
         x: 0,
@@ -799,6 +799,7 @@ function Drowned(map, spawnX, spawnY) {
     this.beingHit = false // Is boss being hit
     this.hitRegistered = false // Keeps track of whether damage has already been dealth
     this.preppingAttack = false
+    this.ringDamage = 1
 
 	this.phase2Played = false // Check if phase 2 cutscene has played, Default false
 
@@ -960,7 +961,7 @@ Drowned.prototype.phase1 = function() {
         if (this.ringOpacity > 0) {
             this.ringSize += 20
             if (Math.abs(this.ringSize / 2 - this.playerDist) <= 10) {
-                p.getHit(1)
+                p.getHit(this.ringDamage)
             }
             this.ringOpacity -= 2 / 66.67
         } else {
@@ -987,6 +988,7 @@ Drowned.prototype.phase1 = function() {
 
     if (this.health <= this.maxHealth / 2) {
         this.phase = 2
+        this.ringDamge = 1.15
         this.goTo(ctr(15), ctr(15))
 
         // Remove later when adding phase 2 cutscene
@@ -1043,7 +1045,7 @@ Drowned.prototype.phase2 = function() {
             if (this.ringOpacity > 0) {
                 this.ringSize += 20
                 if (Math.abs(this.ringSize / 2 - this.playerDist) <= 10) {
-                    p.getHit(1)
+                    p.getHit(this.ringDamage)
                 }
                 this.ringOpacity -= 2 / 66.67
             } else {
@@ -1257,7 +1259,7 @@ Splint.prototype.hit = function() {
 
 function DrownedMinion(map, spawnX, spawnY) { // Idk what to call it man
     Enemy.call(this, map, spawnX, spawnY)
-    this.damage = 1
+    this.damage = 0.5
     this.maxHealth = 50
     this.health = 50
     this.cords = {
