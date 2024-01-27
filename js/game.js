@@ -3406,6 +3406,7 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
+    dev = true
     curMap = drownedRoom
     p.goTo(ctr(15), 23 * 75)
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.stormedsSword]
@@ -3698,6 +3699,12 @@ var gameInterval = setInterval(function() {
             for (var i in monsters) {
                 if (curMap.name == monsters[i].map && !monsters[i].dead) {
                     monsters[i].draw(p)
+
+                    curMap.grid.setWalkableAt(
+                        monsters[i].cords.x,
+                        monsters[i].cords.y,
+                        false
+                    )
                 }
             }
         

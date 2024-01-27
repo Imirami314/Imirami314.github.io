@@ -438,7 +438,7 @@ Landscape.prototype.loadGrid = function() {
     for (var i = 0; i < this.arr.length; i ++) {
         for (var j = 0; j < this.arr[i].length; j ++) {
             var c = this.arr[i].charAt(j)
-            if (!getBlockById(c).through || getBlockById(c).dps > 0) {
+            if (!getBlockById(c).through || getBlockById(c) == '!') {
                 this.grid.setWalkableAt(j, i, false)
             }
         }
@@ -2013,7 +2013,7 @@ cryoUnderground.solve = function() {
 
 var drownedRoom = new Landscape([
     'WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW',
-    'W~~~~~~~~~~~~~~~~~~~~~~~~~~~~~W',
+    'W~~~~~~~~~~~~~W^W~~~~~~~~~~~~~W',
     'W~.......~~~.......~~~.......~W',
     'W~.~~~~~.~~~.~~~~~.~~~.~~~~~.~W',
     'W~.~~~~~.~~~.~~~~~.~~~.~~~~~.~W',

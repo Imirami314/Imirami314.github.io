@@ -47,6 +47,20 @@ Enemy.prototype.isStuck = function(dx, dy) {
     }
 }
 
+Enemy.prototype.getClosestMonster = function() {
+    var closest;
+    var closestDist = 2147483648
+
+    monsters.forEach((m) => {
+        if (entityDistance(this, m) < closestDist && m != this) {
+            closestDist = entityDistance(this, m)
+            closest = m
+        }
+    })
+
+    return closest
+}
+
 // Does not work - fix
 /*Enemy.prototype.updatePath = function() {
     var monsterOnBlock = false
@@ -82,6 +96,11 @@ Enemy.prototype.pathToHome = function() {
     return finder.findPath(this.cords.x, this.cords.y, Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75), curMapGrid)
 }
 
+Enemy.prototype.pathTo = function(cordX, cordY) {
+    var curMapGrid = curMap.grid.clone() // You need to clone before using findPath
+    return finder.findPath(this.cords.x, this.cords.y, cordX, cordY, curMapGrid)
+}
+
 Enemy.prototype.movePathToPlayer = function() {
     if (!!this.pathToPlayer()[1] && this.pathToPlayer().length > 0) {
         this.nextPoint = {
@@ -110,6 +129,29 @@ Enemy.prototype.movePathToHome = function() {
         this.nextPoint = {
             x: this.pathToHome()[1][0],
             y: this.pathToHome()[1][1]
+        }
+
+        var dx = this.nextPoint.x - this.cords.x
+        var dy = this.nextPoint.y - this.cords.y
+        
+        this.moveAngle = Math.atan2(dy, dx)
+        if (Math.abs(this.moveAngle - this.curAngle) > 0.1) {
+            if (this.curAngle < this.moveAngle) {
+                this.curAngle += 0.2
+            } else {
+                this.curAngle -= 0.2
+            }
+        }
+        
+        this.move(dx * 3, dy * 3)
+    }
+}
+
+Enemy.prototype.movePathTo = function(cordX, cordY) {
+    if (!!this.pathTo(cordX, cordY)[1] && this.pathTo(cordX, cordY).length > 0) {
+        this.nextPoint = {
+            x: this.pathTo(cordX, cordY)[1][0],
+            y: this.pathTo(cordX, cordY)[1][1]
         }
 
         var dx = this.nextPoint.x - this.cords.x
@@ -729,8 +771,8 @@ function Drowned(map, spawnX, spawnY) {
     this.name = "Drowned"
     this.damage = 10
     this.maxHealth = 900
-    this.health = 900 // Default 900
-	this.animatedHealth = 900
+    this.health = 450 // Default 900
+	this.animatedHealth = 450
 	
     this.cords = {
         x: 0,
@@ -948,6 +990,8 @@ Drowned.prototype.phase1 = function() {
 
         // Remove later when adding phase 2 cutscene
         curMap.changeBlocks([
+            [14, 1],
+            [16, 1],
             [14, 15],
             [15, 14],
             [16, 15],
@@ -957,16 +1001,15 @@ Drowned.prototype.phase1 = function() {
 }
 
 Drowned.prototype.phase2 = function() {
-    if (this.on(15, 15) && this.numMinions < 5 && !this.hasSummonedMinions) {
+    if (this.on(15, 15) && this.numMinions < 3 && !this.hasSummonedMinions) {
         this.minionSummonTimer -= 1 / 66.67
         this.bodyAngle += Math.PI * 2 / 66.67
         if (this.minionSummonTimer <= 0) {
-            this.summonMinion(this.x - 150 + this.numMinions * 75, this.y + 100)
+            this.summonMinion(this.x - 150 + this.numMinions * 150, this.y + 100)
             this.minionSummonTimer = 1
         }
     } else {
         this.hasSummonedMinions = true
-        this.bodyAngle = this.playerAngle
         if (!this.hitting && this.playerDist > 100 && !this.preppingAttack) {
             this.moving = true
             if (Math.abs(this.pdx) >= 10) {
@@ -979,6 +1022,46 @@ Drowned.prototype.phase2 = function() {
         }
 
         this.activateMinions()
+
+
+        // Attacks that Drowned itself does (just like phase 1)
+        if (this.playerDist <= 200 && !this.preppingAttack) {
+            setTimeout(() => {
+                this.hitting = true
+                this.preppingAttack = false
+            }, 1500)
+
+            this.preppingAttack = true
+        }
+
+        if (this.preppingAttack) { // Slowly turn to indicate charging up attack
+            this.bodyAngle += (Math.PI / 66.67) / 5
+        }
+    
+        if (this.hitting && !this.stunned) { // Attack animation
+            if (this.ringOpacity > 0) {
+                this.ringSize += 20
+                if (Math.abs(this.ringSize / 2 - this.playerDist) <= 10) {
+                    p.getHit(1)
+                }
+                this.ringOpacity -= 2 / 66.67
+            } else {
+                this.hitting = false
+                this.ringSize = 10
+                this.ringOpacity = 1
+            }
+    
+            if (this.bodyAngleChangeCounter < Math.PI * 2) {
+                this.bodyAngle -= Math.PI / 10
+                this.bodyAngleChangeCounter += Math.PI / 10
+            }
+        } else {
+            // Stare at player
+            if (!this.stunned && !this.preppingAttack) {
+                this.bodyAngle = this.playerAngle
+            }
+            this.bodyAngleChangeCounter  = 0
+        }
     }
 
     // this.displayMinions()
@@ -1187,6 +1270,7 @@ function DrownedMinion(map, spawnX, spawnY) { // Idk what to call it man
     this.hitting = false
     this.isHit = false
     this.hitCooldown = 1
+    this.armAngle = 0
 
     this.dead = false
 }
@@ -1199,6 +1283,13 @@ DrownedMinion.prototype.draw = function() {
     ctx.rotate(this.playerAngle)
     ctx.translate(- (this.x), - (this.y))
     ctx.drawImage(images.drownedMinion, this.x - 25, this.y - 27.25, 50, 54.5)
+
+    // Arms
+    ellipse(this.x - 25, this.y, 12.5, 12.5, "rgb(90, 30, 90)")
+    ctx.translate(this.x , this.y)
+    ctx.rotate(this.armAngle)
+    ctx.translate(- this.x, - this.y)
+    ellipse(this.x + 25, this.y, 12.5, 12.5, "rgb(90, 30, 90)") // Right arm (hitting arm)
     ctx.restore()
 }
 
@@ -1208,18 +1299,44 @@ DrownedMinion.prototype.update = function() {
     }
 
     this.playerAngle = Math.atan2((p.y - this.y), (p.x - this.x)) + (Math.PI) / 2 // Gives angle direction of player
+    this.playerDist = Math.hypot((p.x - this.x), (p.y - this.y))
     this.pdx = p.x - this.x
     this.pdy = p.y - this.y
     this.dirCoefX = (this.pdx / Math.abs(this.pdx)) // Gives 1 or -1 depending on whether the player is to the left or right
     this.dirCoefY = (this.pdy / Math.abs(this.pdy)) // Gives 1 or -1 depending on whether the player is above or below
+    this.hitCooldown -= 1 / (66 + 2 / 3)
     
+    if (!this.hitting) {
+        if (Math.abs(this.pdx) >= 10) {
+            this.move(this.dirCoefX * this.speed, 0)
+        }
 
-    if (Math.abs(this.pdx) >= 10) {
-        this.move(this.dirCoefX * this.speed, 0)
+        if (Math.abs(this.pdy) >= 10) {
+            this.move(0, this.dirCoefY * this.speed)
+        }
     }
 
-    if (Math.abs(this.pdy) >= 10) {
-        this.move(0, this.dirCoefY * this.speed)
+    if (this.playerDist <= 100) {
+        this.hit()
+    } else {
+        this.hitting = false
+    }
+}
+
+DrownedMinion.prototype.hit = function() {
+    if (this.hitCooldown <= 0) {
+        this.hitting = true
+        if (this.hitting) {
+            this.armAngle -= Math.PI / 28
+            if (this.armAngle <= - Math.PI * 2 / 3) {
+                this.hitting = false
+                this.hitCooldown = 1
+                this.armAngle = 0
+                if (this.playerDist <= 100) { // Check if player is still in range to get hit
+                    p.getHit(0.5)
+                }
+            }
+        }
     }
 }
 
