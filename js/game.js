@@ -3699,12 +3699,6 @@ var gameInterval = setInterval(function() {
             for (var i in monsters) {
                 if (curMap.name == monsters[i].map && !monsters[i].dead) {
                     monsters[i].draw(p)
-
-                    curMap.grid.setWalkableAt(
-                        monsters[i].cords.x,
-                        monsters[i].cords.y,
-                        false
-                    )
                 }
             }
         

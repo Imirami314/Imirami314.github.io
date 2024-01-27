@@ -86,65 +86,66 @@ Enemy.prototype.getClosestMonster = function() {
     }
 }*/
 
-Enemy.prototype.pathToPlayer = function() {
-    var curMapGrid = curMap.grid.clone() // You need to clone before using findPath
-    return finder.findPath(this.cords.x, this.cords.y, p.cords.x, p.cords.y, curMapGrid)
-}
-
-Enemy.prototype.pathToHome = function() {
-    var curMapGrid = curMap.grid.clone() // You need to clone before using findPath
-    return finder.findPath(this.cords.x, this.cords.y, Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75), curMapGrid)
-}
-
 Enemy.prototype.pathTo = function(cordX, cordY) {
     var curMapGrid = curMap.grid.clone() // You need to clone before using findPath
     return finder.findPath(this.cords.x, this.cords.y, cordX, cordY, curMapGrid)
 }
 
+Enemy.prototype.pathToPlayer = function() {
+    return this.pathTo(p.cords.x, p.cords.y)
+}
+
+Enemy.prototype.pathToHome = function() {
+    return this.pathTo(Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75))
+}
+
 Enemy.prototype.movePathToPlayer = function() {
-    if (!!this.pathToPlayer()[1] && this.pathToPlayer().length > 0) {
-        this.nextPoint = {
-            x: this.pathToPlayer()[1][0],
-            y: this.pathToPlayer()[1][1]
-        }
+    // if (!!this.pathToPlayer()[1] && this.pathToPlayer().length > 0) {
+    //     this.nextPoint = {
+    //         x: this.pathToPlayer()[1][0],
+    //         y: this.pathToPlayer()[1][1]
+    //     }
 
-        var dx = this.nextPoint.x - this.cords.x
-        var dy = this.nextPoint.y - this.cords.y
+    //     var dx = this.nextPoint.x - this.cords.x
+    //     var dy = this.nextPoint.y - this.cords.y
         
-        this.moveAngle = Math.atan2(dy, dx)
-        if (Math.abs(this.moveAngle - this.curAngle) > 0.1) {
-            if (this.curAngle < this.moveAngle) {
-                this.curAngle += 0.2
-            } else {
-                this.curAngle -= 0.2
-            }
-        }
+    //     this.moveAngle = Math.atan2(dy, dx)
+    //     if (Math.abs(this.moveAngle - this.curAngle) > 0.1) {
+    //         if (this.curAngle < this.moveAngle) {
+    //             this.curAngle += 0.2
+    //         } else {
+    //             this.curAngle -= 0.2
+    //         }
+    //     }
 
-        this.move(dx * 3, dy * 3)
-    }
+    //     this.move(dx * 3, dy * 3)
+    // }
+
+    this.movePathTo(p.cords.x, p.cords.y)
 }
 
 Enemy.prototype.movePathToHome = function() {
-    if (!!this.pathToHome()[1] && this.pathToHome().length > 0) {
-        this.nextPoint = {
-            x: this.pathToHome()[1][0],
-            y: this.pathToHome()[1][1]
-        }
+    // if (!!this.pathToHome()[1] && this.pathToHome().length > 0) {
+    //     this.nextPoint = {
+    //         x: this.pathToHome()[1][0],
+    //         y: this.pathToHome()[1][1]
+    //     }
 
-        var dx = this.nextPoint.x - this.cords.x
-        var dy = this.nextPoint.y - this.cords.y
+    //     var dx = this.nextPoint.x - this.cords.x
+    //     var dy = this.nextPoint.y - this.cords.y
         
-        this.moveAngle = Math.atan2(dy, dx)
-        if (Math.abs(this.moveAngle - this.curAngle) > 0.1) {
-            if (this.curAngle < this.moveAngle) {
-                this.curAngle += 0.2
-            } else {
-                this.curAngle -= 0.2
-            }
-        }
+    //     this.moveAngle = Math.atan2(dy, dx)
+    //     if (Math.abs(this.moveAngle - this.curAngle) > 0.1) {
+    //         if (this.curAngle < this.moveAngle) {
+    //             this.curAngle += 0.2
+    //         } else {
+    //             this.curAngle -= 0.2
+    //         }
+    //     }
         
-        this.move(dx * 3, dy * 3)
-    }
+    //     this.move(dx * 3, dy * 3)
+    // }
+    this.movePathTo(Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75))
 }
 
 Enemy.prototype.movePathTo = function(cordX, cordY) {
