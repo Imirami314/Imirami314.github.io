@@ -851,7 +851,11 @@ Drowned.prototype.draw = function() {
             } else {
                 // Ring
                 ctx.beginPath()
-                ctx.strokeStyle = "rgba(0, 255, 255, " + this.ringOpacity + ")"
+                if (this.phase == 1) {
+                    ctx.strokeStyle = "rgba(0, 255, 255, " + this.ringOpacity + ")"
+                } else if (this.phase == 2){
+                    ctx.strokeStyle = "rgba(191, 61, 217, " + this.ringOpacity + ")"
+                }
                 ctx.arc(this.x, this.y, this.ringSize / 2, 0, 2 * Math.PI, true)
                 ctx.lineWidth = 15
                 ctx.stroke()
