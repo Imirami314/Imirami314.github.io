@@ -137,10 +137,10 @@ NPC.prototype.draw = function() {
             this.properties.skinColor = "rgb(255, 180, 180)"
             break
 		case "Wayne":
-			this.properties.skinColor = "rgb(125, 88, 40)"
             if (this.hasAquaLung) {
                 ellipse(this.x, this.y, 75, 75, "rgb(0, 255, 255, 0.4)")
             }
+			this.properties.skinColor = "rgb(125, 88, 40)"
 			break
         case "Smith the Blacksmith":
 			this.properties.skinColor = "rgb(115, 75, 75)"

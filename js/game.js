@@ -395,11 +395,10 @@ Player.prototype.draw = function() {
         }
     }
 
-     // Body
-    ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
-
     switch (this.dir) {
         case "D":
+            // Body
+            ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
 
             // Eyes
             ellipse((width / 2) - 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
@@ -426,6 +425,9 @@ Player.prototype.draw = function() {
             ctx.restore()
             break
         case "R":
+            // Body
+            ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
+
             // Eyes
             ellipse((width / 2) + 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
 
@@ -458,6 +460,9 @@ Player.prototype.draw = function() {
             }
             ctx.restore()
 
+            // Body
+            ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
+
             // Eyes
             ellipse((width / 2) - 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
             break
@@ -478,6 +483,8 @@ Player.prototype.draw = function() {
             }
             ctx.restore()
 
+            // Body
+            ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
             // No eyes are shown in the up position
     }
     
@@ -1109,6 +1116,8 @@ Player.prototype.displayInventory = function() {
             var item = this.inventory[i]
             var mouseItemDist = Math.hypot(mouseX - ((i % 8) * 100 + width / 8 + 100), mouseY - (height / 8 + 100 * (Math.floor(i / 8) + 1)))
             if (this.itemsMode == 'ALL') {
+                ellipse((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1), 90, 90, "rgba(0, 0, 255, 0.5)")
+
                 item.draw((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1))
                 if (mouseItemDist < 50) {
                     ctx.fillStyle = "rgb(0, 0, 0)"
@@ -1116,7 +1125,7 @@ Player.prototype.displayInventory = function() {
                     ctx.font = "50px serif"
                     ctx.fillText(item.name, width / 2, height / 2 + 120)
                     ctx.font = "15px serif"
-                    fillTextMultiLine(item.desc + "\nDamage: " + item.damage, width / 2, height / 2 + 150)
+                    fillTextMultiLine((item.desc || "") + "\nDamage: " + (item.damage || 0), width / 2, height / 2 + 150)
                     if (mouseIsDown) {
                         this.weaponIndex = i
                     }
@@ -2203,10 +2212,10 @@ var creek = new NPC(226 * 75 + 37.5, 87 * 75, "Creek", mainMap, 'U', [
 }, "after")
 
 var coral = new NPC(5 * 75 + 37.5, 2 * 75, "Coral", coralsWatercolors, 'D', [
-    "Hello, I'm coral, and welcome to my watercolor shop.",
+    "Hello, I'm Coral, and welcome to my watercolor shop.",
     "You know the big lake outside? I paint pictures of it so you can\nappreciate it when you're away!",
     "If you'd like to buy a painting, please let me know!"
-], "coral reef changeme", function () {
+], "A skilled artist who loves to paint lakes, especially Dropton Lake.", function() {
     ShopMenu.open(coralShop)
 }, "after")
 
@@ -3121,7 +3130,7 @@ var models = {
     }
 }
 
-var p = new Player(2 * 75, 2 * 75, npcs) // default x = width / 2, y = height / 2 helloooh
+const p = new Player(2 * 75, 2 * 75, npcs) // default x = width / 2, y = height / 2 helloooh
 
 var c121_31 = new Chest(mainMap, 121, 31, [
     items.heatHandle
@@ -3406,75 +3415,55 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    curMap = drownedRoom
-    p.goTo(ctr(15), 23 * 75)
-    p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.stormedsSword]
+    dev = true
+    curMap = mainMap
+    p.goTo(ctr(270), 78 * 75)
+    p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword]
     p.equipped = [items.aquaLung]
-    p.droptonDonations = 100
-    p.resistances.cold = 1
 
-    lonzo.map = mainMap
-    lonzo.x = 158 * 75 + 37.5
-    lonzo.y = 50 * 75 + 37.5
-    lonzo.dir = "L"
-    lonzo.lines = [
-        "Hello! It's been a while!",
-        "I don't know how, but the wind cleared up here\nso it's safe!",
-        "Anyway, did you succeed?",
-        "...",
-        "(*)B@V#BV@#(*(BVP&WBY(*(BU!!!!!!1",
-        "Sorry about that. I can't believe you actually\ndid it!",
-        "By the way, Queen Alaska asked me to go find you.\nShe wanted to talk to you.",
-        "I'm sure she'll be delighted to hear that you were successful!"
+    abandonedChannel.changeBlock(47, 17, '_')
+    abandonedChannel.changeBlock(47, 16, 'O')
+
+    ariel.goTo(ctr(16), ctr(33))
+    ariel.lines = [
+        "Hi again!",
+        "The earthquakes seem to have stopped!\nI don't know how, but I'm not complaining!"
     ]
 
-    queenAlaska.x = 253 * 75 + 37.5
-    queenAlaska.y = 23 * 75 + 37.5
-    queenAlaska.dir = 'R'
-    queenAlaska.map = mainMap
-    queenAlaska.lines = [
-        "Wow, it's really you! You came back!",
-        "How did it go?",
-        "...",
-        "Wow! Interesting. I guess that beast was the reason that Windy Wastelands\nwas so, well... windy.",
-        "I'm very impressed that you took down that hideous monster.\nThat was no easy feat.",
-        "I was just taking with Dr. Qua, a dear friend of mine, from Dropton Town.\nHe says that his city has been experiencing very odd conditions lately.",
-        "Their city has been experiencing significant currents,\nsome of which have even destroyed buildings.",
-        "I appreciate what you have done for us very much, but I'm afraid\nthe problems aren't over just yet.",
-        "But since you have done so much for our village, I'm not leaving you empty-handed.",
-        "I would like to give you my crown.\nIt has been passed down through many generations.",
-        "This isn't any ordinary crown. This crown has very special powers that lets you\nmake the floor below you freeze, creating Speedy Snow!",
-        "I know that you'll find this much more useful than me.",
-        "Again, thank you for everything you've done.",
-        "Now, Do you mind speaking with Dr. Qua?\nHe has some important intel."
+    walter.goTo(ctr(35), ctr(10))
+    walter.dir = 'D'
+    walter.lines = [
+        "The water's gotten so much calmer and more peaceful...",
+        "Still, I'm curious where all that shaking was coming from.",
+        "I wish President Wells would just tell everybody!"
     ]
-    queenAlaska.action = function() {
-        p.giveItem(items.queenAlaskasCrown, true)
-    }
-    queenAlaska.actionLine = "after"
 
-    drQua.x = 256 * 75 + 37.5
-    drQua.y = 23 * 75 + 37.5
+    presidentWells.map = droptonCity
+    presidentWells.goTo(ctr(42), ctr(3))
+    presidentWells.dir = 'D'
+    presidentWells.lines = [
+        "For the last time, I'm not letting people--huh?",
+        "Woah! It's you! You're back!",
+        "And in one piece too! I'll be honest, I was\nstarting to doubt that you'd show up.",
+        "I presume you are the reason the shaking stopped.\nI want to hear all about how you did it!",
+        "Also, some character named Wayne showed up and\nclaimed he knew you. He said he had to tell you something\nimportant.",
+        "I don't know if he's telling the truth or not, but\nhe should be waiting in the Dropton Tunnels."
+    ]
 
-    p.questPoint = {
-        x: 253,
-        y: 23
-    }
-    
+    presidentWells.clearAction()
 
-    mainMap.changeBlock(257, 29, 'z')
-    alerts.push(new GameAlert(258, 29, ["SEGREME DNIW FO RETSAM WEN A SA SKAERB LLAW EHT"], mainMap, "SIGN"))
-
-    // Abandoned channel is open
-    // Open weird crack thing at the top of Dropton City
-    droptonCity.changeBlock(36, 0, 'S')
-    droptonCity.changeBlock(36, 2, 'S')
-    droptonCity.changeBlock(37, 3, 'S')
-    droptonCity.changeBlock(39, 1, 'O')
-    droptonCity.changeBlock(41, 1, '_')
-    droptonCity.changeBlock(41, 2, '_')
-    droptonCity.changeBlock(42, 2, '_')
-    droptonCity.changeBlock(41, 3, 'S')
+    wayne.map = droptonTunnels
+    wayne.hasAquaLung = true
+    wayne.goTo(ctr(28), ctr(23))
+    wayne.lines = [
+        "Aye matey! It's good to see you again!",
+        "I hear you've been working with President Wells to help Dropton!",
+        "The old man sent for me to get you. He's still in Chard Town\nand he has some important information that you 'need to know'.",
+        "It is a long journey though. I would know, I had to\ntravel for such a long time to get here!",
+        "There are rumors about a way to teleport around the island.\nApparently some anonymous man from Chard Town has found a way.",
+        "Noobdy knows who he is, so he's known as The Wanderer.",
+        "Anyway, I'd head over to Chard Town and talk to the Old Man. Otherwise,\nit means I came all this way for nothing!"
+    ]
 }
 
 startPos()
@@ -3742,7 +3731,7 @@ var gameInterval = setInterval(function() {
                         curMap = abandonedChannel
                         p.goTo(ctr(47), ctr(19))
 
-                        // Add code to give the player Drowned's Scythe
+                        p.giveItem(items.drownedsScythe, true)
 
                         abandonedChannel.changeBlock(47, 17, '_')
                         abandonedChannel.changeBlock(47, 16, 'O')

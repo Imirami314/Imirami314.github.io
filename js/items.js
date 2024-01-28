@@ -60,6 +60,16 @@ var items = {
     }, function() {
         p.swordAttack()
     }, "A mystical sword you obtained after defeating Stormed, Master of Wind.", "WEAPONS"),
+    drownedsScythe: new Item("Drowned's Scythe", 35, function(x, y) {
+        ctx.save()
+        ctx.translate(x + 45, y + 45)
+        ctx.rotate(Math.PI / 2) // Flip image vertically
+        ctx.translate(- 45 - x, - 45 - y)
+        ctx.drawImage(images.drownedScythe, x - 30, y + 45, 33.3, 90)
+        ctx.restore()
+    }, function() {
+        p.swordAttack()
+    }, "A mystical scythe you obtained after defeating Drowned, Master of Water.", "WEAPONS"),
     oldMansGlasses: new Item("Old Man's Glasses", 0, function(x, y) {
             ctx.drawImage(images.oldMansGlasses, x - 15, y - 15, 35, 15)
         }, function(p) {
@@ -200,7 +210,6 @@ var items = {
     }, function(p) {
         p.swordAttack()
     }, "A weak, simple sword that is easy to use.", "WEAPONS"),
-    
 	auraOfWarmth: new Item("Aura of Warmth", 0,
     function(x, y) {
         ctx.drawImage(images.auraOfWarmth, x - 20, y - 20, 40, 40)
@@ -314,7 +323,8 @@ var items = {
                 p.inventory.splice(i, 1)
             }
         }
-    }, "A painting by Coral featuring the stunning lake of Dropton.", "MISC")
+    }, "A painting by Coral featuring the stunning lake of Dropton.", "MISC"),
+
 } // Puzzle Keys are not included as they vary depending on where they came from
 
 function Food(name, img, health, secs) {

@@ -1249,7 +1249,7 @@ Splint.prototype.hit = function() {
     if (this.hitCooldown <= 0) {
         this.hitting = true
         if (this.hitting) {
-            this.weaponPos -= Math.PI / 28
+            this.weaponPos -= Math.PI / 45
             if (this.weaponPos <= -1 * Math.PI) {
                 this.hitting = false
                 this.hitCooldown = 1
