@@ -428,8 +428,11 @@ function Landscape(arr, enterX, enterY, doorX, doorY, name, solve) {
             }
         }
     }
+
+    Landscape.all.push(this)
 }
 
+Landscape.all = []
 
 /**
  * Loads the grid for pathfinding
@@ -2049,54 +2052,7 @@ var drownedRoom = new Landscape([
 
 }) // Don't enter from mainMap
 
-
-var areas = [
-    imperilledPrison,
-    johnHouse,
-    ronHouse,
-    mikeHouse,
-    leyHouse,
-    sarahsShop,
-	lyraHouse,
-    carolHouse,
-    rowansDojo,
-    smithHouse,
-    rickHouse,
-    confoundedCave,
-    darkenedRoom,
-    glaciaCenter,
-    trailShop,
-    lonzoHouse,
-    queensCastle,
-    galeCave,
-    howlerHollow,
-    stormedRoom,
-    encompassedLabyrinth,
-    droptonWaterWear,
-    coralsWatercolors,
-    droptonTunnels,
-    droptonCity,
-    droptonHall,
-    droptonTown,
-    droptonResearchFacility,
-    lochNessHouse,
-    abandonedChannel,
-    cryoUnderground,
-    drownedRoom
-]
-
-// for (var l in areas) {
-//     var a = areas[l]
-//     for (var i = 0; i < a.arr.length; i ++) {
-//         for (var j = 0; j < a.arr[i].length; j ++) {
-//             var c = this.arr[i].charAt(j)
-//             console.log(c)
-//             if (c == ",") {
-                
-//             }
-//         }
-//     }
-// }
+var areas = Landscape.all
 
 function areaSearchByCords(x, y) {
     for (var i in areas) {

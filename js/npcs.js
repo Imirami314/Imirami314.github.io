@@ -13,14 +13,11 @@
  */
 function NPC(x, y, name, map, dir, lines, desc, action, actionLine, shopMenu) {
     Entity.call(this, map, x, y)
-    // this.x = x
-    // this.y = y
 	
     this.cords = {}
     this.speed = 4 // Default 4 or 5
 	this.dir = dir
 	this.name = name
-    // this.map = map
 	
     this.lines = lines
 	this.desc = desc
@@ -80,7 +77,11 @@ function NPC(x, y, name, map, dir, lines, desc, action, actionLine, shopMenu) {
     }
 
     this.shopMenu = shopMenu
+
+    NPC.all.push(this)
 }
+
+NPC.all = []
 
 NPC.prototype = Object.create(Entity.prototype)
 
