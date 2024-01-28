@@ -1666,6 +1666,8 @@ var droptonCity = new Landscape([
 ], null, null, null, null, "Dropton City")
 
 droptonCity.solve = function() {
+    setLighting(4500)
+
     // Make Officer Marina give you the full pass once you reach the required amount
     if (p.droptonDonations >= 250) {
         marina.lines = [
@@ -1847,10 +1849,10 @@ abandonedChannel.solve = function() {
     lighting = 2000
     // Places to go
     if (keys.space) {
-        // Exit
-        if (p.on(9, 9)) {
+        // Exits to Dropton City
+        if (p.on(9, 9) || p.on(47, 16)) {
             curMap = droptonCity
-            p.goTo(39 * 75 + 37.5, 2 * 75 + 5)
+            p.goTo(ctr(39), 2 * 75 + 5)
         }
     }
     if (!cascadeEntered && cascade.map != abandonedChannel) {

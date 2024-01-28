@@ -3406,7 +3406,6 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = true
     curMap = drownedRoom
     p.goTo(ctr(15), 23 * 75)
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.stormedsSword]
@@ -3467,24 +3466,6 @@ function startPos() {
     alerts.push(new GameAlert(258, 29, ["SEGREME DNIW FO RETSAM WEN A SA SKAERB LLAW EHT"], mainMap, "SIGN"))
 
     // Abandoned channel is open
-    presidentWells.x = 23 * 75 + 37.5
-    presidentWells.y = 35 * 75 + 37.5
-    presidentWells.map = droptonCity
-
-    presidentWells.lines = [
-        "Did you hear? Something is happening on the north side of Dropton City!",
-        "I haven't got a clue what it is, but everybody seems to be rushing to\nsee it!",
-        "So, I'm going to need your help. Can you head over there\nand see what's going on?",
-        "I'll check the rest of the city, and make sure that everybody is okay.",
-        "Good luck!",
-    ]
-    presidentWells.actionLine = 1
-    presidentWells.action = function() {
-        cameraStart(39 * 75, 4 * 75 + 37.5, 15, "NPC", {
-            lineStop: 3
-        })
-    }
-
     // Open weird crack thing at the top of Dropton City
     droptonCity.changeBlock(36, 0, 'S')
     droptonCity.changeBlock(36, 2, 'S')
@@ -3494,28 +3475,6 @@ function startPos() {
     droptonCity.changeBlock(41, 2, '_')
     droptonCity.changeBlock(42, 2, '_')
     droptonCity.changeBlock(41, 3, 'S')
-    
-    // Change Ariel
-    ariel.x = 34 * 75 + 37.5
-    ariel.y = 2 * 75 + 37.5
-    ariel.dir = 'R'
-    ariel.lines = [
-        "What happened here?",
-        "This clump of rocks was formed the last time the ground shook like this.",
-        "But now it looks like it has opened up into some sort of cave!",
-        "I never realized that there was anything below Dropton City.",
-        "Hopefully something is done about it..."
-    ]
-
-    // Change Walter
-    walter.x = 45 * 75 + 37.5
-    walter.y = 2 * 75 + 37.5
-    walter.dir = 'L'
-    walter.lines = [
-        "Oh my goodness...",
-        "I've never seen this before! There's a cave underneath Dropton!",
-        "The president better get over here quick!"
-    ]
 }
 
 startPos()
@@ -3782,6 +3741,52 @@ var gameInterval = setInterval(function() {
                     Screen.fadeOut(0.005, function() {
                         curMap = abandonedChannel
                         p.goTo(ctr(47), ctr(19))
+
+                        // Add code to give the player Drowned's Scythe
+
+                        abandonedChannel.changeBlock(47, 17, '_')
+                        abandonedChannel.changeBlock(47, 16, 'O')
+
+                        ariel.goTo(ctr(16), ctr(33))
+                        ariel.lines = [
+                            "Hi again!",
+                            "The earthquakes seem to have stopped!\nI don't know how, but I'm not complaining!"
+                        ]
+
+                        walter.goTo(ctr(35), ctr(10))
+                        walter.dir = 'D'
+                        walter.lines = [
+                            "The water's gotten so much calmer and more peaceful...",
+                            "Still, I'm curious where all that shaking was coming from.",
+                            "I wish President Wells would just tell everybody!"
+                        ]
+
+                        presidentWells.map = droptonCity
+                        presidentWells.goTo(ctr(42), ctr(3))
+                        presidentWells.dir = 'D'
+                        presidentWells.lines = [
+                            "For the last time, I'm not letting people--huh?",
+                            "Woah! It's you! You're back!",
+                            "And in one piece too! I'll be honest, I was\nstarting to doubt that you'd show up.",
+                            "I presume you are the reason the shaking stopped.\nI want to hear all about how you did it!",
+                            "Also, some character named Wayne showed up and\nclaimed he knew you. He said he had to tell you something\nimportant.",
+                            "I don't know if he's telling the truth or not, but\nhe should be waiting in the Dropton Tunnels."
+                        ]
+
+                        presidentWells.clearAction()
+
+                        wayne.map = droptonTunnels
+                        wayne.hasAquaLung = true
+                        wayne.goTo(ctr(28), ctr(23))
+                        wayne.lines = [
+                            "Aye matey! It's good to see you again!",
+                            "I hear you've been working with President Wells to help Dropton!",
+                            "The old man sent for me to get you. He's still in Chard Town\nand he has some important information that you 'need to know'.",
+                            "It is a long journey though. I would know, I had to\ntravel for such a long time to get here!",
+                            "There are rumors about a way to teleport around the island.\nApparently some anonymous man from Chard Town has found a way.",
+                            "Noobdy knows who he is, so he's known as The Wanderer.",
+                            "Anyway, I'd head over to Chard Town and talk to the Old Man. Otherwise,\nit means I came all this way for nothing!"
+                        ]
                     })
                 }
             }

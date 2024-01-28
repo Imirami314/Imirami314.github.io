@@ -138,6 +138,9 @@ NPC.prototype.draw = function() {
             break
 		case "Wayne":
 			this.properties.skinColor = "rgb(125, 88, 40)"
+            if (this.hasAquaLung) {
+                ellipse(this.x, this.y, 75, 75, "rgb(0, 255, 255, 0.4)")
+            }
 			break
         case "Smith the Blacksmith":
 			this.properties.skinColor = "rgb(115, 75, 75)"
@@ -394,6 +397,11 @@ NPC.prototype.move = function(pos) {
     }
 }
 
+NPC.prototype.goTo = function(x, y) {
+    this.x = x
+    this.y = y
+}
+
 NPC.prototype.runPath = function(path) {
     if (typeof path[this.pathPoint] == "object") {
         if (this.cords.x == path[this.pathPoint][0] && this.cords.y == path[this.pathPoint][1]) { // Checks to make sure npc is on the right block
@@ -438,4 +446,12 @@ NPC.prototype.drawFace = function(faceX, faceY) {
 	ellipse(faceX, faceY, 50, 50, this.properties.skinColor)
 	ellipse(faceX - 10, faceY - 10, 10, 10, this.properties.eyeColor)
     ellipse(faceX + 10, faceY - 10, 10, 10, this.properties.eyeColor)
+}
+
+/**
+ * Clears action function and sets actionLine to "after"
+ */
+NPC.prototype.clearAction = function() {
+    this.action = function() {}
+    this.actionLine = "after"
 }
