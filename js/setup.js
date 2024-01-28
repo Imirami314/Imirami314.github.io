@@ -344,6 +344,33 @@ function mouseRect(x, y, w, h) {
     return (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h)
 }
 
+class Cooldown {
+    constructor(time) {
+        this.maxTime = time
+        this.time = this.maxTime
+    }
+
+    run() {
+        this.time -= 1 / 66.67
+    }
+
+    ended() {
+        return this.time <= 0
+    }
+
+    onEnd(action) {
+        if (this.ended()) {
+            action()
+        }
+
+        this.reset()
+    }
+
+    reset() {
+        this.time = this.maxTime
+    }
+}
+
 var playing = false
 
 var curMusic;

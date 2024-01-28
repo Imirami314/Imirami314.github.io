@@ -193,7 +193,8 @@ function Player(x, y, npcs) {
     this.moving = false
 
     this.curEating = []
-    this.eatCooldown = 0.5
+    // this.eatCooldown = 0.5
+    this.eatCooldown = new Cooldown(0.5)
 
     this.inventoryDisplay = false
     this.newItemAlert = false
@@ -266,7 +267,7 @@ Player.prototype.draw = function() {
     this.particle = new Particle(this.blockOn.name, this.dir)
     this.doorCooldown -= 1 / (66 + (2 / 3))
     this.hitCooldown -= 1 / (66 + (2 / 3))
-    this.eatCooldown -= 1 / (66 + (2 / 3))
+    this.eatCooldown.run()
     this.cords.x = Math.floor(this.x / 75) // This regulates it, because you don't start at x-cord 0, you start at x-cord 10
     this.cords.y = Math.floor(this.y / 75) // Same thing as x-cord, but height / 2 is about half of width / 2, so it's 5 instead of 10
 
@@ -945,7 +946,7 @@ Player.prototype.removeItem = function(item) {
 }
 
 Player.prototype.eat = function(foodItem) {
-    if (this.eatCooldown <= 0) {
+    this.eatCooldown.onEnd(() => {
         for (var i in this.inventory) {
             var f = this.inventory[i]
             if (f == foodItem) {
@@ -954,15 +955,7 @@ Player.prototype.eat = function(foodItem) {
                 break
             }
         }
-
-        this.eatCooldown = 0.5
-    }
-
-    // this.eatInterval = setInterval(() => {
-    //     if (this.curEating.length > 0) {
-            
-    //     }
-    // }, 1000)
+    })
 }
 
 Player.prototype.hitEnemies = function() {
@@ -3775,6 +3768,15 @@ var gameInterval = setInterval(function() {
                             "There are rumors about a way to teleport around the island.\nApparently some anonymous man from Chard Town has found a way.",
                             "Noobdy knows who he is, so he's known as The Wanderer.",
                             "Anyway, I'd head over to Chard Town and talk to the Old Man. Otherwise,\nit means I came all this way for nothing!"
+                        ]
+
+                        oldMan.goTo(ctr(28), ctr(16))
+                        oldMan.lines = [
+                            "Oh, you're back!",
+                            "I assume Wayne made it to Dropton City, then.",
+                            "...",
+                            "And you destroyed the corrupted Drowned? That's amazing!",
+                            "That means that the next location for you to head to is [insert location]."
                         ]
                     })
                 }
