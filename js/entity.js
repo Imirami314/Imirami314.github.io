@@ -9,7 +9,11 @@ function Entity(map, x, y) {
         x: Math.floor(this.x / 75),
         y: Math.floor(this.y / 75),
     }
+
+    Entity.all.push(this)
 }
+
+Entity.all = []
 
 Entity.prototype.goTo = function(x, y) {
     this.x = x
