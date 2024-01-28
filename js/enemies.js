@@ -1,13 +1,5 @@
 function Enemy(map, spawnX, spawnY) {
-    this.map = map
-    this.spawnX = spawnX
-    this.spawnY = spawnY
-    this.x = spawnX
-    this.y = spawnY
-    this.cords = {
-        x: this.x,
-        y: this.y
-    }
+    Entity.call(this, map, spawnX, spawnY)
 
     this.foundPath = false
     this.lastPath = []
@@ -15,29 +7,15 @@ function Enemy(map, spawnX, spawnY) {
     this.curAngle = 0
 }
 
-Enemy.prototype.on = function(x, y) {
-    if (Math.floor(this.x / 75) == x && Math.floor(this.y / 75) == y) {
-        return true
-    }
+Enemy.prototype = Object.create(Entity.prototype)
 
-    return false
-}
-
-Enemy.prototype.goTo = function(x, y) {
-    this.x = x
-    this.y = y
-}
-
-Enemy.prototype.move = function(dx, dy) {
-    this.cords.x = Math.floor(this.x / 75)
-    this.cords.y = Math.floor(this.y / 75)
-    if (getBlockById(curMap.getBlock(Math.floor((this.x) / 75), Math.floor((this.y + dy) / 75))).through) {
-        this.y += dy
-    }
-    
-    if (getBlockById(curMap.getBlock(Math.floor((this.x + dx) / 75), Math.floor((this.y) / 75))).through) {
-        this.x += dx
-    }
+Enemy.prototype.updatePlayerInfo = function() {
+    this.pdx = p.x - this.x
+    this.pdy = p.y - this.y
+    this.dirCoefX = (this.pdx / Math.abs(this.pdx)) // Gives 1 or -1 depending on whether the player is to the left or right
+    this.dirCoefY = (this.pdy / Math.abs(this.pdy)) // Gives 1 or -1 depending on whether the player is above or below
+    this.playerDist = Math.hypot((p.x - this.x), (p.y - this.y))
+    this.playerAngle = Math.atan2((p.y - this.y), (p.x - this.x)) + (Math.PI) / 2 // Gives angle direction of player
 }
 
 Enemy.prototype.isStuck = function(dx, dy) {
@@ -61,31 +39,6 @@ Enemy.prototype.getClosestMonster = function() {
     return closest
 }
 
-// Does not work - fix
-/*Enemy.prototype.updatePath = function() {
-    var monsterOnBlock = false
-    for (var i = 0; i < mainMap.arr.length; i ++) {
-        for (var j = 0; j < mainMap.arr[i].length; j ++) {
-            var c = mainMap.arr[i].charAt(j)
-            for (var m in monsters) {
-                
-                if (monsters[m].cords.x == j && monsters[m].cords.y == i &&
-                    (monsters[m].cords.x != this.cords.x && monsters[m].cords.y != this.cords.y)) {
-                    monsterOnBlock = true
-                    break
-                }
-            }
-            if (getBlockById(c).through) {
-                if (monsterOnBlock) {
-                    mainMap.grid.setWalkableAt(j, i, false)
-                }  else {
-                    mainMap.grid.setWalkableAt(j, i, true)
-                }
-            }
-        }
-    }
-}*/
-
 Enemy.prototype.pathTo = function(cordX, cordY) {
     var curMapGrid = curMap.grid.clone() // You need to clone before using findPath
     return finder.findPath(this.cords.x, this.cords.y, cordX, cordY, curMapGrid)
@@ -100,51 +53,10 @@ Enemy.prototype.pathToHome = function() {
 }
 
 Enemy.prototype.movePathToPlayer = function() {
-    // if (!!this.pathToPlayer()[1] && this.pathToPlayer().length > 0) {
-    //     this.nextPoint = {
-    //         x: this.pathToPlayer()[1][0],
-    //         y: this.pathToPlayer()[1][1]
-    //     }
-
-    //     var dx = this.nextPoint.x - this.cords.x
-    //     var dy = this.nextPoint.y - this.cords.y
-        
-    //     this.moveAngle = Math.atan2(dy, dx)
-    //     if (Math.abs(this.moveAngle - this.curAngle) > 0.1) {
-    //         if (this.curAngle < this.moveAngle) {
-    //             this.curAngle += 0.2
-    //         } else {
-    //             this.curAngle -= 0.2
-    //         }
-    //     }
-
-    //     this.move(dx * 3, dy * 3)
-    // }
-
     this.movePathTo(p.cords.x, p.cords.y)
 }
 
 Enemy.prototype.movePathToHome = function() {
-    // if (!!this.pathToHome()[1] && this.pathToHome().length > 0) {
-    //     this.nextPoint = {
-    //         x: this.pathToHome()[1][0],
-    //         y: this.pathToHome()[1][1]
-    //     }
-
-    //     var dx = this.nextPoint.x - this.cords.x
-    //     var dy = this.nextPoint.y - this.cords.y
-        
-    //     this.moveAngle = Math.atan2(dy, dx)
-    //     if (Math.abs(this.moveAngle - this.curAngle) > 0.1) {
-    //         if (this.curAngle < this.moveAngle) {
-    //             this.curAngle += 0.2
-    //         } else {
-    //             this.curAngle -= 0.2
-    //         }
-    //     }
-        
-    //     this.move(dx * 3, dy * 3)
-    // }
     this.movePathTo(Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75))
 }
 
@@ -180,11 +92,7 @@ function Darkened(map, spawnX, spawnY) {
     this.maxHealth = 250
     this.health = 250 // Default 250
 	this.animatedHealth = 250
-	
-    this.cords = {
-        x: 0,
-        y: 0
-    }
+
     this.speed = 2
     this.playerDist = 100000 // idk man
     this.playerAngle = 0
@@ -458,11 +366,7 @@ function Stormed(map, spawnX, spawnY) {
     this.maxHealth = 500
     this.health = 500 // Default 500
 	this.animatedHealth = 500
-	
-    this.cords = {
-        x: 0,
-        y: 0
-    }
+
     this.speed = 2
     this.moving = false
     
@@ -774,11 +678,6 @@ function Drowned(map, spawnX, spawnY) {
     this.maxHealth = 900
     this.health = 900 // Default 900
 	this.animatedHealth = 900
-	
-    this.cords = {
-        x: 0,
-        y: 0
-    }
 
     this.speed = 1.5
     this.moving = false
@@ -1138,10 +1037,6 @@ function Splint(map, spawnX, spawnY) { // Idk what to call it man
     this.damage = 2
     this.maxHealth = 20
     this.health = 20
-    this.cords = {
-        x: 0,
-        y: 0
-    }
     this.speed = 1
     this.playerDist = 10000 // Gets updated by the draw method
     this.agroDist = 500
@@ -1160,11 +1055,6 @@ function Splint(map, spawnX, spawnY) { // Idk what to call it man
 Splint.prototype = Object.create(Enemy.prototype)
 
 Splint.prototype.draw = function(p) {
-    this.cords.x = Math.floor(this.x / 75)
-    this.cords.y = Math.floor(this.y / 75)
-    this.playerDist = Math.hypot((p.x - this.x), (p.y - this.y))
-    this.playerAngle = Math.atan2((p.y - this.y), (p.x - this.x))
-
     if (this.health <= 0 && !this.dead) {
         this.dead = true
         var trillsChanceGenerator = Math.random() 
@@ -1266,10 +1156,7 @@ function DrownedMinion(map, spawnX, spawnY) { // Idk what to call it man
     this.damage = 0.5
     this.maxHealth = 50
     this.health = 50
-    this.cords = {
-        x: 0,
-        y: 0
-    }
+
     this.speed = 2
     this.playerDist = 10000 // Gets updated by the draw method
     

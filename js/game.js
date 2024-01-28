@@ -161,8 +161,10 @@ var bossDoors = [
 ]
 
 function Player(x, y, npcs) {
-    this.x = x
-    this.y = y
+    Entity.call(this, curMap, x, y)
+    // this.x = x
+    // this.y = y
+
     this.buildMode = false
     this.buildable = false
     this.bb = ','
@@ -261,6 +263,8 @@ function Player(x, y, npcs) {
     this.curAlert = ""
     
 }
+
+Player.prototype = Object.create(Entity.prototype)
 
 Player.prototype.draw = function() {
     this.mapSwitchTimer -= 1 / (66 + (2 / 3))
@@ -505,8 +509,6 @@ Player.prototype.draw = function() {
     }
 }
 
-// full of chub
-
 Player.prototype.HUD = function() {
     ctx.strokeStyle = "rgba(0, 0, 0, 0)"
     ctx.fillStyle = "rgb(255, 255, 255)"
@@ -597,11 +599,11 @@ Player.prototype.HUD = function() {
  * @param {number} x The x coordinate to check
  * @param {number} y The y coordinate to check
  */
-Player.prototype.on = function(x, y) {
-    if (this.cords.x == x && this.cords.y == y) {
-        return true
-    }
-}
+// Player.prototype.on = function(x, y) {
+//     if (this.cords.x == x && this.cords.y == y) {
+//         return true
+//     }
+// }
 
 
 /**
@@ -612,23 +614,23 @@ Player.prototype.on = function(x, y) {
  * @param {*} y2 Y Block coordinate of bottom right corner
  * @returns 
  */
-Player.prototype.in = function(x1, y1, x2, y2) {
-    if (this.cords.x >= x1 && this.cords.x <= x2 && this.cords.y >= y1 && this.cords.y <= y2) {
-        return true
-    }
+// Player.prototype.in = function(x1, y1, x2, y2) {
+//     if (this.cords.x >= x1 && this.cords.x <= x2 && this.cords.y >= y1 && this.cords.y <= y2) {
+//         return true
+//     }
 
-    return false
-}
+//     return false
+// }
 
 /**
  * Teleports player to specific location
  * @param {*} x IN PIXELS
  * @param {*} y IN PIXELS
  */
-Player.prototype.goTo = function(x, y) {
-    this.x = x
-    this.y = y
-}
+// Player.prototype.goTo = function(x, y) {
+//     this.x = x
+//     this.y = y
+// }
 
 Player.prototype.move = function() {
     if (!!this.inventory[this.weaponIndex]) {
@@ -1013,9 +1015,9 @@ Player.prototype.getHit = function(dmg) {
     this.health -= dmg
 }
 
-Player.prototype.isDead = function() {
-    return (this.health <= 0);
-}
+// Player.prototype.isDead = function() {
+//     return (this.health <= 0);
+// }
 
 Player.prototype.displayMap = function() {
     if (this.mapOn) {
@@ -3640,6 +3642,7 @@ var gameInterval = setInterval(function() {
             for (var i in monsters) {
                 if (curMap.name == monsters[i].map && !monsters[i].dead) {
                     monsters[i].draw(p)
+                    monsters[i].updatePlayerInfo()
                 }
             }
         
@@ -3722,8 +3725,8 @@ var gameInterval = setInterval(function() {
                 } else if (curMap == drownedRoom) {
                     Screen.fadeOut(0.005, function() {
                         curMap = abandonedChannel
+                        p.inRaft = false
                         p.goTo(ctr(47), ctr(19))
-
                         p.giveItem(items.drownedsScythe, true)
 
                         abandonedChannel.changeBlock(47, 17, '_')

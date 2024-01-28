@@ -12,14 +12,15 @@
  * @param {*} shopMenu Insert shopMenu instance (brings up shop menu when dialogue finishes)
  */
 function NPC(x, y, name, map, dir, lines, desc, action, actionLine, shopMenu) {
-    this.x = x
-    this.y = y
+    Entity.call(this, map, x, y)
+    // this.x = x
+    // this.y = y
 	
     this.cords = {}
     this.speed = 4 // Default 4 or 5
 	this.dir = dir
 	this.name = name
-    this.map = map
+    // this.map = map
 	
     this.lines = lines
 	this.desc = desc
@@ -80,6 +81,8 @@ function NPC(x, y, name, map, dir, lines, desc, action, actionLine, shopMenu) {
 
     this.shopMenu = shopMenu
 }
+
+NPC.prototype = Object.create(Entity.prototype)
 
 NPC.prototype.draw = function() {
 	if (scene == "CAMERA") {
@@ -397,10 +400,10 @@ NPC.prototype.move = function(pos) {
     }
 }
 
-NPC.prototype.goTo = function(x, y) {
-    this.x = x
-    this.y = y
-}
+// NPC.prototype.goTo = function(x, y) {
+//     this.x = x
+//     this.y = y
+// }
 
 NPC.prototype.runPath = function(path) {
     if (typeof path[this.pathPoint] == "object") {
