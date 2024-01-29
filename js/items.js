@@ -221,7 +221,7 @@ var items = {
         p.resistances.cold = 1
     }, "A mysterious item that grants you a moderate resistance to cold places, but at the cost of some of your speed.", "MISC"),
 	
-	speedySnowPath: new Item("Speedy Snow Path", 0,
+	shovel: new Item("Shovel", 0,
     function(x, y) {
         ctx.drawImage(images.speedySnowPath, x - 100, y - 56.3, 200, 112.6)
     },

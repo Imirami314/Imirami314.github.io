@@ -13,11 +13,15 @@ One Time
 - Fix queens crown speedy snow sound
 - Fix raft alert
 - Think of theme for the 4th main quest city/town and add it to the Old Man's lines
+- Fix wanderer's lines
+- Fix shovel image
+- Fix breakable blocks
 
 Continuous
 - Add sound effects for all blocks
 - Create region variables for all regions of the main map
 - Make text fonts/sizes consistent
+- Add shovelable (idk) blocks
 
 Textures and images we need:
 - Wood (not wall)

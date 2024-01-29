@@ -378,28 +378,6 @@ Player.prototype.draw = function() {
         this.stunParticles.draw()
     }
 
-	// Path making
-    if (!!this.weapon) {
-        if (this.weapon.name == "Speedy Snow Path") {
-        this.buildMode = true
-        this.bb = 'z'
-        } else {
-        this.buildMode = false
-        }
-        if (this.buildMode) {
-            if (this.blockOn.name == "trail" || this.blockOn.name == "water" || this.blockOn.name == "lava" || this.blockOn.name == "speedy snow" || this.blockOn.name == "door" || this.blockOn.name == "lock" || curMap != mainMap) {
-            this.buildable = false
-            ctx.fillStyle = "rgb(255, 0, 0, 0.5)"
-            ctx.fillRect(p.cords.x * 75 - p.x + width / 2 , p.cords.y * 75 - p.y + height / 2, 75, 75)
-                
-            } else {
-            this.buildable = true
-            ctx.fillStyle = "rgb(0, 255, 0, 0.5)"
-            ctx.fillRect(p.cords.x * 75 - p.x + width / 2 , p.cords.y * 75 - p.y + height / 2, 75, 75)
-            }
-        }
-    }
-
     switch (this.dir) {
         case "D":
             // Body
@@ -744,13 +722,6 @@ Player.prototype.move = function() {
         }
     }
 
-    if (this.buildMode && this.buildable) {
-        if (keys.b) {
-            curMap.changeBlock(this.cords.x, this.cords.y, this.bb) // DEFAULT GONE
-			keys.b = false
-        }
-    }
-
     if (Math.abs(curMap.temperature) > this.resistances.cold) {
         this.health -= (1 / 66.6667) * (Math.abs(curMap.temperature) - this.resistances.cold)
     }
@@ -1018,6 +989,40 @@ Player.prototype.getHit = function(dmg) {
 // Player.prototype.isDead = function() {
 //     return (this.health <= 0);
 // }
+Player.prototype.shovel = function () {
+    // Path making
+    if (!!this.weapon) {
+        if (this.weapon.name == "Shovel") {
+            this.buildMode = true
+            this.bb = '-'
+        } else {
+            this.buildMode = false
+        }
+        if (this.buildMode) {
+            if (this.blockOn.name == "shovel") {
+                
+                this.buildable = true
+                ctx.fillStyle = "rgb(0, 255, 0, 0.5)"
+                ctx.fillRect(p.cords.x * 75 - p.x + width / 2 , p.cords.y * 75 - p.y + height / 2, 75, 75)
+                
+            } else {
+                this.buildable = false
+                ctx.fillStyle = "rgb(255, 0, 0, 0.5)"
+                ctx.fillRect(p.cords.x * 75 - p.x + width / 2 , p.cords.y * 75 - p.y + height / 2, 75, 75)
+            
+            }
+        }
+        
+    }
+    
+
+    if (this.buildMode && this.buildable) {
+        if (keys.b) {
+            curMap.changeBlock(this.cords.x, this.cords.y, this.bb) // DEFAULT GONE
+			keys.b = false
+        }
+    }
+}
 
 Player.prototype.displayMap = function() {
     if (this.mapOn) {
@@ -1298,6 +1303,12 @@ Player.prototype.spearAttack = function() {
             this.spearAttackState = 1
             this.spearHitting = false
         }
+    }
+}
+
+Player.prototype.breakBlock = function () {
+    if (p.weapon.damage > 0 && this.hitting) {
+       
     }
 }
 
@@ -2128,7 +2139,7 @@ var mildred = new NPC(6 * 75 + 37.5, 2 * 75 + 37.5, "Mildred", trailShop, "D", [
 		mildred.lines = ["Glad you're back! Let me open up the shop menu for you."]	
 		mildred.action = function() {
 	        ShopMenu.open([
-	        	{item: items.speedySnowPath, cost: 12, amount: 2}
+	        	{item: items.shovel, cost: 12, amount: 2}
 	 		])
 	    }
 	    mildred.actionLine = "after"
@@ -3790,7 +3801,7 @@ var gameInterval = setInterval(function() {
                     })
                 }
             }
-        
+            
             
         
             for (var i in bosses) {
@@ -3799,7 +3810,10 @@ var gameInterval = setInterval(function() {
                     bosses[i].healthBar()
                 }
             }
-    
+
+            if (!p.isDead()) {
+                p.shovel()
+            }
             // if (curBoss != 0) {
             //     curBoss.update()
             //     curBoss.healthBar()
@@ -3837,6 +3851,8 @@ var gameInterval = setInterval(function() {
                 p.move()
                 p.collide()
                 p.hitEnemies()
+
+                p.breakBlock()
             }
             
     
