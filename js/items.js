@@ -246,6 +246,14 @@ var items = {
 		if (p.cords.x == 26 && p.cords.y == 55 && curMap == mainMap) {
 			scene = "BEAM UNLOCKED"
 			cutsceneFrame = 0
+            theWanderersRiddles.finish()
+            // FINISH LINES
+            theWanderer.lines = ["Wow, what a sight to see. This water is incredible!"]
+            theWanderer.action = function () {
+                alerts.push(new GameAlert(205, 24, ["In this minuscule forest with puddles and trees,\nComplete the pattern and set the next step free."], mainMap, "WANDERER SIGN"))
+                theWanderer.action = function () {} // clears action   
+            }
+            theWanderer.actionLine = "after"
 		}
 	}, "Search for the place with no beginnings and no ends...", "MISC"),
 	aquaLung: new Item("Aqua Lung", 0, function(x, y) {

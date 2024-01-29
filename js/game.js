@@ -1442,6 +1442,11 @@ GameAlert.prototype.draw = function () {
             ctx.fillRect(this.x * 75 - p.x + width / 2 + 27.5, this.y * 75 - p.y + height / 2 + 10, 20, 65)
             ctx.fillStyle = "rgb(102, 74, 50)"
             ctx.fillRect(this.x * 75 - p.x + width / 2 + 5, this.y * 75 - p.y + height / 2 + 5, 65, 35)
+        } else if (this.type == "WANDERER SIGN") {
+            ctx.fillStyle = "rgb(51, 37, 25)"
+            ctx.fillRect(this.x * 75 - p.x + width / 2 + 27.5, this.y * 75 - p.y + height / 2 + 10, 20, 65)
+            ctx.fillStyle = "rgb(31, 112, 242)"
+            ctx.fillRect(this.x * 75 - p.x + width / 2 + 5, this.y * 75 - p.y + height / 2 + 5, 65, 35)    
         }
     } 
 }
@@ -1554,7 +1559,7 @@ GameAlert.prototype.drawMessage = function () {
     
     if (p.cords.x == this.x && p.cords.y == this.y) {
         if (!this.showLines && curMap == this.map) {
-            if (this.type == "SIGN") {
+            if (this.type == "SIGN" || this.type == "WANDERER SIGN") {
                 ctx.fillStyle = "rgb(255, 255, 255)"
                 ctx.roundRect(width / 2 - 75, height / 2 + 50, 150, 50, 10)
                 ctx.fill()
@@ -3903,7 +3908,7 @@ var gameInterval = setInterval(function() {
             for (var i in curMissions) {
                 curMissions[i].alert("NEW")
 
-                if (!!curMissions[i].solve) {
+                if (!!curMissions[i].solve && !curMissions[i].complete) {
                     curMissions[i].solve()
                 }
 
