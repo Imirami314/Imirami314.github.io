@@ -39,11 +39,6 @@ Enemy.prototype.getClosestMonster = function() {
     return closest
 }
 
-Enemy.prototype.pathTo = function(cordX, cordY) {
-    var curMapGrid = curMap.grid.clone() // You need to clone before using findPath
-    return finder.findPath(this.cords.x, this.cords.y, cordX, cordY, curMapGrid)
-}
-
 Enemy.prototype.pathToPlayer = function() {
     return this.pathTo(p.cords.x, p.cords.y)
 }
@@ -1239,6 +1234,9 @@ var monsters = [
     new Splint("Main Map", 46 * 75, 18 * 75),
     new Splint("Main Map", 47 * 75, 18 * 75),
     new Splint("Main Map", 48 * 75, 18 * 75),
+    new Splint("Main Map", 182 * 75, ctr(80)),
+    new Splint("Main Map", 183 * 75, ctr(80)),
+    new Splint("Main Map", 184 * 75, ctr(80)),
     new Splint("Gale Cave", 50 * 75, 33 * 75),
     new Splint("The Cryo Underground", 17 * 75, 1 * 75),
     new Splint("The Cryo Underground", 18 * 75, 22 * 75),

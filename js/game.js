@@ -2521,7 +2521,49 @@ var cascade = new NPC(6 * 75 + 75, 2 * 75 + 37.5, "Dr. Cascade", droptonResearch
 
 }, "after")
 
-// var npcs = [prisonGuard, oldMan, john, ron, mike, mikesMom, david, lyra, carol, ley, sarah, rowan, wayne, smith, rick, rocky, kori, isa, blanche, lonzo, guardAlfred, queenAlaska, fee, fi, fo, fum, shopkeeperMuhammad, mildred, theWanderer, lostTraveler, drQua, caruk, creek, coral, blake, ness, bay, tyde, walter, marina, ariel, raine, rainesDad, caspian, loch, delta, presidentWells, cascade]
+var fred = new NPC(ctr(168), ctr(81), "Fred", mainMap, 'D', [
+    "Oh hello there!",
+    "Not many people come by here.",
+    "My friend, Pierre, and I normally guard this place.",
+    "But we fell asleep on the job, and when I woke up, he was gone!",
+    "This just happened, so he can't have gone far...",
+    "If you can help find Pierre, I'll let you through this gate for free!",
+], "One of the guards in the Dropton Drylands. That's it.", function() {
+
+}, "after")
+
+var pierre = new NPC(ctr(180), ctr(101), "Pierre", mainMap, 'U', [
+    "...",
+    "...mmm...",
+    "...want cake...",
+    "...please...",
+    "...mmph",
+    "zzzZzzzZzzzZzzz",
+], "Another one of the guards in the Dropton Drylands. He probably likes cake.", function() {
+    if (p.weapon.name == "Cake") {
+        pierre.lines = [
+            "...",
+            "*sniff*",
+            "woah...",
+            "*wakes up*\nAaah!",
+            "Where am I? And what is that scrumptious smell?",
+            "Oh! A cake! I don't know who you are, but could I have it?",
+            "...",
+            "Yay!!!",
+            "*munch munch munch munch munch*\n*munch munch munch munch*",
+            "...",
+            "Oh, Fred is waiting for me?\nYeah, I probably should get back to my post.",
+            "See ya later!! And thanks for the cake!"
+        ]
+
+        pierre.action = function() {
+            pierre.curPath = pierre.pathTo(168, 79)
+        }
+
+        pierre.actionLine = "after"
+    }
+}, 0)
+
 var npcs = NPC.all
 var shopMenus = [muhammadShop, blakeShop, caspianShop]
 
@@ -2574,9 +2616,9 @@ function() {
     // changeme to add functionality
 })
 
-// Main Map
-
 var interactives = [
+    // Main Map
+
     new Toggle(mainMap, 116, 31, function() {
         curMap.changeBlock(121, 27, ")")
     }, function() {
@@ -2604,6 +2646,9 @@ var interactives = [
     new RaftDispenser(mainMap, 257 * 75, 30 * 75, 257 * 75 + 37.5, 29 * 75 + 37.5),
 
     new RaftDispenser(mainMap, 256 * 75, 66 * 75, 255 * 75 + 37.5, 66 * 75 + 37.5),
+
+    new Breezeway(mainMap, 181, 86, 181, 84),
+    new Breezeway(mainMap, 181, 84, 181, 86),
 
     // Confounded Cave
 
@@ -3152,6 +3197,10 @@ var c92_37 = new Chest(mainMap, 92, 37, [
     items.confoundedCaveKey
 ])
 
+var c184_78 = new Chest(mainMap, 184, 78, [
+    food.cake()
+])
+
 var c24_2 = new Chest(howlerHollow, 24, 2, [
     new Item("Puzzle Key", 0, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
@@ -3231,24 +3280,7 @@ var c4_41 = new Chest(droptonCity, 4, 41, [
     items.lightContainer
 ])
 
-var chests = [
-    // Main Map
-    c121_31, // Heat Handle
-    c92_37, // Confounded Cave Key
-    
-    // Confounded Cave
-    c14_3, // Puzzle Key
-
-    // Howler Hollow
-    c24_2,
-    c5_18,
-
-    // Cryo Underground
-    c10_1,
-    c34_15,
-    // Dropton City,
-    c4_41,
-]
+var chests = Chest.all
 
 // Secrets
 
@@ -3429,7 +3461,7 @@ if (!!save) {
 function startPos() {
     dev = true
     curMap = mainMap
-    p.goTo(ctr(270), 78 * 75)
+    p.goTo(ctr(168), 83 * 75)
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword]
     p.equipped = [items.aquaLung]
 

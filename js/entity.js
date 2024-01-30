@@ -47,6 +47,11 @@ Entity.prototype.in = function(x1, y1, x2, y2) {
     return false
 }
 
+Entity.prototype.pathTo = function(cordX, cordY) {
+    var curMapGrid = curMap.grid.clone() // You need to clone before using findPath
+    return finder.findPath(this.cords.x, this.cords.y, cordX, cordY, curMapGrid)
+}
+
 Entity.prototype.move = function(dx, dy, hitBlocks) {
     this.cords.x = Math.floor(this.x / 75)
     this.cords.y = Math.floor(this.y / 75)

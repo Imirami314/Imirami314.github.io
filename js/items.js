@@ -17,7 +17,11 @@ function Chest(map, cordX, cordY, items) {
     }
     this.items = items
     this.opened = false
+
+    Chest.all.push(this)
 }
+
+Chest.all = []
 
 Chest.prototype.draw = function() {
     if (!this.opened) {
