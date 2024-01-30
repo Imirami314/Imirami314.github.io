@@ -1053,7 +1053,7 @@ Splint.prototype.draw = function(p) {
     if (this.health <= 0 && !this.dead) {
         this.dead = true
         var trillsChanceGenerator = Math.random() 
-        if (trillsChanceGenerator <= 0.15) {
+        if (trillsChanceGenerator <= 0.5) {
             p.trills += Math.round(Math.random() + 5)
         }
     }
@@ -1237,6 +1237,7 @@ const monsters = [
     new Splint("Main Map", 182 * 75, ctr(80)),
     new Splint("Main Map", 183 * 75, ctr(80)),
     new Splint("Main Map", 184 * 75, ctr(80)),
+    new Splint("Main Map", ctr(163), ctr(91)),
     new Splint("Main Map", ctr(158), ctr(83)),
     new Splint("Main Map", ctr(153), ctr(77)),
     new Splint("Main Map", ctr(143), ctr(87)),

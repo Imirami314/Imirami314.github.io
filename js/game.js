@@ -2682,6 +2682,12 @@ var interactives = [
     new Breezeway(mainMap, 181, 86, 181, 84),
     new Breezeway(mainMap, 181, 84, 181, 86),
 
+    new Toggle(mainMap, 139, 81, function() {
+        curMap.switch(131, 63, "(", ")")
+    }, function() {
+        curMap.switch(131, 63, "(", ")")
+    }, ctr(131), ctr(63)),
+
     // Confounded Cave
 
     new Toggle(confoundedCave, 5, 18, function() {
@@ -3066,7 +3072,8 @@ var interactives = [
 
     new RaftDispenser(drownedRoom, 25 * 75, 5 * 75, 25 * 75 + 37.5, 6 * 75 + 37.5),
 
-
+    // Fortune Field Water Tunnels
+    new RaftDispenser(fortuneFieldWaterTunnel146_88, b(10), b(4), ctr(11), ctr(4))
 ]
 
 /*
@@ -3075,73 +3082,6 @@ mt - Multi-toggle
 raft - Raft
 rd - Raft Dispenser
 */
-
-// var interactives = [
-//     t116_31,
-//     t102_3,
-//     t77_5,
-//     t97_11,
-//     t5_18,
-//     t5_19,
-//     t6_19,
-//     t6_12,
-//     t14_12,
-//     t15_8,
-//     t2_2,
-//     t2_4,
-//     t4_4,
-//     t4_2,
-// 	mt49_19,
-// 	mt2_18,
-// 	mt11_10,
-// 	mt40_3,
-//     t27_26,
-//     t27_25,
-//     t27_24,
-//     t27_23,
-//     t19_26,
-//     t19_24,
-
-//     // Howler Hollow
-//     bw6_2,
-//     bw9_2,
-//     t12_2,
-//     bw12_3,
-//     bw15_3,
-//     t15_9,
-//     bw10_11,
-//     bw7_11,
-
-//     rd257_30,
-//     rd256_66,
-//     lostTravelerToggle,
-//     t16_4,
-//     rd2_2,
-//     t13_6,
-//     t21_4,
-//     rd5_1,
-//     rd1_22,
-//     rd22_22,
-//     t15_27,
-//     rd19_10,
-//     rd38_1,
-//     rd28_19,
-//     t46_19,
-// 	t28_22,
-// 	t34_21,
-// 	m42_22,
-// 	l48_22,
-//     rd6_2,
-//     rd13_9,
-//     rd20_10,
-//     rd12_20,
-//     rd48_32,
-//     l1_16,
-// ]
-
-var rafts = [
-    //raft12_20,
-]
 
 // Load save for interactives
 if (!!save) {
@@ -3325,7 +3265,16 @@ var droptonTunnelsEntrance = new Secret(270, 78, mainMap, function() {
     }
 })
 
-var secrets = [droptonTunnelsEntrance]
+var fortuneFieldWaterEntrance146_88 = new Secret(146, 88, mainMap, function() {
+    if (p.can.goUnderWater && keys.space) {
+        Screen.fadeOut(0.01, function() {
+            curMap = fortuneFieldWaterTunnel146_88
+            p.goTo(ctr(2), ctr(7))
+        })
+    }
+})
+
+var secrets = Secret.all
 
 var opacity = 1
 
