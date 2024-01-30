@@ -2557,7 +2557,39 @@ var pierre = new NPC(ctr(180), ctr(101), "Pierre", mainMap, 'U', [
         ]
 
         pierre.action = function() {
-            pierre.curPath = pierre.pathTo(168, 79)
+            let path = pierre.pathTo(168, 79)
+            path.push(function() {
+                pierre.dir = 'D'
+
+                pierre.lines = [
+                    "I don't know what would've happened if you didn't wake me up...",
+                    "At least I got cake."
+                ]
+
+                fred.lines = [
+                    "Thank you so much for finding Pierre!",
+                    "We'll try not to fall asleep this time.",
+                    "...what's that?",
+                    "Oh right. I'll open the gate right away."
+                ]
+
+                fred.action = function() {
+                    fred.curPath = [
+                        [168, 80],
+                        [167, 80],
+                        function() {
+                            mainMap.changeBlock(166, 80, '(')
+                        }
+                    ]
+
+                    fred.lines = [
+                        "Thanks again for finding Pierre!"
+                    ]
+
+                    fred.clearAction()
+                }
+            })
+            pierre.curPath = path
         }
 
         pierre.actionLine = "after"
@@ -3462,7 +3494,7 @@ function startPos() {
     dev = true
     curMap = mainMap
     p.goTo(ctr(168), 83 * 75)
-    p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword]
+    p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
     p.equipped = [items.aquaLung]
 
     abandonedChannel.changeBlock(47, 17, '_')
