@@ -74,7 +74,7 @@ Enemy.prototype.movePathTo = function(cordX, cordY) {
             }
         }
         
-        this.move(dx * 3, dy * 3)
+        this.move(dx * this.speed, dy * this.speed)
     }
 }
 
@@ -1032,7 +1032,7 @@ function Splint(map, spawnX, spawnY) { // Idk what to call it man
     this.damage = 2
     this.maxHealth = 20
     this.health = 20
-    this.speed = 1
+    this.speed = 2
     this.playerDist = 10000 // Gets updated by the draw method
     this.agroDist = 500
     this.deAgroDist = 1000
@@ -1230,13 +1230,17 @@ DrownedMinion.prototype.hit = function() {
 }
 
 
-var monsters = [
+const monsters = [
     new Splint("Main Map", 46 * 75, 18 * 75),
     new Splint("Main Map", 47 * 75, 18 * 75),
     new Splint("Main Map", 48 * 75, 18 * 75),
     new Splint("Main Map", 182 * 75, ctr(80)),
     new Splint("Main Map", 183 * 75, ctr(80)),
     new Splint("Main Map", 184 * 75, ctr(80)),
+    new Splint("Main Map", ctr(158), ctr(83)),
+    new Splint("Main Map", ctr(153), ctr(77)),
+    new Splint("Main Map", ctr(143), ctr(87)),
+    new Splint("Main Map", ctr(154), ctr(89)),
     new Splint("Gale Cave", 50 * 75, 33 * 75),
     new Splint("The Cryo Underground", 17 * 75, 1 * 75),
     new Splint("The Cryo Underground", 18 * 75, 22 * 75),
@@ -1246,7 +1250,7 @@ var monsters = [
     new Splint("The Cryo Underground", 28 * 75, 18 * 75),
 ]
 
-var bosses = [
+const bosses = [
     new Darkened("Darkened Room", 712.5, 100),
     new Stormed("Stormed Room", 13 * 75 + 37.5, 17 * 75 + 37.5),
     new Drowned("Drowned Room", 15 * 75 + 37.5, 19 * 75 + 37.5),
