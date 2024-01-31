@@ -1400,9 +1400,21 @@ Player.prototype.nearNPC = function () {
     return false
 }
 
-Player.prototype.drawAlert = function () {
-    
+Player.prototype.nearSign = function () {
+    for (var i in alerts) {
+        if (alerts[i].type == "SIGN" || alerts[i].type == "WANDERER SIGN") {
+           if (alerts[i].map == curMap && 
+            p.cords.x == alerts[i].x &&
+            p.cords.y == alerts[i].y &&
+            !alerts[i].showLines) {
+                return true
+            }
+        }
+    }
+    return false
+}
 
+Player.prototype.drawAlert = function () {
     if (!!this.blockOn.useDesc) {
         // ctx.roundRect(width / 2 - 100, height / 2 + 50, 200, 50, 10)
         // ctx.fill()
@@ -1415,16 +1427,25 @@ Player.prototype.drawAlert = function () {
         if (this.alertOpacity <= 1) {
             this.alertOpacity += 0.1
         }
+    } else if (this.nearSign()) {
+        this.curAlert = "Press space to read"
+        if (this.alertOpacity <= 1) {
+            this.alertOpacity += 0.1
+        }
     } else {
         if (this.alertOpacity > 0) {
             this.alertOpacity -= 0.1
         }
     }
-    
+
+    ctx.fillStyle = "rgba(0, 0, 0, " + this.alertOpacity / 2 + ")"
+    ctx.roundRect(width / 2 - width / 9, height - 80 - height / 20, width / 4.5, height / 10, 5)
+    ctx.fill()
     ctx.fillStyle = "rgba(255, 255, 255, " + this.alertOpacity + ")"
     ctx.font = "30px serif"
     ctx.textAlign = "center"
     ctx.fillText(this.curAlert, width / 2, height - 75)
+
 }
 
 function GameAlert(x, y, lines, map, type, item, decipherLines) {
@@ -1575,15 +1596,16 @@ GameAlert.prototype.drawMessage = function () {
     
     if (p.cords.x == this.x && p.cords.y == this.y) {
         if (!this.showLines && curMap == this.map) {
-            if (this.type == "SIGN" || this.type == "WANDERER SIGN") {
-                ctx.fillStyle = "rgb(255, 255, 255)"
-                ctx.roundRect(width / 2 - 75, height / 2 + 50, 150, 50, 10)
-                ctx.fill()
-                ctx.fillStyle = "rgb(0, 0, 0)"
-                ctx.font = "15px serif"
-                ctx.textAlign = "center"
-                ctx.fillText("Press space to read", width / 2, height / 2 + 75)		
-            } else if (this.type == "KEY") {
+            // if (this.type == "SIGN" || this.type == "WANDERER SIGN") {
+            //     ctx.fillStyle = "rgb(255, 255, 255)"
+            //     ctx.roundRect(width / 2 - 75, height / 2 + 50, 150, 50, 10)
+            //     ctx.fill()
+            //     ctx.fillStyle = "rgb(0, 0, 0)"
+            //     ctx.font = "15px serif"
+            //     ctx.textAlign = "center"
+            //     ctx.fillText("Press space to read", width / 2, height / 2 + 75)		
+            // } else 
+            if (this.type == "KEY") {
                 for (var i in p.inventory) {
                     var item = p.inventory[i]
                     if (item.name == this.item) {
