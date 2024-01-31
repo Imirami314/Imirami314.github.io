@@ -1146,83 +1146,83 @@ Splint.prototype.hit = function() {
     }
 }
 
-function DrownedMinion(map, spawnX, spawnY) { // Idk what to call it man
-    Enemy.call(this, map, spawnX, spawnY)
-    this.damage = 0.5
-    this.maxHealth = 50
-    this.health = 50
+class DrownedMinion extends Enemy {
+    constructor(map, spawnX, spawnY) {
+        super(map, spawnX, spawnY)
+        this.damage = 0.5
+        this.maxHealth = 50
+        this.health = 50
 
-    this.speed = 2
-    this.playerDist = 10000 // Gets updated by the draw method
-    
-    this.weaponPos = 0
-    this.hitting = false
-    this.isHit = false
-    this.hitCooldown = 1
-    this.armAngle = 0
-
-    this.dead = false
-}
-
-DrownedMinion.prototype = Object.create(Enemy.prototype)
-
-DrownedMinion.prototype.draw = function() {
-    ctx.save()
-    ctx.translate(this.x, this.y)
-    ctx.rotate(this.playerAngle)
-    ctx.translate(- (this.x), - (this.y))
-    ctx.drawImage(images.drownedMinion, this.x - 25, this.y - 27.25, 50, 54.5)
-
-    // Arms
-    ellipse(this.x - 25, this.y, 12.5, 12.5, "rgb(90, 30, 90)")
-    ctx.translate(this.x , this.y)
-    ctx.rotate(this.armAngle)
-    ctx.translate(- this.x, - this.y)
-    ellipse(this.x + 25, this.y, 12.5, 12.5, "rgb(90, 30, 90)") // Right arm (hitting arm)
-    ctx.restore()
-}
-
-DrownedMinion.prototype.update = function() {
-    if (this.health <= 0) {
-        this.dead = true
-    }
-
-    this.playerAngle = Math.atan2((p.y - this.y), (p.x - this.x)) + (Math.PI) / 2 // Gives angle direction of player
-    this.playerDist = Math.hypot((p.x - this.x), (p.y - this.y))
-    this.pdx = p.x - this.x
-    this.pdy = p.y - this.y
-    this.dirCoefX = (this.pdx / Math.abs(this.pdx)) // Gives 1 or -1 depending on whether the player is to the left or right
-    this.dirCoefY = (this.pdy / Math.abs(this.pdy)) // Gives 1 or -1 depending on whether the player is above or below
-    this.hitCooldown -= 1 / (66 + 2 / 3)
-    
-    if (!this.hitting) {
-        if (Math.abs(this.pdx) >= 10) {
-            this.move(this.dirCoefX * this.speed, 0)
-        }
-
-        if (Math.abs(this.pdy) >= 10) {
-            this.move(0, this.dirCoefY * this.speed)
-        }
-    }
-
-    if (this.playerDist <= 100) {
-        this.hit()
-    } else {
+        this.speed = 2
+        this.playerDist = 10000 // Gets updated by the draw method
+        
+        this.weaponPos = 0
         this.hitting = false
-    }
-}
+        this.isHit = false
+        this.hitCooldown = 1
+        this.armAngle = 0
 
-DrownedMinion.prototype.hit = function() {
-    if (this.hitCooldown <= 0) {
-        this.hitting = true
-        if (this.hitting) {
-            this.armAngle -= Math.PI / 28
-            if (this.armAngle <= - Math.PI * 2 / 3) {
-                this.hitting = false
-                this.hitCooldown = 1
-                this.armAngle = 0
-                if (this.playerDist <= 100) { // Check if player is still in range to get hit
-                    p.getHit(0.5)
+        this.dead = false
+    }
+
+    draw() {
+        ctx.save()
+        ctx.translate(this.x, this.y)
+        ctx.rotate(this.playerAngle)
+        ctx.translate(- (this.x), - (this.y))
+        ctx.drawImage(images.drownedMinion, this.x - 25, this.y - 27.25, 50, 54.5)
+    
+        // Arms
+        ellipse(this.x - 25, this.y, 12.5, 12.5, "rgb(90, 30, 90)")
+        ctx.translate(this.x , this.y)
+        ctx.rotate(this.armAngle)
+        ctx.translate(- this.x, - this.y)
+        ellipse(this.x + 25, this.y, 12.5, 12.5, "rgb(90, 30, 90)") // Right arm (hitting arm)
+        ctx.restore()
+    }
+
+    update() {
+        if (this.health <= 0) {
+            this.dead = true
+        }
+    
+        this.playerAngle = Math.atan2((p.y - this.y), (p.x - this.x)) + (Math.PI) / 2 // Gives angle direction of player
+        this.playerDist = Math.hypot((p.x - this.x), (p.y - this.y))
+        this.pdx = p.x - this.x
+        this.pdy = p.y - this.y
+        this.dirCoefX = (this.pdx / Math.abs(this.pdx)) // Gives 1 or -1 depending on whether the player is to the left or right
+        this.dirCoefY = (this.pdy / Math.abs(this.pdy)) // Gives 1 or -1 depending on whether the player is above or below
+        this.hitCooldown -= 1 / (66 + 2 / 3)
+        
+        if (!this.hitting) {
+            if (Math.abs(this.pdx) >= 10) {
+                this.move(this.dirCoefX * this.speed, 0)
+            }
+    
+            if (Math.abs(this.pdy) >= 10) {
+                this.move(0, this.dirCoefY * this.speed)
+            }
+        }
+    
+        if (this.playerDist <= 100) {
+            this.hit()
+        } else {
+            this.hitting = false
+        }
+    }
+
+    hit() {
+        if (this.hitCooldown <= 0) {
+            this.hitting = true
+            if (this.hitting) {
+                this.armAngle -= Math.PI / 28
+                if (this.armAngle <= - Math.PI * 2 / 3) {
+                    this.hitting = false
+                    this.hitCooldown = 1
+                    this.armAngle = 0
+                    if (this.playerDist <= 100) { // Check if player is still in range to get hit
+                        p.getHit(0.5)
+                    }
                 }
             }
         }

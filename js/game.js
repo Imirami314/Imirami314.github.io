@@ -3161,19 +3161,19 @@ var models = {
 
 const p = new Player(2 * 75, 2 * 75, npcs) // default x = width / 2, y = height / 2 helloooh
 
-var c121_31 = new Chest(mainMap, 121, 31, [
+const c121_31 = new Chest(mainMap, 121, 31, [
     items.heatHandle
 ])
 
-var c92_37 = new Chest(mainMap, 92, 37, [
+const c92_37 = new Chest(mainMap, 92, 37, [
     items.confoundedCaveKey
 ])
 
-var c184_78 = new Chest(mainMap, 184, 78, [
+const c184_78 = new Chest(mainMap, 184, 78, [
     food.cake()
 ])
 
-var c24_2 = new Chest(howlerHollow, 24, 2, [
+const c24_2 = new Chest(howlerHollow, 24, 2, [
     new Item("Puzzle Key", 0, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
     }, function(p) {
@@ -3191,7 +3191,7 @@ var c24_2 = new Chest(howlerHollow, 24, 2, [
     })
 ])
 
-var c5_18 = new Chest(howlerHollow, 5, 18, [
+const c5_18 = new Chest(howlerHollow, 5, 18, [
     new Item("Puzzle Key", 0, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
     }, function(p) {
@@ -3209,7 +3209,7 @@ var c5_18 = new Chest(howlerHollow, 5, 18, [
     })
 ])
 
-var c14_3 = new Chest(confoundedCave, 14, 3, [
+const c14_3 = new Chest(confoundedCave, 14, 3, [
     new Item("Puzzle Key", 0, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
     }, function(p) {
@@ -3227,7 +3227,7 @@ var c14_3 = new Chest(confoundedCave, 14, 3, [
     })
 ])
 
-var c10_1 = new Chest(cryoUnderground, 10, 1, [
+const c10_1 = new Chest(cryoUnderground, 10, 1, [
     new Item("Puzzle Key", 0, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
     }, function(p) {
@@ -3244,19 +3244,19 @@ var c10_1 = new Chest(cryoUnderground, 10, 1, [
     })
 ])
 
-var c34_15 = new Chest(cryoUnderground, 34, 15, [
+const c34_15 = new Chest(cryoUnderground, 34, 15, [
     
 ])
 
-var c4_41 = new Chest(droptonCity, 4, 41, [
+const c4_41 = new Chest(droptonCity, 4, 41, [
     items.lightContainer
 ])
 
-var chests = Chest.all
+const chests = Chest.all
 
 // Secrets
 
-var droptonTunnelsEntrance = new Secret(270, 78, mainMap, function() {
+const droptonTunnelsEntrance = new Secret(270, 78, mainMap, function() {
     if (p.can.goUnderWater && keys.space) {
         Screen.fadeOut(0.01, function() {
             curMap = droptonTunnels
@@ -3265,7 +3265,7 @@ var droptonTunnelsEntrance = new Secret(270, 78, mainMap, function() {
     }
 })
 
-var fortuneFieldWaterEntrance146_88 = new Secret(146, 88, mainMap, function() {
+const fortuneFieldWaterEntrance146_88 = new Secret(146, 88, mainMap, function() {
     if (p.can.goUnderWater && keys.space) {
         Screen.fadeOut(0.01, function() {
             curMap = fortuneFieldWaterTunnel146_88
