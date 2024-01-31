@@ -1004,7 +1004,7 @@ Player.prototype.shovel = function () {
             this.buildMode = false
         }
         if (this.buildMode) {
-            if (this.blockOn.name == "shovel") {
+            if (this.blockOn.name == "shovel") { // if you're standing on a shovel block
                 
                 this.buildable = true
                 ctx.fillStyle = "rgb(0, 255, 0, 0.5)"
@@ -1393,7 +1393,7 @@ Player.prototype.displayNPCInfo = function(n) {
 
 Player.prototype.nearNPC = function () {
     for (var i in npcs) {
-        if (npcs[i].map == curMap && entityDistance(p, npcs[i]) < 100 && npcs[i].lineNum == -1) {
+        if (npcs[i].map == curMap && entityDistance(p, npcs[i]) < 100 && npcs[i].lineNum == -1 && CUR_SHOP_MENU == 0) {
             return true
         }
     }
@@ -2124,7 +2124,7 @@ var shopkeeperMuhammad = new NPC(58 * 75, 33 * 75 + 37.5, "Shopkeeper Muhammad",
     ShopMenu.open(muhammadShop)
 }, "after")
 
-var mildred = new NPC(6 * 75 + 37.5, 2 * 75 + 37.5, "Mildred", trailShop, "D", [
+var mildred = new NPC(6 * 75 + 37.5, 3 * 75, "Mildred", trailShop, "D", [
 	"Oh, hello there.",
 	"In my 50 years of business, I haven't seen you once before!",
 	"...",
@@ -2139,17 +2139,14 @@ var mildred = new NPC(6 * 75 + 37.5, 2 * 75 + 37.5, "Mildred", trailShop, "D", [
 	"And now YOU can become a trailblazer as well!",
 	"We have three trail mixes.\nOur shop menu will provide you with all the information you need.",
 	"Whenever you need more trails, just come talk to me!",
-	"Good luck trailing, young fella!"
-], "hi", function() {		
-		mildred.lines = ["Glad you're back! Let me open up the shop menu for you."]	
-		mildred.action = function() {
-	        ShopMenu.open([
-	        	{item: items.shovel, cost: 12, amount: 2}
-	 		])
-	    }
-	    mildred.actionLine = "after"
-		
-}, "after") 
+	"Do you need anything right now?\nLet me open the shop for you."
+], "hi", function() {	
+    ShopMenu.open([
+        {item: items.shovel, cost: 12, amount: 2}
+    ])
+    mildred.lines = ["Glad you're back! Let me open up the shop menu for you."]		
+}, "after")
+
 
 var theWanderer = new NPC (60 * 75, 41 * 75, "The Wanderer", mainMap, "D",    [
 	"`...",
