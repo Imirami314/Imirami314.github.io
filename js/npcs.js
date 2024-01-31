@@ -401,11 +401,6 @@ NPC.prototype.move = function(pos) {
     }
 }
 
-// NPC.prototype.goTo = function(x, y) {
-//     this.x = x
-//     this.y = y
-// }
-
 NPC.prototype.runPath = function(path) {
     if (typeof path[this.pathPoint] == "object") {
         if (this.cords.x == path[this.pathPoint][0] && this.cords.y == path[this.pathPoint][1]) { // Checks to make sure npc is on the right block
@@ -446,7 +441,6 @@ NPC.prototype.runPath = function(path) {
 }
 
 NPC.prototype.drawFace = function(faceX, faceY) {
-	//alert("uh yeah")
 	ellipse(faceX, faceY, 50, 50, this.properties.skinColor)
 	ellipse(faceX - 10, faceY - 10, 10, 10, this.properties.eyeColor)
     ellipse(faceX + 10, faceY - 10, 10, 10, this.properties.eyeColor)

@@ -1027,119 +1027,119 @@ Drowned.prototype.healthBar = function() {
 
 // Monsters
 
-function Splint(map, spawnX, spawnY) { // Idk what to call it man
-    Enemy.call(this, map, spawnX, spawnY)
-    this.damage = 2
-    this.maxHealth = 20
-    this.health = 20
-    this.speed = 2
-    this.playerDist = 10000 // Gets updated by the draw method
-    this.agroDist = 500
-    this.deAgroDist = 1000
-    this.agro = false
-    // this.pathToPlayer = null;
-    
-    this.weaponPos = 0
-    this.hitting = false
-    this.isHit = false
-    this.hitCooldown = 1
+class Splint extends Enemy {
+    constructor(map, spawnX, spawnY) {
+        super(map, spawnX, spawnY)
+        this.damage = 2
+        this.maxHealth = 20
+        this.health = 20
+        this.speed = 2
+        this.playerDist = 10000 // Gets updated by the draw method
+        this.agroDist = 500
+        this.deAgroDist = 1000
+        this.agro = false
+        // this.pathToPlayer = null;
+        
+        this.weaponPos = 0
+        this.hitting = false
+        this.isHit = false
+        this.hitCooldown = 1
 
-    this.dead = false
-}
-
-Splint.prototype = Object.create(Enemy.prototype)
-
-Splint.prototype.draw = function(p) {
-    if (this.health <= 0 && !this.dead) {
-        this.dead = true
-        var trillsChanceGenerator = Math.random() 
-        if (trillsChanceGenerator <= 0.5) {
-            p.trills += Math.round(Math.random() + 5)
-        }
+        this.dead = false
     }
 
-    if (this.agro && this.playerDist >= 90 && !this.hitting) {
-        // this.move(Math.cos(this.playerAngle) * 2, Math.sin(this.playerAngle) * 2)
-        //this.updatePath()
-        this.movePathToPlayer()
-    }
-
-    if (this.playerDist < 100 && this.hitCooldown <= 0) {
-        this.hit()
-    } else {
-        this.hitCooldown -= 1 / (66 + 2 / 3)
-    }
-
-    if (this.hitting) { // Once hit is started, it finishes even if player is out of range
-        this.hit()
-    }
-    
-    if (this.map == curMap.name) {
-        if (this.playerDist <= this.agroDist) {
-            this.agro = true
-        }
-
-        if (this.playerDist >= this.deAgroDist) {
-            this.agro = false
-
-            if (this.playerDist >= this.deAgroDist * 1.5) { // Splint moves back to its home if the player gets far enough
-                this.movePathToHome()
+    draw() {
+        if (this.health <= 0 && !this.dead) {
+            this.dead = true
+            var trillsChanceGenerator = Math.random() 
+            if (trillsChanceGenerator <= 0.5) {
+                p.trills += Math.round(Math.random() + 5)
             }
         }
-        ctx.save()
-        ctx.translate(this.x, this.y)
-        if (this.agro) {
-            if (this.playerDist <= 100) {
-                ctx.rotate(this.playerAngle - Math.PI / 2)
-            } else {
-                ctx.rotate(this.curAngle - Math.PI / 2)
-            }
+
+        if (this.agro && this.playerDist >= 90 && !this.hitting) {
+            // this.move(Math.cos(this.playerAngle) * 2, Math.sin(this.playerAngle) * 2)
+            //this.updatePath()
+            this.movePathToPlayer()
         }
-        ctx.translate(- (this.x), - (this.y))
-        if (!this.isHit) {
-            ctx.drawImage(images.splint, this.x - 37.5, this.y - 37.5, 75, 75)
+
+        if (this.playerDist < 100 && this.hitCooldown <= 0) {
+            this.hit()
         } else {
-            ctx.drawImage(images.splintHurt, this.x - 37.5, this.y - 37.5, 75, 75)
+            this.hitCooldown -= 1 / (66 + 2 / 3)
         }
-        ctx.translate(this.x, this.y)
-        if (this.agro) {
-            ctx.rotate(this.weaponPos)
-        }
-        ctx.translate(- (this.x), - (this.y))
-        ellipse(this.x - 32, this.y - 10, 25, 25, "rgb(40, 40, 40)")
-        ellipse(this.x - 32, this.y + 10, 25, 25, "rgb(40, 40, 40)")
-        ctx.fillStyle = "rgb(0, 0, 0)"
-        ctx.fillRect(this.x - 35.5, this.y - 60, 10, 70)
-        ctx.restore()
-    }
 
-    if (this.hitCooldown > 0) { // Re-adjust weapon position after a hit
-        if (this.weaponPos < 0) {
-            this.weaponPos += Math.PI / 66
-        } else {
-            this.weaponPos = 0
+        if (this.hitting) { // Once hit is started, it finishes even if player is out of range
+            this.hit()
         }
-    }
-
-    if (this.dead) {
-        for (var i in monsters) {
-            if (monsters[i] == this) {
-                monsters.splice(i, 1)
+        
+        if (this.map == curMap.name) {
+            if (this.playerDist <= this.agroDist) {
+                this.agro = true
             }
-        }
-    }
-}
 
-Splint.prototype.hit = function() {
-    if (this.hitCooldown <= 0) {
-        this.hitting = true
-        if (this.hitting) {
-            this.weaponPos -= Math.PI / 45
-            if (this.weaponPos <= -1 * Math.PI) {
-                this.hitting = false
-                this.hitCooldown = 1
+            if (this.playerDist >= this.deAgroDist) {
+                this.agro = false
+
+                if (this.playerDist >= this.deAgroDist * 1.5) { // Splint moves back to its home if the player gets far enough
+                    this.movePathToHome()
+                }
+            }
+            ctx.save()
+            ctx.translate(this.x, this.y)
+            if (this.agro) {
                 if (this.playerDist <= 100) {
-                    p.getHit(2)
+                    ctx.rotate(this.playerAngle - Math.PI / 2)
+                } else {
+                    ctx.rotate(this.curAngle - Math.PI / 2)
+                }
+            }
+            ctx.translate(- (this.x), - (this.y))
+            if (!this.isHit) {
+                ctx.drawImage(images.splint, this.x - 37.5, this.y - 37.5, 75, 75)
+            } else {
+                ctx.drawImage(images.splintHurt, this.x - 37.5, this.y - 37.5, 75, 75)
+            }
+            ctx.translate(this.x, this.y)
+            if (this.agro) {
+                ctx.rotate(this.weaponPos)
+            }
+            ctx.translate(- (this.x), - (this.y))
+            ellipse(this.x - 32, this.y - 10, 25, 25, "rgb(40, 40, 40)")
+            ellipse(this.x - 32, this.y + 10, 25, 25, "rgb(40, 40, 40)")
+            ctx.fillStyle = "rgb(0, 0, 0)"
+            ctx.fillRect(this.x - 35.5, this.y - 60, 10, 70)
+            ctx.restore()
+        }
+
+        if (this.hitCooldown > 0) { // Re-adjust weapon position after a hit
+            if (this.weaponPos < 0) {
+                this.weaponPos += Math.PI / 66
+            } else {
+                this.weaponPos = 0
+            }
+        }
+
+        if (this.dead) {
+            for (var i in monsters) {
+                if (monsters[i] == this) {
+                    monsters.splice(i, 1)
+                }
+            }
+        }
+    }
+
+    hit() {
+        if (this.hitCooldown <= 0) {
+            this.hitting = true
+            if (this.hitting) {
+                this.weaponPos -= Math.PI / 45
+                if (this.weaponPos <= -1 * Math.PI) {
+                    this.hitting = false
+                    this.hitCooldown = 1
+                    if (this.playerDist <= 100) {
+                        p.getHit(2)
+                    }
                 }
             }
         }
