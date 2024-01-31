@@ -55,12 +55,11 @@ var teleports = [
 ]
 // Cool riddle to figure out the backwards text on some signs: If text on the signs confuse and confound, it all becomes clearer if you flip it around.
 
-var secrets = [ // (Last bool is the beam, meaning the secret is solved)
-	[false, false, false, false] // Chard Town
-]
+// var secrets = [ // (Last bool is the beam, meaning the secret is solved)
+// 	[false, false, false, false] // Chard Town
+// ]
 
 var curCamera = null;
-
 
 /**
  * Starts camera motion
@@ -914,6 +913,12 @@ Player.prototype.removeItem = function(item) {
         if (itm == item) {
             this.inventory.splice(i, 1)
             break
+        } else {
+            if (itm instanceof Food) {
+                if (itm.name == item.name) {
+                    this.inventory.splice(i, 1)
+                }
+            }
         }
     }
 }
@@ -2593,6 +2598,8 @@ var pierre = new NPC(ctr(180), ctr(101), "Pierre", mainMap, 'U', [
         }
 
         pierre.actionLine = "after"
+
+        p.removeItem(food.cake())
     }
 }, 0)
 
@@ -2684,8 +2691,10 @@ var interactives = [
 
     new Toggle(mainMap, 139, 81, function() {
         curMap.switch(131, 63, "(", ")")
+        curMap.changeBlock(141, 81, 'S')
     }, function() {
         curMap.switch(131, 63, "(", ")")
+        curMap.changeBlock(141, 81, '_')
     }, ctr(131), ctr(63)),
 
     // Confounded Cave
@@ -3269,7 +3278,7 @@ const fortuneFieldWaterEntrance146_88 = new Secret(146, 88, mainMap, function() 
     if (p.can.goUnderWater && keys.space) {
         Screen.fadeOut(0.01, function() {
             curMap = fortuneFieldWaterTunnel146_88
-            p.goTo(ctr(2), ctr(7))
+            p.goTo(ctr(9), ctr(6))
         })
     }
 })

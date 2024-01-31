@@ -1038,7 +1038,6 @@ class Splint extends Enemy {
         this.agroDist = 500
         this.deAgroDist = 1000
         this.agro = false
-        // this.pathToPlayer = null;
         
         this.weaponPos = 0
         this.hitting = false
@@ -1085,6 +1084,7 @@ class Splint extends Enemy {
                     this.movePathToHome()
                 }
             }
+
             ctx.save()
             ctx.translate(this.x, this.y)
             if (this.agro) {
@@ -1133,7 +1133,10 @@ class Splint extends Enemy {
         if (this.hitCooldown <= 0) {
             this.hitting = true
             if (this.hitting) {
-                this.weaponPos -= Math.PI / 45
+                if (!this.isHit) {
+                    this.weaponPos -= Math.PI / 45
+                }
+
                 if (this.weaponPos <= -1 * Math.PI) {
                     this.hitting = false
                     this.hitCooldown = 1
