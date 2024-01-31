@@ -120,6 +120,16 @@ theWanderersRiddles.solve = function () {
 	}
 }
 
+// Wanderer riddle with specific locations will be specified as initials
+var theWanderersRiddlesGV = new Mission("The Wanderer's Riddles - Glacia Village", "Ability", null, 0)
+
+theWanderersRiddlesGV.solve = function () {
+    // console.log(getBlockInfoByCords(202 * 75, 24 * 75).id)
+    if (getBlockInfoByCords(202 * 75, 24 * 75).id == "-") { // Default WATER
+        
+    }
+}
+
 var leysGreatFear = new Mission("Ley's Great Fear", "Reward", null, 0)
 
 leysGreatFear.solve = function () {

@@ -881,7 +881,7 @@ Shovel s
 */
 
 var mainMap = new Landscape([
-    'SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSTTSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS,,,,,,,,,,,,,,,,,,,,',
+    'SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSTTSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',
     'SO,,,,T,,,,,,,,,,,,,,,,,,,,TTTTTTTT,,,,,,,,,,,,,,,,,,,,,,,T,,,,,TT@__!!!!________!!S!_____________________S__S__!!!__S____________________SSSS!!!!!!!!!!!!!!!!!!S~~~~~~~~~~~~~~~~~~~~S****************************************************************************************,,,,,,,,,,,,,,,,,,,,',
     'S,,,,,T,,,,TTTTTTTTT,,,,,,,T~~~~~~T,,,,,,,,,,,,,,,,,,,,,,,,,,,,,TT@!______!___!!!!_S!____!!SSSSSSSS__SSS_SS__S__!_!__S____________________SSSS!!!!!!!!!!!!!!!!!!S~~~~~~~~~~~~~~~~~~~~S****************************************************************************************,,,,,,,,,,,,,,,,,,,,',
     'S,,,,,T~~~~T@,,,,@@T,,,,,,,T~~~~~~TTTTTTT,,,,,,,,,,B,,,,,,,,T,,,TT@SSSSSSSS!!SSSSSSS_______S___S_____S_______S_SSSSS_S!___________________SSSS$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$SSSSSSSSS****************************************************************************************,,,,,,,,,,,,,,,,,,,,',
@@ -905,7 +905,7 @@ var mainMap = new Landscape([
     'T,,,,,,,T--,,,,,,,,,@W--W@~~~~~~TTTTTTTTTTTTTTT~~~~~~~TTTTT,,,@~@,,WWWWWWWWW,_~~~~~~~~_,,,TTSSSSSSSSSSSSSSS__S___!!S______$$$$$_____SSSSSSS*******zzzzz*******zzt~~~~~~~~t******zzT,,,t~,,~,,,~t,,,,~,t~,,,,,,T**********WWWWWWWWWWWWWWWWW************************************,,,,,,,,,,,,,,,,,,,,',
     'T,,,,,,,T--,,,,,,,,,,,--TTTTTTTTT-------------TTTTTTT~~~~~~,,@~~~@,WWWW|WWWW,_~~~~~~~~_,,,TT____!!___S_______S_____S______$$|$$_____SSSSSSS******zzzzzzz******zzt~~~~~~~~t******zzT,,,,,,,,,,,,,,,,,t,,,,,,,,,T***************************************************************,,,,,,,,,,,,,,,,,,,,',
     'T,,,,,,,T-------------------------------------------TTTTTTT,@~~~~~@,,,---,,,,_~~~~~~~~_,,,TT____!!___S_____________S________________S!SS|SS*****zzzzzzzzz*****zzt~~~~~~~~t******zzTTTTTTTTTTTT,,,,,,,,,,,,t,,,T***************************************************************,,,,,,,,,,,,,,,,,,,,',
-    'T,,,,,,,T--,,B,,T,,W,,--T~~~~~~~TT@@BBBBB@@-----------------------------------________,,,,TT_________SSSS_SSSS_____S________!!______SSS___S*****zzzzzzzzz*****zzt~~~~~~~~t******zz***********TTTTTTT,,,,,,,,,,T***********************************************zzzz************,,,,,,,,,,,,,,,,,,,,',
+    'T,,,,,,,T--,,B,,T,,W,,--T~~~~~~~TT@@BBBBB@@-----------------------------------________,,,,TT_________SSSS_SSSS_____S________!!______SSS___S*****zzzzzzzzz*****zzt~~~~~~~~t******zz***********TTTTTTT,,,,,,s,,,T***********************************************zzzz************,,,,,,,,,,,,,,,,,,,,',
     'TTTT,TTTT--,BBB,T,WWW,--T~~~~~~~--@BBBBBBB@---@TTTT---------------------------,,,,,,,,,,,,TT____________S____SS____SSSSSSSS_!!______S!S___S*****zzzzzzzzz*****zzt~~~~~~~~t**SSSSzzSSSS*************TTTTTTTTTTTT*******************TTTTTTTTTTTTTTTTTTTTTTTTTTTT~~Tz************,,,,,,,,,,,,,,,,,,,,',
     'T///,///T--BBBBBTWWWWW--T~~~~~~~--BBBBBBBBB---@T,,,,,,,,,,,,,,,,,,,,,,,,,,,,--,,,,,,,,,,,,TTSSSSSSSSSSSS_______SSS_S______S_________SSS___S*****zzzzzzzzz*****zz*tttttttt***S~~SzzS~~S*******************************************TT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Tz************,,,,,,,,,,,,,,,,,,,,',
     'T/,,,,,/T--BB|BBTWWWWW--T~~~~~~~TTBBBB|BBBB---@T,,,,,,,,,,,,,,,,,,,,,,,,,,,,--,,,,,,,,,,,,TT_S_____S_S_S_SS!!!__SS_S_SSSS)S______________SS*****zzzzzzzzz*****zz************S~~SzzS~~S*******************************************T~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Tz************,,,,,,,,,,,,,,,,,,,,',
@@ -1007,13 +1007,6 @@ mainMap.solve = function() {
         }
     }
 
-    
-
-    if (p.area == "Encompassed Forest") {
-
-                    
-    }
-
     if (keys.space) {
         if (theBlockedEntrance.complete && p.on(252, 81)) {
             curMap = droptonCity
@@ -1021,8 +1014,11 @@ mainMap.solve = function() {
         }
     }
 	
-
-
+    if (!!getGameAlertInfoByCords(205, 24, mainMap)) {
+        if (getGameAlertInfoByCords(205, 24, mainMap).playerRead) {
+            curMissions.push(theWanderersRiddlesGV)
+        }
+    }
 	
 }
 
