@@ -1232,7 +1232,6 @@ class DrownedMinion extends Enemy {
     }
 }
 
-
 const monsters = [
     new Splint("Main Map", 46 * 75, 18 * 75),
     new Splint("Main Map", 47 * 75, 18 * 75),
