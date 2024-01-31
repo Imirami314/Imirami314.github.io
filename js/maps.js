@@ -2076,18 +2076,30 @@ var drownedRoom = new Landscape([
 }) // Don't enter from mainMap
 
 var fortuneFieldWaterTunnel146_88 = new Landscape([
-    'OOOOOOOOOOOOOOOOOOOO',
-    'OOOOOOOOOOOOOOOOOOOO',
-    'OOOOOOOOO__OOOOOOOOO',
-    'OOOOOOOOO__OOOO___OO',
-    'OOOO_______~~!~___OO',
-    'OOO__OO____OOOO___OO',
-    'OOO_OOO____OOOOOOOOO',
-    'OO__OOOOO_OOOOOOOOOO',
-    'OOO_OOOOOOOOOOOOOOOO',
-    'OOOOOOOOOOOOOOOOOOOO',
-], null, null, null, null, "Fortune Field Secret Tunnel", function() {
-    
+    'OOSSSOOOOOOOOOOOOOOO',
+    'OSO~~SOOSSSSOOOOOOOO',
+    'OOSS~~SOS~~SOOSSSSSO',
+    'OOOSS~SSS~~SSSS~~~SO',
+    'OOSS~~~~~~~~~!~~~~SO',
+    'OOS~~SS~~~~SSSS~~~SO',
+    'OSS~SSS~~~SSOOSSSSSO',
+    'OS~~SOSSSOSOOOOOOOOO',
+    'OSS~SOOOSSSOOOOOOOOO',
+    'OOSSSOOOOOOOOOOOOOOO',
+], null, null, null, null, "Fortune Field Secret Tunnel (146, 88)", function() {
+    if (keys.space) {
+        // Exit back through entrance
+        if (p.on(9, 7)) {
+            curMap = mainMap
+            p.goTo(ctr(146), ctr(87))
+        }
+
+        // Second exit (to toggle)
+        if (p.on(2, 1)) {
+            curMap = mainMap
+            p.goTo(ctr(140), ctr(82))
+        }
+    }
 })
 
 var areas = Landscape.all

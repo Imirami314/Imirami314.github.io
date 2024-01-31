@@ -376,7 +376,6 @@ class NPC extends Entity {
 	
         var finished = false
         
-        console.log(pos)
         var moveX = pos[0]
         var moveY = pos[1]
         
@@ -417,7 +416,6 @@ class NPC extends Entity {
             }
     
             this.move(path[this.pathPoint])
-            console.log("Path point: " + path[this.pathPoint])
         } else if (typeof path[this.pathPoint] == "function") {
             try {
                 path[this.pathPoint]()
