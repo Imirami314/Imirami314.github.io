@@ -3903,8 +3903,7 @@ var gameInterval = setInterval(function() {
             for (var i in npcs) {
                 if (!!npcs[i].map) {
                     if (curMap.name == npcs[i].map.name) {
-                        
-                            npcs[i].talk(p, npcs)
+                        npcs[i].talk(p, npcs)
                     }
                 }
             }
