@@ -2697,6 +2697,22 @@ var interactives = [
         curMap.changeBlock(141, 81, '_')
     }, ctr(131), ctr(63)),
 
+    new Toggle(mainMap, 150, 73, function() {
+        curMap.switch(130, 63, "(", ")")
+        curMap.changeBlock(148, 74, 'S')
+    }, function() {
+        curMap.switch(130, 63, "(", ")")
+        curMap.changeBlock(148, 74, '_')
+    }, ctr(130), ctr(63)),
+
+    new Toggle(mainMap, 131, 89, function() {
+        curMap.switch(129, 63, "(", ")")
+        curMap.changeBlock(133, 90, 'W')
+    }, function() {
+        curMap.switch(129, 63, "(", ")")
+        curMap.changeBlock(133, 90, '.')
+    }, ctr(129), ctr(63)),
+
     // Confounded Cave
 
     new Toggle(confoundedCave, 5, 18, function() {
@@ -3082,7 +3098,11 @@ var interactives = [
     new RaftDispenser(drownedRoom, 25 * 75, 5 * 75, 25 * 75 + 37.5, 6 * 75 + 37.5),
 
     // Fortune Field Water Tunnels
-    new RaftDispenser(fortuneFieldWaterTunnel146_88, b(10), b(4), ctr(11), ctr(4))
+    new RaftDispenser(fortuneFieldWaterTunnel146_88, b(10), b(4), ctr(11), ctr(4)),
+
+    new RaftDispenser(fortuneFieldWaterTunnel144_78, b(6), b(5), ctr(7), ctr(5)),
+
+    new MultiToggle(fortuneFieldWaterTunnel144_78, 11, 3, 8, 4, ["!", "$", "S", "W"]),
 ]
 
 /*
@@ -3283,6 +3303,24 @@ const fortuneFieldWaterEntrance146_88 = new Secret(146, 88, mainMap, function() 
     }
 })
 
+const fortuneFieldWaterEntrance144_78 = new Secret(144, 78, mainMap, function() {
+    if (p.can.goUnderWater && keys.space) {
+        Screen.fadeOut(0.01, function() {
+            curMap = fortuneFieldWaterTunnel144_78
+            p.goTo(ctr(9), ctr(5))
+        })
+    }
+})
+
+const fortuneFieldWaterEntrance148_102 = new Secret(148, 102, mainMap, function() {
+    if (p.can.goUnderWater && keys.space) {
+        Screen.fadeOut(0.01, function() {
+            curMap = fortuneFieldWaterTunnel148_102
+            p.goTo(ctr(26), ctr(10))
+        })
+    }
+})
+
 var secrets = Secret.all
 
 var opacity = 1
@@ -3449,7 +3487,7 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = false
+    dev = true
     curMap = mainMap
     p.goTo(ctr(168), 83 * 75)
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
