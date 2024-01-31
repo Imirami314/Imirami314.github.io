@@ -213,7 +213,7 @@ class NPC extends Entity {
         } 
         
         ctx.restore()
-        if (Math.hypot((this.x - p.x), (this.y - p.y)) <= 100 && keys.space && this.lineNum < 0 && this.textCooldown <= 0) {
+        if (Math.hypot((this.x - p.x), (this.y - p.y)) <= 100 && keys.space && this.lineNum < 0 && this.textCooldown <= 0 && CUR_SHOP_MENU == 0) {
             this.lineNum = 0
             this.textCooldown = 1
         } else if (this.remote) {
