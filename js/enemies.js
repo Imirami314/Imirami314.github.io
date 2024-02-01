@@ -78,6 +78,35 @@ Enemy.prototype.movePathTo = function(cordX, cordY) {
     }
 }
 
+class Boss extends Enemy {
+    constructor(map, spawnX, spawnY) {
+        super(map, spawnX, spawnY)
+    }
+
+    healthBar() {
+        ctx.fillStyle = "rgb(150, 0, 0)"
+        ctx.font = "70px serif"
+        ctx.textAlign = "center"
+        ctx.fillText(this.name, width / 2, height / 9)
+        
+        ctx.fillStyle = "rgb(100, 100, 100)"
+        ctx.roundRect(width / 8, height / 8, width * 3 / 4, 25, 10)
+        ctx.fill()
+        if (this.health > 0) {
+            ctx.fillStyle = "rgb(150, 0, 0)"
+            ctx.roundRect(width / 8, height / 8, (width * 3 / 4) * (this.animatedHealth / this.maxHealth), 25, 5)
+            ctx.fill()
+        }
+    
+        if (this.health < this.animatedHealth && this.health > 0) {
+            this.animatedHealth --
+            this.beingHit = true
+        } else {
+            this.beingHit = false
+        }
+    }
+}
+
 // Bosses
 
 function Darkened(map, spawnX, spawnY) {
@@ -354,7 +383,7 @@ Darkened.prototype.healthBar = function() {
     }
 }
 
-class Stormed extends Enemy {
+class Stormed extends Boss {
     constructor(map, spawnX, spawnY) {
         super(map, spawnX, spawnY)
 
@@ -595,33 +624,9 @@ class Stormed extends Enemy {
         this.windModeTimer = 20
         this.windPull = 0.1
     }
-
-    healthBar() {
-        ctx.fillStyle = "rgb(150, 0, 0)"
-        ctx.font = "70px serif"
-        ctx.textAlign = "center"
-        ctx.fillText("Stormed", width / 2, height / 9)
-        
-        ctx.fillStyle = "rgb(100, 100, 100)"
-        ctx.roundRect(width / 8, height / 8, width * 3 / 4, 25, 10)
-        ctx.fill()
-        if (this.health > 0) {
-            ctx.fillStyle = "rgb(150, 0, 0)"
-            ctx.roundRect(width / 8, height / 8, (width * 3 / 4) * (this.animatedHealth / this.maxHealth), 25, 5)
-            ctx.fill()
-        }
-    
-        if (this.health < this.animatedHealth && this.health > 0) {
-            this.animatedHealth --
-            this.beingHit = true
-        } else {
-            this.beingHit = false
-        }
-            
-    }
 }
 
-class Drowned extends Enemy {
+class Drowned extends Boss {
     constructor(map, x, y) {
         super(map, x, y)
 
@@ -954,30 +959,6 @@ class Drowned extends Enemy {
         setTimeout(() => {
             this.stunned = false
         }, 3000)
-    }
-
-    healthBar() {
-        ctx.fillStyle = "rgb(150, 0, 0)"
-        ctx.font = "70px serif"
-        ctx.textAlign = "center"
-        ctx.fillText("Drowned", width / 2, height / 9)
-        
-        ctx.fillStyle = "rgb(100, 100, 100)"
-        ctx.roundRect(width / 8, height / 8, width * 3 / 4, 25, 10)
-        ctx.fill()
-        if (this.health > 0) {
-            ctx.fillStyle = "rgb(150, 0, 0)"
-            ctx.roundRect(width / 8, height / 8, (width * 3 / 4) * (this.animatedHealth / this.maxHealth), 25, 5)
-            ctx.fill()
-        }
-    
-        if (this.health < this.animatedHealth && this.health > 0) {
-            this.animatedHealth --
-            this.beingHit = true
-        } else {
-            this.beingHit = false
-        }
-            
     }
 }
 
