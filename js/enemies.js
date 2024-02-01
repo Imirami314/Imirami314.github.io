@@ -354,314 +354,271 @@ Darkened.prototype.healthBar = function() {
     }
 }
 
-function Stormed(map, spawnX, spawnY) {
-    Enemy.call(this, map, spawnX, spawnY)
-    this.name = "Stormed"
-    this.damage = 10
-    this.maxHealth = 500
-    this.health = 500 // Default 500
-	this.animatedHealth = 500
+class Stormed extends Enemy {
+    constructor(map, spawnX, spawnY) {
+        super(map, spawnX, spawnY)
 
-    this.speed = 2
-    this.moving = false
-    
-    this.playerDist = 69420 // Direct distance from player (I set it to 69420 because it gets updated anyway)
-    this.playerAngle = 0
-    this.bodyAngle = 0
-    this.scaleFactor = 1
-    this.scaleShift = 1
-    this.swordRotation = 0
+        this.name = "Stormed"
+        this.damage = 10
+        this.maxHealth = 500
+        this.health = 500 // Default 500
+        this.animatedHealth = 500
 
-    this.phase = 1 // Default 1
-    this.windMode = false // Default false
-    this.windModeTimer = 20 // Countdown until windMode begins
-    this.windPull = 0.1 // How fast the wind pulls the player towards the boss
+        this.speed = 2
+        this.moving = false
+        
+        this.playerDist = 69420 // Direct distance from player (I set it to 69420 because it gets updated anyway)
+        this.playerAngle = 0
+        this.bodyAngle = 0
+        this.scaleFactor = 1
+        this.scaleShift = 1
+        this.swordRotation = 0
 
-    this.hitCooldown = 1
-    this.hitting = false
-    this.hittable = true // Can boss be hit
-    this.beingHit = false // Is boss being hit
-    this.hitRegistered = false // Keeps track of whether damage has already been dealth
+        this.phase = 1 // Default 1
+        this.windMode = false // Default false
+        this.windModeTimer = 20 // Countdown until windMode begins
+        this.windPull = 0.1 // How fast the wind pulls the player towards the boss
 
-	this.phase2Played = false // Check if phase 2 cutscene has played, Default false
+        this.hitCooldown = 1
+        this.hitting = false
+        this.hittable = true // Can boss be hit
+        this.beingHit = false // Is boss being hit
+        this.hitRegistered = false // Keeps track of whether damage has already been dealth
 
-    //Unused
-    this.phase2MapChanged = false // Check if Stormed changed the landscape so he doesn't do it over and over again in phase 2, Default false
+        this.phase2Played = false // Check if phase 2 cutscene has played, Default false
 
-    this.hasBuiltLavaWalls = false // Default false, keeps track of whether the phase 2 ice walls have been built yet
-    this.isStunned = false // Default false
+        //Unused
+        this.phase2MapChanged = false // Check if Stormed changed the landscape so he doesn't do it over and over again in phase 2, Default false
 
-	this.absorbX = 0
-	this.absorbY = 0
-}
+        this.hasBuiltLavaWalls = false // Default false, keeps track of whether the phase 2 ice walls have been built yet
+        this.isStunned = false // Default false
 
-Stormed.prototype = Object.create(Enemy.prototype)
+        this.absorbX = 0
+        this.absorbY = 0
+    }
 
-Stormed.prototype.draw = function() {
-	
-	this.playerDist = Math.hypot((this.x - p.x), (this.y - p.y))
-    if (this.map == curMap.name) {
-        ctx.save()
-        ctx.translate(this.x, this.y)
-        ctx.rotate(this.bodyAngle) // DEFAULT ON
-        ctx.scale(this.scaleFactor * this.scaleShift, this.scaleFactor * this.scaleShift)
-        ctx.translate(-1 * this.x, -1 * this.y)
-
-        // Body
-        if (this.phase == 1) {
-            if (this.beingHit) {
-                ctx.save()
-                ctx.drawImage(images.stormedPhase2, this.x - 75, this.y - 75, 150, 150)
-                //ctx.translate(Math.random() * 20, Math.random() * 20)
-                ctx.restore()
-            } else {
-                ctx.drawImage(images.stormedPhase1, this.x - 75, this.y - 75, 150, 150)
-            }
-        } else if (this.phase == 2 || this.phase == 3) {
-            ctx.drawImage(images.stormedPhase2, this.x - 75, this.y - 75, 150, 150)
-        }
-
-        if (this.hitting) {
+    draw() {
+        // this.playerDist = Math.hypot((this.x - p.x), (this.y - p.y))
+        if (this.map == curMap.name) {
             ctx.save()
             ctx.translate(this.x, this.y)
-            ctx.translate(Math.random() * 5, Math.random() * 5)
-            ctx.rotate(this.swordRotation)
-            ctx.translate(- (this.x), - (this.y))
-            ellipse(this.x + 75, this.y, 40, 40, "rgb(60, 245, 245)") // Right arm
-            
-            ctx.translate(this.x + 75, this.y)
-            ctx.rotate(Math.PI / 2)
-            ctx.translate(- (this.x + 75), - (this.y))
-            ctx.drawImage(images.stormedSword, this.x + 50, this.y - 150, 50, 150) // Sword
-            ctx.restore()
-        } else {
-            ellipse(this.x - 75, this.y, 40, 40, "rgb(60, 245, 245)") // Left arm
-            ellipse(this.x + 75, this.y, 40, 40, "rgb(60, 245, 245)") // Right arm
-            ctx.drawImage(images.stormedSword, this.x + 50, this.y - 150, 50, 150) // Sword
-        }
-        
-        ctx.restore()
-        ctx.fillStyle = "rgb(0, 0, 0)"
-    }
-}
-
-Stormed.prototype.update = function() {
-
-	// Particles (Wind)
-    this.windParticles = new ParticleSystem(this.x, this.y, 10, 500, 100, 100, 100)
-	if (this.windMode) {
-		this.windParticles.create()
-		this.windParticles.draw()
-	} // Particles behind stormed
-	
-    this.draw()
-	
-    // Makes it so the calculations don't divide by 0
-    if ((p.x - this.x) == 0) {
-        this.x -= 0.5
-    }
+            ctx.rotate(this.bodyAngle) // DEFAULT ON
+            ctx.scale(this.scaleFactor * this.scaleShift, this.scaleFactor * this.scaleShift)
+            ctx.translate(-1 * this.x, -1 * this.y)
     
-    if ((p.y - this.y) == 0) {
-        this.y -= 0.5
-    }
-
-    // Update information for the boss
-    this.hitCooldown -= 1 / 66.67
-    if (this.phase == 2) {
-        this.windModeTimer -= 1 / 66.67
-    }
-    this.cords.x = Math.floor(this.x / 75)
-    this.cords.y = Math.floor(this.y / 75)
-    this.pdx = p.x - this.x
-    this.pdy = p.y - this.y
-    this.dirCoefX = (this.pdx / Math.abs(this.pdx)) // Gives 1 or -1 depending on whether the player is to the left or right
-    this.dirCoefY = (this.pdy / Math.abs(this.pdy)) // Gives 1 or -1 depending on whether the player is above or below
-    this.playerDist = Math.hypot((p.x - this.x), (p.y - this.y))
-    this.playerAngle = Math.atan2((p.y - this.y), (p.x - this.x)) + (Math.PI) / 2 // Gives angle direction of player
-    
-    // Makes the angle pi instead of like 1835pi
-    this.bodyAngle = this.bodyAngle % (Math.PI * 2)
-    // this.playerAngle = this.playerAngle % (Math.PI * 2)
-    // this.swordRotation = this.swordRotation % (Math.PI * 2)
-    
-    // Amount x and y to move at a certain angle
-    this.xFactor = Math.cos(this.playerAngle)
-    this.yFactor = Math.sin(this.playerAngle)
-
-    if (this.hitting) { // Attack animation
-        if (this.phase == 1) {
-            this.swordRotation -= Math.PI / 50 // Rotates to the left
-        } else if (this.phase == 3) {
-            this.swordRotation -= Math.PI / 33.33 // Rotates to the left
-        }
-
-        // Hurts the player on hit, but only if Stormed is facing the right direction
-        // if (Math.abs(this.playerAngle - this.bodyAngle) <= Math.PI / 2 && this.playerDist <= 150) {
-        //     p.getHit(5)
-        // }
-
-        // If sword even touches player at all, it deals damage
-        if (Math.abs((this.playerAngle) - (this.bodyAngle + this.swordRotation + Math.PI / 2)) <= Math.PI / 10 && this.playerDist <= 150) {
-            if (!this.hitRegistered) { // Prevents damage from being dealt more than once
-                p.getHit(3)
-                this.hitRegistered = true
-            }
-        }
-        
-        if (this.swordRotation <= - Math.PI) { // Ends hit when it gets far enough
-            this.swordRotation = 0 // Reset sword position
-            this.hitCooldown = 1
-            this.hitting = false
-            this.hitRegistered = false
-        }
-    }
-
-    if (this.windModeTimer <= 0) {
-        this.windMode = true
-        // Wind mode is on until windModeTimer reaches a certain negative number, then it resets and wind mode ends
-    }
-
-    if (this.phase == 1 || this.phase == 3) {
-        if (this.phase == 3) {
-            if (this.scaleFactor < 1) {
-                this.scaleFactor += 0.01
-            } else {
-                this.scaleFactor = 1
-            }
-        }
-        if (!this.hitting) { // Makes Stormed always face towards the player, but freeze when hitting
-            this.bodyAngle = this.playerAngle
-        }
-        
-        // Moves the boss, but prevents the boss from shaking while moving (moves only when not hitting)
-        if (!this.hitting && this.playerDist > 100) {
-            this.moving = true
-            if (Math.abs(this.pdx) >= 10) {
-                this.x += this.dirCoefX * this.speed // Don't use move function so he can go through blocks
-                // this.move(this.dirCoefX * this.speed, 0)
-            }
-    
-            if (Math.abs(this.pdy) >= 10) {
-                this.y += this.dirCoefY * this.speed
-                // this.move(0, this.dirCoefY * this.speed)
-            }
-        } else {
-            this.moving = false
-        }
-        
-        
-        
-        // If the player is close enough, hit them if the hit is recharged
-        if (this.playerDist <= 150 && this.hitCooldown <= 0) {
-            this.hitting = true
-        }
-
-        if (this.health <= this.maxHealth / 2 && !this.phase2Played) {
-			cutsceneFrame = 0
-            this.phase = 2
-        }
-    } else if (this.phase == 2) {
-        if (this.phase2Played) {
-            if (!this.windMode) {
-                this.scaleFactor -= 0.01
-                if (this.scaleFactor <= 0) {
-                    this.x = 17 * 75 + 37.5
-                    this.y = 17 * 75 + 37.5
-                    this.phase = 3
+            // Body
+            if (this.phase == 1) {
+                if (this.beingHit) {
+                    ctx.save()
+                    ctx.drawImage(images.stormedPhase2, this.x - 75, this.y - 75, 150, 150)
+                    //ctx.translate(Math.random() * 20, Math.random() * 20)
+                    ctx.restore()
+                } else {
+                    ctx.drawImage(images.stormedPhase1, this.x - 75, this.y - 75, 150, 150)
                 }
+            } else if (this.phase == 2 || this.phase == 3) {
+                ctx.drawImage(images.stormedPhase2, this.x - 75, this.y - 75, 150, 150)
+            }
+    
+            if (this.hitting) {
+                ctx.save()
+                ctx.translate(this.x, this.y)
+                ctx.translate(Math.random() * 5, Math.random() * 5)
+                ctx.rotate(this.swordRotation)
+                ctx.translate(- (this.x), - (this.y))
+                ellipse(this.x + 75, this.y, 40, 40, "rgb(60, 245, 245)") // Right arm
                 
-            } else if (this.windMode) {
+                ctx.translate(this.x + 75, this.y)
+                ctx.rotate(Math.PI / 2)
+                ctx.translate(- (this.x + 75), - (this.y))
+                ctx.drawImage(images.stormedSword, this.x + 50, this.y - 150, 50, 150) // Sword
+                ctx.restore()
+            } else {
+                ellipse(this.x - 75, this.y, 40, 40, "rgb(60, 245, 245)") // Left arm
+                ellipse(this.x + 75, this.y, 40, 40, "rgb(60, 245, 245)") // Right arm
+                ctx.drawImage(images.stormedSword, this.x + 50, this.y - 150, 50, 150) // Sword
+            }
+            
+            ctx.restore()
+            ctx.fillStyle = "rgb(0, 0, 0)"
+        }
+    }
+
+    update() {
+
+        // Particles (Wind)
+        this.windParticles = new ParticleSystem(this.x, this.y, 10, 500, 100, 100, 100)
+        if (this.windMode) {
+            this.windParticles.create()
+            this.windParticles.draw()
+        } // Particles behind stormed
+        
+        this.draw()
+        
+        // Makes it so the calculations don't divide by 0
+        if ((p.x - this.x) == 0) {
+            this.x -= 0.5
+        }
+        
+        if ((p.y - this.y) == 0) {
+            this.y -= 0.5
+        }
+    
+        // Update information for the boss
+        this.hitCooldown -= 1 / 66.67
+        if (this.phase == 2) {
+            this.windModeTimer -= 1 / 66.67
+        }
+
+        this.updatePlayerInfo()
+        
+        // Makes the angle pi instead of like 1835pi
+        this.bodyAngle = this.bodyAngle % (Math.PI * 2)
+        
+        // Amount x and y to move at a certain angle
+        this.xFactor = Math.cos(this.playerAngle)
+        this.yFactor = Math.sin(this.playerAngle)
+    
+        if (this.hitting) { // Attack animation
+            if (this.phase == 1) {
+                this.swordRotation -= Math.PI / 50 // Rotates to the left
+            } else if (this.phase == 3) {
+                this.swordRotation -= Math.PI / 33.33 // Rotates to the left
+            }
+    
+            // If sword even touches player at all, it deals damage
+            if (Math.abs((this.playerAngle) - (this.bodyAngle + this.swordRotation + Math.PI / 2)) <= Math.PI / 10 && this.playerDist <= 150) {
+                if (!this.hitRegistered) { // Prevents damage from being dealt more than once
+                    p.getHit(3)
+                    this.hitRegistered = true
+                }
+            }
+            
+            if (this.swordRotation <= - Math.PI) { // Ends hit when it gets far enough
+                this.swordRotation = 0 // Reset sword position
+                this.hitCooldown = 1
+                this.hitting = false
+                this.hitRegistered = false
+            }
+        }
+    
+        if (this.windModeTimer <= 0) {
+            this.windMode = true
+            // Wind mode is on until windModeTimer reaches a certain negative number, then it resets and wind mode ends
+        }
+    
+        if (this.phase == 1 || this.phase == 3) {
+            if (this.phase == 3) {
+                if (this.scaleFactor < 1) {
+                    this.scaleFactor += 0.01
+                } else {
+                    this.scaleFactor = 1
+                }
+            }
+            if (!this.hitting) { // Makes Stormed always face towards the player, but freeze when hitting
+                this.bodyAngle = this.playerAngle
+            }
+            
+            // Moves the boss, but prevents the boss from shaking while moving (moves only when not hitting)
+            if (!this.hitting && this.playerDist > 100) {
+                this.moving = true
+                if (Math.abs(this.pdx) >= 10) {
+                    this.x += this.dirCoefX * this.speed // Don't use move function so he can go through blocks
+                    // this.move(this.dirCoefX * this.speed, 0)
+                }
+        
+                if (Math.abs(this.pdy) >= 10) {
+                    this.y += this.dirCoefY * this.speed
+                    // this.move(0, this.dirCoefY * this.speed)
+                }
+            } else {
+                this.moving = false
+            }
+            
+            // If the player is close enough, hit them if the hit is recharged
+            if (this.playerDist <= 150 && this.hitCooldown <= 0) {
+                this.hitting = true
+            }
+    
+            if (this.health <= this.maxHealth / 2 && !this.phase2Played) {
+                cutsceneFrame = 0
+                this.phase = 2
+            }
+        } else if (this.phase == 2) {
+            if (this.phase2Played) {
+                if (!this.windMode) {
+                    this.scaleFactor -= 0.01
+                    if (this.scaleFactor <= 0) {
+                        this.x = 17 * 75 + 37.5
+                        this.y = 17 * 75 + 37.5
+                        this.phase = 3
+                    }
+                    
+                } else if (this.windMode) {
+                    this.x = 13 * 75 + 37.5
+                    this.y = 17 * 75 + 37.5
+                    this.doWindMode()
+                }
+            } else {
+                scene = "STORMED BOSS CUTSCENE PHASE 2"
+                this.phase2Played = true
+                this.windMode = true
                 this.x = 13 * 75 + 37.5
                 this.y = 17 * 75 + 37.5
-                this.doWindMode()
+                p.goTo(13 * 75 + 37.5, 21 * 75 + 37.5)
             }
-        } else {
-            scene = "STORMED BOSS CUTSCENE PHASE 2"
-            this.phase2Played = true
-            this.windMode = true
-            this.x = 13 * 75 + 37.5
-            this.y = 17 * 75 + 37.5
-            p.goTo(13 * 75 + 37.5, 21 * 75 + 37.5)
         }
     }
-}
 
-Stormed.prototype.doWindMode = function() {
-    if (!this.hasBuiltLavaWalls) {
-        // Builds ice wall around Stormed at the start of windMode
-        // curMap.changeBlock(this.cords.x - 1, this.cords.y - 1, 'I')
-        // curMap.changeBlock(this.cords.x, this.cords.y - 1, 'I')
-        // curMap.changeBlock(this.cords.x + 1, this.cords.y - 1, 'I')
-        // curMap.changeBlock(this.cords.x - 1, this.cords.y, 'I')
-        // curMap.changeBlock(this.cords.x + 1, this.cords.y, 'I')
-        // curMap.changeBlock(this.cords.x - 1, this.cords.y + 1, 'I')
-        // curMap.changeBlock(this.cords.x, this.cords.y + 1, 'I')
-        // curMap.changeBlock(this.cords.x + 1, this.cords.y + 1, 'I')
-        stormedRoom.changeBlocks([
-            [11, 15], [11, 16], [11, 17], [11, 18], [11, 19],
-            [12, 19], [13, 19], [14, 19], [15, 19],
-            [15, 18], [15, 17], [15, 16], [15, 15],
-            [12, 15], [13, 15], [14, 15],
-        ], '!')
-        this.hasBuiltLavaWalls = true
-    } else {
-        // Check if any of the walls are broken
-        // if (curMap.getBlock(this.cords.x - 1, this.cords.y - 1) == '~' ||
-        //         curMap.getBlock(this.cords.x, this.cords.y - 1) == '~' ||
-        //         curMap.getBlock(this.cords.x + 1, this.cords.y - 1) == '~' ||
-        //         curMap.getBlock(this.cords.x - 1, this.cords.y) == '~' ||
-        //         curMap.getBlock(this.cords.x + 1, this.cords.y) == '~' ||
-        //         curMap.getBlock(this.cords.x - 1, this.cords.y + 1) == '~' ||
-        //         curMap.getBlock(this.cords.x, this.cords.y + 1) == '~' ||
-        //         curMap.getBlock(this.cords.x + 1, this.cords.y + 1) == '~') {
-        //     // this.beStunned()
-        //     this.phase = 3
-        //     this.windMode = false
-        // }
-    }
-    this.bodyAngle += Math.PI / 25
-    p.manualMove(-1 * Math.cos(this.playerAngle - Math.PI / 2) * this.windPull, -1 * Math.sin(this.playerAngle - Math.PI / 2) * this.windPull) // Pulls the player towards Stormed
-    if (this.windPull <= 8) { // Accelerate speed that player gets pulled in, caps at 8 pixels/frame
-        this.windPull *= 1.01
+    doWindMode() {
+        if (!this.hasBuiltLavaWalls) {
+            stormedRoom.changeBlocks([
+                [11, 15], [11, 16], [11, 17], [11, 18], [11, 19],
+                [12, 19], [13, 19], [14, 19], [15, 19],
+                [15, 18], [15, 17], [15, 16], [15, 15],
+                [12, 15], [13, 15], [14, 15],
+            ], '!')
+            this.hasBuiltLavaWalls = true
+        }
+        this.bodyAngle += Math.PI / 25
+        p.manualMove(-1 * Math.cos(this.playerAngle - Math.PI / 2) * this.windPull, -1 * Math.sin(this.playerAngle - Math.PI / 2) * this.windPull) // Pulls the player towards Stormed
+        if (this.windPull <= 8) { // Accelerate speed that player gets pulled in, caps at 8 pixels/frame
+            this.windPull *= 1.01
+        }
+    
+        if (this.windModeTimer <= -10) { // Wind mode lasts for 10 seconds
+            this.resetWindMode()
+        }
     }
 
-    if (this.windModeTimer <= -10) { // Wind mode lasts for 10 seconds
-        this.resetWindMode()
+    resetWindMode() {
+        this.windModeTimer = 20
+        this.windPull = 0.1
     }
-}
 
-Stormed.prototype.resetWindMode = function() {
-    this.windModeTimer = 20
-    this.windPull = 0.1
-}
-
-// Stormed.prototype.beStunned = function () {
-//     this.windMode = false
-//     this.resetWindMode()
-// }
-
-Stormed.prototype.healthBar = function() {
-	ctx.fillStyle = "rgb(150, 0, 0)"
-	ctx.font = "70px serif"
-    ctx.textAlign = "center"
-    ctx.fillText("Stormed", width / 2, height / 9)
-	
-    ctx.fillStyle = "rgb(100, 100, 100)"
-    ctx.roundRect(width / 8, height / 8, width * 3 / 4, 25, 10)
-	ctx.fill()
-    if (this.health > 0) {
+    healthBar() {
         ctx.fillStyle = "rgb(150, 0, 0)"
-        ctx.roundRect(width / 8, height / 8, (width * 3 / 4) * (this.animatedHealth / this.maxHealth), 25, 5)
-    	ctx.fill()
+        ctx.font = "70px serif"
+        ctx.textAlign = "center"
+        ctx.fillText("Stormed", width / 2, height / 9)
+        
+        ctx.fillStyle = "rgb(100, 100, 100)"
+        ctx.roundRect(width / 8, height / 8, width * 3 / 4, 25, 10)
+        ctx.fill()
+        if (this.health > 0) {
+            ctx.fillStyle = "rgb(150, 0, 0)"
+            ctx.roundRect(width / 8, height / 8, (width * 3 / 4) * (this.animatedHealth / this.maxHealth), 25, 5)
+            ctx.fill()
+        }
+    
+        if (this.health < this.animatedHealth && this.health > 0) {
+            this.animatedHealth --
+            this.beingHit = true
+        } else {
+            this.beingHit = false
+        }
+            
     }
-
-	if (this.health < this.animatedHealth && this.health > 0) {
-		this.animatedHealth --
-        this.beingHit = true
-	} else {
-        this.beingHit = false
-    }
-		
 }
 
 class Drowned extends Enemy {
