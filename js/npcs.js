@@ -19,6 +19,8 @@ class NPC extends Entity {
         this.cords = {}
         this.speed = 4 // Default 4 or 5
         this.dir = dir
+        this.dirSave = dir
+        this.lookAtPlayer = true
         this.name = name
         
         this.lines = lines
@@ -216,6 +218,7 @@ class NPC extends Entity {
         if (Math.hypot((this.x - p.x), (this.y - p.y)) <= 100 && keys.space && this.lineNum < 0 && this.textCooldown <= 0 && CUR_SHOP_MENU == 0) {
             this.lineNum = 0
             this.textCooldown = 1
+            this.dirSave = this.dir
         } else if (this.remote) {
             this.remoteSpeak = true
             this.lineNum = 0
@@ -245,24 +248,32 @@ class NPC extends Entity {
         }
     
         if (this.lineNum >= 0 && playerDist <= 100) {
-    
-            // Change player dir depending on which way you're facing
+            // Change player/npc dir depending on which way you're facing
             if (p.cords.y == this.cords.y) {
-                if (p.cords.x == this.cords.x) {
-                    p.dir = "U"
-                } else if (p.x > this.x) {
+                if (p.x > this.x) {
                     p.dir = "L"
+                    if (this.lookAtPlayer) {
+                        this.dir = "R"
+                    }
                 } else if (p.x < this.x) {
                     p.dir = "R"
+                    if (this.lookAtPlayer) {
+                        this.dir = "L"
+                    }
                 }
             } else if (p.cords.y > this.cords.y) {
                 p.dir = "U"
-            } else {
+                if (this.lookAtPlayer) {
+                    this.dir = "D"
+                }
+            } else if (p.cords.y < this.cords.y) {
                 p.dir = "D"
+                if (this.lookAtPlayer) {
+                    this.dir = "U"
+                }
             }
             
         }
-        
     
         if (this.lineNum >= 0) {
             
@@ -299,6 +310,7 @@ class NPC extends Entity {
                             this.actionFinished = false
                             this.talkedTo = true
                             this.remoteSpeak = false
+                            this.dir = this.dirSave
                         } else {
                             this.lineNum ++
                             this.nextIndicatorY = 0
@@ -365,10 +377,6 @@ class NPC extends Entity {
         } else {
             p.canMove = true
         }
-    
-        
-    
-        
     }
 
     move(pos) {

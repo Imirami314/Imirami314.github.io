@@ -2243,7 +2243,7 @@ var steelField = new Region([
         x1: 92,
         y1: 1,
         x2: 138,
-        y2: 60
+        y2: 51
     }
 ], function() {
     setLighting(5000)

@@ -570,45 +570,6 @@ Player.prototype.HUD = function() {
     }
 }
 
-
-/**
- * Check if player is on a block at certain coordinates
- * @param {number} x The x coordinate to check
- * @param {number} y The y coordinate to check
- */
-// Player.prototype.on = function(x, y) {
-//     if (this.cords.x == x && this.cords.y == y) {
-//         return true
-//     }
-// }
-
-
-/**
- * Checks if player is within a specific area
- * @param {*} x1 X Block coordinate of top left corner
- * @param {*} y1 Y Block coordinate of top left corner
- * @param {*} x2 X Block coordinate of bottom right corner
- * @param {*} y2 Y Block coordinate of bottom right corner
- * @returns 
- */
-// Player.prototype.in = function(x1, y1, x2, y2) {
-//     if (this.cords.x >= x1 && this.cords.x <= x2 && this.cords.y >= y1 && this.cords.y <= y2) {
-//         return true
-//     }
-
-//     return false
-// }
-
-/**
- * Teleports player to specific location
- * @param {*} x IN PIXELS
- * @param {*} y IN PIXELS
- */
-// Player.prototype.goTo = function(x, y) {
-//     this.x = x
-//     this.y = y
-// }
-
 Player.prototype.move = function() {
     if (!!this.inventory[this.weaponIndex]) {
         this.weapon = this.inventory[this.weaponIndex]
@@ -2579,6 +2540,11 @@ var pierre = new NPC(ctr(180), ctr(101), "Pierre", mainMap, 'U', [
         ]
 
         pierre.action = function() {
+            pierre.lines = [
+                "Thanks for the cake.",
+                "I'm heading back to my friend Fred now."
+            ]
+            pierre.lookAtPlayer = true
             let path = pierre.pathTo(168, 79)
             path.push(function() {
                 pierre.dir = 'D'
@@ -2619,6 +2585,8 @@ var pierre = new NPC(ctr(180), ctr(101), "Pierre", mainMap, 'U', [
         p.removeItem(food.cake())
     }
 }, 0)
+
+pierre.lookAtPlayer = false
 
 var npcs = NPC.all
 var shopMenus = [muhammadShop, blakeShop, caspianShop]
@@ -3504,7 +3472,7 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = true
+    dev = false
     curMap = mainMap
     p.goTo(ctr(128), ctr(63))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
