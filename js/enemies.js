@@ -664,277 +664,191 @@ Stormed.prototype.healthBar = function() {
 		
 }
 
+class Drowned extends Enemy {
+    constructor(map, x, y) {
+        super(map, x, y)
 
+        this.name = "Drowned"
+        this.damage = 10
+        this.maxHealth = 900
+        this.health = 900 // Default 900
+        this.animatedHealth = 900
 
-function Drowned(map, spawnX, spawnY) {
-    Enemy.call(this, map, spawnX, spawnY)
-    this.name = "Drowned"
-    this.damage = 10
-    this.maxHealth = 900
-    this.health = 900 // Default 900
-	this.animatedHealth = 900
+        this.speed = 1.5
+        this.moving = false
+        
+        this.playerDist = 69420 // Direct distance from player (I set it to 69420 because it gets updated anyway)
+        this.playerAngle = 0
+        this.bodyAngle = 0
+        this.bodyAngleChangeCounter = 0
+        this.scaleFactor = 1
+        this.scaleShift = 1
+        this.swordRotation = 0
 
-    this.speed = 1.5
-    this.moving = false
-    
-    this.playerDist = 69420 // Direct distance from player (I set it to 69420 because it gets updated anyway)
-    this.playerAngle = 0
-    this.bodyAngle = 0
-    this.bodyAngleChangeCounter = 0
-    this.scaleFactor = 1
-    this.scaleShift = 1
-    this.swordRotation = 0
+        this.phase = 1 // Default 1
 
-    this.phase = 1 // Default 1
+        this.hitCooldown = 1
+        this.hitting = false
+        this.hittable = true // Can boss be hit
+        this.beingHit = false // Is boss being hit
+        this.hitRegistered = false // Keeps track of whether damage has already been dealth
+        this.preppingAttack = false
+        this.ringDamage = 1
 
-    this.hitCooldown = 1
-    this.hitting = false
-    this.hittable = true // Can boss be hit
-    this.beingHit = false // Is boss being hit
-    this.hitRegistered = false // Keeps track of whether damage has already been dealth
-    this.preppingAttack = false
-    this.ringDamage = 1
+        this.phase2Played = false // Check if phase 2 cutscene has played, Default false
 
-	this.phase2Played = false // Check if phase 2 cutscene has played, Default false
+        this.prepAngleCounter = 0 // Angle for where Drowned pulls back for a bit before hitting
+        this.ringSize = 10
+        this.ringOpacity = 1
 
-    this.prepAngleCounter = 0 // Angle for where Drowned pulls back for a bit before hitting
-    this.ringSize = 10
-    this.ringOpacity = 1
+        this.hasSummonedMinions = false
+        this.numMinions = 0
+        this.minionSummonTimer = 1
+    }
 
-    this.hasSummonedMinions = false
-    this.numMinions = 0
-    this.minionSummonTimer = 1
-}
-
-Drowned.prototype = Object.create(Enemy.prototype)
-
-Drowned.prototype.draw = function() {
+    draw() {
 	
-	this.playerDist = Math.hypot((this.x - p.x), (this.y - p.y))
-    if (this.map == curMap.name) {
-        ctx.save()
-        ctx.translate(this.x, this.y)
-        ctx.rotate(this.bodyAngle) // DEFAULT ON
-        ctx.scale(this.scaleFactor * this.scaleShift, this.scaleFactor * this.scaleShift)
-        ctx.translate(-1 * this.x, -1 * this.y)
-
-        // Body
-        if (this.phase == 1) {
-            if (this.beingHit) {
-                ctx.save()
-                ctx.drawImage(images.drownedHurt, this.x - 75, this.y - 75, 150, 150)
-                ctx.restore()
-            } else {
-                // Ring
-                ctx.beginPath()
-                ctx.strokeStyle = "rgba(0, 255, 255, " + this.ringOpacity + ")"
-                ctx.arc(this.x, this.y, this.ringSize / 2, 0, 2 * Math.PI, true)
-                ctx.lineWidth = 15
-                ctx.stroke()
-
-                if (!this.stunned) {
-                    ctx.drawImage(images.drownedPhase1, this.x - 75, this.y - 75, 150, 150)
+        this.playerDist = Math.hypot((this.x - p.x), (this.y - p.y))
+        if (this.map == curMap.name) {
+            ctx.save()
+            ctx.translate(this.x, this.y)
+            ctx.rotate(this.bodyAngle) // DEFAULT ON
+            ctx.scale(this.scaleFactor * this.scaleShift, this.scaleFactor * this.scaleShift)
+            ctx.translate(-1 * this.x, -1 * this.y)
+    
+            // Body
+            if (this.phase == 1) {
+                if (this.beingHit) {
+                    ctx.save()
+                    ctx.drawImage(images.drownedHurt, this.x - 75, this.y - 75, 150, 150)
+                    ctx.restore()
                 } else {
-                    ctx.drawImage(images.drownedStunned, this.x - 75, this.y - 75, 150, 150)
-                }
-            }
-        } else if (this.phase == 2) {
-            if (this.beingHit) {
-                ctx.save()
-                ctx.drawImage(images.drownedHurt, this.x - 75, this.y - 75, 150, 150)
-                ctx.restore()
-            } else {
-                // Ring
-                ctx.beginPath()
-                if (this.phase == 1) {
+                    // Ring
+                    ctx.beginPath()
                     ctx.strokeStyle = "rgba(0, 255, 255, " + this.ringOpacity + ")"
-                } else if (this.phase == 2){
-                    ctx.strokeStyle = "rgba(191, 61, 217, " + this.ringOpacity + ")"
+                    ctx.arc(this.x, this.y, this.ringSize / 2, 0, 2 * Math.PI, true)
+                    ctx.lineWidth = 15
+                    ctx.stroke()
+    
+                    if (!this.stunned) {
+                        ctx.drawImage(images.drownedPhase1, this.x - 75, this.y - 75, 150, 150)
+                    } else {
+                        ctx.drawImage(images.drownedStunned, this.x - 75, this.y - 75, 150, 150)
+                    }
                 }
-                ctx.arc(this.x, this.y, this.ringSize / 2, 0, 2 * Math.PI, true)
-                ctx.lineWidth = 15
-                ctx.stroke()
-
-                ctx.drawImage(images.drownedPhase2, this.x - 75, this.y - 75, 150, 150)
-            }
-        }
-
-        if (this.hitting) {
-            // Arms and weapons
-            ctx.drawImage(images.drownedScythe, this.x, this.y - 150, 105, 150) // Scythe
-            if (this.phase == 1) {
-                ellipse(this.x - 85, this.y, 40, 40, "rgb(0, 50, 150)") // Left arm
-                ellipse(this.x + 85, this.y, 40, 40, "rgb(0, 50, 150)") // Right arm
             } else if (this.phase == 2) {
-                ellipse(this.x - 85, this.y, 40, 40, "rgb(150, 50, 150)") // Left arm
-                ellipse(this.x + 85, this.y, 40, 40, "rgb(150, 50, 150)") // Right arm
+                if (this.beingHit) {
+                    ctx.save()
+                    ctx.drawImage(images.drownedHurt, this.x - 75, this.y - 75, 150, 150)
+                    ctx.restore()
+                } else {
+                    // Ring
+                    ctx.beginPath()
+                    if (this.phase == 1) {
+                        ctx.strokeStyle = "rgba(0, 255, 255, " + this.ringOpacity + ")"
+                    } else if (this.phase == 2){
+                        ctx.strokeStyle = "rgba(191, 61, 217, " + this.ringOpacity + ")"
+                    }
+                    ctx.arc(this.x, this.y, this.ringSize / 2, 0, 2 * Math.PI, true)
+                    ctx.lineWidth = 15
+                    ctx.stroke()
+    
+                    ctx.drawImage(images.drownedPhase2, this.x - 75, this.y - 75, 150, 150)
+                }
             }
-        } else {
-            ctx.drawImage(images.drownedScythe, this.x, this.y - 150, 105, 150) // Scythe
-            if (this.phase == 1) {
-                ellipse(this.x - 85, this.y, 40, 40, "rgb(0, 50, 150)") // Left arm
-                ellipse(this.x + 85, this.y, 40, 40, "rgb(0, 50, 150)") // Right arm
-            } else if (this.phase == 2) {
-                ellipse(this.x - 85, this.y, 40, 40, "rgb(150, 50, 150)") // Left arm
-                ellipse(this.x + 85, this.y, 40, 40, "rgb(150, 50, 150)") // Right arm
+    
+            if (this.hitting) {
+                // Arms and weapons
+                ctx.drawImage(images.drownedScythe, this.x, this.y - 150, 105, 150) // Scythe
+                if (this.phase == 1) {
+                    ellipse(this.x - 85, this.y, 40, 40, "rgb(0, 50, 150)") // Left arm
+                    ellipse(this.x + 85, this.y, 40, 40, "rgb(0, 50, 150)") // Right arm
+                } else if (this.phase == 2) {
+                    ellipse(this.x - 85, this.y, 40, 40, "rgb(150, 50, 150)") // Left arm
+                    ellipse(this.x + 85, this.y, 40, 40, "rgb(150, 50, 150)") // Right arm
+                }
+            } else {
+                ctx.drawImage(images.drownedScythe, this.x, this.y - 150, 105, 150) // Scythe
+                if (this.phase == 1) {
+                    ellipse(this.x - 85, this.y, 40, 40, "rgb(0, 50, 150)") // Left arm
+                    ellipse(this.x + 85, this.y, 40, 40, "rgb(0, 50, 150)") // Right arm
+                } else if (this.phase == 2) {
+                    ellipse(this.x - 85, this.y, 40, 40, "rgb(150, 50, 150)") // Left arm
+                    ellipse(this.x + 85, this.y, 40, 40, "rgb(150, 50, 150)") // Right arm
+                }
             }
+            
+            ctx.restore()
+            ctx.fillStyle = "rgb(0, 0, 0)"
+        }
+    }
+
+    update() {
+        this.draw()
+        
+        // Makes it so the calculations don't divide by 0
+        if ((p.x - this.x) == 0) {
+            this.x -= 0.5
         }
         
-        ctx.restore()
-        ctx.fillStyle = "rgb(0, 0, 0)"
-    }
-}
-
-Drowned.prototype.update = function() {
-    this.draw()
-	
-    // Makes it so the calculations don't divide by 0
-    if ((p.x - this.x) == 0) {
-        this.x -= 0.5
-    }
-    
-    if ((p.y - this.y) == 0) {
-        this.y -= 0.5
-    }
-
-    // Update information for the boss
-    this.hitCooldown -= 1 / 66.67
-    if (this.phase == 2) {
-        this.windModeTimer -= 1 / 66.67
-    }
-    this.cords.x = Math.floor(this.x / 75)
-    this.cords.y = Math.floor(this.y / 75)
-    this.blockOn = curMap.getBlock(this.cords.x, this.cords.y)
-    this.pdx = p.x - this.x
-    this.pdy = p.y - this.y
-    this.dirCoefX = (this.pdx / Math.abs(this.pdx)) // Gives 1 or -1 depending on whether the player is to the left or right
-    this.dirCoefY = (this.pdy / Math.abs(this.pdy)) // Gives 1 or -1 depending on whether the player is above or below
-    this.playerDist = Math.hypot((p.x - this.x), (p.y - this.y))
-    this.playerAngle = Math.atan2((p.y - this.y), (p.x - this.x)) + (Math.PI) / 2 // Gives angle direction of player
-    
-    // Makes the angle pi instead of like 1835pi
-    this.bodyAngle = this.bodyAngle % (Math.PI * 2)
-    
-    // Amount x and y to move at a certain angle
-    this.xFactor = Math.cos(this.playerAngle)
-    this.yFactor = Math.sin(this.playerAngle)
-
-    if (this.phase == 1) {
-        this.phase1()
-    } else if (this.phase == 2) {
-        this.phase2()
-    }
-}
-
-Drowned.prototype.phase1 = function() {
-    if (!this.stunned) {
-        if (!this.hitting && this.playerDist > 100 && !this.preppingAttack) {
-            this.moving = true
-            if (Math.abs(this.pdx) >= 10) {
-                this.move(this.dirCoefX * this.speed, 0)
-            }
-
-            if (Math.abs(this.pdy) >= 10) {
-                this.move(0, this.dirCoefY * this.speed)
-            }
+        if ((p.y - this.y) == 0) {
+            this.y -= 0.5
         }
+    
+        // Update information for the boss
+        this.hitCooldown -= 1 / 66.67
+        if (this.phase == 2) {
+            this.windModeTimer -= 1 / 66.67
+        }
+        this.cords.x = Math.floor(this.x / 75)
+        this.cords.y = Math.floor(this.y / 75)
+        this.blockOn = curMap.getBlock(this.cords.x, this.cords.y)
+        this.pdx = p.x - this.x
+        this.pdy = p.y - this.y
+        this.dirCoefX = (this.pdx / Math.abs(this.pdx)) // Gives 1 or -1 depending on whether the player is to the left or right
+        this.dirCoefY = (this.pdy / Math.abs(this.pdy)) // Gives 1 or -1 depending on whether the player is above or below
+        this.playerDist = Math.hypot((p.x - this.x), (p.y - this.y))
+        this.playerAngle = Math.atan2((p.y - this.y), (p.x - this.x)) + (Math.PI) / 2 // Gives angle direction of player
         
+        // Makes the angle pi instead of like 1835pi
+        this.bodyAngle = this.bodyAngle % (Math.PI * 2)
         
-
-        if (this.playerDist <= 200 && !this.preppingAttack) {
-            setTimeout(() => {
-                this.hitting = true
-                this.preppingAttack = false
-            }, 1500)
-
-            this.preppingAttack = true
+        // Amount x and y to move at a certain angle
+        this.xFactor = Math.cos(this.playerAngle)
+        this.yFactor = Math.sin(this.playerAngle)
+    
+        if (this.phase == 1) {
+            this.phase1()
+        } else if (this.phase == 2) {
+            this.phase2()
         }
     }
 
-    if (this.preppingAttack) { // Slowly turn to indicate charging up attack
-        this.bodyAngle += (Math.PI / 66.67) / 5
-    }
-
-    if (this.hitting && !this.stunned) { // Attack animation
-        if (this.ringOpacity > 0) {
-            this.ringSize += 20
-            if (Math.abs(this.ringSize / 2 - this.playerDist) <= 10) {
-                p.getHit(this.ringDamage)
+    phase1() {
+        if (!this.stunned) {
+            if (!this.hitting && this.playerDist > 100 && !this.preppingAttack) {
+                this.moving = true
+                if (Math.abs(this.pdx) >= 10) {
+                    this.move(this.dirCoefX * this.speed, 0)
+                }
+    
+                if (Math.abs(this.pdy) >= 10) {
+                    this.move(0, this.dirCoefY * this.speed)
+                }
             }
-            this.ringOpacity -= 2 / 66.67
-        } else {
-            this.hitting = false
-            this.ringSize = 10
-            this.ringOpacity = 1
-        }
-
-        if (this.bodyAngleChangeCounter < Math.PI * 2) {
-            this.bodyAngle -= Math.PI / 10
-            this.bodyAngleChangeCounter += Math.PI / 10
-        }
-    } else {
-        // Stare at player
-        if (!this.stunned && !this.preppingAttack) {
-            this.bodyAngle = this.playerAngle
-        }
-        this.bodyAngleChangeCounter  = 0
-    }
-
-    if (this.blockOn == '!') {
-        this.getStunned()
-    }
-
-    if (this.health <= this.maxHealth / 2) {
-        this.phase = 2
-        this.ringDamge = 1.15
-        this.goTo(ctr(15), ctr(15))
-
-        // Remove later when adding phase 2 cutscene
-        curMap.changeBlocks([
-            [14, 1],
-            [16, 1],
-            [14, 15],
-            [15, 14],
-            [16, 15],
-            [15, 16]
-        ], '~')
-    }
-}
-
-Drowned.prototype.phase2 = function() {
-    if (this.on(15, 15) && this.numMinions < 3 && !this.hasSummonedMinions) {
-        this.minionSummonTimer -= 1 / 66.67
-        this.bodyAngle += Math.PI * 2 / 66.67
-        if (this.minionSummonTimer <= 0) {
-            this.summonMinion(this.x - 150 + this.numMinions * 150, this.y + 100)
-            this.minionSummonTimer = 1
-        }
-    } else {
-        this.hasSummonedMinions = true
-        if (!this.hitting && this.playerDist > 100 && !this.preppingAttack) {
-            this.moving = true
-            if (Math.abs(this.pdx) >= 10) {
-                this.move(this.dirCoefX * this.speed, 0)
-            }
-
-            if (Math.abs(this.pdy) >= 10) {
-                this.move(0, this.dirCoefY * this.speed)
+            
+            
+    
+            if (this.playerDist <= 200 && !this.preppingAttack) {
+                setTimeout(() => {
+                    this.hitting = true
+                    this.preppingAttack = false
+                }, 1500)
+    
+                this.preppingAttack = true
             }
         }
-
-        this.activateMinions()
-
-
-        // Attacks that Drowned itself does (just like phase 1)
-        if (this.playerDist <= 200 && !this.preppingAttack) {
-            setTimeout(() => {
-                this.hitting = true
-                this.preppingAttack = false
-            }, 1500)
-
-            this.preppingAttack = true
-        }
-
+    
         if (this.preppingAttack) { // Slowly turn to indicate charging up attack
             this.bodyAngle += (Math.PI / 66.67) / 5
         }
@@ -963,66 +877,151 @@ Drowned.prototype.phase2 = function() {
             }
             this.bodyAngleChangeCounter  = 0
         }
+    
+        if (this.blockOn == '!') {
+            this.getStunned()
+        }
+    
+        if (this.health <= this.maxHealth / 2) {
+            this.phase = 2
+            this.ringDamge = 1.15
+            this.goTo(ctr(15), ctr(15))
+    
+            // Remove later when adding phase 2 cutscene
+            curMap.changeBlocks([
+                [14, 1],
+                [16, 1],
+                [14, 15],
+                [15, 14],
+                [16, 15],
+                [15, 16]
+            ], '~')
+        }
     }
 
-    // this.displayMinions()
-}
-
-Drowned.prototype.summonMinion = function(x, y) {
-    var minion = new DrownedMinion("Drowned Room", x, y)
-    monsters.push(minion)
-    this.numMinions ++
-}
-
-Drowned.prototype.displayMinions = function() {
-    monsters.forEach((m) => {
-        if (m instanceof DrownedMinion) {
-            m.draw()
+    phase2() {
+        if (this.on(15, 15) && this.numMinions < 3 && !this.hasSummonedMinions) {
+            this.minionSummonTimer -= 1 / 66.67
+            this.bodyAngle += Math.PI * 2 / 66.67
+            if (this.minionSummonTimer <= 0) {
+                this.summonMinion(this.x - 150 + this.numMinions * 150, this.y + 100)
+                this.minionSummonTimer = 1
+            }
+        } else {
+            this.hasSummonedMinions = true
+            if (!this.hitting && this.playerDist > 100 && !this.preppingAttack) {
+                this.moving = true
+                if (Math.abs(this.pdx) >= 10) {
+                    this.move(this.dirCoefX * this.speed, 0)
+                }
+    
+                if (Math.abs(this.pdy) >= 10) {
+                    this.move(0, this.dirCoefY * this.speed)
+                }
+            }
+    
+            this.activateMinions()
+    
+    
+            // Attacks that Drowned itself does (just like phase 1)
+            if (this.playerDist <= 200 && !this.preppingAttack) {
+                setTimeout(() => {
+                    this.hitting = true
+                    this.preppingAttack = false
+                }, 1500)
+    
+                this.preppingAttack = true
+            }
+    
+            if (this.preppingAttack) { // Slowly turn to indicate charging up attack
+                this.bodyAngle += (Math.PI / 66.67) / 5
+            }
+        
+            if (this.hitting && !this.stunned) { // Attack animation
+                if (this.ringOpacity > 0) {
+                    this.ringSize += 20
+                    if (Math.abs(this.ringSize / 2 - this.playerDist) <= 10) {
+                        p.getHit(this.ringDamage)
+                    }
+                    this.ringOpacity -= 2 / 66.67
+                } else {
+                    this.hitting = false
+                    this.ringSize = 10
+                    this.ringOpacity = 1
+                }
+        
+                if (this.bodyAngleChangeCounter < Math.PI * 2) {
+                    this.bodyAngle -= Math.PI / 10
+                    this.bodyAngleChangeCounter += Math.PI / 10
+                }
+            } else {
+                // Stare at player
+                if (!this.stunned && !this.preppingAttack) {
+                    this.bodyAngle = this.playerAngle
+                }
+                this.bodyAngleChangeCounter  = 0
+            }
         }
-    })
-}
+    
+        // this.displayMinions()
+    }
 
-Drowned.prototype.activateMinions = function() {
-    monsters.forEach((m) => {
-        if (m instanceof DrownedMinion && !m.dead) {
-            m.update()
-        }
-    })
-}
+    summonMinion(x, y) {
+        var minion = new DrownedMinion("Drowned Room", x, y)
+        monsters.push(minion)
+        this.numMinions ++
+    }
 
-Drowned.prototype.getStunned = function() {
-    this.stunned = true
-    this.stun()
-}
+    displayMinions() {
+        monsters.forEach((m) => {
+            if (m instanceof DrownedMinion) {
+                m.draw()
+            }
+        })
+    }
 
-Drowned.prototype.stun = function() {
-    setTimeout(() => {
-        this.stunned = false
-    }, 3000)
-}
+    activateMinions() {
+        monsters.forEach((m) => {
+            if (m instanceof DrownedMinion && !m.dead) {
+                m.update()
+            }
+        })
+    }
 
-Drowned.prototype.healthBar = function() {
-	ctx.fillStyle = "rgb(150, 0, 0)"
-	ctx.font = "70px serif"
-    ctx.textAlign = "center"
-    ctx.fillText("Drowned", width / 2, height / 9)
-	
-    ctx.fillStyle = "rgb(100, 100, 100)"
-    ctx.roundRect(width / 8, height / 8, width * 3 / 4, 25, 10)
-	ctx.fill()
-    if (this.health > 0) {
+    getStunned() {
+        this.stunned = true
+        this.stun()
+    }
+
+    stun() {
+        setTimeout(() => {
+            this.stunned = false
+        }, 3000)
+    }
+
+    healthBar() {
         ctx.fillStyle = "rgb(150, 0, 0)"
-        ctx.roundRect(width / 8, height / 8, (width * 3 / 4) * (this.animatedHealth / this.maxHealth), 25, 5)
-    	ctx.fill()
+        ctx.font = "70px serif"
+        ctx.textAlign = "center"
+        ctx.fillText("Drowned", width / 2, height / 9)
+        
+        ctx.fillStyle = "rgb(100, 100, 100)"
+        ctx.roundRect(width / 8, height / 8, width * 3 / 4, 25, 10)
+        ctx.fill()
+        if (this.health > 0) {
+            ctx.fillStyle = "rgb(150, 0, 0)"
+            ctx.roundRect(width / 8, height / 8, (width * 3 / 4) * (this.animatedHealth / this.maxHealth), 25, 5)
+            ctx.fill()
+        }
+    
+        if (this.health < this.animatedHealth && this.health > 0) {
+            this.animatedHealth --
+            this.beingHit = true
+        } else {
+            this.beingHit = false
+        }
+            
     }
-
-	if (this.health < this.animatedHealth && this.health > 0) {
-		this.animatedHealth --
-        this.beingHit = true
-	} else {
-        this.beingHit = false
-    }
-		
 }
 
 // Monsters
