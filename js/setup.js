@@ -177,6 +177,12 @@ function triangle(x1, y1, x2, y2, x3, y3, color) {
 	
 }
 
+function Rotate(x, y, rad) {
+    ctx.translate(x, y)
+    ctx.rotate(rad)
+    ctx.translate(-x, -y)
+}
+
 function b(n) {
     return n * 75
 }

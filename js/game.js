@@ -1346,7 +1346,28 @@ var opal = new NPC(ctr(125), ctr(62), "Opal", mainMap, 'R', [
     "It's very dangerous, and it makes it much harder to get around!",
     "So yeah, I'd be careful.",
     "Bye-bye!"
-])
+], "Resident - Litholia")
+
+var jade = new NPC(ctr(4), ctr(2), "Jade", litholianHistoryCenter, 'U', [
+    "Oh?",
+    "I've never met you before...who are you?",
+    "...",
+    "Ah, ok. This is the Litholian History Center.\nIt's still under construction though.",
+    "If you'd like to know about the history of Litholia,\nI'm the person to ask!",
+], "Resident - Litholia\nVery knowledgable about the history of Litholia.", function() {
+    jade.lines = [
+        "Oh, you again!\nI assume you want to learn about Litholia's history.",
+        "I could talk about it for hours, but I won't\nbore you with all the details.",
+        "Litholia used to be connected to Steel Field to the North,\nbut then a wall was built between the two by Bouldered, Master of Land.",
+        "And now, lava has been mysteriously seeping out of the ground!",
+        "If it gets any worse, the people of Litholia will have to leave!!",
+        "...",
+        "*ahem. Sorry, about the yelling. It is true though.",
+        "Well, that's your history lesson for today.",
+    ]
+
+    jade.clearAction()
+}, "after")
 
 var npcs = NPC.all
 var shopMenus = [muhammadShop, blakeShop, caspianShop]
@@ -2236,7 +2257,7 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-   // dev = true
+    dev = true
     curMap = mainMap
     p.goTo(ctr(128), ctr(63))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
@@ -2466,8 +2487,11 @@ var gameInterval = setInterval(function() {
             }
         
             for (var i in monsters) {
-                if (curMap.name == monsters[i].map && !monsters[i].dead) {
+                if (curMap.name == monsters[i].map && !monsters[i].isDead()) {
                     monsters[i].draw(p)
+                    if (!!monsters[i].update) {
+                        monsters[i].update()
+                    }
                     monsters[i].updatePlayerInfo()
                 }
             }

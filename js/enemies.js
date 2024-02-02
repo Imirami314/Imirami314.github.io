@@ -740,15 +740,15 @@ class Drowned extends Boss {
         if (this.phase == 2) {
             this.windModeTimer -= 1 / 66.67
         }
-        this.cords.x = Math.floor(this.x / 75)
-        this.cords.y = Math.floor(this.y / 75)
-        this.blockOn = curMap.getBlock(this.cords.x, this.cords.y)
-        this.pdx = p.x - this.x
-        this.pdy = p.y - this.y
-        this.dirCoefX = (this.pdx / Math.abs(this.pdx)) // Gives 1 or -1 depending on whether the player is to the left or right
-        this.dirCoefY = (this.pdy / Math.abs(this.pdy)) // Gives 1 or -1 depending on whether the player is above or below
-        this.playerDist = Math.hypot((p.x - this.x), (p.y - this.y))
-        this.playerAngle = Math.atan2((p.y - this.y), (p.x - this.x)) + (Math.PI) / 2 // Gives angle direction of player
+        // this.cords.x = Math.floor(this.x / 75)
+        // this.cords.y = Math.floor(this.y / 75)
+        // this.blockOn = curMap.getBlock(this.cords.x, this.cords.y)
+        // this.pdx = p.x - this.x
+        // this.pdy = p.y - this.y
+        // this.dirCoefX = (this.pdx / Math.abs(this.pdx)) // Gives 1 or -1 depending on whether the player is to the left or right
+        // this.dirCoefY = (this.pdy / Math.abs(this.pdy)) // Gives 1 or -1 depending on whether the player is above or below
+        // this.playerDist = Math.hypot((p.x - this.x), (p.y - this.y))
+        // this.playerAngle = Math.atan2((p.y - this.y), (p.x - this.x)) + (Math.PI) / 2 // Gives angle direction of player
         
         // Makes the angle pi instead of like 1835pi
         this.bodyAngle = this.bodyAngle % (Math.PI * 2)
@@ -1064,6 +1064,79 @@ class Splint extends Enemy {
     }
 }
 
+class Patroller extends Enemy {
+    constructor(map, spawnX, spawnY) {
+        super(map, spawnX, spawnY)
+
+        this.bodyAngle = 0
+        this.health = 65
+
+        this.projectiles = []
+        this.shotCooldown = new Cooldown(1)
+    }
+
+    draw() {
+        ctx.save()
+        Rotate(this.x, this.y + 2, this.bodyAngle)
+        ctx.drawImage(images.patroller, this.x - 37.5, this.y - 39, 75, 78)
+        ctx.restore()
+    }
+
+    update() {
+        // Makes bodyAngle stay within reasonable boundaries
+        // this.bodyAngle = (Math.abs(this.bodyAngle) % (Math.PI * 2))
+
+        if (this.bodyAngle >= Math.PI) {
+            this.bodyAngle = - Math.PI
+        }
+
+        this.shotCooldown.run()
+
+        this.displayProjectiles()
+
+        if (!this.canSeePlayer()) {
+            this.bodyAngle += Math.PI / 66.67
+        } else {
+            this.shotCooldown.onEnd(() => {
+                // this.shoot()
+            })
+        }
+    }
+
+    canSeePlayer() {
+        if (this.playerDist <= 300 && Math.abs(this.bodyAngle - this.playerAngle) < Math.PI / 40) {
+            return true
+        }
+
+        return false
+    }
+
+    shoot() {
+        this.projectiles.push({
+            x: this.x,
+            y: this.y,
+            dx: Math.cos(this.playerAngle) * 10,
+            dy: Math.sin(this.playerAngle) * 10,
+        })
+    }
+
+    drawProjectiles(proj) {
+        ellipse(proj.x, proj.y, 20, 20, "rgb(50, 50, 50)") // changeme to image for patroller projectile
+    }
+
+    updateProjectiles(proj) {
+        proj.x += proj.dx
+        proj.y += proj.dy
+    }
+
+    displayProjectiles() {
+        this.projectiles.forEach((proj) => {
+            this.drawProjectiles(proj)
+            this.updateProjectiles(proj)
+        })
+    }
+}
+
 class DrownedMinion extends Enemy {
     constructor(map, spawnX, spawnY) {
         super(map, spawnX, spawnY)
@@ -1159,6 +1232,7 @@ const monsters = [
     new Splint("Main Map", ctr(153), ctr(77)),
     new Splint("Main Map", ctr(143), ctr(87)),
     new Splint("Main Map", ctr(154), ctr(89)),
+    new Patroller("Main Map", ctr(127), ctr(62)),
     new Splint("Gale Cave", 50 * 75, 33 * 75),
     new Splint("The Cryo Underground", 17 * 75, 1 * 75),
     new Splint("The Cryo Underground", 18 * 75, 22 * 75),

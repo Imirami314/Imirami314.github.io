@@ -1049,7 +1049,6 @@ Player.prototype.displayInventory = function() {
     ctx.stroke()
 }
 
-// Player animations
 Player.prototype.swordAttack = function() {
     this.swordHitting = true
 
