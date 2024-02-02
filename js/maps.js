@@ -998,6 +998,7 @@ var mainMap = new Landscape([
 
 var c = new Camera(200 * 75, 15 * 75, 15)
 mainMap.solve = function() {
+    // Encompassed Forest
     function correctDir() {
         var lostTravelerLine = lostTraveler.lines[0]
         switch (lostTraveler.dir){
@@ -1007,6 +1008,7 @@ mainMap.solve = function() {
         }
     }
 
+    // Blocked Entrance Complete
     if (keys.space) {
         if (theBlockedEntrance.complete && p.on(252, 81)) {
             curMap = droptonCity
@@ -1014,6 +1016,14 @@ mainMap.solve = function() {
         }
     }
 	
+    // Lonzo mannn
+    console.log(lonzo.playerDist)
+    if (lonzo.playerDist <= 500 && lonzo.firstInteraction) {
+        lonzo.remote = true
+        
+     }
+
+    // Wanderer GV
     if (!!getGameAlertInfoByCords(205, 24, mainMap)) {
         if (getGameAlertInfoByCords(205, 24, mainMap).playerRead) {
             curMissions.push(theWanderersRiddlesGV)
@@ -1021,6 +1031,7 @@ mainMap.solve = function() {
     }
 	
 }
+
 
 var imperilledPrison = new Landscape([
     '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',

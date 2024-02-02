@@ -1989,7 +1989,7 @@ var blanche = new NPC(180 * 75 + 37.5, 19 * 75 + 37.5, "Blanche", mainMap, "D", 
     curMissions.push(blancheAndBianca)
 }, "after")
 
-var lonzo = new NPC(3 * 75 + 37.5, 1 * 75 + 37.5, "Lonzo", lonzoHouse, "D", [
+var lonzo = new NPC(222 * 75 + 37.5, 11 * 75 + 37.5, "Lonzo", mainMap, "D", [
     "*cough",
     "Hello. Who might you be?",
     "...",
@@ -2767,6 +2767,10 @@ var interactives = [
         curMap.changeBlock(20, 0, "(")
     }, 20 * 75 + 37.5, 0 * 75 + 37.5),
 
+    // Glacia Village
+    new Breezeway(mainMap, 218, 11, 218, 9), // Pair up ones that connect to each other
+    new Breezeway(mainMap, 218, 9, 218, 11),
+
     // Queen's Castle
 
     new Toggle(queensCastle, 2, 2, function() {
@@ -3480,7 +3484,7 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = true
+   // dev = true
     curMap = mainMap
     p.goTo(ctr(128), ctr(63))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]

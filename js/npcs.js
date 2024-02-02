@@ -246,6 +246,7 @@ class NPC extends Entity {
         } else {
             this.showName = false
         }
+        this.playerDist = playerDist // temporary
     
         if (this.lineNum >= 0 && playerDist <= 100) {
             // Change player/npc dir depending on which way you're facing
@@ -305,6 +306,7 @@ class NPC extends Entity {
                             if (this.actionLine == "after") {
                                 this.action(p)
                             }
+                           // alert("true")
                             this.firstInteraction = false
                             this.lineNum = -1
                             this.actionFinished = false
