@@ -737,16 +737,14 @@ Player.prototype.collide = function() {
                 this.cordSave.y = this.cords.y
     
                 var areaJoining = areaSearchByCords(this.cords.x, this.cords.y)
-                
+                curMap = areaJoining
                 this.x = areaJoining.enterX
                 this.y = areaJoining.enterY
-                curMap = areaJoining
             } else if (curMap != mainMap) {
                 if (!!this.cordSave.x && !!this.cordSave.y) {
-                    curMap = mainMap
-                    this.x = this.cordSave.x * 75 + 37.5
-                    this.y = this.cordSave.y * 75 + 37.5
+                    this.goTo(ctr(this.cordSave.x), ctr(this.cordSave.y))
                     this.cordSave = {}
+                    curMap = mainMap
                 } else {
                     console.log("No coordinates were saved upon area entry")
                 }
@@ -2586,6 +2584,16 @@ var pierre = new NPC(ctr(180), ctr(101), "Pierre", mainMap, 'U', [
     }
 }, 0)
 
+var opal = new NPC(ctr(125), ctr(62), "Opal", mainMap, 'R', [
+    "Hello there traveler!",
+    "Welcome to Litholia!",
+    "But uhhh, you came at a pretty inconvenient time.",
+    "Litholia is a town made mostly out of rocks and stones,\nbut recently lava has been oozing out of the ground!",
+    "It's very dangerous, and it makes it much harder to get around!",
+    "So yeah, I'd be careful.",
+    "Bye-bye!"
+])
+
 pierre.lookAtPlayer = false
 
 var npcs = NPC.all
@@ -3472,7 +3480,7 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = false
+    dev = true
     curMap = mainMap
     p.goTo(ctr(128), ctr(63))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
