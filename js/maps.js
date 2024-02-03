@@ -815,6 +815,7 @@ function Camera(cx, cy, cspeed, type, config) {
 	this.type = type
 
     if (!!config) {
+        this.npcName = config.npcName
         this.lineStop = config.lineStop
         this.time = config.time
     }
@@ -839,6 +840,7 @@ Camera.prototype.draw = function() {
 		this.showCamera = false
         cutsceneFrame = 0
 	}
+    console.log(this.npcName)
 }
 
 Camera.prototype.move = function () {
@@ -1017,11 +1019,17 @@ mainMap.solve = function() {
     }
 	
     // Lonzo mannn
-    console.log(lonzo.playerDist)
+    console.log(lonzo.lineNum)
     if (lonzo.playerDist <= 500 && lonzo.firstInteraction) {
         lonzo.remote = true
+        lonzo.firstInteraction = false
+        cameraStart(222 * 75, 11 * 75, 10, "NPC", {
+            npcName: lonzo,
+            lineStop: -1
+        })
         
      }
+    
 
     // Wanderer GV
     if (!!getGameAlertInfoByCords(205, 24, mainMap)) {

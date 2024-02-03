@@ -473,8 +473,11 @@ var mike = new NPC(28 * 75, 44 * 75, "Mike", mainMap, "L", [
     "My mom is a journalist, so she knows about your escape,\nor whatever it is.",
     "She's been trying to get a hold of you for an interview for\nages! I'm sure she'd love it if you paid her a visit.",
     "So, yeah. If you want these glasses, that's what you\ngotta do for me in return.",
-], "Resident - Chard Town\nA curious child whose favorite spot is the Big Lake.", function(p) {
+], "Resident - Chard Town\nA curious child whose favorite spot is the Big Lake.") 
+
+mike.action = function(p) {
     cameraStart(51 * 75 + 37.5, 6 * 75 + 37.5, 25, "NPC", {
+        npcName: mike,
         lineStop: 9
     })
     // Location of Mike's Mom's house
@@ -482,7 +485,8 @@ var mike = new NPC(28 * 75, 44 * 75, "Mike", mainMap, "L", [
         x: 51,
         y: 8
     }
-}, 7)
+}
+mike.actionLine = 7
 
 var david = new NPC(16 * 75 + 37.5, 16 * 75 + 37.5, "David Swimmer", mainMap, "D", [
     "In case you're wondering, yes, my last name is actually Swimmer.",
@@ -524,6 +528,7 @@ var ley = new NPC(17 * 75 + 37.5, 29 * 75 + 37.5, "Ley", mainMap, "D", [
     "Thank you! Let me know once you're done\nso I can go over there again!"
 ], "Resident - Chard Town\nA coward at times, but loves both the outdoors and spending time at home.", function(p) {
     cameraStart(44 * 75, 19 * 75, 15, "NPC", {
+        npcName: ley,
         lineStop: 7
     })
     ley.action = function(p) {
@@ -742,6 +747,13 @@ var blanche = new NPC(180 * 75 + 37.5, 19 * 75 + 37.5, "Blanche", mainMap, "D", 
 }, "after")
 
 var lonzo = new NPC(222 * 75 + 37.5, 11 * 75 + 37.5, "Lonzo", mainMap, "D", [
+    "HEY! HEY YOU!",
+    "Please help me!\nI fell asleep here and now I'm stuck!",
+    "You see that swirly thing?\nIt will take me to you!"
+], "hi")
+
+lonzo.action = function () {
+    lonzo.lines = [
     "*cough",
     "Hello. Who might you be?",
     "...",
@@ -759,7 +771,10 @@ var lonzo = new NPC(222 * 75 + 37.5, 11 * 75 + 37.5, "Lonzo", mainMap, "D", [
     "I think I fell down on my way out of it so I\ndon't remember where it is. But it's somewhere\nto the east, and...",
     "zzz", 
     "zzzzzzzzzzz..."
-], "hi")
+    ]
+    lonzo.clearAction()
+}
+lonzo.actionLine = "after"
 
 var guardAlfred = new NPC(19 * 75 + 37.5, 7 * 75 + 37.5, "Castle Guard Alfred", queensCastle, "D", [
     "Hello. Welcome to the High Floor.",
@@ -1202,7 +1217,8 @@ var presidentWells = new NPC(1 * 75 + 37.5, 1 * 75 + 37.5, "President Wells", dr
                                 presidentWells.actionLine = 1
                                 presidentWells.action = function() {
                                     cameraStart(39 * 75, 4 * 75 + 37.5, 15, "NPC", {
-                                        lineStop: 3
+                                        npcName: presidentWells,
+                                        lineStop: 2
                                     })
                                 }
 
@@ -3432,23 +3448,20 @@ var gameInterval = setInterval(function() {
 			}
             
 			console.log("x: " + Math.round(curCX / 100) + " " + Math.round(finalCX / 100) + " y: " + Math.round(curCY / 100) + " " + Math.round(finalCY / 100))
-			if (Math.hypot((curCX - camera.cx), (curCY - camera.cy)) <= camera.cspeed) { // round to the nearest hundreth
+			if (Math.hypot((curCX - camera.cx), (curCY - camera.cy)) <= camera.cspeed + camera.cspeed / 4) { // round to the nearest hundreth (really weird logic, but fixes camera never stopping)
                 curCX = camera.cx
                 curCY = camera.cy
 				cameraMoving = false
 			}
 
-            if (camera.type == "NPC") {
-				for (i in npcs) {
-					if (npcs[i].lineNum == camera.lineStop) {
-						if (keys.space) {
-                            
-							scene = "GAME"
-                            cameraEnd()
-						}
-					}
-				}
+            if (camera.type == "NPC") { 
+                if (camera.npcName.lineNum == camera.lineStop) {        
+                        scene = "GAME"
+                        cameraEnd() 
+                } 
 			}
+
+               
 
             if (camera.type == "AUTO") {
                 if (!camera.stopTimerSet) {
