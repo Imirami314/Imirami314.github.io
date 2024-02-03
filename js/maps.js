@@ -1020,7 +1020,7 @@ mainMap.solve = function() {
     }
 	
     // Lonzo mannn
-    console.log(lonzo.playerDist)
+    // console.log(lonzo.playerDist)
     if (lonzo.playerDist <= 500 && lonzo.firstInteraction) {
         lonzo.remote = true
         lonzo.firstInteraction = false

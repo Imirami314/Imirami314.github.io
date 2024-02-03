@@ -775,8 +775,9 @@ Player.prototype.hitEnemies = function() {
             }
             
             // Monster knockback
-            m.x += Math.cos(this.mAngle) * 25
-            m.y += Math.sin(this.mAngle) * 25
+            // m.x += Math.cos(this.mAngle) * 25
+            // m.y += Math.sin(this.mAngle) * 25
+            m.move(Math.cos(this.mAngle) * 25, Math.sin(this.mAngle) * 25, true)
             
             // Tells monster that it is hit (doesn't work for some monsters idk why)
             m.isHit = true

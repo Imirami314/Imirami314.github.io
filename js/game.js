@@ -2273,9 +2273,9 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = true
-    curMap = stormedRoom
-    p.goTo(ctr(0), ctr(0))
+    // dev = true
+    curMap = mainMap
+    p.goTo(ctr(128), ctr(63))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
     p.equipped = [items.aquaLung]
 
@@ -2505,9 +2505,10 @@ var gameInterval = setInterval(function() {
             for (var i in monsters) {
                 if (curMap.name == monsters[i].map && !monsters[i].isDead()) {
                     monsters[i].draw(p)
-                    if (!!monsters[i].update && !monsters[i] instanceof DrownedMinion) {
+                    if (!!monsters[i].update && !(monsters[i] instanceof DrownedMinion)) {
                         monsters[i].update()
                     }
+
                     monsters[i].updatePlayerInfo()
                 }
             }

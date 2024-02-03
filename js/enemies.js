@@ -1076,10 +1076,13 @@ class Patroller extends Enemy {
         this.health = 65
 
         this.projectiles = []
+        this.projectileSpeed = 5
         this.shotCooldown = new Cooldown(1)
     }
 
     draw() {
+        this.displayProjectiles()
+
         ctx.save()
         Rotate(this.x, this.y + 2, this.bodyAngle + (Math.PI) / 2)
         ctx.drawImage(images.patroller, this.x - 37.5, this.y - 39, 75, 78)
@@ -1087,23 +1090,19 @@ class Patroller extends Enemy {
     }
 
     update() {
-        // Makes bodyAngle stay within reasonable boundaries
-        // this.bodyAngle = (Math.abs(this.bodyAngle) % (Math.PI * 2))
-
         if (this.bodyAngle >= Math.PI) {
             this.bodyAngle = - Math.PI
         }
 
         this.shotCooldown.run()
 
-        this.displayProjectiles()
-
         if (!this.canSeePlayer()) {
             this.bodyAngle += Math.PI / 66.67
         } else {
-            this.shotCooldown.onEnd(() => {
-                // this.shoot()
-            })
+            if (this.shotCooldown.ended()) {
+                this.shoot()
+                this.shotCooldown.reset()
+            }
         }
     }
 
@@ -1119,18 +1118,29 @@ class Patroller extends Enemy {
         this.projectiles.push({
             x: this.x,
             y: this.y,
-            dx: Math.cos(this.playerAngle) * 10,
-            dy: Math.sin(this.playerAngle) * 10,
+            dx: Math.cos(this.playerAngle) * this.projectileSpeed,
+            dy: Math.sin(this.playerAngle) * this.projectileSpeed,
         })
     }
 
     drawProjectiles(proj) {
-        ellipse(proj.x, proj.y, 20, 20, "rgb(50, 50, 50)") // changeme to image for patroller projectile
+        ellipse(proj.x, proj.y, 20, 20, "rgb(0, 0, 0)") // changeme to image for patroller projectile
     }
 
     updateProjectiles(proj) {
         proj.x += proj.dx
         proj.y += proj.dy
+
+        let projPlayerDist = Math.hypot(
+            proj.x - p.x,
+            proj.y - p.y
+        )
+
+        if (projPlayerDist <= 20) {
+            p.getHit(1)
+
+            this.projectiles.splice(this.projectiles.indexOf(proj), 1)
+        }
     }
 
     displayProjectiles() {
