@@ -497,29 +497,55 @@ Player.prototype.move = function() {
         this.moving = false
     }
 
-    for (var i in bosses) {
-        var b = bosses[i]
-        var bDist = Math.hypot((this.x - b.x), (this.y - b.y))
-        if (bDist <= 100 && mouseIsDown && !holding && this.hitCooldown <= 0 && b.hittable) {
-            if (!!this.weapon.damage) {
-                b.health -= this.weapon.damage
-            } else {
-                b.health -= 1
-            }
-            this.hitCooldown = 0.35
+    // for (var i in bosses) {
+    //     var boss = bosses[i]
+    //     // var bDist = Math.hypot((this.x - b.x), (this.y - b.y))
+    //     var bDist = entityDistance(this, curBoss)
+    //     console.log(bDist)
+    //     if (bDist <= 100 && mouseIsDown && !holding && this.hitCooldown <= 0 && b.hittable) {
+    //         if (!!this.weapon.damage) {
+    //             b.health -= this.weapon.damage
+    //         } else {
+    //             b.health -= 1
+    //         }
+    //         this.hitCooldown = 0.35
             
-            switch (b.name) {
-                case "Darkened":
-                    b.tpHitCount ++
-                    break
-                case "Stormed":
-                    if (b.phase == 2) {
-                        b.windMode = false
-                    }
-                    break
-            }
+    //         switch (b.name) {
+    //             case "Darkened":
+    //                 b.tpHitCount ++
+    //                 break
+    //             case "Stormed":
+    //                 if (b.phase == 2) {
+    //                     b.windMode = false
+    //                 }
+    //                 break
+    //         }
+    //     }
+    // }
+    // var bDist = Math.hypot((this.x - b.x), (this.y - b.y))
+
+    var bDist = entityDistance(this, curBoss)
+    if (bDist <= 100 && mouseIsDown && !holding && this.hitCooldown <= 0 && curBoss.hittable) {
+        if (!!this.weapon.damage) {
+            curBoss.health -= this.weapon.damage
+        } else {
+            curBoss.health -= 1
+        }
+        this.hitCooldown = 0.35
+        
+        switch (curBoss.name) {
+            case "Darkened":
+                curBoss.tpHitCount ++
+                break
+            case "Stormed":
+                if (curBoss.phase == 2) {
+                    curBoss.windMode = false
+                }
+                break
         }
     }
+
+    
 
     if (Math.abs(curMap.temperature) > this.resistances.cold) {
         this.health -= (1 / 66.6667) * (Math.abs(curMap.temperature) - this.resistances.cold)

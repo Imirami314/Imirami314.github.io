@@ -29,6 +29,9 @@ Entity.getAllOfType = function(type) {
 Entity.prototype.goTo = function(x, y) {
     this.x = x
     this.y = y
+
+    this.cords.x = Math.floor(this.x / 75)
+    this.cords.y = Math.floor(this.y / 75)
 }
 
 Entity.prototype.on = function(cordX, cordY) {

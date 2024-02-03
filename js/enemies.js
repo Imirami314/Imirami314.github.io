@@ -15,7 +15,7 @@ Enemy.prototype.updatePlayerInfo = function() {
     this.dirCoefX = (this.pdx / Math.abs(this.pdx)) // Gives 1 or -1 depending on whether the player is to the left or right
     this.dirCoefY = (this.pdy / Math.abs(this.pdy)) // Gives 1 or -1 depending on whether the player is above or below
     this.playerDist = Math.hypot((p.x - this.x), (p.y - this.y))
-    this.playerAngle = Math.atan2((p.y - this.y), (p.x - this.x)) + (Math.PI) / 2 // Gives angle direction of player
+    this.playerAngle = Math.atan2((p.y - this.y), (p.x - this.x)) // Gives angle direction of player
 }
 
 Enemy.prototype.isStuck = function(dx, dy) {
@@ -163,12 +163,12 @@ class Darkened extends Boss {
         }
         
         this.tpTimer -= 1 / (66 + (2 / 3))
-        this.cords.x = Math.floor(this.x / 75)
-        this.cords.y = Math.floor(this.y / 75)
-        this.pdx = p.x - this.x
-        this.pdy = p.y - this.y
-        this.playerDist = Math.hypot((p.x - this.x), (p.y - this.y))
-        this.playerAngle = Math.atan2((p.y - this.y), (p.x - this.x)) + (Math.PI) / 2 // Gives angle direction of player
+        // this.cords.x = Math.floor(this.x / 75)
+        // this.cords.y = Math.floor(this.y / 75)
+        // this.pdx = p.x - this.x
+        // this.pdy = p.y - this.y
+        // this.playerDist = Math.hypot((p.x - this.x), (p.y - this.y))
+        // this.playerAngle = Math.atan2((p.y - this.y), (p.x - this.x)) + (Math.PI) / 2 // Gives angle direction of player
         
         this.spikeX = this.x + Math.cos(this.playerAngle - Math.PI / 3.3) * 112
         this.spikeY = this.y + Math.sin(this.playerAngle - Math.PI / 3.3) * 112
@@ -181,7 +181,7 @@ class Darkened extends Boss {
         if (this.map == curMap.name) {
             ctx.save()
             ctx.translate(this.x, this.y)
-            ctx.rotate(this.playerAngle)
+            ctx.rotate(this.playerAngle + Math.PI / 2)
             ctx.scale(this.scaleFactor * this.scaleShift, this.scaleFactor * this.scaleShift)
             ctx.translate(-1 * this.x, -1 * this.y)
             
@@ -265,6 +265,7 @@ class Darkened extends Boss {
 
     update() {
         this.draw()
+        this.updatePlayerInfo()
         
         if (this.health <= this.maxHealth / 2) {
             this.phase = 2
@@ -328,7 +329,7 @@ class Darkened extends Boss {
                 }
             }
     
-            if (this.spikeShotCooldown <= 0 && !this.dead) {
+            if (this.spikeShotCooldown <= 0 && !this.isDead()) {
                 this.spikes.push({
                     x: this.spikeX,
                     y: this.spikeY,
@@ -409,7 +410,7 @@ class Stormed extends Boss {
         if (this.map == curMap.name) {
             ctx.save()
             ctx.translate(this.x, this.y)
-            ctx.rotate(this.bodyAngle) // DEFAULT ON
+            ctx.rotate(this.bodyAngle + Math.PI / 2) // DEFAULT ON
             ctx.scale(this.scaleFactor * this.scaleShift, this.scaleFactor * this.scaleShift)
             ctx.translate(-1 * this.x, -1 * this.y)
     
@@ -611,7 +612,7 @@ class Drowned extends Boss {
         this.name = "Drowned"
         this.damage = 10
         this.maxHealth = 900
-        this.health = 900 // Default 900
+        this.health = 400 // Default 900
         this.animatedHealth = 900
 
         this.speed = 1.5
@@ -652,7 +653,7 @@ class Drowned extends Boss {
         if (this.map == curMap.name) {
             ctx.save()
             ctx.translate(this.x, this.y)
-            ctx.rotate(this.bodyAngle) // DEFAULT ON
+            ctx.rotate(this.bodyAngle + Math.PI / 2) // DEFAULT ON
             ctx.scale(this.scaleFactor * this.scaleShift, this.scaleFactor * this.scaleShift)
             ctx.translate(-1 * this.x, -1 * this.y)
     
@@ -725,6 +726,7 @@ class Drowned extends Boss {
 
     update() {
         this.draw()
+        this.updatePlayerInfo()
         
         // Makes it so the calculations don't divide by 0
         if ((p.x - this.x) == 0) {
@@ -740,9 +742,10 @@ class Drowned extends Boss {
         if (this.phase == 2) {
             this.windModeTimer -= 1 / 66.67
         }
+
+        this.blockOn = curMap.getBlock(this.cords.x, this.cords.y)
         // this.cords.x = Math.floor(this.x / 75)
         // this.cords.y = Math.floor(this.y / 75)
-        // this.blockOn = curMap.getBlock(this.cords.x, this.cords.y)
         // this.pdx = p.x - this.x
         // this.pdy = p.y - this.y
         // this.dirCoefX = (this.pdx / Math.abs(this.pdx)) // Gives 1 or -1 depending on whether the player is to the left or right
@@ -824,7 +827,7 @@ class Drowned extends Boss {
     
         if (this.health <= this.maxHealth / 2) {
             this.phase = 2
-            this.ringDamge = 1.15
+            this.ringDamage = 1.15
             this.goTo(ctr(15), ctr(15))
     
             // Remove later when adding phase 2 cutscene
@@ -840,6 +843,7 @@ class Drowned extends Boss {
     }
 
     phase2() {
+        // alert(this.on(15, 15))
         if (this.on(15, 15) && this.numMinions < 3 && !this.hasSummonedMinions) {
             this.minionSummonTimer -= 1 / 66.67
             this.bodyAngle += Math.PI * 2 / 66.67
@@ -903,7 +907,7 @@ class Drowned extends Boss {
             }
         }
     
-        // this.displayMinions()
+        this.displayMinions()
     }
 
     summonMinion(x, y) {
@@ -914,7 +918,7 @@ class Drowned extends Boss {
 
     displayMinions() {
         monsters.forEach((m) => {
-            if (m instanceof DrownedMinion) {
+            if (m instanceof DrownedMinion && !m.isDead()) {
                 m.draw()
             }
         })
@@ -922,7 +926,7 @@ class Drowned extends Boss {
 
     activateMinions() {
         monsters.forEach((m) => {
-            if (m instanceof DrownedMinion && !m.dead) {
+            if (m instanceof DrownedMinion && !m.isDead()) {
                 m.update()
             }
         })
@@ -963,7 +967,7 @@ class Splint extends Enemy {
     }
 
     draw() {
-        if (this.health <= 0 && !this.dead) {
+        if (this.health <= 0 && !this.isDead()) {
             this.dead = true
             var trillsChanceGenerator = Math.random() 
             if (trillsChanceGenerator <= 0.5) {
@@ -1035,7 +1039,7 @@ class Splint extends Enemy {
             }
         }
 
-        if (this.dead) {
+        if (this.isDead()) {
             for (var i in monsters) {
                 if (monsters[i] == this) {
                     monsters.splice(i, 1)
@@ -1077,7 +1081,7 @@ class Patroller extends Enemy {
 
     draw() {
         ctx.save()
-        Rotate(this.x, this.y + 2, this.bodyAngle)
+        Rotate(this.x, this.y + 2, this.bodyAngle + (Math.PI) / 2)
         ctx.drawImage(images.patroller, this.x - 37.5, this.y - 39, 75, 78)
         ctx.restore()
     }
@@ -1159,7 +1163,7 @@ class DrownedMinion extends Enemy {
     draw() {
         ctx.save()
         ctx.translate(this.x, this.y)
-        ctx.rotate(this.playerAngle)
+        ctx.rotate(this.playerAngle + Math.PI / 2)
         ctx.translate(- (this.x), - (this.y))
         ctx.drawImage(images.drownedMinion, this.x - 25, this.y - 27.25, 50, 54.5)
     
@@ -1173,20 +1177,22 @@ class DrownedMinion extends Enemy {
     }
 
     update() {
+        this.updatePlayerInfo()
         if (this.health <= 0) {
             this.dead = true
         }
     
-        this.playerAngle = Math.atan2((p.y - this.y), (p.x - this.x)) + (Math.PI) / 2 // Gives angle direction of player
-        this.playerDist = Math.hypot((p.x - this.x), (p.y - this.y))
-        this.pdx = p.x - this.x
-        this.pdy = p.y - this.y
-        this.dirCoefX = (this.pdx / Math.abs(this.pdx)) // Gives 1 or -1 depending on whether the player is to the left or right
-        this.dirCoefY = (this.pdy / Math.abs(this.pdy)) // Gives 1 or -1 depending on whether the player is above or below
+        // this.playerAngle = Math.atan2((p.y - this.y), (p.x - this.x)) + (Math.PI) / 2 // Gives angle direction of player
+        // this.playerDist = Math.hypot((p.x - this.x), (p.y - this.y))
+        // this.pdx = p.x - this.x
+        // this.pdy = p.y - this.y
+        // this.dirCoefX = (this.pdx / Math.abs(this.pdx)) // Gives 1 or -1 depending on whether the player is to the left or right
+        // this.dirCoefY = (this.pdy / Math.abs(this.pdy)) // Gives 1 or -1 depending on whether the player is above or below
         this.hitCooldown -= 1 / (66 + 2 / 3)
         
         if (!this.hitting) {
             if (Math.abs(this.pdx) >= 10) {
+                console.log(this.speed)
                 this.move(this.dirCoefX * this.speed, 0)
             }
     
@@ -1194,6 +1200,8 @@ class DrownedMinion extends Enemy {
                 this.move(0, this.dirCoefY * this.speed)
             }
         }
+
+        // this.move(0, this.dirCoefY * this.speed)
     
         if (this.playerDist <= 100) {
             this.hit()
