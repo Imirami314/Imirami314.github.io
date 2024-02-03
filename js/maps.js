@@ -2446,4 +2446,29 @@ var fortuneField = new Region([
     // changeme Add music for Fortune Field
 })
 
-var regions = [chardTown, steelField, glaciaVillage, windyWastelands, encompassedForest, droptonDrylands, fortuneField]
+var litholia = new Region([
+    {
+        x1: 92,
+        y1: 52,
+        x2: 128,
+        y2: 63
+    },
+    {
+        x1: 92,
+        y1: 64,
+        x2: 120,
+        y2: 109
+    },
+    {
+        x1: 128,
+        y1: 52,
+        x2: 128,
+        y2: 61
+    }
+], function() {
+    setLighting(5000)
+}, function() {
+    playMusic("Litholia")
+})
+
+var regions = [chardTown, steelField, glaciaVillage, windyWastelands, encompassedForest, droptonDrylands, fortuneField, litholia]
