@@ -749,7 +749,7 @@ var blanche = new NPC(180 * 75 + 37.5, 19 * 75 + 37.5, "Blanche", mainMap, "D", 
 var lonzo = new NPC(222 * 75 + 37.5, 11 * 75 + 37.5, "Lonzo", mainMap, "D", [
     "HEY! HEY YOU!",
     "Please help me!\nI fell asleep here and now I'm stuck!",
-    "You see that swirly thing?\nIt will take me to you!"
+    "You see that swirly thing?\nIt will take you to me!"
 ], "hi")
 
 lonzo.action = function () {
