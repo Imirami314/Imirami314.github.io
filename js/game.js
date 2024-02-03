@@ -752,27 +752,63 @@ var lonzo = new NPC(222 * 75 + 37.5, 11 * 75 + 37.5, "Lonzo", mainMap, "D", [
     "You see that swirly thing?\nIt will take you to me!"
 ], "hi")
 
+// Action up to meeting the queen mission
 lonzo.action = function () {
     lonzo.lines = [
     "*cough",
-    "Hello. Who might you be?",
-    "...",
-    "nice.",
-    "What do you need?",
-    "...",
-    "Elemental masters? Ah yes, yes, I\nkeep telling everybody about them, but nobody believes\nme!",
-    "It makes me sag.",
-    "Sad, I mean.",
-    "Anyway, the master of wind is locked around this\narea somewhere.",
-    "I know that from the time I snuck into the\nqueen's lair to use the toilet. But\nthat's a whole different story.",
-    "You should ask the queen, but she...",
+    "Wow. Thank you so much for saving me.",
+    "That wind thing is called a breezeway if you didn't know.",
+    "It's created exclusively in Glacia Village.\nPowered by the wastelands! I-",
+    "OOPS! I'm so rude I didn't even\nintroduce myself. I'm...",
     "C&BP$wbo9#&W*CN#O(B(BVO!!!",
-    "...she doesn't make much contact with the outside world, so\nher lair might be tough to get into.",
-    "I think I fell down on my way out of it so I\ndon't remember where it is. But it's somewhere\nto the east, and...",
-    "zzz", 
-    "zzzzzzzzzzz..."
+    "Sorry, I'm uh, Lonzo. What's your name?",
+    "...",
+    "Nice.",
+    "Anyways, I better get going, so uh...",
+    "...",
+    "What did you say? ELEMENTAL MASTERS?",
+    "Yes, yes! I keep telling everybody about them,\nbut nobody believes me!",
+    "I can't believe this! This is the best day ever!",
+    "OSD*#&HIFH#)*RW)DFIDHISH)Q*UE!!!",
+    "Sorry. I can barely hold my excitement.\nCome meet in my house and I can talk to you more!",
     ]
-    lonzo.clearAction()
+    lonzo.action = function () {
+        lonzo.map = lonzoHouse
+        lonzo.x = ctr(3)
+        lonzo.y = ctr(1)
+        lonzo.lines = [
+            "Hello.",
+            "Why don't you tell me what you know about these masters?",
+            "...",
+            "WHAT?! You fought the master of dark?\nAND BEAT IT?",
+            "OFUHS(*#EEWJVQEGUDFS&T*!WI#E!!!",
+            "If you're able to beat an enemy that great,\nit is certain you can help us.",
+            "Recently, there has been a huge pick up of wind in\nWindy Wastelands.",
+            "It is usually windy there, but it seems another source is causing it.",
+            "I've been doing historical research,\nand evidence is showing that there might be some corrupt being living there!",
+            "FHG(@#&OEHDHSDUG(SKDJ(@&E)!",
+            "If we can locate it and take it down,\nwe think Glacia Village will be safe once and for all!",
+            "This is huge. We must alert Queen Alaska!",
+            "...",
+            "WHAT?! YOU DON'T KNOW WHO THE QUEEN IS?!?!",
+            "Well, I would love to introduce you to her,\nbut unfortunately the doors are shut.",
+            "I had the key at one point, but I lost it!",
+            "`She also said something about once I have the key, go between red and blue??",
+            "Anyways, if you can help me find the key, that would be great!",
+            "It should be around Glacia Village somewhere..."
+
+        ]
+        lonzo.action = function() {
+            curMissions.push(meetingTheQueen)
+            lonzo.lines = [
+                "We need to find the key... and fast!",
+                "It should be somewhere here in Glacia Village...",
+                "`She also said something about once I have the key, go between red and blue??"
+            ]
+            lonzo.clearAction()
+        }
+        lonzo.actionLine = "after"
+    }
 }
 lonzo.actionLine = "after"
 

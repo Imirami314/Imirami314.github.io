@@ -60,12 +60,20 @@ Mission.prototype.finish = function() {
     }
 }
 
+// MAIN MISSIONS
 var aStrangeWorld = new Mission("A Strange World", "Main", null, 0)
 
 aStrangeWorld.solve = function () {
 	
 }
 
+var meetingTheQueen = new Mission("Meeting The Queen", "Main", null, 0)
+
+meetingTheQueen.solve = function () {
+    
+}
+
+// ABILITY MISSIONS
 var theWanderersRiddles = new Mission("The Wanderer's Riddles", "Ability", null, 0)
 
 theWanderersRiddles.solve = function () {
@@ -130,6 +138,8 @@ theWanderersRiddlesGV.solve = function () {
     }
 }
 
+
+// REWARD MISSIONS 
 var leysGreatFear = new Mission("Ley's Great Fear", "Reward", null, 0)
 
 leysGreatFear.solve = function () {
