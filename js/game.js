@@ -2311,7 +2311,7 @@ if (!!save) {
 function startPos() {
     dev = true
     curMap = mainMap
-    p.goTo(ctr(128), ctr(63))
+    p.goTo(ctr(106), ctr(98))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
     p.equipped = [items.aquaLung]
 
