@@ -34,7 +34,7 @@ var alerts = [
 
     // Dropton Drylands
     new GameAlert(252, 67, ["Welcome to the Dropton Drylands!", "Not that it's dry here, it's just dry compared to being underwater..."], mainMap, "SIGN"),
-    new GameAlert(79, 43, ["Dropton Water Wear:\nDropton's official partner for all water-related gear!"], mainMap, "SIGN"),
+    new GameAlert(224, 83, ["Dropton Water Wear:\nDropton's official partner for all water-related gear!"], mainMap, "SIGN"),
 
     // Dropton City/Town
     new GameAlert(38, 16, ["House under repair due to mysterious current...", "KEEP OUT!"], droptonCity, "SIGN"),
@@ -773,41 +773,43 @@ lonzo.action = function () {
     "Sorry. I can barely hold my excitement.\nCome meet in my house and I can talk to you more!",
     ]
     lonzo.action = function () {
-        lonzo.map = lonzoHouse
-        lonzo.x = ctr(3)
-        lonzo.y = ctr(1)
-        lonzo.lines = [
-            "Hello.",
-            "Why don't you tell me what you know about these masters?",
-            "...",
-            "WHAT?! You fought the master of dark?\nAND BEAT IT?",
-            "OFUHS(*#EEWJVQEGUDFS&T*!WI#E!!!",
-            "If you're able to beat an enemy that great,\nit is certain you can help us.",
-            "Recently, there has been a huge pick up of wind in\nWindy Wastelands.",
-            "It is usually windy there, but it seems another source is causing it.",
-            "I've been doing historical research,\nand evidence is showing that there might be some corrupt being living there!",
-            "FHG(@#&OEHDHSDUG(SKDJ(@&E)!",
-            "If we can locate it and take it down,\nwe think Glacia Village will be safe once and for all!",
-            "This is huge. We must alert Queen Alaska!",
-            "...",
-            "WHAT?! YOU DON'T KNOW WHO THE QUEEN IS?!?!",
-            "Well, I would love to introduce you to her,\nbut unfortunately the doors are shut.",
-            "I had the key at one point, but I lost it!",
-            "`She also said something about once I have the key, go between red and blue??",
-            "Anyways, if you can help me find the key, that would be great!",
-            "It should be around Glacia Village somewhere..."
-
-        ]
-        lonzo.action = function() {
-            curMissions.push(meetingTheQueen)
+        Screen.fadeOut(0.03, function() {
+            lonzo.map = lonzoHouse
+            lonzo.x = ctr(3)
+            lonzo.y = ctr(1)
             lonzo.lines = [
-                "We need to find the key... and fast!",
-                "It should be somewhere here in Glacia Village...",
-                "`She also said something about once I have the key, go between red and blue??"
+                "Hello.",
+                "Why don't you tell me what you know about these masters?",
+                "...",
+                "WHAT?! You fought the master of dark?\nAND BEAT IT?",
+                "OFUHS(*#EEWJVQEGUDFS&T*!WI#E!!!",
+                "If you're able to beat an enemy that great,\nit is certain you can help us.",
+                "Recently, there has been a huge pick up of wind in\nWindy Wastelands.",
+                "It is usually windy there, but it seems another source is causing it.",
+                "I've been doing historical research,\nand evidence is showing that there might be some corrupt being living there!",
+                "FHG(@#&OEHDHSDUG(SKDJ(@&E)!",
+                "If we can locate it and take it down,\nwe think Glacia Village will be safe once and for all!",
+                "This is huge. We must alert Queen Alaska!",
+                "...",
+                "WHAT?! YOU DON'T KNOW WHO THE QUEEN IS?!?!",
+                "Well, I would love to introduce you to her,\nbut unfortunately the doors are shut.",
+                "I had the key at one point, but I lost it!",
+                "`She also said something about once I have the key, go between red and blue??",
+                "Anyways, if you can help me find the key, that would be great!",
+                "It should be around Glacia Village somewhere..."
+
             ]
-            lonzo.clearAction()
-        }
-        lonzo.actionLine = "after"
+            lonzo.action = function() {
+                curMissions.push(meetingTheQueen)
+                lonzo.lines = [
+                    "We need to find the key... and fast!",
+                    "It should be somewhere here in Glacia Village...",
+                    "`She also said something about once I have the key, go between red and blue??"
+                ]
+                lonzo.clearAction()
+            }
+            lonzo.actionLine = "after"
+        })
     }
 }
 lonzo.actionLine = "after"
