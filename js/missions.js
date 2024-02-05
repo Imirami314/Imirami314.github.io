@@ -275,6 +275,6 @@ var curMissions = []
 
 function addMission(mission) {
 	if (curMissions.indexOf(mission) == -1) {
-		addMission(mission)
+		curMissions.push(mission)
 	}
 }
