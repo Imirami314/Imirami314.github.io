@@ -74,7 +74,29 @@ aStrangeWorld.solve = function () {
 var meetingTheQueen = new Mission("Meeting The Queen", "Main", null, 0)
 
 meetingTheQueen.solve = function () {
-    
+    nevada.action = function() {
+        Screen.fadeOut(0.05, function() {
+            nevada.map = mainMap
+            nevada.x = ctr(169)
+            nevada.y = ctr(25)
+            nevada.dir = "R"
+
+            curMap = mainMap
+            p.x = ctr(171)
+            p.y = ctr(25)
+            p.dir = "L"
+            
+
+            nevada.lines = ["See this over here?"]
+            nevada.remote = true
+            nevada.action = function () {
+
+            }
+            
+
+        })
+    }
+    nevada.actionLine = "after"
 }
 
 // ABILITY MISSIONS

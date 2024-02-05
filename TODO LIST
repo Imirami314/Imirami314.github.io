@@ -14,8 +14,8 @@ One Time
 - Fix raft alert
 - Think of theme for the 4th main quest city/town and add it to the Old Man's lines
 - Fix wanderer's lines
-- Fix shovel image
 - Fix breakable blocks
+- Fix remote NPC logic
 
 Continuous
 - Add sound effects for all blocks
@@ -31,6 +31,7 @@ Textures and images we need:
 - Sand (we have one right now but it sucks)
 - Maybe more tree textures for variety?
 - Windy Wastelands Key (it's just the confounded cave key right now lol)
+- Shovel
 - Decipherer
 - Puzzle keys
 - Chard Town Beam
