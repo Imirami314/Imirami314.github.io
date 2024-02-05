@@ -746,6 +746,26 @@ var blanche = new NPC(180 * 75 + 37.5, 19 * 75 + 37.5, "Blanche", mainMap, "D", 
     addMission(blancheAndBianca)
 }, "after")
 
+var nevada = new NPC(ctr(5), b(3), "Nevada", breezwayBuilds, "D", [
+    "Why hello there!",
+    "I've never seen you before!",
+    "I'm Nevada, proud new owner of Breezeway Builds!\nThis store has been in the family for three generations!",
+    "`And if you're wondering... no, unfortunately I'm not related to\nQueen Alaska...",
+    "Anyways, how can I help you?",
+    "...",
+    "Wait, what?\nYou don't know what a breezeway is?",
+    "Oh, it seems like you're VERY new here.",
+    "I'm more of a builder than an explainer.\nYou might want to talk to Lonzo.",
+    "He lives right next to me, to the east.",
+    "You can come back here once you're done!"
+
+], "Resident - Glacia Village", function () {
+    nevada.lines = [
+        "Sorry, you might wanna talk to Lonzo first\nto learn more about this stuff.",
+        "Come back here when you're done!"
+    ]
+}, "after")
+
 var lonzo = new NPC(222 * 75 + 37.5, 11 * 75 + 37.5, "Lonzo", mainMap, "D", [
     "HEY! HEY YOU!",
     "Please help me!\nI fell asleep here and now I'm stuck!",
@@ -805,6 +825,23 @@ lonzo.action = function () {
                     "We need to find the key... and fast!",
                     "It should be somewhere here in Glacia Village...",
                     "`She also said something about once I have the key, go between red and blue??"
+                ]
+                nevada.lines = [
+                    "Hey again!",
+                    "You talked to Lonzo?",
+                    "...",
+                    "Great! What did he say?",
+                    "...",
+                    "Oh... not much, huh?",
+                    "Well, I guess I'll do the explaining.",
+                    "Breezeways are created by harnessing the power of the Windy Wastelands.",
+                    "Since there is so much excess wind, scientists have found ways to harness\nits power with the help of wind enemies, or Gales!",
+                    "Using breezeways will give you the ability to teleport short distances!",
+                    "So that's about it! Need anything else?",
+                    "...",
+                    "Wait what did Lonzo say? Something about a key?",
+                    "...",
+                    "Yes, I actually might know something about it. Follow me..."    
                 ]
                 lonzo.clearAction()
             }
@@ -1624,6 +1661,8 @@ var interactives = [
     // Glacia Village
     new Breezeway(mainMap, 218, 11, 218, 9), // Pair up ones that connect to each other
     new Breezeway(mainMap, 218, 9, 218, 11),
+
+    new Breezeway(mainMap, 167, 26, 168, 27),
 
     // Queen's Castle
 

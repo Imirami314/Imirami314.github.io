@@ -1286,6 +1286,20 @@ var trailShop = new Landscape([
 	'WWWWWW|WWWWWW'
 ], 6 * 75 + 37.5, 7 * 75 + 37.5, 165, 16, "Trail Shop")
 
+var breezwayBuilds = new Landscape([
+    'SSSSSSSSSSS',
+    'S***zzz***S',
+    'S*zSzzzSz*S',
+    'S*zSSSSSz*S',
+    'Szzzz*zzzzS',
+    'Szzz***zzzS',
+    'Szzzz*zzzzS',
+    'S~zzzzzzz~S',
+    'S~zzzzzzz~S',
+    'S~~~zzz~~~S',
+    'SSSSS|SSSSS',
+], ctr(5), ctr(10), 206, 16, "Breezeway Builds")
+
 var lonzoHouse = new Landscape([
     '**W_$!!',
     'WWW_$$$',
