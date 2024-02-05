@@ -1397,7 +1397,7 @@ var opal = new NPC(ctr(125), ctr(62), "Opal", mainMap, 'R', [
     "Welcome to Litholia!",
     "But uhhh, you came at a pretty inconvenient time.",
     "Litholia is a town made mostly out of rocks and stones,\nbut recently lava has been oozing out of the ground!",
-    "It's very dangerous, and it makes it much harder to get around!",
+    "There's normally some lava, but now there is waaaay too much!\nIt's very dangerous, and it makes it much harder to get around!",
     "So yeah, I'd be careful.",
     "Bye-bye!"
 ], "Resident - Litholia")
