@@ -12,7 +12,11 @@ function Mission(name, type, nodes, num, solve) {
 
 	this.complete = false
 	this.completionPopup = false
+
+	Mission.all.push(this)
 }
+
+Mission.all = []
 
 Mission.prototype.drawDesc = function () {
 	ctx.fillStyle = "rgb(0, 0, 0)"
@@ -235,6 +239,42 @@ var deltasLostTreasure = new Mission("Delta's Lost Treasure", "Reward", null, 0,
 	}
 })
 
+var berylsSpecialBracelet = new Mission("Beryl's Special Bracelet", "Reward", null, 0, function() {
+	if (entityDistance(p, beryl) && p.weapon.name == "Beryl's Bracelet" && mouseIsDown) {
+		beryl.lines = [
+			"Wh-what? Am I dreaming?",
+			"You found my bracelet!",
+			"...",
+			"Oh yes, of course. You wanted to know where King Jasper was.\nLucky for you, I can remember it now!",
+			"He went to do some business in the northern region of Fortune Field.",
+			"Again, thank you so much. Here's some money as a little gift.",
+		]
 
-var missions = [theWanderersRiddles, leysGreatFear, davidsDreamPond, blancheAndBianca, theBlockedEntrance, deltasLostTreasure]
+		beryl.action = function() {
+			p.trills += 50
+			p.removeItem(items.berylsBracelet)
+
+			beryl.lines = [
+				"Thanks for finding my bracelet.\nKing Jasper should be in the northern region of Fortune Field."
+			]
+
+			beryl.clearAction()
+
+			berylsSpecialBracelet.finish()
+		}
+
+		beryl.actionLine = "after"
+
+		beryl.lineNum = 0
+	}
+})
+
+
+var missions = Mission.all
 var curMissions = []
+
+function addMission(mission) {
+	if (curMissions.indexOf(mission) == -1) {
+		curMissions.push(mission)
+	}
+}

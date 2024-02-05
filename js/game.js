@@ -1428,12 +1428,15 @@ var beryl = new NPC(ctr(104), ctr(72), "Beryl", mainMap, 'L', [
     "Sorry, I'm really worried right now.",
     "I had this stress bracelet made of gems that I always wore,\nbut then some mean people started trying to steal it from me!",
     "So, I hid it in a safe chest until they went away. But then, some\nlava started seeping out of the ground, blocking my path!",
-    "Now I don't know how to get back to the chest\nto find my bracelet...",
+    "Now I don't know how to get back to the chest\nwith my bracelet...",
+    "The chest is up north, right by the border between us and Steel Field.",
     "...",
-    "You're looking for somebody in charge? Well, that would be King Jasper.",
+    "You're looking for the leader of Litholia?\nWell, that would be King Jasper.",
     "He's off doing some business in, uh...",
     "Aw man! I can't remember anything without my bracelet!\nPlease, if you can, help me find it!"
-])
+], "Resident - Litholia\nVery reliant on her special bracelet. Without it, she it too worried to remember anything!", function() {
+    curMissions.push(berylsSpecialBracelet)
+}, "after")
 
 var npcs = NPC.all
 var shopMenus = [muhammadShop, blakeShop, caspianShop]
@@ -2130,7 +2133,7 @@ const c4_41 = new Chest(droptonCity, 4, 41, [
 ])
 
 const c119_55 = new Chest(mainMap, 119, 55, [
-
+    items.berylsBracelet
 ])
 
 const chests = Chest.all
