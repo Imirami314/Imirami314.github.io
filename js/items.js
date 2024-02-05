@@ -336,6 +336,9 @@ var items = {
             }
         }
     }, "A painting by Coral featuring the stunning lake of Dropton.", "MISC"),
+    berylsBracelet: new Item("Beryl's Bracelet", 0, function(x, y) {
+        ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
+    })
 
 } // Puzzle Keys are not included as they vary depending on where they came from
 

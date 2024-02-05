@@ -1423,6 +1423,18 @@ var jade = new NPC(ctr(4), ctr(2), "Jade", litholianHistoryCenter, 'U', [
     jade.clearAction()
 }, "after")
 
+var beryl = new NPC(ctr(104), ctr(72), "Beryl", mainMap, 'L', [
+    "Oh, hi.",
+    "Sorry, I'm really worried right now.",
+    "I had this stress bracelet made of gems that I always wore,\nbut then some mean people started trying to steal it from me!",
+    "So, I hid it in a safe chest until they went away. But then, some\nlava started seeping out of the ground, blocking my path!",
+    "Now I don't know how to get back to the chest\nto find my bracelet...",
+    "...",
+    "You're looking for somebody in charge? Well, that would be King Jasper.",
+    "He's off doing some business in, uh...",
+    "Aw man! I can't remember anything without my bracelet!\nPlease, if you can, help me find it!"
+])
+
 var npcs = NPC.all
 var shopMenus = [muhammadShop, blakeShop, caspianShop]
 
@@ -1509,6 +1521,8 @@ var interactives = [
     new Breezeway(mainMap, 181, 86, 181, 84),
     new Breezeway(mainMap, 181, 84, 181, 86),
 
+    new RaftDispenser(mainMap, b(143), b(77), ctr(143), ctr(76)),
+
     new Toggle(mainMap, 139, 81, function() {
         curMap.switch(131, 63, "(", ")")
         curMap.changeBlock(141, 81, 'S')
@@ -1532,6 +1546,16 @@ var interactives = [
         curMap.switch(129, 63, "(", ")")
         curMap.changeBlock(133, 90, '.')
     }, ctr(129), ctr(63)),
+
+    new RaftDispenser(mainMap, b(134), b(59), ctr(135), ctr(59)),
+
+    new Toggle(mainMap, 119, 85, function() {
+        curMap.switch(105, 89, "(", ")")
+        curMap.switch(106, 89, "(", ")")
+    }, function() {
+        curMap.switch(105, 89, "(", ")")
+        curMap.switch(106, 89, "(", ")")
+    }, b(106), ctr(89)),
 
     // Confounded Cave
 
@@ -2103,6 +2127,10 @@ const c34_15 = new Chest(cryoUnderground, 34, 15, [
 
 const c4_41 = new Chest(droptonCity, 4, 41, [
     items.lightContainer
+])
+
+const c119_55 = new Chest(mainMap, 119, 55, [
+
 ])
 
 const chests = Chest.all

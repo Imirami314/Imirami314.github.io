@@ -1250,8 +1250,18 @@ const monsters = [
     new Splint("Main Map", ctr(153), ctr(77)),
     new Splint("Main Map", ctr(143), ctr(87)),
     new Splint("Main Map", ctr(154), ctr(89)),
+    new Splint("Main Map", ctr(105), ctr(92)),
+    new Splint("Main Map", ctr(106), ctr(92)),
+    new Splint("Main Map", ctr(97), ctr(96)),
+    new Splint("Main Map", ctr(114), ctr(96)),
     new Patroller("Main Map", ctr(115), ctr(72)),
+    new Patroller("Main Map", ctr(100), ctr(93)),
+    new Patroller("Main Map", ctr(111), ctr(93)),
+    new Patroller("Main Map", ctr(103), ctr(99)),
+    new Patroller("Main Map", ctr(108), ctr(99)),
+
     new Splint("Gale Cave", 50 * 75, 33 * 75),
+
     new Splint("The Cryo Underground", 17 * 75, 1 * 75),
     new Splint("The Cryo Underground", 18 * 75, 22 * 75),
     new Splint("The Cryo Underground", 22 * 75, 11 * 75),
