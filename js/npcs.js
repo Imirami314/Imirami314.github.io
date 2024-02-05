@@ -342,7 +342,12 @@ class NPC extends Entity {
                         if (this.lines[this.lineNum].charAt(0) == "`") {
                             ctx.font = "15px serif"
                             fillTextMultiLine(this.lines[this.lineNum].substring(1,(this.lines[this.lineNum]).length), width / 2, (height * 3 / 4) + 60)
+                        } else if (this.lines[this.lineNum].charAt(0) == "*") {
+                            ctx.font = "20px serif"
+                            ctx.fillStyle = "rgb(150, 0, 0)"
+                            fillTextMultiLine(this.lines[this.lineNum].substring(1,(this.lines[this.lineNum]).length), width / 2, (height * 3 / 4) + 60)
                         } else {
+                            ctx.fillStyle = "rgb(0, 0, 0)"
                             ctx.font = "20px serif"
                             fillTextMultiLine(this.lines[this.lineNum], width / 2, (height * 3 / 4) + 60)
                         }
