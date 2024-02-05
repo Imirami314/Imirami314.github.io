@@ -2506,7 +2506,7 @@ var gameInterval = setInterval(function() {
                         playMusic("Gale Cave Light")
                     }
                 } else if (curMap == howlerHollow) {
-                    // playMusic("Howler Hollow") No howler hollow music yet
+                    playMusic("Howler Hollow")
                 } else if (curMap == stormedRoom) {
                     playMusic("Darkened Battle") // Default ??? Need to make music for Stormed
                 } else if (curMap == droptonTunnels) {

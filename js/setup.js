@@ -424,16 +424,16 @@ var music = [
         audio: new Audio('audio/adventure.mp3')
 	},
     {
-		name: "Cryo Underground",
-        audio: new Audio('audio/cryo_underground.mp3')
-	},
-    {
         name: "Lonzo House",
         audio: new Audio('audio/lonzoHouse.mp3')
     },
 	{
 		name: "Queen's Castle",
         audio: new Audio('audio/queens_castle.mp3')
+	},
+	{
+		name: "Windy Wastelands",
+        audio: new Audio('audio/windy_wastelands.mp3')
 	},
     {
 		name: "Gale Cave Dark",
@@ -443,10 +443,10 @@ var music = [
 		name: "Gale Cave Light",
         audio: new Audio('audio/gale_cave.mp3')
 	},
-	{
-		name: "Windy Wastelands",
-        audio: new Audio('audio/windy_wastelands.mp3')
-	},
+    {
+        name: "Howler Hollow",
+        audio: new Audio('audio/howlerHollow.mp3')
+    },
     {
         name: "Encompassed Forest",
         audio: new Audio('audio/encompassedForest.mp3')
@@ -463,6 +463,10 @@ var music = [
         name: "Dropton City",
         audio: new Audio('audio/droptonCity.mp3')
     },
+    {
+		name: "Cryo Underground",
+        audio: new Audio('audio/cryo_underground.mp3')
+	},
     {
         name: "Litholia",
         audio: new Audio('audio/litholia.mp3')
@@ -541,6 +545,7 @@ function playMusic(name) {
             curMusic = msc[i]
         } else {
             msc.audio.pause()
+            msc.audio.currentTime = 0
             msc.audio.isPlaying = false
         }
     }
