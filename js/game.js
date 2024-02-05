@@ -433,7 +433,7 @@ var oldMan = new NPC(5*75, 1*75, "Old Man", johnHouse, "D", [
     }
 
 	if (oldMan.firstInteraction) {
-		curMissions.push(aStrangeWorld)
+		addMission(aStrangeWorld)
 	}
 }, "after")
 
@@ -494,7 +494,7 @@ var david = new NPC(16 * 75 + 37.5, 16 * 75 + 37.5, "David Swimmer", mainMap, "D
     "But I do love to swim!",
     "This pond is kind of depressing though. I would love to find\na great big pond that I could swim in forever!"
 ], "Resident - Chard Town\nA socially awkward dude who loves to swim.\nUnfortunately, he's not great at it.", function() {
-    curMissions.push(davidsDreamPond)
+    addMission(davidsDreamPond)
 }, "after")
 
 
@@ -533,7 +533,7 @@ var ley = new NPC(17 * 75 + 37.5, 29 * 75 + 37.5, "Ley", mainMap, "D", [
     })
     ley.action = function(p) {
         if (ley.firstInteraction) {
-            curMissions.push(leysGreatFear)    
+            addMission(leysGreatFear)    
         }
     }
     ley.actionLine = "after"
@@ -743,7 +743,7 @@ var blanche = new NPC(180 * 75 + 37.5, 19 * 75 + 37.5, "Blanche", mainMap, "D", 
     "Hey, could you help me? All you'd have to do is\ngo into the forest and find her.",
     "I'm too scared to go again...\nBianca is much braver than I am."
 ], "Resident - Glacia Village", function() {
-    curMissions.push(blancheAndBianca)
+    addMission(blancheAndBianca)
 }, "after")
 
 var lonzo = new NPC(222 * 75 + 37.5, 11 * 75 + 37.5, "Lonzo", mainMap, "D", [
@@ -800,7 +800,7 @@ lonzo.action = function () {
 
             ]
             lonzo.action = function() {
-                curMissions.push(meetingTheQueen)
+                addMission(meetingTheQueen)
                 lonzo.lines = [
                     "We need to find the key... and fast!",
                     "It should be somewhere here in Glacia Village...",
@@ -958,7 +958,7 @@ var theWanderer = new NPC (60 * 75, 41 * 75, "The Wanderer", mainMap, "D",    [
 	
 ], "hi", function () {
     if (theWanderer.firstInteraction) {
-        curMissions.push(theWanderersRiddles)
+        addMission(theWanderersRiddles)
     }
     theWanderer.action = function (p) {
         
@@ -1177,7 +1177,7 @@ var loch = new NPC(40 * 75 + 37.5, 28 * 75 + 37.5, "Loch", droptonCity, 'L', [
     "Opening up this entrance would provide easy access to Dropton Dryalnds!",
     "If you have any ideas on how to fix this, it will be very helpful.\nI'll reward you too!"
 ], "ello", function() {
-    curMissions.push(theBlockedEntrance)
+    addMission(theBlockedEntrance)
 }, "after")
 
 var delta = new NPC(18 * 75 + 37.5, 11 * 75 + 37.5, "Delta", droptonTown, 'D', [
@@ -1192,7 +1192,7 @@ var delta = new NPC(18 * 75 + 37.5, 11 * 75 + 37.5, "Delta", droptonTown, 'D', [
     "I'm counting on you!"
 ], "[insert description]", function() {
     p.giveItem(items.deltasKey, true)
-    curMissions.push(deltasLostTreasure)
+    addMission(deltasLostTreasure)
 }, "after")
 
 var presidentWells = new NPC(1 * 75 + 37.5, 1 * 75 + 37.5, "President Wells", droptonResearchFacility, 'R', [
@@ -1435,7 +1435,7 @@ var beryl = new NPC(ctr(104), ctr(72), "Beryl", mainMap, 'L', [
     "He's off doing some business in, uh...",
     "Aw man! I can't remember anything without my bracelet!\nPlease, if you can, help me find it!"
 ], "Resident - Litholia\nVery reliant on her special bracelet. Without it, she it too worried to remember anything!", function() {
-    curMissions.push(berylsSpecialBracelet)
+    addMission(berylsSpecialBracelet)
 }, "after")
 
 var npcs = NPC.all
@@ -2020,7 +2020,7 @@ if (!!save) {
                 savedMission.complete = mission.complete
                 savedMission.completionPopup = mission.completionPopup
 
-                curMissions.push(missions[i])
+                addMission(missions[i])
             }
         }
     })
@@ -2315,7 +2315,7 @@ function saveGame() {
     }
 
     curMissions.forEach((mission) => {
-        SAVING.curMissions.push(mission)
+        SAVING.addMission(mission)
     })
     lset("curMissions", JSON.stringify(SAVING.curMissions))
     

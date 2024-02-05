@@ -1035,7 +1035,7 @@ mainMap.solve = function() {
     // Wanderer GV
     if (!!getGameAlertInfoByCords(205, 24, mainMap)) {
         if (getGameAlertInfoByCords(205, 24, mainMap).playerRead) {
-            curMissions.push(theWanderersRiddlesGV)
+            addMission(theWanderersRiddlesGV)
         }
     }
 	
