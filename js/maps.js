@@ -2355,14 +2355,16 @@ var encompassedForest = new Region([{
     var pDir = ""
     function changeDir () {
         lostTraveler.dir = randNPCDir[Math.floor(Math.random() * 4)]
-        lostTraveler.lines = [randDir[Math.floor(Math.random() * 4)]]
         forestTeleport = false
     }
 
-    if (entityDistance(lostTraveler, p) <= 300) {
-        forestLoopStarted = true
-        forestTeleport = true
-    }
+    // if (entityDistance(lostTraveler, p) <= 300) {
+    //     forestLoopStarted = true
+    //     forestTeleport = true
+    // }
+
+    forestLoopStarted = true
+    forestTeleport = true
 
     function moveLostToggle() {
         // Move lost traveler's toggle to next location in cycle

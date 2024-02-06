@@ -996,16 +996,14 @@ var theWanderer = new NPC (60 * 75, 41 * 75, "The Wanderer", mainMap, "D",    [
         addMission(theWanderersRiddles)
     }
     theWanderer.action = function (p) {
-        
-        
+
     }
-		
-	
 }, "after")
 
 var lostTraveler = new NPC (252 * 75 + 37.5, 48 * 75 + 37.5, "Lost Traveler", mainMap, "D", [
-    "Oh yeahhhh",
-    "oh yeahh"
+    "yellow...",
+    "purple...",
+    "...yellow...purple...yellow...purple..."
 ])
 
 

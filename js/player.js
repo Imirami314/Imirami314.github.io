@@ -340,7 +340,7 @@ Player.prototype.HUD = function() {
 
     ctx.fillStyle = "rgb(255, 255, 255)"
     ctx.font = "20px serif"
-    ctx.fillText("Trills: " + this.trills, 40, 25)
+    ctx.fillText("Trills: " + this.trills, 90, 25)
 
     // ctx.fillStyle = "rgb(0, 0, 0)"
     // ctx.fillRect(1285, 530, 100, 100)
@@ -355,21 +355,29 @@ Player.prototype.HUD = function() {
     } else {
         this.animatedHealth = this.health
     }
-    ctx.save()
-    ctx.translate(1365 - 100, 640 - 100)
-    ctx.scale(0.1, 0.1)
-    ctx.translate(-1 * p.x, -1 * p.y)
 
-    // Border
-    curMap.draw(p, "Snippet View")
-    ellipse(this.x, this.y, 50, 50, "rgb(255, 0, 0)")
-    ctx.restore()
+    // Minimap
+    if (!encompassedForest.inRegion) {
+        ctx.save()
+        ctx.translate(1365 - 100, 640 - 100)
+        ctx.scale(0.1, 0.1)
+        ctx.translate(-1 * p.x, -1 * p.y)
 
-    ctx.beginPath()
-    ctx.strokeStyle = "rgb(0, 0, 0)"
-    ctx.lineWidth = 8
-    ctx.rect(1192, 467, 153, 154)
-    ctx.stroke()
+        // Border
+        curMap.draw(p, "Snippet View")
+        ellipse(this.x, this.y, 50, 50, "rgb(255, 0, 0)")
+        ctx.restore()
+
+        ctx.beginPath()
+        ctx.strokeStyle = "rgb(0, 0, 0)"
+        ctx.lineWidth = 8
+        ctx.rect(1192, 464, 153, 157)
+        ctx.stroke()
+    } else {
+        ctx.font = "100px serif"
+        ctx.fillStyle = "rgb(255, 255, 255)"
+        ctx.fillText("?", 1260, 565)
+    }
     
     //
     for (var i = 0; i < monsters.length; i ++) {
