@@ -385,8 +385,6 @@ function Teleport(x, y, map) {
 }
 
 Teleport.prototype.draw = function () {
-		console.log(p.mapPan.x * mapScale)
-		
 		ctx.save()
         ctx.translate(width / 2, height / 2)
         ctx.scale(mapScale, mapScale) 
@@ -2383,7 +2381,7 @@ if (!!save) {
 function startPos() {
     dev = true
     curMap = mainMap
-    p.goTo(ctr(106), ctr(98))
+    p.goTo(ctr(180), ctr(56))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
     p.equipped = [items.aquaLung]
 

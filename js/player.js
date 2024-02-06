@@ -310,7 +310,7 @@ Player.prototype.draw = function() {
     }
     
 
-    if (mouseIsDown && !keys.e && !this.mapOn && !this.hitting) {
+    if (mouseClicked && !keys.e && !this.mapOn && !this.hitting) {
         try {
             this.weapon.use(this)
         } catch(error) {

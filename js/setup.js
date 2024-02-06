@@ -32,24 +32,11 @@ function lget(key) {
 const canvas = document.querySelector('.myCanvas');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-// var curWidth = canvas.width
-// var curHeight = canvas.height
 const width = 1440;
 const height = 675;
 const ctx = canvas.getContext('2d');
 ctx.scale(window.innerWidth / 1440, window.innerHeight / 675)
 
-// var scaleInterval = setInterval(function() {
-//     canvas.width = window.innerWidth;
-//     console.log(curWidth + " " + canvas.width)
-//     canvas.height = window.innerHeight;
-//     if ((curWidth != canvas.width) || (curHeight != canvas.height)) {
-//         ctx.scale(1 / (curWidth / 1440), 1 / (curHeight / 675))
-//         ctx.scale(curWidth / 1440, curHeight / 675)
-//         curWidth = canvas.width
-//         curHeight = canvas.height
-//     }
-// }, 1000)
 var save;
 
 if (!!lget("player")) {
@@ -96,6 +83,7 @@ var keys = {
 }
 
 var mouseIsDown = false
+var mouseClicked = false
 var holding = false
 var mouseX
 var mouseY
@@ -335,18 +323,21 @@ document.addEventListener('mousemove', (event) => {
 })
 
 window.addEventListener('mousedown', function() {
-    mouseIsDown = true;
+    mouseIsDown = true
+    mouseClicked = true
     holding = false
     setTimeout(function() {
         if(mouseIsDown) {
             holding = true
+            mouseClicked = false
             // mouse was held down for > 0.45 second
         }
-    }, 450);
+    }, 250);
 });
 
 window.addEventListener('mouseup', function() {
-    mouseIsDown = false;
+    mouseIsDown = false
+    mouseClicked = false
 });
 
 
