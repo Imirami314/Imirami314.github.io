@@ -964,16 +964,21 @@ class Splint extends Enemy {
         this.hitCooldown = 1
 
         this.dead = false
+        this.haveTrillsBeenAwarded = false
+        this.trillAward = Math.round(Math.random() * 5)
     }
 
     draw() {
-        if (this.health <= 0 && !this.isDead()) {
-            this.dead = true
-            var trillsChanceGenerator = Math.random() 
-            if (trillsChanceGenerator <= 0.5) {
-                p.trills += Math.round(Math.random() + 5)
-            }
-        }
+        // if (this.isDead() && !this.haveTrillsBeenAwarded) {
+        //     var trillsChanceGenerator = Math.random() 
+        //     if (trillsChanceGenerator <= 0.5) {
+        //         p.trills += Math.round(Math.random() + 5)
+        //     }
+
+        //     alert("gogu")
+
+        //     this.haveTrillsBeenAwarded = true
+        // }
 
         if (this.agro && this.playerDist >= 90 && !this.hitting) {
             // this.move(Math.cos(this.playerAngle) * 2, Math.sin(this.playerAngle) * 2)

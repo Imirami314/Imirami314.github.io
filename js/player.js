@@ -781,6 +781,11 @@ Player.prototype.hitEnemies = function() {
             } else {
                 m.health -= 1
             }
+
+            if (m.health <= 0 && !m.haveTrillsBeenAwarded) {
+                this.trills += m.trillAward
+                m.haveTrillsBeenAwarded = true
+            }
             
             // Monster knockback
             // m.x += Math.cos(this.mAngle) * 25
