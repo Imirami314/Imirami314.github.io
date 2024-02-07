@@ -1479,8 +1479,8 @@ var kingJasper = new NPC(ctr(115), ctr(81), "King Jasper", mainMap, 'R', [
     "Perfect! I was just talking to Mr. Wells about a famous Litholian legend.\nIt goes as follows:",
     "*As the island grows weak and the fortress appears,\nBring these words to a true hero's ears,",
     "*Observe the bushes along the river that flows,\nAmong their numbers, a secret subtly shows,",
-    "*Two on the left, the other side three,\nFrom there to the east, a strange group of trees,",
-    "*The four wooded towers, with no shrubs aside,\nWhere the river runs by the one most north, head inside.",
+    "*Two on the left, the other side three,\nFrom there, directly east, lies strange group of trees,",
+    "*These four wooded towers, with no shrubs beside,\nWhere the river runs by the one most north, head inside.",
     "That fortress mentioned at the beginning could be the\nlarge stone building that emerged in Southern Litholia. Unfortunately, nobody knows\nwhat it is nor how to get inside it.",
     "So, it's possible that this riddle is telling us how to enter it!",
 ], "The King of Litholia.", function() {
@@ -1488,8 +1488,8 @@ var kingJasper = new NPC(ctr(115), ctr(81), "King Jasper", mainMap, 'R', [
         "We need to to help us decipher the following riddle:",
         "*As the island grows weak and the fortress appears,\nBring these words to a true hero's ears,",
         "*Observe the bushes along the river that flows,\nAmong their numbers, a secret subtly shows,",
-        "*Two on the left, the other side three,\nFrom there to the east, a strange group of trees,",
-        "*The four wooded towers, with no shrubs aside,\nWhere the river runs by the one most north, head inside.",
+        "*Two on the left, the other side three,\nFrom there, directly east, lies strange group of trees,",
+        "*These four wooded towers, with no shrubs beside,\nWhere the river runs by the one most north, head inside.",
         "That fortress mentioned at the beginning could be the\nlarge stone building that emerged in Southern Litholia. Unfortunately, nobody knows\nwhat it is nor how to get inside it.",
         "Maybe the riddle tells us how to enter it!"
     ]
@@ -2401,7 +2401,7 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = false
+    dev = true
     curMap = mainMap
     p.goTo(ctr(180), ctr(56))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
