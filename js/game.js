@@ -856,13 +856,13 @@ var guardAlfred = new NPC(19 * 75 + 37.5, 7 * 75 + 37.5, "Castle Guard Alfred", 
     "Ah yes. She's been waiting someone.\nShe made a wall around her throne that APPARENTLY\nopens only to this person.",
     "She's been hiding in there for a while now.\nHopefully, you're the person she's waiting for!",
     "The queen instructed us to tell visitors to stand on the white\nblock in front of her throne.",
-    "So far, no visitor's prescence opened the door,\nso we are starting to lose hope.",
+    "So far, no visitor's presence opened the door,\nso we are starting to lose hope.",
     "Anyway, you may now proceed."
 ], "hi")
 
 var queenAlaska = new NPC(42 * 75 + 37.5, 3 * 75 + 37.5, "Queen Alaska", queensCastle, "L", [
     "Welcome! I am Queen Alaska, but you can just\ncall me Alaska.",
-    "I see your prescence triggered my special\nwall, which means you are the person I'm supposed to meet.",
+    "I see your presence triggered my special\nwall, which means you are the person I'm supposed to meet.",
     "So, is it true? Did you really venture into the Confounded Cave\nof Chard Town and defeat Darkened?",
     "...",
     "That's incredible. You know, another Elemental Master was\ncaptured here, in Glacia.",
