@@ -2235,6 +2235,15 @@ const fortuneFieldWaterEntrance148_102 = new Secret(148, 102, mainMap, function(
     }
 })
 
+const litholianLegendWaterEntrance = new Secret(171, 66, mainMap, function() {
+    if (p.can.goUnderWater && keys.space) {
+        Screen.fadeOut(0.01, function() {
+            curMap = litholianLegendPassageways
+            p.goTo(ctr(37), ctr(2))
+        })
+    }
+})
+
 var secrets = Secret.all
 
 var opacity = 1
