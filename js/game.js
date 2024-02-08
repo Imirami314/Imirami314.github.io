@@ -2013,6 +2013,11 @@ var interactives = [
     new RaftDispenser(fortuneFieldWaterTunnel144_78, b(6), b(5), ctr(7), ctr(5)),
 
     new MultiToggle(fortuneFieldWaterTunnel144_78, 11, 3, 8, 4, ["!", "$", "S", "W"]),
+
+    // Passageways of Litholian Legend
+    new RaftDispenser(litholianLegendPassageways, b(38), b(1), ctr(37), ctr(1)),
+
+    new RaftDispenser(litholianLegendPassageways, b(20), b(10), ctr(20), ctr(9)),
 ]
 
 /*
