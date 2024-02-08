@@ -2258,9 +2258,11 @@ var litholianLegendPassageways = new Landscape([
 ], null, null, null, null, "Passages of Litholian Legend", function() {
     setLighting(1500)
 
-    if (p.on(1, 38)) {
-        curMap = mainMap
-        p.goTo(b(106), b(101))
+    if (keys.space) {
+        if (p.on(1, 38)) {
+            curMap = mainMap
+            p.goTo(b(106), b(101))
+        }
     }
 })
 

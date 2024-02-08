@@ -767,6 +767,19 @@ Player.prototype.eat = function(foodItem) {
     })
 }
 
+Player.prototype.getClosestMonster = function() {
+    let closestDist = 1000000000
+    let closestMonster = 0;
+    monsters.forEach((m) => {
+        if (closestMonster == 0 || (entityDistance(p, closestMonster) < closestDist)) {
+            closestDist = entityDistance(p, closestMonster) < closestDist
+            closestMonster = m
+        }
+    })
+
+    return closestMonster
+}
+
 Player.prototype.hitEnemies = function() {
     var monsterThatWasHitNum = null
     // For monsters
@@ -786,23 +799,11 @@ Player.prototype.hitEnemies = function() {
                 this.trills += m.trillAward
                 m.haveTrillsBeenAwarded = true
             }
-            
-            // Monster knockback
-            // m.x += Math.cos(this.mAngle) * 25
-            // m.y += Math.sin(this.mAngle) * 25
             m.move(Math.cos(this.mAngle) * 25, Math.sin(this.mAngle) * 25, true)
             
             // Tells monster that it is hit (doesn't work for some monsters idk why)
             m.isHit = true
             monsterThatWasHitNum = i
-            // eventsDelay(
-            //     function() {
-            //         m.isHit = true
-            //     },
-            //     function() {
-            //         m.isHit = false
-            //     },
-            // 0.5)
         }
     }
 
