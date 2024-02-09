@@ -2245,6 +2245,8 @@ const litholianLegendWaterEntrance = new Secret(171, 66, mainMap, function() {
         Screen.fadeOut(0.01, function() {
             curMap = litholianLegendPassageways
             p.goTo(ctr(37), ctr(2))
+
+            Screen.fadeIn(0.01, function() {})
         })
     }
 })

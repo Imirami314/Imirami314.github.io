@@ -590,43 +590,78 @@ Player.prototype.collide = function() {
 
     if (this.doorCooldown <= 0) {
         if ((this.blockOn.name == "door" || this.blockOn.name == "hole") && keys.space) {
-            fadeStarted = true
+            this.canMove = false
+            // ctx.fillStyle = "rgb(0, 0, 0, " + fadeOut +    ")"
+            // ctx.fillRect(0, 0, width, height)
+            // if ((areaSearchByCords(this.cords.x, this.cords.y) != 0) || (curMap != mainMap)) { // i have to go tho it is new time for chunky men!ok gluconate
+            //     fadeOut += 0.05
+            // } else {
+            //     fadeStarted = false
+            // }
+            function startAreaEnter() {
+                // need to use 'p' instead of this due to scope
+                if (curMap == mainMap) {
+                    p.cordSave.x = p.cords.x
+                    p.cordSave.y = p.cords.y
+        
+                    var areaJoining = areaSearchByCords(p.cords.x, p.cords.y)
+                    curMap = areaJoining
+                    p.x = areaJoining.enterX
+                    p.y = areaJoining.enterY
+                } else if (curMap != mainMap) {
+                    if (!!p.cordSave.x && !!p.cordSave.y) {
+                        p.goTo(ctr(p.cordSave.x), ctr(p.cordSave.y))
+                        p.cordSave = {}
+                        curMap = mainMap
+                    } else {
+                        console.log("No coordinates were saved upon area entry")
+                    }
+                }
+                fadeStarted = false
+                fadeOut = 0
+                p.canMove = true
+            }
+            
+            Screen.fadeOut(0.05, function() {
+                startAreaEnter()
+                Screen.fadeIn(0.05, function() {})
+            })
         }
         this.doorCooldown = 0.1
     }
 
-    if (fadeStarted) {
-        this.canMove = false
-        ctx.fillStyle = "rgb(0, 0, 0, " + fadeOut +    ")"
-        ctx.fillRect(0, 0, width, height)
-        if ((areaSearchByCords(this.cords.x, this.cords.y) != 0) || (curMap != mainMap)) { // i have to go tho it is new time for chunky men!ok gluconate
-            fadeOut += 0.05
-        } else {
-            fadeStarted = false
-        }
-        if (fadeOut >= 1) {
-            if (curMap == mainMap) {
-                this.cordSave.x = this.cords.x
-                this.cordSave.y = this.cords.y
+    // if (fadeStarted) {
+    //     this.canMove = false
+    //     ctx.fillStyle = "rgb(0, 0, 0, " + fadeOut +    ")"
+    //     ctx.fillRect(0, 0, width, height)
+    //     if ((areaSearchByCords(this.cords.x, this.cords.y) != 0) || (curMap != mainMap)) { // i have to go tho it is new time for chunky men!ok gluconate
+    //         fadeOut += 0.05
+    //     } else {
+    //         fadeStarted = false
+    //     }
+    //     if (fadeOut >= 1) {
+    //         if (curMap == mainMap) {
+    //             this.cordSave.x = this.cords.x
+    //             this.cordSave.y = this.cords.y
     
-                var areaJoining = areaSearchByCords(this.cords.x, this.cords.y)
-                curMap = areaJoining
-                this.x = areaJoining.enterX
-                this.y = areaJoining.enterY
-            } else if (curMap != mainMap) {
-                if (!!this.cordSave.x && !!this.cordSave.y) {
-                    this.goTo(ctr(this.cordSave.x), ctr(this.cordSave.y))
-                    this.cordSave = {}
-                    curMap = mainMap
-                } else {
-                    console.log("No coordinates were saved upon area entry")
-                }
-            }
-            fadeStarted = false
-            fadeOut = 0
-            this.canMove = true
-        }
-    }
+    //             var areaJoining = areaSearchByCords(this.cords.x, this.cords.y)
+    //             curMap = areaJoining
+    //             this.x = areaJoining.enterX
+    //             this.y = areaJoining.enterY
+    //         } else if (curMap != mainMap) {
+    //             if (!!this.cordSave.x && !!this.cordSave.y) {
+    //                 this.goTo(ctr(this.cordSave.x), ctr(this.cordSave.y))
+    //                 this.cordSave = {}
+    //                 curMap = mainMap
+    //             } else {
+    //                 console.log("No coordinates were saved upon area entry")
+    //             }
+    //         }
+    //         fadeStarted = false
+    //         fadeOut = 0
+    //         this.canMove = true
+    //     }
+    // }
 
     // Secret Entrances
     

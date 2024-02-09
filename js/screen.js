@@ -18,15 +18,19 @@ Screen.fadeOut = function(speed, action) {
     } else {
         console.log("Cannot add another effect if one of the same type is active")
     }
+}
 
-    // ctx.fillStyle = "rgb(0, 0, 0, " + this.fade + ")"
-    // ctx.fillRect(0, 0, width, height)
-    // cutsceneFrame = 0
-    // this.fade += speed
-    // if (this.fade >= 1) {
-    //     action()
-    //     this.fade = 0
-    // }
+Screen.fadeIn = function(speed, action) {
+    if (!this.checkEffectActive("FADE IN")) {
+        this.effects.push({
+            type: "FADE IN",
+            speed: speed,
+            action: action
+        })
+        this.fade = 1
+    } else {
+        console.log("Cannot add another effect if one of the same type is active")
+    }
 }
 
 Screen.shake = function(intensity, duration) {
@@ -39,19 +43,6 @@ Screen.shake = function(intensity, duration) {
     } else {
         console.log("Cannot add another effect if one of the same type is active")
     }
-
-    // if (this.shakeTime < duration) {
-    //     this.shakeOffset.x = intensity * (Math.random() < 0.5 ? -1 : 1) // Returns either -1 or 1
-    //     this.shakeOffset.y = intensity * (Math.random() < 0.5 ? -1 : 1)
-    //     this.shakeTime += 1 / 66.67
-    // } else {
-    //     this.shakeTime = 0
-    //     this.shakeOffset = {
-    //         x: 0,
-    //         y: 0
-    //     }
-    //     return
-    // }
 }
 
 Screen.checkEffectActive = function(type) {
@@ -80,9 +71,19 @@ Screen.update = function() {
                 cutsceneFrame = 0
                 this.fade += e.speed
                 if (this.fade >= 1) {
-                    e.action()
                     this.fade = 0
                     this.stopEffect("FADE OUT")
+                    e.action()
+                }
+                break
+            case "FADE IN":
+                console.log("Fade = " + this.fade)
+                cutsceneFrame = 0
+                this.fade -= e.speed
+                if (this.fade <= 0) {
+                    e.action()
+                    this.fade = 0
+                    this.stopEffect("FADE IN")
                 }
                 break
             case "SHAKE":
