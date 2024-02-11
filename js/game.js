@@ -842,6 +842,35 @@ lonzo.action = function () {
                     "Yes, I actually might know something about it. Follow me..."    
                 ]
                 lonzo.clearAction()
+                nevada.action = function() {
+                    Screen.fadeOut(0.05, function() {
+                        nevada.map = mainMap
+                        nevada.x = ctr(169)
+                        nevada.y = ctr(25)
+                        nevada.dir = "R"
+            
+                        curMap = mainMap
+                        p.x = ctr(171)
+                        p.y = ctr(25)
+                        p.dir = "L"
+                        
+            
+                        nevada.lines = [
+                            "See this over here?",
+                            "There is a breezeway that used to be connected to the river that is no longer\nfunction after the other breezeway broke.",
+                            "And it looks like there is something floating in the water!",
+                            "I would be able to fix it, but unfortunately I am out of materials.",
+                            "To make a breezeway, I'm gonna need 10 gale wings.",
+                            "I usually do charge 100 trills as well, but\nsince it's your first time I'll only charge 50!",
+                            "If you can get me all the materials, I'll start construction RIGHT away!"
+                        ]
+                        nevada.remote = true
+                        
+            
+            
+                    })
+                    nevada.clearAction()
+                }
             }
             lonzo.actionLine = "after"
         })
