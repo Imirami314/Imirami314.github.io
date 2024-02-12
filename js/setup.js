@@ -179,6 +179,10 @@ function ctr(n) {
     return n * 75 + 37.5
 }
 
+function perSec(n) {
+    return n * 1 / 66.67
+}
+
 var eventDelays = []
 
 function eventsDelay(f1, f2, delay) { // Must occur in animation loop

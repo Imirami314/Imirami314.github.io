@@ -77,6 +77,8 @@ class NPC extends Entity {
                 this.pathPoint = n.pathPoint
                 this.pathPointReached = n.pathPointReached
                 this.curPath = n.curPath
+
+                this.firstInteraction = n.firstInteraction
             }
         }
 

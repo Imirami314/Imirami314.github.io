@@ -180,6 +180,60 @@ LockToggle.prototype.activate = function() {
     }
 }
 
+/**
+ * An interactive that quickly transports a player to another location
+ * @param {*} map Map that the Breezeway is in
+ * @param {*} x The x BLOCK coordinate that it is on
+ * @param {*} y The y BLOCK coordinate that it is on
+ * @param {*} tpx The x BLOCK coordinate to teleport to
+ * @param {*} tpy The y BLOCK coordinate to teleport to
+ */
+function Breezeway(map, x, y, tpx, tpy) {
+    this.map = map
+    this.x = x
+    this.y = y
+    this.tpx = tpx
+    this.tpy = tpy
+
+    this.centerRotation = 0
+
+    this.cooldown = 1
+    this.cords = {
+        x: this.x,
+        y: this.y
+    }
+}
+
+Breezeway.prototype.draw = function() {
+
+    this.cords.x = this.x
+    this.cords.y = this.y
+
+    this.centerRotation += Math.PI / 66.67
+
+    ctx.drawImage(images.breezewayBase, this.x * 75, this.y * 75, 75, 75)
+    ctx.drawImage(images.breezewayCenter, this.x * 75, this.y * 75, 75, 75)
+}
+
+Breezeway.prototype.update = function() {
+    this.cooldown -= 1 / 66.67
+}
+
+Breezeway.prototype.activate = function() {
+    if (keys.space && p.on(this.x, this.y) && this.cooldown <= 0) {
+        
+        setTimeout(() => {
+            p.goTo(this.tpx * 75 + 37.5, this.tpy * 75 + 37.5)
+        }, 1500)
+
+        cameraStart(this.tpx * 75 + 37.5, this.tpy * 75 + 37.5, 15, "AUTO", {
+            time: 3250
+        })
+
+        this.cooldown = 1
+    }
+}
+
 
 function Raft(map, x /* Pixels */, y /* Pixels */) {
     this.map = map
@@ -460,63 +514,84 @@ RaftDispenser.prototype.activate = function() {
 	// }
 }
 
-/**
- * An interactive that quickly transports a player to another location
- * @param {*} map Map that the Breezeway is in
- * @param {*} x The x BLOCK coordinate that it is on
- * @param {*} y The y BLOCK coordinate that it is on
- * @param {*} tpx The x BLOCK coordinate to teleport to
- * @param {*} tpy The y BLOCK coordinate to teleport to
- */
-function Breezeway(map, x, y, tpx, tpy) {
-    this.map = map
-    this.x = x
-    this.y = y
-    this.tpx = tpx
-    this.tpy = tpy
+class Rock {
+    constructor(map, x, y) {
+        this.map = map
+        this.spawnX = x
+        this.spawnY = y
+        this.x = x
+        this.y = y
 
-    this.centerRotation = 0
+        this.setPosOffset = false
+        this.posOffset = {}
 
-    this.cooldown = 1
-    this.cords = {
-        x: this.x,
-        y: this.y
+        this.pushDir = ''
+        this.pushSpeedPerSec = 35
     }
-}
 
-Breezeway.prototype.draw = function() {
+    draw() {
+        ctx.fillStyle = "rgb(20, 20, 20)"
+        ellipse(this.x, this.y, 65, 65)
+    }
 
-    this.cords.x = this.x
-    this.cords.y = this.y
+    activate() {
+        this.playerDist = entityDistance(this, p)
+        if (this.playerDist < 75) {
+            if (keys.space) {
+                p.dir = this.getPushDir()
+                switch (this.getPushDir()) {
+                    case 'U':
+                        p.y -= perSec(this.pushSpeedPerSec)
+                        this.y -= perSec(this.pushSpeedPerSec)
+                        break
+                    case 'D':
+                        p.y += perSec(this.pushSpeedPerSec)
+                        this.y += perSec(this.pushSpeedPerSec)
+                        break
+                    case 'L':
+                        p.x -= perSec(this.pushSpeedPerSec)
+                        this.x -= perSec(this.pushSpeedPerSec)
+                        break
+                    case 'R':
+                        p.x += perSec(this.pushSpeedPerSec)
+                        this.x += perSec(this.pushSpeedPerSec)
+                        break
+                }
+            }
+        }
+    }
 
-    this.centerRotation += Math.PI / 66.67
-
-    ctx.drawImage(images.breezewayBase, this.x * 75, this.y * 75, 75, 75)
-    ctx.drawImage(images.breezewayCenter, this.x * 75, this.y * 75, 75, 75)
-
-    // ctx.save()
-    // ctx.translate(this.x * 75 + 37.5, this.y * 75 + 37.5)
-    // ctx.rotate(this.centerRotation)
-    // ctx.drawImage(images.breezewayCenter, this.x * 75, this.y * 75, 75, 75)
-    // ctx.translate(- (this.x * 75 + 37.5), - (this.y * 75 + 37.5))
-    // ctx.restore()
-}
-
-Breezeway.prototype.update = function() {
-    this.cooldown -= 1 / 66.67
-}
-
-Breezeway.prototype.activate = function() {
-    if (keys.space && p.on(this.x, this.y) && this.cooldown <= 0) {
-        
-        setTimeout(() => {
-            p.goTo(this.tpx * 75 + 37.5, this.tpy * 75 + 37.5)
-        }, 1500)
-
-        cameraStart(this.tpx * 75 + 37.5, this.tpy * 75 + 37.5, 15, "AUTO", {
-            time: 3250
-        })
-
-        this.cooldown = 1
+    getPushDir() {
+        let horizontalDist = Math.abs(p.x - this.x)
+        let verticalDist = Math.abs(p.y - this.y)
+        if (p.x <= this.x) {
+            if (p.y >= this.y) {
+                if (horizontalDist > verticalDist) {
+                    return 'R'
+                } else {
+                    return 'U'
+                }
+            } else if (p.y < this.y) {
+                if (horizontalDist > verticalDist) {
+                    return 'R'
+                } else {
+                    return 'D'
+                }
+            }
+        } else if (p.x > this.x) {
+            if (p.y >= this.y) {
+                if (horizontalDist > verticalDist) {
+                    return 'L'
+                } else {
+                    return 'U'
+                }
+            } else if (p.y < this.y) {
+                if (horizontalDist > verticalDist) {
+                    return 'L'
+                } else {
+                    return 'D'
+                }
+            }
+        }
     }
 }

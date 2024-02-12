@@ -1646,6 +1646,8 @@ var interactives = [
         curMap.switch(106, 89, "(", ")")
     }, b(106), ctr(89)),
 
+    new Rock(mainMap, ctr(106), ctr(98)),
+
     // Confounded Cave
 
     new Toggle(confoundedCave, 5, 18, function() {
@@ -2448,7 +2450,7 @@ if (!!save) {
 function startPos() {
     dev = true
     curMap = mainMap
-    p.goTo(ctr(180), ctr(56))
+    p.goTo(ctr(105), ctr(101))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
     p.equipped = [items.aquaLung]
 
