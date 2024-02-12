@@ -379,10 +379,6 @@ class NPC extends Entity {
             } else {
                 p.canMove = false
             }
-        } else if (this.remoteSpeak) {
-            p.canMove = false
-        } else {
-            p.canMove = true
         }
     }
 
