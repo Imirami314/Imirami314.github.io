@@ -77,7 +77,6 @@ Screen.update = function() {
                 }
                 break
             case "FADE IN":
-                console.log("Fade = " + this.fade)
                 cutsceneFrame = 0
                 this.fade -= e.speed
                 if (this.fade <= 0) {
