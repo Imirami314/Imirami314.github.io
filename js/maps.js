@@ -107,6 +107,7 @@ var images = {
     chestClosed: initImage('sprites/interactives/chest/chestClosed.png'),
     breezewayBase: initImage('sprites/interactives/breezeway/breezewayBase.png'),
     breezewayCenter: initImage('sprites/interactives/breezeway/breezewayCenter.png'),
+    rock: initImage('sprites/interactives/rock/rock.png'),
 }
 
 var blocks = [

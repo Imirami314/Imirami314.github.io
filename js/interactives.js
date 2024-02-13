@@ -526,17 +526,18 @@ class Rock {
         this.posOffset = {}
 
         this.pushDir = ''
-        this.pushSpeedPerSec = 35
+        this.pushSpeedPerSec = 150
     }
 
     draw() {
-        ctx.fillStyle = "rgb(20, 20, 20)"
-        ellipse(this.x, this.y, 65, 65)
+        // ctx.fillStyle = "rgb(20, 20, 20)"
+        // ellipse(this.x, this.y, 65, 65)
+        ctx.drawImage(images.rock, this.x - 50, this.y - 50, 100, 100)
     }
 
     activate() {
         this.playerDist = entityDistance(this, p)
-        if (this.playerDist < 75) {
+        if (this.playerDist < 100) {
             if (keys.space) {
                 p.dir = this.getPushDir()
                 switch (this.getPushDir()) {
