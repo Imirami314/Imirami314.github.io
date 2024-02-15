@@ -199,7 +199,7 @@ function Breezeway(map, x, y, tpx, tpy) {
 
     this.cooldown = 1
     this.cords = {
-        x: this.x,
+    x: this.x,
         y: this.y
     }
 }
@@ -478,21 +478,16 @@ RaftDispenser.prototype.update = function() {
 
 RaftDispenser.prototype.activate = function() {
     if (p.cords.x == this.cords.x &&
-            p.cords.y == this.cords.y && 
-            this.cooldown <= 0 ) {
+        p.cords.y == this.cords.y && 
+        this.cooldown <= 0) {
 		
 		if (keys.space) {
-			
 			if ((this.x - (this.dsx - 37.5) == 0) || (this.y - (this.dsy - 37.5) == 0)) {
 				this.enableAnimation = true
 			}
-
-			
-			
 		}
 		
 		this.showAlert = true
-		
     } else {
 		this.showAlert = false
 	}
@@ -505,13 +500,6 @@ RaftDispenser.prototype.activate = function() {
 		this.animateX = 0
 		this.animateY = 0
 	}
-
-	// if (p.cords.x == this.cords.x &&
-	// 	    p.cords.y == this.cords.y) {
-	// 	this.showAlert = true
-	// } else {
-	// 	this.showAlert = false
-	// }
 }
 
 class Rock {
@@ -530,8 +518,6 @@ class Rock {
     }
 
     draw() {
-        // ctx.fillStyle = "rgb(20, 20, 20)"
-        // ellipse(this.x, this.y, 65, 65)
         ctx.drawImage(images.rock, this.x - 50, this.y - 50, 100, 100)
     }
 
@@ -542,20 +528,28 @@ class Rock {
                 p.dir = this.getPushDir()
                 switch (this.getPushDir()) {
                     case 'U':
-                        p.y -= perSec(this.pushSpeedPerSec)
-                        this.y -= perSec(this.pushSpeedPerSec)
+                        if (getBlockInfoByCords(this.x, this.y - perSec(this.pushSpeedPerSec) - 10).through && getBlockInfoByCords(p.x, p.y - perSec(this.pushSpeedPerSec) - 10).through) {
+                            p.y -= perSec(this.pushSpeedPerSec)
+                            this.y -= perSec(this.pushSpeedPerSec)
+                        }
                         break
                     case 'D':
-                        p.y += perSec(this.pushSpeedPerSec)
-                        this.y += perSec(this.pushSpeedPerSec)
+                        if (getBlockInfoByCords(this.x, this.y + perSec(this.pushSpeedPerSec) + 10).through && getBlockInfoByCords(p.x, p.y + perSec(this.pushSpeedPerSec) + 10).through) {
+                            p.y += perSec(this.pushSpeedPerSec)
+                            this.y += perSec(this.pushSpeedPerSec)
+                        }
                         break
                     case 'L':
-                        p.x -= perSec(this.pushSpeedPerSec)
-                        this.x -= perSec(this.pushSpeedPerSec)
+                        if (getBlockInfoByCords(this.x - perSec(this.pushSpeedPerSec) - 10, this.y).through && getBlockInfoByCords(p.x - perSec(this.pushSpeedPerSec) - 10, p.y).through) {
+                            p.x -= perSec(this.pushSpeedPerSec)
+                            this.x -= perSec(this.pushSpeedPerSec)
+                        }
                         break
                     case 'R':
-                        p.x += perSec(this.pushSpeedPerSec)
-                        this.x += perSec(this.pushSpeedPerSec)
+                        if (getBlockInfoByCords(this.x + perSec(this.pushSpeedPerSec) + 10, this.y).through && getBlockInfoByCords(p.x + perSec(this.pushSpeedPerSec) + 10, p.y).through) {
+                            p.x += perSec(this.pushSpeedPerSec)
+                            this.x += perSec(this.pushSpeedPerSec)
+                        }
                         break
                 }
             }

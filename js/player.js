@@ -6,7 +6,7 @@ function Player(x, y, npcs) {
     this.buildMode = false
     this.buildable = false
     this.bb = ','
-    this.health = 10
+    this.health = 1000
     this.animatedHealth = 10
     this.cords = {}
     this.speed = 4 // Default 4 or 5
