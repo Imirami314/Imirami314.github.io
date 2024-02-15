@@ -3648,7 +3648,7 @@ var gameInterval = setInterval(function() {
 			}
             
 			console.log("x: " + Math.round(curCX / 100) + " " + Math.round(finalCX / 100) + " y: " + Math.round(curCY / 100) + " " + Math.round(finalCY / 100))
-			if (Math.hypot((curCX - camera.cx), (curCY - camera.cy)) <= camera.cspeed + camera.cspeed / 4) { // round to the nearest hundreth (really weird logic, but fixes camera never stopping)
+			if (Math.hypot((curCX - camera.cx), (curCY - camera.cy)) <= camera.cspeed) { // round to the nearest hundreth (really weird logic, but fixes camera never stopping)
                 curCX = camera.cx
                 curCY = camera.cy
 				cameraMoving = false
@@ -3657,6 +3657,7 @@ var gameInterval = setInterval(function() {
             if (camera.type == "NPC") { 
                 if (camera.npcName.lineNum == camera.lineStop) {        
                         scene = "GAME"
+                        cameraMoving = false
                         cameraEnd() 
                 } 
 			}

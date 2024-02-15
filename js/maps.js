@@ -834,7 +834,7 @@ Camera.prototype.draw = function() {
 		p.canMove = false
 		finalCX = this.cx
 		finalCY = this.cy
-		cameraSpeed = this.cspeed
+		this.cspeed = this.getSpeed()
 		cameraMoving = true
 		camera = this
 		scene = "CAMERA"
@@ -847,6 +847,16 @@ Camera.prototype.draw = function() {
 
 Camera.prototype.move = function () {
 	
+}
+
+Camera.prototype.getSpeed = function () {
+    var div = 1
+    var s = 0
+    while ((Math.hypot((p.x - this.cx), (p.y - this.cy)) / div) >= this.cspeed) {
+        s = Math.hypot((p.x - this.cx), (p.y - this.cy)) / div
+        div += 1
+    }
+    return s
 }
 
 
