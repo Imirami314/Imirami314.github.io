@@ -503,12 +503,14 @@ RaftDispenser.prototype.activate = function() {
 }
 
 class Rock {
+    static MAX_SIZE = 100
     constructor(map, x, y) {
         this.map = map
         this.spawnX = x
         this.spawnY = y
         this.x = x
         this.y = y
+        this.size = Rock.MAX_SIZE
 
         this.setPosOffset = false
         this.posOffset = {}
@@ -518,7 +520,8 @@ class Rock {
     }
 
     draw() {
-        ctx.drawImage(images.rock, this.x - 50, this.y - 50, 100, 100)
+        ctx.drawImage(images.rock, this.x - this.size / 2, this.y - this.size / 2, this.size, this.size)
+        this.checkDissolve()
     }
 
     activate() {
@@ -587,6 +590,128 @@ class Rock {
                     return 'D'
                 }
             }
+        }
+    }
+
+    checkDissolve() {
+        if (curMap.getBlock(Math.floor(this.x / 75), Math.floor(this.y / 75)) == '~') {
+            this.dissolve()
+        }
+    }
+
+    dissolve() {
+        this.size -= perSec(20)
+        if (this.size <= 0) {
+            interactives.splice(interactives.indexOf(this), 1)
+        }
+    }
+}
+
+class RockSwitch {
+    constructor(map, x, y) {
+        this.map = map
+        this.x = x
+        this.y = y
+    }
+}
+
+class RockDispenser {
+    constructor(map, x, y, dsx, dsy) {
+        this.map = map
+        this.x = x
+        this.y = y
+
+        
+        this.dsx = dsx // x cord where the rock is dispensed
+        this.dsy = dsy // y cord where the rock is dispensed
+
+        this.cords = {
+            x: 0,
+            y: 0
+        }
+
+        this.cooldown = 1
+
+        this.showAlert = false
+
+        this.animateX = 0
+        this.animateY = 0
+        this.dispensed = false
+    }
+
+    draw() {
+        this.cords.x = Math.floor(this.x / 75)
+        this.cords.y = Math.floor(this.y / 75)
+        // Dispenser thing component
+        ctx.fillStyle = "rgb(100, 100, 100)"
+        ctx.fillRect(this.x, this.y, 75, 75)
+        
+        // Raft component
+        ctx.fillStyle = "rgb(200, 200, 200)"
+        ctx.fillRect(this.x + 5 + this.animateX, this.y + 5 + this.animateY, 65, 65 - (this.cooldown * 65))
+
+        // Dispenser lid
+        ctx.fillStyle = "rgba(50, 50, 50, 0.5)"
+        ctx.fillRect(this.x, this.y, 75, 75)
+
+        
+        if (this.showAlert) {
+            ctx.fillStyle = "rgb(255, 255, 255)"
+            ctx.roundRect(p.x - 75, p.y + 50, 150, 50, 10)
+            ctx.fill()
+            ctx.fillStyle = "rgb(0, 0, 0)"
+            ctx.font = "15px serif"
+            ctx.textAlign = "center"
+            ctx.fillText("Press space to dispense", p.x, p.y + 75)	
+        }
+    }
+
+    update() {
+        if (this.cooldown > 0) {
+            this.cooldown -= 1 / (66 + (2 / 3))
+        }	
+        this.cords.x = Math.floor(this.x / 75)
+        this.cords.y = Math.floor(this.y / 75)
+        this.draw()
+    
+        if (this.enableAnimation) {
+            if (this.x + this.animateX + 37.5 < this.dsx) {
+                this.animateX += 2.5
+            } else if (this.x + this.animateX + 37.5 > this.dsx) {
+                this.animateX -= 2.5
+            } else if (this.y + this.animateY + 37.5 < this.dsy) {
+                this.animateY += 2.5
+            } else if (this.y + this.animateY + 37.5 > this.dsy) {
+                this.animateY -= 2.5
+            } else {
+                this.dispensed = true
+            }
+        }
+    }
+
+    activate() {
+        if (p.cords.x == this.cords.x &&
+            p.cords.y == this.cords.y && 
+            this.cooldown <= 0) {
+            
+            if (keys.space) {
+                if ((this.x - (this.dsx - 37.5) == 0) || (this.y - (this.dsy - 37.5) == 0)) {
+                    this.enableAnimation = true
+                }
+            }
+            
+            this.showAlert = true
+        } else {
+            this.showAlert = false
+        }
+    
+        if (this.dispensed == true) {
+            interactives.push(new Rock(this.map, this.dsx, this.dsy))
+            this.cooldown = 1
+            this.enableAnimation = false
+            this.dispensed = false
+            this.animateX = 0
+            this.animateY = 0
         }
     }
 }

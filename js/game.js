@@ -1648,6 +1648,8 @@ var interactives = [
 
     new Rock(mainMap, ctr(106), ctr(98)),
 
+    new RockDispenser(mainMap, b(104), b(98), ctr(105), ctr(98)),
+
     // Confounded Cave
 
     new Toggle(confoundedCave, 5, 18, function() {

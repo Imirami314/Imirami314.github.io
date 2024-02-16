@@ -837,7 +837,13 @@ Player.prototype.hitEnemies = function() {
             }
 
             if (m.health <= 0 && !m.haveTrillsBeenAwarded) {
-                this.trills += m.trillAward
+                if (!!m.trillAward) {
+                    this.trills += m.trillAward
+                } else {
+                    alert("Monster has no 'trillAward' property assigned!")
+                }
+
+                
                 m.haveTrillsBeenAwarded = true
             }
             m.move(Math.cos(this.mAngle) * 25, Math.sin(this.mAngle) * 25, true)
