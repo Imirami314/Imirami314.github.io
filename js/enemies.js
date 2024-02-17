@@ -1141,9 +1141,15 @@ class Patroller extends Enemy {
             proj.y - p.y
         )
 
+        let projDist = entityDistance(this, proj)
+
         if (projPlayerDist <= 20) {
             p.getHit(1)
 
+            this.projectiles.splice(this.projectiles.indexOf(proj), 1)
+        }
+
+        if (projDist >= 1000) {
             this.projectiles.splice(this.projectiles.indexOf(proj), 1)
         }
     }
