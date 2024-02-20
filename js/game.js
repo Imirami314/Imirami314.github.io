@@ -1650,6 +1650,12 @@ var interactives = [
 
     new RockDispenser(mainMap, b(104), b(98), ctr(105), ctr(98)),
 
+    new RockSwitch(mainMap, 104, 97, function() {
+        curMap.changeBlock(99, 99, '~')
+    }, function() {
+        curMap.changeBlock(99, 99, '_')
+    }),
+
     // Confounded Cave
 
     new Toggle(confoundedCave, 5, 18, function() {

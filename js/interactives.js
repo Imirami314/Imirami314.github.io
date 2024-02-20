@@ -608,10 +608,53 @@ class Rock {
 }
 
 class RockSwitch {
-    constructor(map, x, y) {
+    constructor(map, blockX, blockY, onAction, offAction) {
         this.map = map
-        this.x = x
-        this.y = y
+        this.x = b(blockX)
+        this.y = b(blockY)
+        this.cords = {
+            x: blockX,
+            y: blockY
+        }
+        this.onAction = onAction
+        this.offAction = offAction
+        this.state = 'off'
+        this.lastRockStatus = false // Whether the rock was on in the last frame
+    }
+
+    draw() {
+        ctx.fillStyle = "rgb(50, 50, 50)"
+        ctx.fillRect(this.x, this.y, 75, 75)
+    }
+
+    activate() {
+        if (this.isRockOn() != this.lastRockStatus) {
+            this.lastRockStatus = this.isRockOn()
+            this.doSwitchAction()
+        }
+    }
+
+    isRockOn() {
+        for (let inter of interactives) {
+            if (inter instanceof Rock) {
+                let interDist = Math.hypot(this.x + 37.5 - inter.x, this.y + 37.5 - inter.y)
+                if (interDist < 35) {
+                    return true
+                }
+            }
+        }
+
+        return false
+    }
+
+    doSwitchAction() {
+        if (this.state == 'on') {
+            this.state = 'off'
+            this.offAction()
+        } else if (this.state == 'off') {
+            this.state = 'on'
+            this.onAction()
+        }
     }
 }
 
