@@ -189,6 +189,15 @@ function eventsDelay(f1, f2, delay) { // Must occur in animation loop
     eventDelays.push({f1: f1, f2: f2, delay: delay, timer: delay})
 }
 
+const commandsRun = []
+
+function runOnce(command) {
+    if (commandsRun.indexOf(JSON.stringify(command)) == -1) {
+        command()
+        commandsRun.push(JSON.stringify(command))
+    }
+}
+
 function entityDistance(entity1, entity2) {
     if (!!entity1.x && !!entity1.y && !!entity2.x && !!entity2.y) {
         return Math.hypot((entity1.x - entity2.x), (entity1.y - entity2.y))
