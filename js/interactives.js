@@ -504,6 +504,7 @@ RaftDispenser.prototype.activate = function() {
 
 class Rock {
     static MAX_SIZE = 100
+    static DISSOLVE_SPEED = 175 // Per sec
     constructor(map, x, y) {
         this.map = map
         this.spawnX = x
@@ -600,7 +601,7 @@ class Rock {
     }
 
     dissolve() {
-        this.size -= perSec(20)
+        this.size -= perSec(Rock.DISSOLVE_SPEED)
         if (this.size <= 0) {
             interactives.splice(interactives.indexOf(this), 1)
         }
@@ -623,8 +624,8 @@ class RockSwitch {
     }
 
     draw() {
-        ctx.fillStyle = "rgb(50, 50, 50)"
-        ctx.fillRect(this.x, this.y, 75, 75)
+        if (this.state == 'off') ctx.drawImage(images.rockSwitchOff, this.x, this.y, 75, 75)
+        else ctx.drawImage(images.rockSwitchOn, this.x, this.y, 75, 75)
     }
 
     activate() {

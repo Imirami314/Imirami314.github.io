@@ -108,6 +108,8 @@ var images = {
     breezewayBase: initImage('sprites/interactives/breezeway/breezewayBase.png'),
     breezewayCenter: initImage('sprites/interactives/breezeway/breezewayCenter.png'),
     rock: initImage('sprites/interactives/rock/rock.png'),
+    rockSwitchOff: initImage('sprites/interactives/rock/rockSwitchOff.png'),
+    rockSwitchOn: initImage('sprites/interactives/rock/rockSwitchOn.png'),
 }
 
 var blocks = [
