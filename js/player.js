@@ -836,21 +836,26 @@ Player.prototype.hitEnemies = function() {
                 m.health -= 1
             }
 
-            if (m.health <= 0 && !m.haveTrillsBeenAwarded) {
-                if (!!m.trillAward) {
-                    this.trills += m.trillAward
-                } else {
-                    alert("Monster has no 'trillAward' property assigned!")
-                }
+            // if (m.health <= 0 && !m.haveTrillsBeenAwarded) {
+            //     if (!!m.trillAward) {
+            //         this.trills += m.trillAward
+            //     } else {
+            //        // alert("Monster has no 'trillAward' property assigned!")
+            //     }
 
                 
-                m.haveTrillsBeenAwarded = true
-            }
-            m.move(Math.cos(this.mAngle) * 25, Math.sin(this.mAngle) * 25, true)
+            //     m.haveTrillsBeenAwarded = true
+            // }
+            // m.move(Math.cos(this.mAngle) * 25, Math.sin(this.mAngle) * 25, true)
             
-            // Tells monster that it is hit (doesn't work for some monsters idk why)
-            m.isHit = true
-            monsterThatWasHitNum = i
+            // // Tells monster that it is hit (doesn't work for some monsters idk why)
+            // m.isHit = true
+            // monsterThatWasHitNum = i
+            if (m.isDead()) {
+                m.onKill()
+
+                monsters.splice(monsters.indexOf(m), 1)
+            }
         }
     }
 

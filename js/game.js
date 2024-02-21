@@ -824,53 +824,7 @@ lonzo.action = function () {
                     "It should be somewhere here in Glacia Village...",
                     "`She also said something about once I have the key, go between red and blue??"
                 ]
-                nevada.lines = [
-                    "Hey again!",
-                    "You talked to Lonzo?",
-                    "...",
-                    "Great! What did he say?",
-                    "...",
-                    "Oh... not much, huh?",
-                    "Well, I guess I'll do the explaining.",
-                    "Breezeways are created by harnessing the power of the Windy Wastelands.",
-                    "Since there is so much excess wind, scientists have found ways to harness\nits power with the help of wind enemies, or Gales!",
-                    "Using breezeways will give you the ability to teleport short distances!",
-                    "So that's about it! Need anything else?",
-                    "...",
-                    "Wait what did Lonzo say? Something about a key?",
-                    "...",
-                    "Yes, I actually might know something about it. Follow me..."    
-                ]
                 lonzo.clearAction()
-                nevada.action = function() {
-                    Screen.fadeOut(0.05, function() {
-                        nevada.map = mainMap
-                        nevada.x = ctr(169)
-                        nevada.y = ctr(25)
-                        nevada.dir = "R"
-            
-                        curMap = mainMap
-                        p.x = b(171)
-                        p.y = ctr(25)
-                        p.dir = "L"
-                        
-            
-                        nevada.lines = [
-                            "See this over here?",
-                            "There is a breezeway that used to be connected to the river that is no longer\nfunctioning after the other breezeway broke.",
-                            "And it looks like there is something floating in the water!",
-                            "I would be able to fix it, but unfortunately I am out of materials.",
-                            "To make a breezeway, I'm gonna need 10 gale wings.",
-                            "I usually do charge 100 trills as well, but\nsince it's your first time I'll only charge 50!",
-                            "If you can get me all the materials, I'll start construction RIGHT away!"
-                        ]
-                        nevada.remote = true
-                        
-            
-            
-                    })
-                    nevada.clearAction()
-                }
             }
             lonzo.actionLine = "after"
         })

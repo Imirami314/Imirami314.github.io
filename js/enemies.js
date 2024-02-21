@@ -1073,6 +1073,132 @@ class Splint extends Enemy {
     }
 }
 
+class Gale extends Enemy {
+    constructor(map, spawnX, spawnY) {
+        super(map, spawnX, spawnY)
+        this.damage = 2
+        this.maxHealth = 20
+        this.health = 20
+        this.speed = 2
+        this.playerDist = 10000 // Gets updated by the draw method
+        this.agroDist = 500
+        this.deAgroDist = 1000
+        this.agro = false
+        
+        this.weaponPos = 0
+        this.hitting = false
+        this.isHit = false
+        this.hitCooldown = 1
+
+        this.dead = false
+        this.wingsAwarded = false
+        this.trillAward = Math.round(Math.random() * 3)
+    }
+
+    draw() {
+
+
+        if (this.agro && this.playerDist >= 90 && !this.hitting) {
+            // this.move(Math.cos(this.playerAngle) * 2, Math.sin(this.playerAngle) * 2)
+            //this.updatePath()
+            this.movePathToPlayer()
+        }
+
+        if (this.playerDist < 100 && this.hitCooldown <= 0) {
+            this.hit()
+        } else {
+            this.hitCooldown -= 1 / (66 + 2 / 3)
+        }
+
+        if (this.hitting) { // Once hit is started, it finishes even if player is out of range
+            this.hit()
+        }
+        
+        if (this.map == curMap.name) {
+            if (this.playerDist <= this.agroDist) {
+                this.agro = true
+            }
+
+            if (this.playerDist >= this.deAgroDist) {
+                this.agro = false
+
+                if (this.playerDist >= this.deAgroDist * 1.5) { // Splint moves back to its home if the player gets far enough
+                    this.movePathToHome()
+                }
+            }
+
+            ctx.save()
+            ctx.translate(this.x, this.y)
+            if (this.agro) {
+                if (this.playerDist <= 100) {
+                    ctx.rotate(this.playerAngle - Math.PI / 2)
+                } else {
+                    ctx.rotate(this.curAngle - Math.PI / 2)
+                }
+            }
+            ctx.translate(- (this.x), - (this.y))
+            if (!this.isHit) {
+                ellipse(this.x - 37.5, this.y - 37.5, 75, 75, "rgb(132, 211, 245)")
+                //ctx.drawImage(images.splint, this.x - 37.5, this.y - 37.5, 75, 75)
+            } else {
+                ellipse(this.x - 37.5, this.y - 37.5, 75, 75, "rgb(132, 211, 245)")
+            }
+            ctx.translate(this.x, this.y)
+            if (this.agro) {
+                ctx.rotate(this.weaponPos)
+            }
+            ctx.translate(- (this.x), - (this.y))
+            ellipse(this.x - 32, this.y - 10, 25, 25, "rgb(40, 40, 40)")
+            ellipse(this.x - 32, this.y + 10, 25, 25, "rgb(40, 40, 40)")
+            ctx.fillStyle = "rgb(0, 0, 0)"
+            ctx.fillRect(this.x - 35.5, this.y - 60, 10, 70)
+            ctx.restore()
+        }
+
+        if (this.hitCooldown > 0) { // Re-adjust weapon position after a hit
+            if (this.weaponPos < 0) {
+                this.weaponPos += Math.PI / 66
+            } else {
+                this.weaponPos = 0
+            }
+        }
+
+        if (this.isDead()) {
+            for (var i in monsters) {
+                if (monsters[i] == this) {
+                    monsters.splice(i, 1)
+                }
+            }
+        }
+    }
+
+    onKill() {
+        if (this.isDead() && !this.wingsAwarded) {
+            p.giveItem(items.galeWing) 
+            this.wingsAwarded = true
+        } 
+    }
+
+    hit() {
+        if (this.hitCooldown <= 0) {
+            this.hitting = true
+            if (this.hitting) {
+                if (!this.isHit) {
+                    this.weaponPos -= Math.PI / 45
+                }
+
+                if (this.weaponPos <= -1 * Math.PI) {
+                    this.hitting = false
+                    this.hitCooldown = 1
+                    if (this.playerDist <= 100) {
+                        p.getHit(2)
+                    }
+                }
+            }
+        }
+    }
+}
+
 class Patroller extends Enemy {
     constructor(map, spawnX, spawnY) {
         super(map, spawnX, spawnY)
@@ -1274,6 +1400,8 @@ const monsters = [
     new Splint("Main Map", ctr(153), ctr(64)),
     new Splint("Main Map", ctr(147), ctr(63)),
     new Splint("Main Map", ctr(171), ctr(56)),
+
+    new Gale("Main Map", ctr(169), ctr(20)),
 
     new Patroller("Main Map", ctr(115), ctr(72)),
     new Patroller("Main Map", ctr(100), ctr(93)),

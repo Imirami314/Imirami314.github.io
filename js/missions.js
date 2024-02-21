@@ -74,63 +74,117 @@ aStrangeWorld.solve = function () {
 var meetingTheQueen = new Mission("Meeting The Queen", "Main", null, 0)
 
 meetingTheQueen.solve = function () {
-    // Special lines if you talk to Nevada before Lonzo
-    if (nevada.firstInteraction) {
-        nevada.firstInteraction = false
-        nevada.lines = [
-            "Why hello there!",
-            "I've never seen you before!",
-            "I'm Nevada, proud new owner of Breezeway Builds!\nThis store has been in the family for three generations!",
-            "`And if you're wondering... no, unfortunately I'm not related to\nQueen Alaska...",
-            "Anyways, how can I help you?",
-            "...",
-            "Oh you must be new here.\nYou might want to talk to Lonzo first-",
-            "...",
-            "Oh? You already talked with him?\nWhat did he say?",
-            "...",
-            "Oh... not much, huh?",
-            "Well, I guess I'll do the explaining.",
-            "Breezeways are created by harnessing the power of the Windy Wastelands.",
-            "Since there is so much excess wind, scientists have found ways to harness\nits power with the help of wind enemies, or Gales!",
-            "Using breezeways will give you the ability to teleport short distances!",
-            "So that's about it! Need anything else?",
-            "...",
-            "Wait what did Lonzo say? Something about a key?",
-            "...",
-            "Yes, I actually might know something about it. Follow me..."    
+    // Change Nevada Lines
+    runOnce(() => {
+        if (nevada.firstInteraction) {
+            nevada.firstInteraction = false
+            nevada.lines = [
+                "Why hello there!",
+                "I've never seen you before!",
+                "I'm Nevada, proud new owner of Breezeway Builds!\nThis store has been in the family for three generations!",
+                "`And if you're wondering... no, unfortunately I'm not related to\nQueen Alaska...",
+                "Anyways, how can I help you?",
+                "...",
+                "Oh you must be new here.\nYou might want to talk to Lonzo first-",
+                "...",
+                "Oh? You already talked with him?\nWhat did he say?",
+                "...",
+                "Oh... not much, huh?",
+                "Well, I guess I'll do the explaining.",
+                "Breezeways are created by harnessing the power of the Windy Wastelands.",
+                "Since there is so much excess wind, scientists have found ways to harness\nits power with the help of wind enemies, or Gales!",
+                "Using breezeways will give you the ability to teleport short distances!",
+                "So that's about it! Need anything else?",
+                "...",
+                "Wait what did Lonzo say? Something about a key?",
+                "...",
+                "Yes, I actually might know something about it. Follow me..."    
 
-        ]
-        nevada.action = function() {
-            Screen.fadeOut(0.05, function() {
-                nevada.map = mainMap
-                nevada.x = ctr(169)
-                nevada.y = ctr(25)
-                nevada.dir = "R"
-    
-                curMap = mainMap
-                p.x = b(171)
-                p.y = ctr(25)
-                p.dir = "L"
-                
-    
+            ]
+            nevada.action = function() {
+                Screen.fadeOut(0.05, function() {
+                    nevada.map = mainMap
+                    nevada.x = ctr(169)
+                    nevada.y = ctr(25)
+                    nevada.dir = "R"
+        
+                    curMap = mainMap
+                    p.x = b(171)
+                    p.y = ctr(25)
+                    p.dir = "L"
+                    
+        
+                    nevada.lines = [
+                        "See this over here?",
+                        "There is a breezeway that used to be connected to the river that is no longer\nfunction after the other breezeway broke.",
+                        "And it looks like there is something floating in the water!",
+                        "I would be able to fix it, but unfortunately I am out of materials.",
+                        "To make a breezeway, I'm gonna need 10 gale wings.",
+                        "I usually do charge 100 trills as well, but\nsince it's your first time I'll only charge 50!",
+                        "If you can get me all the materials, I'll start construction RIGHT away!"
+                    ]
+                    nevada.remote = true
+                    
+        
+        
+                })
+                nevada.clearAction()
+            }
+        } else {
                 nevada.lines = [
-                    "See this over here?",
-                    "There is a breezeway that used to be connected to the river that is no longer\nfunction after the other breezeway broke.",
-                    "And it looks like there is something floating in the water!",
-                    "I would be able to fix it, but unfortunately I am out of materials.",
-                    "To make a breezeway, I'm gonna need 10 gale wings.",
-                    "I usually do charge 100 trills as well, but\nsince it's your first time I'll only charge 50!",
-                    "If you can get me all the materials, I'll start construction RIGHT away!"
+                    "Hey again!",
+                    "You talked to Lonzo?",
+                    "...",
+                    "Great! What did he say?",
+                    "...",
+                    "Oh... not much, huh?",
+                    "Well, I guess I'll do the explaining.",
+                    "Breezeways are created by harnessing the power of the Windy Wastelands.",
+                    "Since there is so much excess wind, scientists have found ways to harness\nits power with the help of wind enemies, or Gales!",
+                    "Using breezeways will give you the ability to teleport short distances!",
+                    "So that's about it! Need anything else?",
+                    "...",
+                    "Wait what did Lonzo say? Something about a key?",
+                    "...",
+                    "Yes, I actually might know something about it. Follow me..."    
                 ]
-                nevada.remote = true
                 
-    
-    
-            })
-            nevada.clearAction()
+                nevada.action = function() {
+                    Screen.fadeOut(0.05, function() {
+                        nevada.map = mainMap
+                        nevada.x = ctr(169)
+                        nevada.y = ctr(25)
+                        nevada.dir = "R"
+            
+                        curMap = mainMap
+                        p.x = b(171)
+                        p.y = ctr(25)
+                        p.dir = "L"
+                        
+            
+                        nevada.lines = [
+                            "See this over here?",
+                            "There is a breezeway that used to be connected to the river that is no longer\nfunctioning after the other breezeway broke.",
+                            "And it looks like there is something floating in the water!",
+                            "I would be able to fix it, but unfortunately I am out of materials.",
+                            "To make a breezeway, I'm gonna need 10 gale wings.",
+                            "I usually do charge 100 trills as well, but\nsince it's your first time I'll only charge 50!",
+                            "If you can get me all the materials, I'll start construction RIGHT away!"
+                        ]
+                        nevada.remote = true
+                        
+            
+            
+                    })
+                    nevada.clearAction()
+                }
+            
+            
         }
-    }
-    nevada.actionLine = "after"
+        nevada.actionLine = "after"
+    })
+
+    
 }
 
 // ABILITY MISSIONS

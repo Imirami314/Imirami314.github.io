@@ -234,7 +234,12 @@ var items = {
      //p.buildMode = true
 		//p.bb = 'z'
     }, "[insert description]", "MISC"),
+    galeWing: new Item("Gale Wing", 0,
+    function(x, y) {
+        ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
+    }, function(p) {
 
+    }),
 	decipherer: new Item("Decipherer", 0, 
 	function(x, y) {
 		ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
