@@ -2386,7 +2386,7 @@ function saveGame() {
     }
 
     curMissions.forEach((mission) => {
-        SAVING.addMission(mission)
+        SAVING.curMissions.push(mission)
     })
     lset("curMissions", JSON.stringify(SAVING.curMissions))
     
