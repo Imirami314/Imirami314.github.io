@@ -518,6 +518,8 @@ class Rock {
 
         this.pushDir = ''
         this.pushSpeedPerSec = 150
+        
+        this.drawOnTop = true
     }
 
     draw() {

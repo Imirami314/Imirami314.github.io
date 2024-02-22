@@ -1530,6 +1530,7 @@ function() {
     // changeme to add functionality
 })
 
+
 var interactives = [
     // Main Map
 
@@ -2012,6 +2013,8 @@ var interactives = [
 
     new RaftDispenser(litholianLegendPassageways, b(20), b(10), ctr(20), ctr(9)),
 ]
+
+var topInteractives = [] // Interactives that should be drawn on a higher layer, do not change manually
 
 /*
 t - Toggle
@@ -2616,10 +2619,19 @@ var gameInterval = setInterval(function() {
         
             for (var i in interactives) {
                 if (curMap == interactives[i].map) {
-                    interactives[i].draw()
+                    if (!interactives[i].drawOnTop) {
+                        interactives[i].draw()
+                    }
+
                     if (!!interactives[i].update) {
                         interactives[i].update()
                     }
+                }
+            }
+
+            for (let inter of interactives) { // Draws interactives that belong on a higher layer
+                if (inter.drawOnTop) {
+                    inter.draw()
                 }
             }
 
