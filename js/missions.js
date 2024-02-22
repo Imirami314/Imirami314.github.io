@@ -109,7 +109,7 @@ meetingTheQueen.solve = function () {
                     nevada.dir = "R"
         
                     curMap = mainMap
-                    p.x = b(171)
+                    p.x = ctr(170)
                     p.y = ctr(25)
                     p.dir = "L"
                     
@@ -183,6 +183,34 @@ meetingTheQueen.solve = function () {
         }
         nevada.actionLine = "after"
     })
+    
+    // Fix once shop allows for non-trills?
+    if (p.has(items.galeWing) && p.trills >= 50) {
+        
+        runOnce(() => {
+            
+            nevada.lines = [
+                "Hi there, how's it going?",
+                "...",
+                "WOW! You got 10 gale wings and 50 trills? Great!",
+                "I'll get started on the breezeway right away!"
+            ]
+
+            nevada.action = function() {
+                Screen.fadeOut(0.05, function() {
+                    interactives.push(new Breezeway(mainMap, 168, 27, 167, 26))
+                    nevada.lines = [
+                        "Tada! It's all done!",
+                        "Now, why don't you try getting the item in the water?"
+                    ]
+                    nevada.remote = true
+                })
+            }
+            nevada.actionLine = "after"
+            
+        })
+    }
+
 
     
 }

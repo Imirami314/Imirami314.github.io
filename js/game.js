@@ -2413,7 +2413,7 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = true
+    dev = false
     curMap = mainMap
     p.goTo(ctr(105), ctr(101))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]

@@ -518,47 +518,87 @@ class Rock {
 
         this.pushDir = ''
         this.pushSpeedPerSec = 150
+        this.rotate = 20
         
         this.drawOnTop = true
     }
 
     draw() {
+        ctx.save()
+        ctx.translate(this.x, this.y)
+        ctx.rotate(this.rotate * Math.PI / 180)
+        ctx.translate(-1 * (this.x), -1 * (this.y))
         ctx.drawImage(images.rock, this.x - this.size / 2, this.y - this.size / 2, this.size, this.size)
+
         this.checkDissolve()
+
+        ctx.restore()
+        
     }
 
     activate() {
         this.playerDist = entityDistance(this, p)
-        if (this.playerDist < 100) {
+        if (this.playerDist < 100 && this.playerDist > 50) {
             if (keys.space) {
+                p.canMove = false
                 p.dir = this.getPushDir()
                 switch (this.getPushDir()) {
                     case 'U':
                         if (getBlockInfoByCords(this.x, this.y - perSec(this.pushSpeedPerSec) - 10).through && getBlockInfoByCords(p.x, p.y - perSec(this.pushSpeedPerSec) - 10).through) {
-                            p.y -= perSec(this.pushSpeedPerSec)
-                            this.y -= perSec(this.pushSpeedPerSec)
+                            if (keys.w) {
+                                p.y -= perSec(this.pushSpeedPerSec)
+                                this.y -= perSec(this.pushSpeedPerSec)
+                            } else if (keys.s) {
+                                p.y += perSec(this.pushSpeedPerSec)
+                                this.y += perSec(this.pushSpeedPerSec)
+                            }
                         }
                         break
                     case 'D':
                         if (getBlockInfoByCords(this.x, this.y + perSec(this.pushSpeedPerSec) + 10).through && getBlockInfoByCords(p.x, p.y + perSec(this.pushSpeedPerSec) + 10).through) {
-                            p.y += perSec(this.pushSpeedPerSec)
-                            this.y += perSec(this.pushSpeedPerSec)
+                            if (keys.w) {
+                                p.y -= perSec(this.pushSpeedPerSec)
+                                this.y -= perSec(this.pushSpeedPerSec)
+                            } else if (keys.s) {
+                                p.y += perSec(this.pushSpeedPerSec)
+                                this.y += perSec(this.pushSpeedPerSec)
+                            }
+                            // p.y += perSec(this.pushSpeedPerSec)
+                            // this.y += perSec(this.pushSpeedPerSec)
                         }
                         break
                     case 'L':
                         if (getBlockInfoByCords(this.x - perSec(this.pushSpeedPerSec) - 10, this.y).through && getBlockInfoByCords(p.x - perSec(this.pushSpeedPerSec) - 10, p.y).through) {
-                            p.x -= perSec(this.pushSpeedPerSec)
-                            this.x -= perSec(this.pushSpeedPerSec)
+                            if (keys.a) {
+                                p.x -= perSec(this.pushSpeedPerSec)
+                                this.x -= perSec(this.pushSpeedPerSec)
+                                this.rotate --
+                            } else if (keys.d) {
+                                p.x += perSec(this.pushSpeedPerSec)
+                                this.x += perSec(this.pushSpeedPerSec)
+                                this.rotate ++
+                            }
+                            
                         }
                         break
                     case 'R':
                         if (getBlockInfoByCords(this.x + perSec(this.pushSpeedPerSec) + 10, this.y).through && getBlockInfoByCords(p.x + perSec(this.pushSpeedPerSec) + 10, p.y).through) {
-                            p.x += perSec(this.pushSpeedPerSec)
-                            this.x += perSec(this.pushSpeedPerSec)
+                            if (keys.a) {
+                                p.x -= perSec(this.pushSpeedPerSec)
+                                this.x -= perSec(this.pushSpeedPerSec)
+                                this.rotate --
+                            } else if (keys.d) {
+                                p.x += perSec(this.pushSpeedPerSec)
+                                this.x += perSec(this.pushSpeedPerSec)
+                                this.rotate ++
+                            }
                         }
                         break
                 }
+            } else {
+                p.canMove = true
             }
+            
         }
     }
 
