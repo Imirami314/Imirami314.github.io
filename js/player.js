@@ -6,7 +6,7 @@ function Player(x, y, npcs) {
     this.buildMode = false
     this.buildable = false
     this.bb = ','
-    this.health = 1000
+    this.health = 1000 // Default 10
     this.animatedHealth = 10
     this.cords = {}
     this.speed = 4 // Default 4 or 5
@@ -828,7 +828,7 @@ Player.prototype.hitEnemies = function() {
         var m = monsters[i]
         var mDist = entityDistance(this, m)
         this.mAngle = Math.atan2((m.y - this.y), (m.x - this.x))
-        if (mDist <= 150 && mouseIsDown && this.hitCooldown <= 0) {
+        if (mDist <= 150 && mouseIsDown && this.hitCooldown <= 0 && !m.isDead()) {
             this.hitCooldown = 0.35
             if (!!this.weapon.damage) {
                 m.health -= (this.weapon.damage || 1.5)
@@ -846,13 +846,17 @@ Player.prototype.hitEnemies = function() {
                 
             //     m.haveTrillsBeenAwarded = true
             // }
-            // m.move(Math.cos(this.mAngle) * 25, Math.sin(this.mAngle) * 25, true)
+            m.move(Math.cos(this.mAngle) * 25, Math.sin(this.mAngle) * 25, true)
             
             // // Tells monster that it is hit (doesn't work for some monsters idk why)
             // m.isHit = true
             // monsterThatWasHitNum = i
             if (m.isDead()) {
-                m.onKill()
+                try {
+                    m.onKill()
+                } catch (e) {
+                    throw("Monster type is missing onKill method!")
+                }
 
                 monsters.splice(monsters.indexOf(m), 1)
             }

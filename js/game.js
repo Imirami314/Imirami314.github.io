@@ -1601,15 +1601,22 @@ var interactives = [
         curMap.switch(106, 89, "(", ")")
     }, b(106), ctr(89)),
 
-    new Rock(mainMap, ctr(106), ctr(98)),
+    // new Rock(mainMap, ctr(105), ctr(99)),
+    new Rock(mainMap, ctr(98), ctr(99)),
 
-    new RockDispenser(mainMap, b(104), b(98), ctr(105), ctr(98)),
+    new RockDispenser(mainMap, b(104), b(99), ctr(105), ctr(99)),
 
-    new RockSwitch(mainMap, 104, 97, function() {
-        curMap.changeBlock(99, 99, '~')
+    new RockSwitch(mainMap, 97, 99, function() {
+        curMap.changeBlocks([
+            [105, 95],
+            [106, 95]
+        ], '(')
     }, function() {
-        curMap.changeBlock(99, 99, '_')
-    }),
+        curMap.changeBlocks([
+            [105, 95],
+            [106, 95]
+        ], ')')
+    }/*, b(106), ctr(95)*/),
 
     // Confounded Cave
 
@@ -2496,10 +2503,10 @@ var suspensiaInterval = setInterval(function() { // Makes suspensia spread into 
 var gameInterval = setInterval(function() {
     if (tabIsActive) {
         if (dev) {
-            p.health = 15 // Constantly resets player health to 100
+            p.health = 15 // Constantly resets player health to 15
             for (var i in blocks) { 
                 blocks[i].through = true
-                blocks[i].speed = 25
+                blocks[i].speed = 17.5
                 blocks[i].dps = 0
             }
         }
@@ -2824,16 +2831,6 @@ var gameInterval = setInterval(function() {
             ctx.translate((-1 * p.x) + (width / 2), (-1 * p.y) + (height / 2))
             curMap.drawNextLayer(p)
             ctx.restore()
-    
-            // Play toggle cutscenes
-            for (var i in interactives) {
-                if (interactives[i].constructor.name == "Toggle") {
-                    var inter = interactives[i]
-                    if (inter.cutscene != null) {
-                        inter.toggleCutscene(inter.cutscene.x, inter.cutscene.y)
-                    }
-                }
-            }
     
             // Display lighting pixels
             if (lighting < 5000) {

@@ -84,27 +84,6 @@ Toggle.prototype.activate = function() {
     }
 }
 
-Toggle.prototype.toggleCutscene = function(x, y) {
-    ctx.save()
-    // ctx.scale(0.5, 0.5)
-    ctx.translate(-1 * x, -1 * y)
-    curMap.draw(p, "Cutscene View", -1 * x, -1 * x, 1)
-    ctx.restore()
-    ctx.fillStyle = "rgb(0, 0, 0)"
-    ctx.fillRect(20, 20, 100, 100)
-}
-
-Toggle.prototype.playCutscene = function(x, y) {
-    this.cutscene = {
-        x: x,
-        y: y
-    }
-}
-
-Toggle.prototype.stopCutscene = function() {
-    this.cutscene = null
-}
-
 function MultiToggle(map, x, y, changeX, changeY, blocks) {
 	this.map = map;
 	this.x = x;
@@ -538,7 +517,7 @@ class Rock {
 
     activate() {
         this.playerDist = entityDistance(this, p)
-        if (this.playerDist < 100 && this.playerDist > 50) {
+        if (this.playerDist < 100 && !this.isDissolved()) {
             if (keys.space) {
                 p.canMove = false
                 p.dir = this.getPushDir()
@@ -645,13 +624,22 @@ class Rock {
     dissolve() {
         this.size -= perSec(Rock.DISSOLVE_SPEED)
         if (this.size <= 0) {
+            p.canMove = true
             interactives.splice(interactives.indexOf(this), 1)
         }
+    }
+
+    isDissolved() {
+        if (this.size <= 0) {
+            return true
+        }
+
+        return false
     }
 }
 
 class RockSwitch {
-    constructor(map, blockX, blockY, onAction, offAction) {
+    constructor(map, blockX, blockY, onAction, offAction, cameraX, cameraY) {
         this.map = map
         this.x = b(blockX)
         this.y = b(blockY)
@@ -661,6 +649,10 @@ class RockSwitch {
         }
         this.onAction = onAction
         this.offAction = offAction
+        this.cameraX = cameraX
+        this.cameraY = cameraY
+
+
         this.state = 'off'
         this.lastRockStatus = false // Whether the rock was on in the last frame
     }
@@ -673,7 +665,18 @@ class RockSwitch {
     activate() {
         if (this.isRockOn() != this.lastRockStatus) {
             this.lastRockStatus = this.isRockOn()
-            this.doSwitchAction()
+
+            if (!!this.cameraX && !!this.cameraY) {
+                cameraStart(this.cameraX, this.cameraY, 100, "AUTO", {
+                    time: 3250
+                })
+
+                setInterval(() => {
+                    this.doSwitchAction()
+                }, 1500)
+            } else {
+                this.doSwitchAction()
+            }
         }
     }
 

@@ -1406,8 +1406,6 @@ const monsters = [
     new Patroller("Main Map", ctr(115), ctr(72)),
     new Patroller("Main Map", ctr(100), ctr(93)),
     new Patroller("Main Map", ctr(111), ctr(93)),
-    new Patroller("Main Map", ctr(103), ctr(99)),
-    new Patroller("Main Map", ctr(108), ctr(99)),
 
     new Splint("Gale Cave", 50 * 75, 33 * 75),
 
