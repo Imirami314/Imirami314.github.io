@@ -591,7 +591,6 @@ Player.prototype.collide = function() {
     if (this.doorCooldown <= 0) {
         if ((this.blockOn.name == "door" || this.blockOn.name == "hole") && keys.space) {
             this.canMove = false
-            console.log(this.canMove)
             // ctx.fillStyle = "rgb(0, 0, 0, " + fadeOut +    ")"
             // ctx.fillRect(0, 0, width, height)
             // if ((areaSearchByCords(this.cords.x, this.cords.y) != 0) || (curMap != mainMap)) { // i have to go tho it is new time for chunky men!ok gluconate
@@ -605,12 +604,9 @@ Player.prototype.collide = function() {
             
             Screen.fadeOut(0.05, function() {
                 // need to use 'p' instead of this due to scope
-                console.log(p.canMove)
                 if (curMap == mainMap) {
-                    console.log(p.canMove)
                     p.cordSave.x = p.cords.x
                     p.cordSave.y = p.cords.y
-                    console.log(p.canMove)
                     var areaJoining = areaSearchByCords(p.cords.x, p.cords.y)
                     curMap = areaJoining
                     p.x = areaJoining.enterX
@@ -624,10 +620,10 @@ Player.prototype.collide = function() {
                         console.log("No coordinates were saved upon area entry")
                     }
                 }
+
                 fadeStarted = false
                 fadeOut = 0
 
-                console.log(p.canMove)
                 Screen.fadeIn(0.05, function() {
                     p.canMove = true
                 })

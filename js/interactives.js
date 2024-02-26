@@ -509,13 +509,12 @@ class Rock {
         ctx.translate(-1 * (this.x), -1 * (this.y))
         ctx.drawImage(images.rock, this.x - this.size / 2, this.y - this.size / 2, this.size, this.size)
 
-        this.checkDissolve()
-
         ctx.restore()
         
     }
 
     activate() {
+        this.checkDissolve()
         this.playerDist = entityDistance(this, p)
         if (this.playerDist < 100 && !this.isDissolved()) {
             if (keys.space) {
