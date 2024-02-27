@@ -2309,7 +2309,7 @@ var stoneheartFortress = new Landscape([
         if (p.on(9, 6)) {
             Screen.fadeOut(0.05, function() {
                 curMap = stoneheartSanctuary
-                p.goTo(100, 100)
+                p.goTo(ctr(1), ctr(1))
 
                 Screen.fadeIn(0.05, function() {
                     p.canMove = true
@@ -2333,11 +2333,11 @@ var stoneheartFortress = new Landscape([
 
 var stoneheartSanctuary = new Landscape([
     '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
-    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
-    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
-    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
-    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
-    '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
+    '$O_____~__~______~!!%%%~%%%~$$~~~$$~~~~$',
+    '$______~___!S_____!!!~%%%~%%%%%!%%%%%%~$',
+    '$_SSSS_!_SSSSSSS____SSSS_$$$$$$$$$$~~~~$',
+    '$_S__S_S_SSSSSSS_SSSS__~____________$$$$',
+    '$____~_~_______~______$$$$$$$$$$$$$$$$$$',
     '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
     '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
     '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
@@ -2373,7 +2373,20 @@ var stoneheartSanctuary = new Landscape([
     '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
     '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
 ], null, null, null, null, "Stoneheart Sanctuary", function() {
+    setLighting(2000)
 
+    if (keys.space) {
+        if (p.on(1, 1)) {
+            Screen.fadeOut(0.05, function() {
+                p.goTo(ctr(9), ctr(6))
+                curMap = stoneheartFortress
+
+                Screen.fadeIn(0.05, function() {
+                    p.canMove = true
+                })
+            })
+        }
+    }
 })
 
 var areas = Landscape.all

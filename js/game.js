@@ -2033,6 +2033,19 @@ var interactives = [
     }, function() {
         curMap.changeBlock(10, 6, ')')
     }),
+
+    // Stoneheart Sanctuary
+    new Rock(stoneheartSanctuary, ctr(17), ctr(2)), // Test rock
+
+    new RockDispenser(stoneheartSanctuary, b(1), b(2), ctr(2), ctr(2)),
+
+    new RaftDispenser(stoneheartSanctuary, b(18), b(3), ctr(18), ctr(2)),
+
+    new RockSwitch(stoneheartSanctuary, 37, 2, function() {
+
+    }, function() {
+        
+    })
 ]
 
 var topInteractives = [] // Interactives that should be drawn on a higher layer, do not change manually
@@ -2435,8 +2448,8 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = true
-    curMap = stoneheartFortress
-    p.goTo(ctr(12), ctr(1))
+    curMap = stoneheartSanctuary
+    p.goTo(ctr(15), ctr(2))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
     p.equipped = [items.aquaLung]
 

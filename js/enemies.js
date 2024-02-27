@@ -1416,6 +1416,10 @@ const monsters = [
 
     new Patroller("Stoneheart Fortress", ctr(3), ctr(6)),
     new Patroller("Stoneheart Fortress", ctr(20), ctr(7)),
+
+    new Patroller("Stoneheart Sanctuary", ctr(6), ctr(5)),
+    new Patroller("Stoneheart Sanctuary", ctr(10), ctr(2)),
+    new Patroller("Stoneheart Sanctuary", ctr(27), ctr(2)),
 ]
 
 const bosses = [

@@ -340,9 +340,11 @@ Raft.prototype.activate = function() {
         if (!this.hasPlayer && !p.inRaft) {
             this.hasPlayer = true
             p.inRaft = true
+            p.canMove = false
         } else if (this.hasPlayer && p.inRaft) {
             this.hasPlayer = false
             p.inRaft = false
+            p.canMove = true
             
         }
         this.enterRaftCooldown = 1
