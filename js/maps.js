@@ -854,6 +854,7 @@ Camera.prototype.draw = function() {
 		p.canMove = true
 		this.showCamera = false
         cutsceneFrame = 0
+        cameraMoving = false
 	}
     console.log(this.npcName)
 }
