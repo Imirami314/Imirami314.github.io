@@ -1415,6 +1415,9 @@ const monsters = [
     new Splint("The Cryo Underground", 43 * 75, 1 * 75),
     new Splint("The Cryo Underground", 45 * 75, 1 * 75),
     new Splint("The Cryo Underground", 28 * 75, 18 * 75),
+
+    new Patroller("Stoneheart Fortress", ctr(3), ctr(6)),
+    new Patroller("Stoneheart Fortress", ctr(20), ctr(7)),
 ]
 
 const bosses = [

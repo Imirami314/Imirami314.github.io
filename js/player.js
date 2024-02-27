@@ -591,16 +591,6 @@ Player.prototype.collide = function() {
     if (this.doorCooldown <= 0) {
         if ((this.blockOn.name == "door" || this.blockOn.name == "hole") && keys.space) {
             this.canMove = false
-            // ctx.fillStyle = "rgb(0, 0, 0, " + fadeOut +    ")"
-            // ctx.fillRect(0, 0, width, height)
-            // if ((areaSearchByCords(this.cords.x, this.cords.y) != 0) || (curMap != mainMap)) { // i have to go tho it is new time for chunky men!ok gluconate
-            //     fadeOut += 0.05
-            // } else {
-            //     fadeStarted = false
-            // }
-            // function startAreaEnter() {
-                
-            // }
             
             Screen.fadeOut(0.05, function() {
                 // need to use 'p' instead of this due to scope
@@ -629,41 +619,9 @@ Player.prototype.collide = function() {
                 })
             })
         }
+        
         this.doorCooldown = 0.1
     }
-
-    // if (fadeStarted) {
-    //     this.canMove = false
-    //     ctx.fillStyle = "rgb(0, 0, 0, " + fadeOut +    ")"
-    //     ctx.fillRect(0, 0, width, height)
-    //     if ((areaSearchByCords(this.cords.x, this.cords.y) != 0) || (curMap != mainMap)) { // i have to go tho it is new time for chunky men!ok gluconate
-    //         fadeOut += 0.05
-    //     } else {
-    //         fadeStarted = false
-    //     }
-    //     if (fadeOut >= 1) {
-    //         if (curMap == mainMap) {
-    //             this.cordSave.x = this.cords.x
-    //             this.cordSave.y = this.cords.y
-    
-    //             var areaJoining = areaSearchByCords(this.cords.x, this.cords.y)
-    //             curMap = areaJoining
-    //             this.x = areaJoining.enterX
-    //             this.y = areaJoining.enterY
-    //         } else if (curMap != mainMap) {
-    //             if (!!this.cordSave.x && !!this.cordSave.y) {
-    //                 this.goTo(ctr(this.cordSave.x), ctr(this.cordSave.y))
-    //                 this.cordSave = {}
-    //                 curMap = mainMap
-    //             } else {
-    //                 console.log("No coordinates were saved upon area entry")
-    //             }
-    //         }
-    //         fadeStarted = false
-    //         fadeOut = 0
-    //         this.canMove = true
-    //     }
-    // }
 
     // Secret Entrances
     

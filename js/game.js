@@ -2019,6 +2019,24 @@ var interactives = [
     new RaftDispenser(litholianLegendPassageways, b(38), b(1), ctr(37), ctr(1)),
 
     new RaftDispenser(litholianLegendPassageways, b(20), b(10), ctr(20), ctr(9)),
+
+    // Stoneheart Fortress
+    new RockDispenser(stoneheartFortress, b(11), b(2), ctr(12), ctr(2)),
+
+    new RockSwitch(stoneheartFortress, 15, 2, function() {
+        curMap.changeBlock(8, 1, '~')
+    }, function() {
+        curMap.changeBlock(8, 1, '!')
+    }),
+
+    new Breezeway(stoneheartFortress, 2, 8, 17, 3),
+    new Breezeway(stoneheartFortress, 17, 3, 2, 8),
+
+    new RockSwitch(stoneheartFortress, 10, 7, function() {
+        curMap.changeBlock(10, 6, '(')
+    }, function() {
+        curMap.changeBlock(10, 6, ')')
+    }),
 ]
 
 var topInteractives = [] // Interactives that should be drawn on a higher layer, do not change manually
@@ -2421,8 +2439,8 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = true
-    curMap = mainMap
-    p.goTo(ctr(105), ctr(101))
+    curMap = stoneheartFortress
+    p.goTo(ctr(12), ctr(1))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
     p.equipped = [items.aquaLung]
 
