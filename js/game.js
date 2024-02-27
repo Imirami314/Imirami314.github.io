@@ -2042,9 +2042,9 @@ var interactives = [
     new RaftDispenser(stoneheartSanctuary, b(18), b(3), ctr(18), ctr(2)),
 
     new RockSwitch(stoneheartSanctuary, 37, 2, function() {
-
+        curMap.changeBlock(37, 4, '(')
     }, function() {
-        
+        curMap.changeBlock(37, 4, ')')
     })
 ]
 
