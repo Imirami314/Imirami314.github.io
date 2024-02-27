@@ -969,16 +969,6 @@ class Splint extends Enemy {
     }
 
     draw() {
-        // if (this.isDead() && !this.haveTrillsBeenAwarded) {
-        //     var trillsChanceGenerator = Math.random() 
-        //     if (trillsChanceGenerator <= 0.5) {
-        //         p.trills += Math.round(Math.random() + 5)
-        //     }
-
-        //     alert("gogu")
-
-        //     this.haveTrillsBeenAwarded = true
-        // }
 
         if (this.agro && this.playerDist >= 90 && !this.hitting) {
             // this.move(Math.cos(this.playerAngle) * 2, Math.sin(this.playerAngle) * 2)
@@ -1070,6 +1060,10 @@ class Splint extends Enemy {
                 }
             }
         }
+    }
+
+    onKill() {
+        p.trills += Math.round(Math.random() * 4 + 1) // Random number of trills from 1 to 5
     }
 }
 
@@ -1285,6 +1279,10 @@ class Patroller extends Enemy {
             this.drawProjectiles(proj)
             this.updateProjectiles(proj)
         })
+    }
+
+    onKill() {
+        p.trills += Math.round(Math.random() * 5 + 3) // Random number of trills from 3 to 8
     }
 }
 

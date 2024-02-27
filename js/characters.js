@@ -221,10 +221,6 @@ setInterval(function() {
 	ellipse(width/2 + 68, height/2 - 90, spearSize, spearSize, "rgb(0, 50, 100)")
     ctx.beginPath()
     
-    
-	
-	
-    
     ctx.restore()
 	
 	ctx.fillStyle = "rgb(255, 255, 255, "+ fade +")"
@@ -232,7 +228,5 @@ setInterval(function() {
 	
 	
 	cutSceneFrame ++
-    
-    // ellipse(width / 2, height / 2, 50, 50, "rgb(100, 0, 0)")
     
 }, 15)

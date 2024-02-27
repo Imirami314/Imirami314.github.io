@@ -1593,30 +1593,26 @@ var interactives = [
 
     new RaftDispenser(mainMap, b(134), b(59), ctr(135), ctr(59)),
 
-    new Toggle(mainMap, 119, 85, function() {
-        curMap.switch(105, 89, "(", ")")
-        curMap.switch(106, 89, "(", ")")
-    }, function() {
-        curMap.switch(105, 89, "(", ")")
-        curMap.switch(106, 89, "(", ")")
-    }, b(106), ctr(89)),
-
-    // new Rock(mainMap, ctr(105), ctr(99)),
-    new Rock(mainMap, ctr(98), ctr(99)),
-
     new RockDispenser(mainMap, b(104), b(99), ctr(105), ctr(99)),
 
     new RockSwitch(mainMap, 97, 99, function() {
         curMap.changeBlocks([
             [105, 95],
-            [106, 95]
+            [106, 95],
+            [105, 89],
+            [106, 89]
         ], '(')
     }, function() {
         curMap.changeBlocks([
             [105, 95],
-            [106, 95]
+            [106, 95],
+            [105, 89],
+            [106, 89]
         ], ')')
     }/*, b(106), ctr(95)*/),
+
+    new Breezeway(mainMap, 114, 99, 118, 95),
+    new Breezeway(mainMap, 118, 95, 114, 99),
 
     // Confounded Cave
 
