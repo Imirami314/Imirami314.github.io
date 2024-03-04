@@ -6,7 +6,7 @@ function Player(x, y, npcs) {
     this.buildMode = false
     this.buildable = false
     this.bb = ','
-    this.health = 1000 // Default 10
+    this.health = 10 // Default 10
     this.animatedHealth = 10
     this.cords = {}
     this.speed = 4 // Default 4 or 5
@@ -1156,9 +1156,9 @@ Player.prototype.spearAttack = function() {
 }
 
 Player.prototype.breakBlock = function () {
-    if (p.weapon.damage > 0 && this.hitting) {
+    // if (this.weapon.damage > 0 && this.hitting) {
        
-    }
+    // }
 }
 
 Player.prototype.displayNPCList = function () {

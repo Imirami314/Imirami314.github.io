@@ -589,7 +589,7 @@ class Stormed extends Boss {
             this.hasBuiltLavaWalls = true
         }
         this.bodyAngle += Math.PI / 25
-        p.manualMove(-1 * Math.cos(this.playerAngle - Math.PI / 2) * this.windPull, -1 * Math.sin(this.playerAngle - Math.PI / 2) * this.windPull) // Pulls the player towards Stormed
+        p.manualMove(-1 * Math.cos(this.playerAngle) * this.windPull, -1 * Math.sin(this.playerAngle) * this.windPull) // Pulls the player towards Stormed
         if (this.windPull <= 8) { // Accelerate speed that player gets pulled in, caps at 8 pixels/frame
             this.windPull *= 1.01
         }

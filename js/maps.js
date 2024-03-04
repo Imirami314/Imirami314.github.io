@@ -770,12 +770,14 @@ Landscape.prototype.checkBlocks = function(blocks, c) {
  * @param {*} block The block char of the new block
  */
 Landscape.prototype.changeBlock = function(x, y, block) {
-    this.arr[y] = this.arr[y].replaceAt(x, block)
-    this.changes.push({
-        x: x,
-        y: y,
-        block: block
-    })
+    if (this.arr[y].charAt(x) != block) {
+        this.arr[y] = this.arr[y].replaceAt(x, block)
+        this.changes.push({
+            x: x,
+            y: y,
+            block: block
+        })
+    }
 }
 
 /**

@@ -2035,6 +2035,7 @@ var interactives = [
     }),
 
     // Stoneheart Sanctuary
+    new Rock(stoneheartSanctuary, ctr(16), ctr(2)),
     new Rock(stoneheartSanctuary, ctr(17), ctr(2)), // Test rock
 
     new RockDispenser(stoneheartSanctuary, b(1), b(2), ctr(2), ctr(2)),
@@ -2664,7 +2665,7 @@ var gameInterval = setInterval(function() {
             }
 
             for (let inter of interactives) { // Draws interactives that belong on a higher layer
-                if (inter.drawOnTop) {
+                if (inter.drawOnTop && curMap == interactives[i].map) {
                     inter.draw()
                 }
             }
