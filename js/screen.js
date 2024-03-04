@@ -80,7 +80,10 @@ Screen.update = function() {
                 cutsceneFrame = 0
                 this.fade -= e.speed
                 if (this.fade <= 0) {
-                    e.action()
+                    if (!!e.action) {
+                        p.canMove = true
+                        e.action()
+                    }
                     this.fade = 0
                     this.stopEffect("FADE IN")
                 }

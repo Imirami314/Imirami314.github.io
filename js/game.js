@@ -634,6 +634,14 @@ var rowan = new NPC(7 * 75 + 37.5, 6 * 75 + 37.5, "Rowan", rowansDojo, "L", [
     
 }, "after")
 
+var wyatt = new NPC(ctr(2), ctr(3), "Wyatt", wyattHouse, "D", [
+    "Hey there!",
+    "I'm just a normal citizen here in Chard Town,\nwith nothing to hide!",
+    "So you can, uh, leave now.",
+    "...",
+    "Bye."
+], "Resident - Chard Town\n")
+
 var wayne = new NPC(48 * 75, 55 * 75, "Wayne", mainMap, "D", [
     "Aye matey! What brings you to this foreign land?",
     "I'm Wayne, fearless sailor of the seven seas!",
@@ -2035,7 +2043,6 @@ var interactives = [
     }),
 
     // Stoneheart Sanctuary
-    new Rock(stoneheartSanctuary, ctr(16), ctr(2)),
     new Rock(stoneheartSanctuary, ctr(17), ctr(2)), // Test rock
 
     new RockDispenser(stoneheartSanctuary, b(1), b(2), ctr(2), ctr(2)),
@@ -2449,8 +2456,8 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = true
-    curMap = stoneheartSanctuary
-    p.goTo(ctr(15), ctr(2))
+    curMap = mainMap
+    p.goTo(ctr(2), ctr(2))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
     p.equipped = [items.aquaLung]
 

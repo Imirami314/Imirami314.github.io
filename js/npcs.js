@@ -374,7 +374,7 @@ class NPC extends Entity {
             this.runPath(this.curPath)
         }
     
-        if (playerDist <= 100) {
+        if (playerDist <= 100 || this.remoteSpeak) {
             if (this.lineNum == -1) {
                 p.canMove = true
                 

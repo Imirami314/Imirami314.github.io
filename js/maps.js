@@ -936,16 +936,16 @@ var mainMap = new Landscape([
     'T,,,,,,,T--,,,,,,,,,,,--TTTTTTTTT-------------TTTTTTT~~~~~~,,@~~~@,WWWW|WWWW,_~~~~~~~~_,,,TT____!!___S_______S_____S______$$|$$_____SSSSSSS******zzzzzzz******zzt~~~~~~~t*******zzT,,,,,,,,,,,,,,,,,t,,,,,,,,,T***************************************************************,,,,,,,,,,,,,,,,,,,,',
     'T,,,,,,,T-------------------------------------------TTTTTTT,@~~~~~@,,,---,,,,_~~~~~~~~_,,,TT____!!___S_____________S________________S!SS|SS*****zzzzzzzzz*****zzt~~~~~~~t*******zzTTTTTTTTTTTT,,,,,,,,,,,,t,,,T***************************************************************,,,,,,,,,,,,,,,,,,,,',
     'T,,,,,,,T--,,B,,T,,W,,--T~~~~~~~TT@@BBBBB@@-----------------------------------________,,,,TT_________SSSS_SSSS_____S________!!______SSS___S*****zzzzzzzzz*****zzt~~~~~~~t*******zz***********TTTTTTT,,,,,,s,,,T***********************************************zzzz************,,,,,,,,,,,,,,,,,,,,',
-    'TTTT,TTTT--,BBB,T,WWW,--T~~~~~~~--@BBBBBBB@---@TTTT---------------------------,,,,,,,,,,,,TT____________S____SS____SSSSSSSS_!!______S!S___S*****zzzzzzzzz*****zzt~~~~~~~t***SSSSzzSSSS*************TTTTTTTTTTTT*******************TTTTTTTTTTTTTTTTTTTTTTTTTTTT~~Tz************,,,,,,,,,,,,,,,,,,,,',
-    'T///,///T--BBBBBTWWWWW--T~~~~~~~--BBBBBBBBB---@T,,,,,,,,,,,,,,,,,,,,,,,,,,,,--,,,,,,,,,,,,TTSSSSSSSSSSSS_______SSS_S______S_________SSS___S*****zzzzzzzzz*****zzt~~~~~~~t***S~~SzzS~~S*******************************************TT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Tz************,,,,,,,,,,,,,,,,,,,,',
-    'T/,,,,,/T--BB|BBTWWWWW--T~~~~~~~TTBBBB|BBBB---@T,,,,,,,,,,,,,,,,,,,,,,,,,,,,--,,,,,,,,,,,,TT_S_____S_S_S_SS!!!__SS_S_SSSS)S______________SS*****zzzzzzzzz*****zz*ttttttt****S~~SzzS~~S*******************************************T~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Tz************,,,,,,,,,,,,,,,,,,,,',
-    'T/,,,,,/T-------TWW|WW--TTTTTTTTTT------------@T,,,,,,,,,,,,,,,@@@,,,,,,,,,,--,,,,,,,,,,,,TT_!_____S_S_!_S___!_______S!!S)S______________SS******zzzzzzz******zz************SSSSzzS~~S*******************************************TIIITTTTTTTTTTTTTTTTTTTTTTTTTTTTz************,,,,,,,,,,,,,,,,,,,,',
-    'T/,,,,//T-TTTTT-T----------------TTTTTTTTT@---@T,,,,,,,,,,,,,,,@@@,,,,,,,,,,--,,,,,,,,,,,,TT_SSSSSSS_SS!_S___SSSSS_S_S!!S)S_______$______SS*******zzzzz*******zzzzzzzzzzzzzzzzzzzzS~~S*******************************************T~~~~~~~~~~~~~~~~~~~~~~~~~~~~TTTS************,,,,,,,,,,,,,,,,,,,,',
-    'TT/////TT-T,,,--TTTTTT--TTTTTTTT---------------T,,,,,,,,,,,,,,,@@@,,,,,,,,,,,--,,,,,,,,,,,TT_____________S_________S_S!!S)S______$!$_____SS*******************zzzzzzzzzzzzzzzzzzzzSSSS*******************************************T~~~~~~~~~~~~~~~~~~~~~~~~T---TTTzS***********,,,,,,,,,,,,,,,,,,,,',
-    'TTTT~TTT--T,,,----------,,,,,,,TTTTTTTTTTTT----TTTTTTTTTTTTTTTTTTTTTTTTTTTTTT--,,,,,,,,,,,TTSSSSSSSSSSSS_SSSSSSSSS_S_S!!S_S_____$!!!$____SSTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTS:STTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT---TTTTTTTTTTTTTTTTTTTTTTTTTT,,,,,,,,,,',
+    'TTTT,TTTT--,BBB,T,WWW,--T~~~~~~~--@BBBBBBB@----@@TT---------------------------,,,,,,,,,,,,TT____________S____SS____SSSSSSSS_!!______S!S___S*****zzzzzzzzz*****zzt~~~~~~~t***SSSSzzSSSS*************TTTTTTTTTTTT*******************TTTTTTTTTTTTTTTTTTTTTTTTTTTT~~Tz************,,,,,,,,,,,,,,,,,,,,',
+    'T///,///T--BBBBBTWWWWW--T~~~~~~~--BBBBBBBBB----@TTB@@-@@@TTTTTTT,,BBBTTTTTTT--,,,,,,,,,,,,TTSSSSSSSSSSSS_______SSS_S______S_________SSS___S*****zzzzzzzzz*****zzt~~~~~~~t***S~~SzzS~~S*******************************************TT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Tz************,,,,,,,,,,,,,,,,,,,,',
+    'T/,,,,,/T--BB|BBTWWWWW--T~~~~~~~TTBBBB|BBBB----@TBBB@-BBB-------,BBBBBTTO,,T--,,,,,,,,,,,,TT_S_____S_S_S_SS!!!__SS_S_SSSS)S______________SS*****zzzzzzzzz*****zz*ttttttt****S~~SzzS~~S*******************************************T~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Tz************,,,,,,,,,,,,,,,,,,,,',
+    'T/,,,,,/T-------TWW|WW--TTTTTTTTTT------------@TBBBBB-B~B-TTTT--BBBBBBBT,,,T--,,,,,,,,,,,,TT_!_____S_S_!_S___!_______S!!S)S______________SS******zzzzzzz******zz************SSSSzzS~~S*******************************************TIIITTTTTTTTTTTTTTTTTTTTTTTTTTTTz************,,,,,,,,,,,,,,,,,,,,',
+    'T/,,,,//T-TTTTT-T----------------TTTTTTTTT@---@TBB|BB-BBB-T~~T--BBBBBBB@,,,T--,,,,,,,,,,,,TT_SSSSSSS_SS!_S___SSSSS_S_S!!S)S_______$______SS*******zzzzz*******zzzzzzzzzzzzzzzzzzzzS~~S*******************************************T~~~~~~~~~~~~~~~~~~~~~~~~~~~~TTTS************,,,,,,,,,,,,,,,,,,,,',
+    'TT/////TT-T,,,--TTTTTT--TTTTTTTT---------------T@---------T~~T--BBB|BBB@,,,TT--,,,,,,,,,,,TT_____________S_________S_S!!S)S______$!$_____SS*******************zzzzzzzzzzzzzzzzzzzzSSSS*******************************************T~~~~~~~~~~~~~~~~~~~~~~~~T---TTTzS***********,,,,,,,,,,,,,,,,,,,,',
+    'TTTT~TTT--T,,,----------,,,,,,,TTTTTTTTTTTT----TTTTTTTTTTTTTTT---------TTTTTT--,,,,,,,,,,,TTSSSSSSSSSSSS_SSSSSSSSS_S_S!!S_S_____$!!!$____SSTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTS:STTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT---TTTTTTTTTTTTTTTTTTTTTTTTTT,,,,,,,,,,',
     'T~~~~T---TT,,,-,,,,,,,,,,/////,,,,,,,,,,,,T------------------------------------,,,,,,,,,,,TT___________S______!__S_SSSSSSSSSSSS$!!!!!$___SS*************************************SSS***********S**********************************T,,,,,,,,,,,,,,,,,,,,,,,,T---T,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,',
-    'T~TTTT-TTT,,,,-,,,,,//////~~~//////,,,,,,,T------------------------------------,,,,,,,,,,,TT___________S_________S____________$$$$$$$$$__SS**********************W!**z*|***WW*|*W*W***********S**********************************T,,,,,,,,,,,,,,,,,,,,,,,,T---T,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,',
-    'T~~~~T-T,,,,,,-//////~~~~~~~~~~~~~//////,,T,,,,TTTTTTTT@,,,--,,,@TTTTTTTTTTTTT-,,,,,,,,,,,TT___________S!________S____________$$$$$$$$$__SS*********************WWW*z**W***W*z**W*WWW**!******S**********************************T,,,,,,,,,,,,,,,,,,,,,,,,T---T,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,',
+    'T~TTTT-TTT,,,,-,,,,,//////~~~//////,,,,,,,T----------------------TTTTTTT-------,,,,,,,,,,,TT___________S_________S____________$$$$$$$$$__SS**********************W!**z*|***WW*|*W*W***********S**********************************T,,,,,,,,,,,,,,,,,,,,,,,,T---T,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,',
+    'T~~~~T-T,,,,,,-//////~~~~~~~~~~~~~//////,,T,,,,TTTTTTTT@,,,--,,,@,,,,,,TTTTTTT-,,,,,,,,,,,TT___________S!________S____________$$$$$$$$$__SS*********************WWW*z**W***W*z**W*WWW**!******S**********************************T,,,,,,,,,,,,,,,,,,,,,,,,T---T,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,',
     'TTTT~T-T,,,,,-//~~~~~~~~~~~~~~~~~~~~~~~//,T,,,,T,,,,,,,,,,,--,,,,,,,,,,,,,,-------,,,,,,,,TT____________S!!!__SSSSSSSSSSSSSS__$$$$$$$$$__SS**********************|*****WWW**W***z|**|**W******S**********************************T,,,,,,,,,,,,,,,,,,,,,,,,T---T,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,',
     'T~~~~T-T,,,,-//~~~~~~~~~~~~~~~~~~~~~~~~~/,T,,,,T,,,,,==============,,,,,,,--BBBBB--,,,,,,,TTSSSSSSSSSS__S_____S__$___!_____S__$$$$$$$$$__SS******************!W*z*WWW***W!z*z**WW*WWWW********S**********************************T,,,,,,,,,,,,,,,,,,,,,,,,T---T,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,',
     'T~TTTT-T,,,-///~~~~~~~~~~~~~~~~~~~~~~~~~/,T,,,,T,,,,=~~~~~~..~~~~~~=,,,,@--B=====B--@,,,,,TT_XXX________S__!!!S_$$$________S__$$$$|$$$$__SS********WW**z**W***WW!*z*W**z*****W**z******WWWW***S**********************************T,,,,,,,,,,,,,,,,,,,,,,,,TT-TT,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,',
@@ -1212,6 +1212,64 @@ var rowansDojo = new Landscape([
     'B=========B',
     'BBBBB|BBBBB',
 ], 5 * 75 + 37.5, 10 * 75 + 37.5, 78, 42, "Rowan's Dojo")
+
+var wyattHouse = new Landscape([
+    'BBBBBBBBB',
+    'B.....=OB',
+    'B.....==B',
+    'B.......B',
+    'BBBB....B',
+    'B~~B..BBB',
+    'B~~B..B@B',
+    'BBBB|BBBB',
+], ctr(4), ctr(7), 67, 30, "Wyatt's House", function() {
+    if (wyatt.trusting != true) {
+        if (p.in(6, 1, 7, 2) && wyatt.isMad != true) {
+            wyatt.isMad = true
+            wyatt.remoteSpeak = true
+            wyatt.lineNum = 0
+            wyatt.dir = "R"
+            wyatt.lines = [
+                "Woah, there!",
+                "That's uh, a private place.",
+                "It's where I like to hang out and, uh",
+                "...do stuff. I only let my family and friends\ngo over there.",
+                "And I don't really know you.",
+                "*(gurgle)",
+                "Sorry, that's my stomach. I usually eat a cookie every day,\nbut I ran out!"
+            ]
+
+            wyatt.action = function() {
+                wyatt.dir = "D"
+                wyatt.lines = [
+                    "`I could really use a cookie right about now...",
+                ]
+
+                wyatt.clearAction()
+
+                Screen.fadeOut(0.05, function() {
+                    p.goTo(ctr(4), ctr(6))
+                    wyatt.isMad = false
+                    Screen.fadeIn(0.05, function() {
+                        p.canMove = true
+                    })
+                })
+            }
+
+            wyatt.actionLine = "after"
+        }
+    } else {
+        if (keys.space) {
+            if (p.on(7, 1)) {
+                Screen.fadeOut(0.05, function() {
+                    curMap = mainMap
+                    p.goTo(ctr(72), ctr(27))
+                    Screen.fadeIn(0.05)
+                })
+            }
+        }
+    }
+})
 
 var smithHouse = new Landscape([
     '!S_______',
@@ -2463,6 +2521,16 @@ var chardTown = new Region([
     }
 ], function() {
     setLighting(5000)
+
+    if (keys.space) {
+        if (p.on(72, 27)) {
+            Screen.fadeOut(0.05, function() {
+                curMap = wyattHouse
+                p.goTo(ctr(7), ctr(1))
+                Screen.fadeIn(0.05)
+            })
+        }
+    }
 }, function() {
     playMusic("Chard")
 })
