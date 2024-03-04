@@ -891,6 +891,15 @@ var queenAlaska = new NPC(42 * 75 + 37.5, 3 * 75 + 37.5, "Queen Alaska", queensC
     ]
     lonzo.action = function(p) {
         p.giveItem(items.windyWastelandKey, true)
+
+        lonzo.lines = [
+            "Go to the Windy Wastelands using the key!",
+            "Good...",
+            "O(GV#YIWRE(*RCYOVWBYOZ*@Y&!!",
+            "...luck!"
+        ]
+
+        lonzo.clearAction()
     }
     lonzo.actionLine = "after"
 }, "after")

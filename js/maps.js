@@ -858,7 +858,6 @@ Camera.prototype.draw = function() {
         cutsceneFrame = 0
         cameraMoving = false
 	}
-    console.log(this.npcName)
 }
 
 Camera.prototype.move = function () {
@@ -1057,7 +1056,6 @@ mainMap.solve = function() {
             npcName: lonzo,
             lineStop: -1
         })
-        
      }
     
 
