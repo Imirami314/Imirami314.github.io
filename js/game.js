@@ -51,7 +51,7 @@ var alerts = [
 ]
 
 var teleports = [
-	new Teleport(26 * 75 + 37.5, 55 * 75 + 37.5, mainMap)
+	new Teleport(ctr(26), ctr(55), mainMap)
 ]
 // Cool riddle to figure out the backwards text on some signs: If text on the signs confuse and confound, it all becomes clearer if you flip it around.
 
@@ -401,8 +401,8 @@ Teleport.prototype.draw = function () {
 			
 			if (mouseX > this.x * 75 + p.mapPan.x && mouseX < this.x * 75 + (75 * mapScale) && mouseY > this.y * 75 && mouseY < this.y * 75 + (75 * mapScale)) {
 				alert("click specific")
-				p.x = this.x * 75 + 37.5
-				p.y = this.y * 75 + 37.5
+				p.x = ctr(this.x)
+				p.y = ctr(this.y)
 			}
 		}
 	
@@ -415,7 +415,7 @@ Teleport.prototype.draw = function () {
 
 //
 
-var prisonGuard = new NPC(19 * 75 + 37.5, 2 * 75 + 37.5, "Prison Guard", imperilledPrison, "R", [""], "uh yeah")
+var prisonGuard = new NPC(ctr(19), ctr(2), "Prison Guard", imperilledPrison, "R", [""], "uh yeah")
 
 var oldMan = new NPC(5*75, 1*75, "Old Man", johnHouse, "D", [
     "Huh? Who is there?",
@@ -437,7 +437,7 @@ var oldMan = new NPC(5*75, 1*75, "Old Man", johnHouse, "D", [
 
 // oldMan.glasses = true // Default false
 
-var john = new NPC(17 * 75 + 37.5, 9 * 75 + 37.5, "John", mainMap, "D", [
+var john = new NPC(ctr(17), ctr(9), "John", mainMap, "D", [
     "Hi! You're that prison guy, aren't you?",
     "You know, ever since you suddenly woke up, \nyou've become a bit of a celebrity. At least for a few of us.",
     "We had heard about somebody stuck in the Imperilled Prison, but we never knew\nwhy. To be honest, we never thought you'd get out.",
@@ -474,7 +474,7 @@ var mike = new NPC(28 * 75, 44 * 75, "Mike", mainMap, "L", [
 ], "Resident - Chard Town\nA curious child whose favorite spot is the Big Lake.") 
 
 mike.action = function(p) {
-    cameraStart(51 * 75 + 37.5, 6 * 75 + 37.5, 25, "NPC", {
+    cameraStart(ctr(51), ctr(6), 25, "NPC", {
         npcName: mike,
         lineStop: 9
     })
@@ -486,7 +486,7 @@ mike.action = function(p) {
 }
 mike.actionLine = 7
 
-var david = new NPC(16 * 75 + 37.5, 16 * 75 + 37.5, "David Swimmer", mainMap, "D", [
+var david = new NPC(ctr(16), ctr(16), "David Swimmer", mainMap, "D", [
     "In case you're wondering, yes, my last name is actually Swimmer.",
     "I don't know what my parents were thinking.",
     "But I do love to swim!",
@@ -496,12 +496,12 @@ var david = new NPC(16 * 75 + 37.5, 16 * 75 + 37.5, "David Swimmer", mainMap, "D
 }, "after")
 
 
-var lyra = new NPC(6 * 75 + 37.5, 1 * 75 + 37.5, "Lyra", lyraHouse, "D", [
+var lyra = new NPC(ctr(6), ctr(1), "Lyra", lyraHouse, "D", [
     "`What happened to all of the cool weapons?\nAll the weapons nowadays are the same.",
     "`It sure would be nice to see something new for a change..."
 ])
 
-var carol = new NPC(5 * 75 + 37.5, 1 * 75 + 37.5, "Carol", carolHouse, "R", [
+var carol = new NPC(ctr(5), ctr(1), "Carol", carolHouse, "R", [
     "AAAH!",
     "`how did he get in my house how did he get in my house\nhow did he get in my house...",
     "*ahem",
@@ -514,7 +514,7 @@ var carol = new NPC(5 * 75 + 37.5, 1 * 75 + 37.5, "Carol", carolHouse, "R", [
     
 }, "after")
 
-var ley = new NPC(17 * 75 + 37.5, 29 * 75 + 37.5, "Ley", mainMap, "D", [
+var ley = new NPC(ctr(17), ctr(29), "Ley", mainMap, "D", [
     "...",
 	"AHHH!",
 	"`Gee... I didn't think anyone would find me here...",
@@ -543,7 +543,7 @@ var sarahShopMenu = [
     {item: food.steak(), cost: 30, amount: 1},
 ]
 
-var sarah = new NPC(4 * 75 + 37.5, 1 * 75 + 37.5, "Sarah", sarahsShop, "D", [
+var sarah = new NPC(ctr(4), ctr(1), "Sarah", sarahsShop, "D", [
     "Hello there, uh...",
     "`what was it again? Oh yeah!",
     "Hello there, good sir! I'm opening a\nshop here in Chard Town!",
@@ -604,8 +604,8 @@ var mikesMom = new NPC(300, 300, "Mike's Mom", mikeHouse, "R", [
             [51, 8],
             function() {
                 mike.map = mikeHouse
-                mike.x = 6 * 75 + 37.5
-                mike.y = 4 * 75 + 37.5
+                mike.x = ctr(6)
+                mike.y = ctr(4)
                 mike.dir = 'L'
             }
         ]
@@ -620,7 +620,7 @@ var mikesMom = new NPC(300, 300, "Mike's Mom", mikeHouse, "R", [
 	
 }, 0)
 
-var rowan = new NPC(7 * 75 + 37.5, 6 * 75 + 37.5, "Rowan", rowansDojo, "L", [
+var rowan = new NPC(ctr(7), ctr(6), "Rowan", rowansDojo, "L", [
     "Welcome to my dojo!",
     "Want to to learn some tips on combat?",
     "...",
@@ -739,7 +739,7 @@ var isa = new NPC(2 * 75 + 75, 7 * 75, "Isa", glaciaCenter, "R", [
     "Everybody thinks he's crazy, but uh, I would ask him.\nSee you later."
 ], "hi")
 
-var blanche = new NPC(180 * 75 + 37.5, 19 * 75 + 37.5, "Blanche", mainMap, "D", [
+var blanche = new NPC(ctr(180), ctr(19), "Blanche", mainMap, "D", [
     "Oh, hello...",
     "Sorry, I'm just really worried.",
     "I was hanging out with my friend, Bianca, in the\nforest southeast of here.",
@@ -772,7 +772,7 @@ var nevada = new NPC(ctr(5), b(3), "Nevada", breezwayBuilds, "D", [
     ]
 }, "after")
 
-var lonzo = new NPC(222 * 75 + 37.5, 11 * 75 + 37.5, "Lonzo", mainMap, "D", [
+var lonzo = new NPC(ctr(222), ctr(11), "Lonzo", mainMap, "D", [
     "HEY! HEY YOU!",
     "Please help me!\nI fell asleep here and now I'm stuck!",
     "You see that swirly thing?\nIt will take you to me!"
@@ -840,7 +840,7 @@ lonzo.action = function () {
 }
 lonzo.actionLine = "after"
 
-var guardAlfred = new NPC(19 * 75 + 37.5, 7 * 75 + 37.5, "Castle Guard Alfred", queensCastle, "D", [
+var guardAlfred = new NPC(ctr(19), ctr(7), "Castle Guard Alfred", queensCastle, "D", [
     "Hello. Welcome to the High Floor.",
     "Are you looking to meet with the Queen?",
     "...",
@@ -851,7 +851,7 @@ var guardAlfred = new NPC(19 * 75 + 37.5, 7 * 75 + 37.5, "Castle Guard Alfred", 
     "Anyway, you may now proceed."
 ], "hi")
 
-var queenAlaska = new NPC(42 * 75 + 37.5, 3 * 75 + 37.5, "Queen Alaska", queensCastle, "L", [
+var queenAlaska = new NPC(ctr(42), ctr(3), "Queen Alaska", queensCastle, "L", [
     "Welcome! I am Queen Alaska, but you can just\ncall me Alaska.",
     "I see your presence triggered my special\nwall, which means you are the person I'm supposed to meet.",
     "So, is it true? Did you really venture into the Confounded Cave\nof Chard Town and defeat Darkened?",
@@ -873,8 +873,8 @@ var queenAlaska = new NPC(42 * 75 + 37.5, 3 * 75 + 37.5, "Queen Alaska", queensC
     "I'll call Lonzo to help you out. He'll be waiting for you at\nthe front of this castle.",
 	"Good luck my friend! You're definitely going to need it."
 ], "hi", function(p) {
-    lonzo.x = 252 * 75 + 37.5
-    lonzo.y = 21 * 75 + 37.5
+    lonzo.x = ctr(252)
+    lonzo.y = ctr(21)
     lonzo.map = mainMap
     lonzo.lines = [
         "Hey there again!",
@@ -895,19 +895,19 @@ var queenAlaska = new NPC(42 * 75 + 37.5, 3 * 75 + 37.5, "Queen Alaska", queensC
     lonzo.actionLine = "after"
 }, "after")
 
-var fee = new NPC(46 * 75 + 37.5, 16 * 75 + 37.5, "Fee", galeCave, "D", [
+var fee = new NPC(ctr(46), ctr(16), "Fee", galeCave, "D", [
     "Lemme guess, you came to talk to me for a word of advice.",
     "I always just go with the flow...",
     "Also, have you seen three other people that look like me?\nThey're in this cave somewhere..."
 ], "hi")
 
-var fi = new NPC(4 * 75 + 37.5, 16 * 75 + 37.5, "Fi", galeCave, "D", [
+var fi = new NPC(ctr(4), ctr(16), "Fi", galeCave, "D", [
     "Hey pal, want a word of advice?",
     "If you ever hit rock bottom, the only way is up.",
     "By the way, where'd fee, fo, and fum go?"
 ], "hi")
 
-var fo = new NPC(5 * 75 + 37.5, 9 * 75 + 37.5, "Fo", galeCave, "D", [
+var fo = new NPC(ctr(5), ctr(9), "Fo", galeCave, "D", [
     "This cave has been dark for so long...",
     "In the meantime, I've made up a song.",
     "Red, Orange, Yellow then Blue, Indigo and Violet Too!",
@@ -916,7 +916,7 @@ var fo = new NPC(5 * 75 + 37.5, 9 * 75 + 37.5, "Fo", galeCave, "D", [
     "Anyway, I've been looking for my brothers, but I can't see\nanything!"
 ], "hi")
 
-var fum = new NPC(37 * 75 + 37.5, 2 * 75 + 37.5, "Fum", galeCave, "D", [
+var fum = new NPC(ctr(37), ctr(2), "Fum", galeCave, "D", [
     "HEY YOU! WHAT ARE YOU DOING?",
     "Hah, I'm just messin' with you.", "When things get heated, always stay calm.",
     "You have any idea why the cave is so dark?"
@@ -926,7 +926,7 @@ var muhammadShop = [
     {item: items.auraOfWarmth, cost: 12, amount: 2}
 ]
 
-var shopkeeperMuhammad = new NPC(58 * 75, 33 * 75 + 37.5, "Shopkeeper Muhammad", galeCave, "L", [
+var shopkeeperMuhammad = new NPC(58 * 75, ctr(33), "Shopkeeper Muhammad", galeCave, "L", [
     "Hello!",
     "Would you like to purchase some auras?\nWe use all-natural ingredients.",
     "By the way, if you're ever short on money, try killing\nsome Splints, monsters notorious for stealing.",
@@ -936,7 +936,7 @@ var shopkeeperMuhammad = new NPC(58 * 75, 33 * 75 + 37.5, "Shopkeeper Muhammad",
     ShopMenu.open(muhammadShop)
 }, "after")
 
-var mildred = new NPC(6 * 75 + 37.5, 3 * 75, "Mildred", trailShop, "D", [
+var mildred = new NPC(ctr(6), 3 * 75, "Mildred", trailShop, "D", [
 	"Oh, hello there.",
 	"In my 50 years of business, I haven't seen you once before!",
 	"...",
@@ -991,7 +991,7 @@ var theWanderer = new NPC (60 * 75, 41 * 75, "The Wanderer", mainMap, "D",    [
     }
 }, "after")
 
-var lostTraveler = new NPC (252 * 75 + 37.5, 48 * 75 + 37.5, "Lost Traveler", mainMap, "D", [
+var lostTraveler = new NPC (ctr(252), ctr(48), "Lost Traveler", mainMap, "D", [
     "yellow...",
     "purple...",
     "...yellow...purple...yellow...purple..."
@@ -1020,13 +1020,13 @@ var drQua = new NPC(69420 * 75, 42069 * 75, "Dr. Qua", mainMap, 'L', [
     }
 }, "after")
 
-var caruk = new NPC(227 * 75, 90 * 75 + 37.5, "Caruk the Fisherman", mainMap, 'L', [
+var caruk = new NPC(227 * 75, ctr(90), "Caruk the Fisherman", mainMap, 'L', [
     "I am fisherger!",
 ], "[insert description]", function() {
 
 }, "after")
 
-var creek = new NPC(226 * 75 + 37.5, 87 * 75, "Creek", mainMap, 'U', [
+var creek = new NPC(ctr(226), 87 * 75, "Creek", mainMap, 'U', [
     "Hello there kind sir!",
     "I'm setting up a shop, but it's not quite ready.",
     "Come back later when it's complete."
@@ -1034,7 +1034,7 @@ var creek = new NPC(226 * 75 + 37.5, 87 * 75, "Creek", mainMap, 'U', [
 
 }, "after")
 
-var coral = new NPC(5 * 75 + 37.5, 2 * 75, "Coral", coralsWatercolors, 'D', [
+var coral = new NPC(ctr(5), 2 * 75, "Coral", coralsWatercolors, 'D', [
     "Hello, I'm Coral, and welcome to my watercolor shop.",
     "You know the big lake outside? I paint pictures of it so you can\nappreciate it when you're away!",
     "If you'd like to buy a painting, please let me know!"
@@ -1050,7 +1050,7 @@ var blakeShop = [
     {item: items.aquaLung, cost: 100, amount: 1}
 ]
 
-var blake = new NPC(8 * 75 + 37.5, 1 * 75 + 75 /* So he stands on the very edge of the block */, "Blake", droptonWaterWear, 'D', [
+var blake = new NPC(ctr(8), 1 * 75 + 75 /* So he stands on the very edge of the block */, "Blake", droptonWaterWear, 'D', [
     "Hi there!",
     "Welcome to Dropton Water Wear!",
     "You don't appear to be a resident of Dropton.",
@@ -1059,7 +1059,7 @@ var blake = new NPC(8 * 75 + 37.5, 1 * 75 + 75 /* So he stands on the very edge 
     ShopMenu.open(blakeShop)
 }, "after")
 
-var ness = new NPC(13 * 75 + 37.5, 13 * 75 + 37.5, "Ness", droptonTunnels, 'R', [
+var ness = new NPC(ctr(13), ctr(13), "Ness", droptonTunnels, 'R', [
     "Welcome to the Dropton Tunnels!",
     "Are you new here or are you returning?",
     "...",
@@ -1069,7 +1069,7 @@ var ness = new NPC(13 * 75 + 37.5, 13 * 75 + 37.5, "Ness", droptonTunnels, 'R', 
 
 }, "after")
 
-var bay = new NPC(15 * 75 + 37.5, 9 * 75 + 37.5, "Bay", droptonTunnels, 'D', [
+var bay = new NPC(ctr(15), ctr(9), "Bay", droptonTunnels, 'D', [
     "Hi there!",
     "These tunnels are confusing, aren't they?",
     "Most of the paths don't do anything, they're only used in emergencies.",
@@ -1080,7 +1080,7 @@ var bay = new NPC(15 * 75 + 37.5, 9 * 75 + 37.5, "Bay", droptonTunnels, 'D', [
 
 }, "after")
 
-var tyde = new NPC(33 * 75 + 37.5, 16 * 75 + 37.5, "Tyde", droptonCity, 'U', [
+var tyde = new NPC(ctr(33), ctr(16), "Tyde", droptonCity, 'U', [
     "*sniff*",
     "Hi...",
     "You look like you're from the surface.",
@@ -1102,7 +1102,7 @@ var walter = new NPC(23 * 75 + 75 / 2, 32 * 75 + 75 / 2, "Walter", droptonCity, 
     "Until we meet again!"
 ])
 
-var marina = new NPC(2 * 75 + 75, 17 * 75 + 37.5, "Officer Marina", droptonCity, 'D', [
+var marina = new NPC(2 * 75 + 75, ctr(17), "Officer Marina", droptonCity, 'D', [
     "Hey.",
     "The Pass Office is closed right now. Sorry\nabout the inconvenience.",
     "Dropton is short on money due to all the repairs,\nso we're shut down for the time being.",
@@ -1115,7 +1115,7 @@ var marina = new NPC(2 * 75 + 75, 17 * 75 + 37.5, "Officer Marina", droptonCity,
 
 }, "after")
 
-var ariel = new NPC(14 * 75 + 37.5, 26 * 75 + 37.5, "Ariel", droptonCity, 'L', [
+var ariel = new NPC(ctr(14), ctr(26), "Ariel", droptonCity, 'L', [
     "Hello there!",
     "You seem to be from the surface!",
     "Unfortunately, you came to visit Dropton City at a\nreally bad time.",
@@ -1130,7 +1130,7 @@ var ariel = new NPC(14 * 75 + 37.5, 26 * 75 + 37.5, "Ariel", droptonCity, 'L', [
 
 }, "after")
 
-var raine = new NPC(47 * 75, 38 * 75 + 37.5, "Raine", droptonCity, 'L', [
+var raine = new NPC(47 * 75, ctr(38), "Raine", droptonCity, 'L', [
     "Ayo!",
     "GIVE ME MONEY!!!!",
     "To fIx ThE hOUsEs!!!!",
@@ -1172,7 +1172,7 @@ var raine = new NPC(47 * 75, 38 * 75 + 37.5, "Raine", droptonCity, 'L', [
     raine.actionLine = "after"
 }, 4)
 
-var rainesDad = new NPC(55 * 75 + 37.5, 39 * 75 + 37.5, "Raine's Dad", droptonCity, 'L', [
+var rainesDad = new NPC(ctr(55), ctr(39), "Raine's Dad", droptonCity, 'L', [
     "Hello there, how are you?",
     "...",
     "Good. I work as a repairman, so as you can imagine, I'm pretty\nbusy these days.",
@@ -1185,7 +1185,7 @@ var caspianShop = [
     {item: food.apple(), cost: 5, amount: 5}
 ]
 
-var caspian = new NPC(6 * 75, 4 * 75 + 37.5, "Caspian", droptonTown, 'L', [
+var caspian = new NPC(6 * 75, ctr(4), "Caspian", droptonTown, 'L', [
     "Hey there!",
     "I'm trying my best to help support Dropton, so I've\nset up a little shop!",
     "It's not much right now though...",
@@ -1193,7 +1193,7 @@ var caspian = new NPC(6 * 75, 4 * 75 + 37.5, "Caspian", droptonTown, 'L', [
     ShopMenu.open(caspianShop)
 }, "after")
 
-var loch = new NPC(40 * 75 + 37.5, 28 * 75 + 37.5, "Loch", droptonCity, 'L', [
+var loch = new NPC(ctr(40), ctr(28), "Loch", droptonCity, 'L', [
     "Hey there.",
     "This mysterious substance just recently formed around Dropton City's\nmain entrance.",
     "If we find a way to get rid of this ice, I'm pretty sure the\nflow of the water will get rid of this purple stuff.",
@@ -1204,7 +1204,7 @@ var loch = new NPC(40 * 75 + 37.5, 28 * 75 + 37.5, "Loch", droptonCity, 'L', [
     addMission(theBlockedEntrance)
 }, "after")
 
-var delta = new NPC(18 * 75 + 37.5, 11 * 75 + 37.5, "Delta", droptonTown, 'D', [
+var delta = new NPC(ctr(18), ctr(11), "Delta", droptonTown, 'D', [
     "Hi! Could you help me with something?",
     "I found this treasure chest in Dropton City, but I didn't have the key.",
     "Then, I found the key many days later on the ground!",
@@ -1219,7 +1219,7 @@ var delta = new NPC(18 * 75 + 37.5, 11 * 75 + 37.5, "Delta", droptonTown, 'D', [
     addMission(deltasLostTreasure)
 }, "after")
 
-var presidentWells = new NPC(1 * 75 + 37.5, 1 * 75 + 37.5, "President Wells", droptonResearchFacility, 'R', [
+var presidentWells = new NPC(ctr(1), ctr(1), "President Wells", droptonResearchFacility, 'R', [
     "Oh hello there!",
     "...erm, who are you?",
     "...",
@@ -1233,8 +1233,8 @@ var presidentWells = new NPC(1 * 75 + 37.5, 1 * 75 + 37.5, "President Wells", dr
         [4, 4],
         function() {
             presidentWells.map = droptonHall
-            presidentWells.x = 1 * 75 + 37.5
-            presidentWells.y = 1 * 75 + 37.5
+            presidentWells.x = ctr(1)
+            presidentWells.y = ctr(1)
 
             presidentWells.lines = [
                 "Hello again! Great to see that you made it.",
@@ -1265,8 +1265,8 @@ var presidentWells = new NPC(1 * 75 + 37.5, 1 * 75 + 37.5, "President Wells", dr
                             [7, 5],
                             [7, 6],
                             function() {
-                                presidentWells.x = 23 * 75 + 37.5
-                                presidentWells.y = 35 * 75 + 37.5
+                                presidentWells.x = ctr(23)
+                                presidentWells.y = ctr(35)
                                 presidentWells.map = droptonCity
 
                                 presidentWells.lines = [
@@ -1278,7 +1278,7 @@ var presidentWells = new NPC(1 * 75 + 37.5, 1 * 75 + 37.5, "President Wells", dr
                                 ]
                                 presidentWells.actionLine = 1
                                 presidentWells.action = function() {
-                                    cameraStart(39 * 75, 4 * 75 + 37.5, 15, "NPC", {
+                                    cameraStart(39 * 75, ctr(4), 15, "NPC", {
                                         npcName: presidentWells,
                                         lineStop: 2
                                     })
@@ -1295,8 +1295,8 @@ var presidentWells = new NPC(1 * 75 + 37.5, 1 * 75 + 37.5, "President Wells", dr
                                 droptonCity.changeBlock(41, 3, 'S')
                                 
                                 // Change Ariel
-                                ariel.x = 34 * 75 + 37.5
-                                ariel.y = 2 * 75 + 37.5
+                                ariel.x = ctr(34)
+                                ariel.y = ctr(2)
                                 ariel.dir = 'R'
                                 ariel.lines = [
                                     "What happened here?",
@@ -1307,8 +1307,8 @@ var presidentWells = new NPC(1 * 75 + 37.5, 1 * 75 + 37.5, "President Wells", dr
                                 ]
 
                                 // Change Walter
-                                walter.x = 45 * 75 + 37.5
-                                walter.y = 2 * 75 + 37.5
+                                walter.x = ctr(45)
+                                walter.y = ctr(2)
                                 walter.dir = 'L'
                                 walter.lines = [
                                     "Oh my goodness...",
@@ -1324,7 +1324,7 @@ var presidentWells = new NPC(1 * 75 + 37.5, 1 * 75 + 37.5, "President Wells", dr
     ]
 }, "after")
 
-var cascade = new NPC(6 * 75 + 75, 2 * 75 + 37.5, "Dr. Cascade", droptonResearchFacility, 'R', [
+var cascade = new NPC(6 * 75 + 75, ctr(2), "Dr. Cascade", droptonResearchFacility, 'R', [
     "Hmm...",
     "Let's see here, if I add some water...",
     "No, that won't work..."
@@ -1552,23 +1552,23 @@ var interactives = [
         curMap.changeBlock(121, 28, ")")
     }, function() {
         curMap.changeBlock(121, 28, "(")
-    }, 121 * 75 + 37.5, 28 * 75 + 37.5),
+    }, ctr(121), ctr(28)),
 
     new Toggle(mainMap, 77, 5, function() {
         curMap.changeBlock(121, 29, ")")
     }, function() {
         curMap.changeBlock(121, 29, "(")
-    }, 121 * 75 + 37.5, 29 * 75 + 37.5),
+    }, ctr(121), ctr(29)),
 
     new Toggle(mainMap, 97, 11, function() {
         curMap.changeBlock(121, 30, ")")
     }, function() {
         curMap.changeBlock(121, 30, "(")
-    }, 121 * 75 + 37.5, 30 * 75 + 37.5),
+    }, ctr(121), ctr(30)),
 
-    new RaftDispenser(mainMap, 257 * 75, 30 * 75, 257 * 75 + 37.5, 29 * 75 + 37.5),
+    new RaftDispenser(mainMap, 257 * 75, 30 * 75, ctr(257), ctr(29)),
 
-    new RaftDispenser(mainMap, 256 * 75, 66 * 75, 255 * 75 + 37.5, 66 * 75 + 37.5),
+    new RaftDispenser(mainMap, 256 * 75, 66 * 75, ctr(255), ctr(66)),
 
     new Breezeway(mainMap, 181, 86, 181, 84),
     new Breezeway(mainMap, 181, 84, 181, 86),
@@ -1669,19 +1669,19 @@ var interactives = [
         curMap.changeBlock(11, 22, "(")
         curMap.changeBlock(11, 16, "(")
         curMap.changeBlock(5, 14, "S")
-    }, 11 * 75 + 37.5, 19 * 75 + 37.5),
+    }, ctr(11), ctr(19)),
 
     new Toggle(confoundedCave, 14, 12, function() {
         curMap.changeBlock(39, 22, ")")
     }, function() {
         curMap.changeBlock(39, 22, "(")
-    }, 39 * 75 + 37.5, 22 * 75 + 37.5),
+    }, ctr(39), ctr(22)),
 
     new Toggle(confoundedCave, 15, 8, function() {
         curMap.changeBlock(20, 0, ")")
     }, function() {
         curMap.changeBlock(20, 0, "(")
-    }, 20 * 75 + 37.5, 0 * 75 + 37.5),
+    }, ctr(20), ctr(0)),
 
     // Glacia Village
     new Breezeway(mainMap, 218, 11, 218, 9), // Pair up ones that connect to each other
@@ -1796,7 +1796,7 @@ var interactives = [
     }, function() {
         howlerHollow.switch(14, 11, '(', ')')
         howlerHollow.switch(16, 11, '(', ')')
-    }, 15 * 75 + 37.5, 11 * 75 + 37.5),
+    }, ctr(15), ctr(11)),
 
     new Toggle(howlerHollow, 25, 15, function() {
         howlerHollow.changeBlock(4, 4, ')')
@@ -1804,7 +1804,7 @@ var interactives = [
     }, function() {
         howlerHollow.changeBlock(4, 4, '(')
         howlerHollow.changeBlock(5, 4, '(')
-    }, 4 * 75 + 37.5, 5 * 75),
+    }, ctr(4), 5 * 75),
 
     new Breezeway(howlerHollow, 24, 10, 24, 6),
     new Breezeway(howlerHollow, 24, 6, 24, 10),
@@ -1848,7 +1848,7 @@ var interactives = [
     }),
 
     // Dropton City
-    new RaftDispenser(droptonCity, 2 * 75, 2 * 75, 2 * 75 + 37.5, 3 * 75 + 37.5),
+    new RaftDispenser(droptonCity, 2 * 75, 2 * 75, ctr(2), ctr(3)),
 
     // Abandoned Channel
     new LockToggle(abandonedChannel, 1, 16, function () {
@@ -1880,7 +1880,7 @@ var interactives = [
 
     new MultiToggle(abandonedChannel, 17, 21, 14, 21, ['S', 'W', '~', '_', '!']),
 
-    new RaftDispenser(abandonedChannel, 6 * 75, 27 * 75, 5 * 75 + 37.5, 27 * 75 + 37.5),
+    new RaftDispenser(abandonedChannel, 6 * 75, 27 * 75, ctr(5), ctr(27)),
 
     new LockToggle(abandonedChannel, 26, 21, function () {
         //curMap.changeBlock(43, 19, '_')
@@ -1910,13 +1910,13 @@ var interactives = [
         curMap.changeBlock(17, 6, ')')
     }, function() {
         curMap.changeBlock(17, 6, '(')
-    }, 17 * 75 + 37.5, 6 * 75 + 37.5),
+    }, ctr(17), ctr(6)),
 
-    new RaftDispenser(cryoUnderground, 5 * 75, 1 * 75, 6 * 75 + 37.5, 1 * 75 + 37.5),
+    new RaftDispenser(cryoUnderground, 5 * 75, 1 * 75, ctr(6), ctr(1)),
 
-    new RaftDispenser(cryoUnderground, 1 * 75, 22 * 75, 1 * 75 + 37.5, 21 * 75 + 37.5),
+    new RaftDispenser(cryoUnderground, 1 * 75, 22 * 75, ctr(1), ctr(21)),
 
-    new RaftDispenser(cryoUnderground, 22 * 75, 22 * 75, 22 * 75 + 37.5, 21 * 75 + 37.5),
+    new RaftDispenser(cryoUnderground, 22 * 75, 22 * 75, ctr(22), ctr(21)),
 
     new Toggle(cryoUnderground, 15, 27, function() {
         curMap.changeBlock(18, 23, '!')
@@ -1946,11 +1946,11 @@ var interactives = [
         curMap.changeBlock(19, 26, 'z')
     }),
 
-    new RaftDispenser(cryoUnderground, 19 * 75, 10 * 75, 20 * 75 + 37.5, 10 * 75 + 37.5),
+    new RaftDispenser(cryoUnderground, 19 * 75, 10 * 75, ctr(20), ctr(10)),
 
-    new RaftDispenser(cryoUnderground, 38 * 75, 1 * 75, 39 * 75 + 37.5, 1 * 75 + 37.5),
+    new RaftDispenser(cryoUnderground, 38 * 75, 1 * 75, ctr(39), ctr(1)),
 
-    new RaftDispenser(cryoUnderground, 28 * 75, 19 * 75, 28 * 75 + 37.5, 20 * 75 + 37.5),
+    new RaftDispenser(cryoUnderground, 28 * 75, 19 * 75, ctr(28), ctr(20)),
 
     new Toggle(cryoUnderground, 46, 19, function() {
         curMap.changeBlock(47, 23, 'W')
@@ -1964,7 +1964,7 @@ var interactives = [
 
         curMap.changeBlock(46, 19, 'z')
         curMap.changeBlock(46, 20, 'z')
-    }, 48 * 75, 23 * 75 + 37.5),
+    }, 48 * 75, ctr(23)),
 
     new Toggle(cryoUnderground, 28, 22, function () {
         
@@ -1993,24 +1993,24 @@ var interactives = [
         //curMap.changeBlock(34, 22, '.')
     }),
 
-    new RaftDispenser(cryoUnderground, 48 * 75, 32 * 75, 47 * 75 + 37.5, 32 * 75 + 37.5),
+    new RaftDispenser(cryoUnderground, 48 * 75, 32 * 75, ctr(47), ctr(32)),
 
     // Drowned Room
-    new RaftDispenser(drownedRoom, 15 * 75, 25 * 75, 15 * 75 + 37.5, 24 * 75 + 37.5),
+    new RaftDispenser(drownedRoom, 15 * 75, 25 * 75, ctr(15), ctr(24)),
 
-    new RaftDispenser(drownedRoom, 5 * 75, 25 * 75, 5 * 75 + 37.5, 24 * 75 + 37.5),
+    new RaftDispenser(drownedRoom, 5 * 75, 25 * 75, ctr(5), ctr(24)),
 
-    new RaftDispenser(drownedRoom, 25 * 75, 25 * 75, 25 * 75 + 37.5, 24 * 75 + 37.5),
+    new RaftDispenser(drownedRoom, 25 * 75, 25 * 75, ctr(25), ctr(24)),
 
-    new RaftDispenser(drownedRoom, 5 * 75, 15 * 75, 6 * 75 + 37.5, 15 * 75 + 37.5),
+    new RaftDispenser(drownedRoom, 5 * 75, 15 * 75, ctr(6), ctr(15)),
 
-    new RaftDispenser(drownedRoom, 25 * 75, 15 * 75, 24 * 75 + 37.5, 15 * 75 + 37.5),
+    new RaftDispenser(drownedRoom, 25 * 75, 15 * 75, ctr(24), ctr(15)),
 
-    new RaftDispenser(drownedRoom, 5 * 75, 5 * 75, 5 * 75 + 37.5, 6 * 75 + 37.5),
+    new RaftDispenser(drownedRoom, 5 * 75, 5 * 75, ctr(5), ctr(6)),
 
-    new RaftDispenser(drownedRoom, 15 * 75, 5 * 75, 15 * 75 + 37.5, 6 * 75 + 37.5),
+    new RaftDispenser(drownedRoom, 15 * 75, 5 * 75, ctr(15), ctr(6)),
 
-    new RaftDispenser(drownedRoom, 25 * 75, 5 * 75, 25 * 75 + 37.5, 6 * 75 + 37.5),
+    new RaftDispenser(drownedRoom, 25 * 75, 5 * 75, ctr(25), ctr(6)),
 
     // Fortune Field Water Tunnels
     new RaftDispenser(fortuneFieldWaterTunnel146_88, b(10), b(4), ctr(11), ctr(4)),
@@ -2246,7 +2246,7 @@ const droptonTunnelsEntrance = new Secret(270, 78, mainMap, function() {
     if (p.can.goUnderWater && keys.space) {
         Screen.fadeOut(0.01, function() {
             curMap = droptonTunnels
-            p.goTo(14 * 75 + 37.5, 14 * 75 + 37.5)
+            p.goTo(ctr(14), ctr(14))
         })
     }
 })
@@ -2736,13 +2736,13 @@ var gameInterval = setInterval(function() {
                 } else if (curMap == stormedRoom) {
                     Screen.fadeOut(0.005, function() {
                         curMap = galeCave
-                        p.x = 44 * 75 + 37.5
-                        p.y = 34 * 75 + 37.5
+                        p.x = ctr(44)
+                        p.y = ctr(34)
                         p.giveItem(items.stormedsSword, true)
 
                         lonzo.map = mainMap
-                        lonzo.x = 158 * 75 + 37.5
-                        lonzo.y = 50 * 75 + 37.5
+                        lonzo.x = ctr(158)
+                        lonzo.y = ctr(50)
                         lonzo.dir = "L"
                         lonzo.lines = [
                             "Hello! It's been a while!",
@@ -2755,8 +2755,8 @@ var gameInterval = setInterval(function() {
                             "I'm sure she'll be delighted to hear that you were successful!"
                         ]
 
-                        queenAlaska.x = 253 * 75 + 37.5
-                        queenAlaska.y = 23 * 75 + 37.5
+                        queenAlaska.x = ctr(253)
+                        queenAlaska.y = ctr(23)
                         queenAlaska.dir = 'R'
                         queenAlaska.map = mainMap
                         queenAlaska.lines = [
@@ -2769,8 +2769,8 @@ var gameInterval = setInterval(function() {
                         ]
                         queenAlaska.action = function() {}
 
-                        drQua.x = 256 * 75 + 37.5
-                        drQua.y = 23 * 75 + 37.5
+                        drQua.x = ctr(256)
+                        drQua.y = ctr(23)
 
                         p.questPoint = {
                             x: 253,
@@ -3158,8 +3158,8 @@ var gameInterval = setInterval(function() {
                 p.x = 6 * 75
                 p.y = 54 * 75
                 p.giveItem(items.spearOfTheDarkened, false)
-                wayne.x = 6 * 75 + 37.5
-                wayne.y = 46 * 75 + 37.5
+                wayne.x = ctr(6)
+                wayne.y = ctr(46)
                 lighting = 5000
                 wayne.actionLine = "after"
                 wayne.action = function(p) {
@@ -3355,8 +3355,8 @@ var gameInterval = setInterval(function() {
                 
             } else {
                 scene = "GAME"
-                p.x = 41 * 75 + 37.5
-                p.y = 59 * 75 + 37.5
+                p.x = ctr(41)
+                p.y = ctr(59)
                 p.questPoint = {
                     x: 37,
                     y: 50
@@ -3366,8 +3366,8 @@ var gameInterval = setInterval(function() {
                 curMap.changeBlock(138, 4, "_")
     
                 // This code piece is a backup to move the old man into the correct spot, even though he should be there anyway
-                oldMan.x = 40 * 75 + 37.5
-                oldMan.y = 59 * 75 + 37.5
+                oldMan.x = ctr(40)
+                oldMan.y = ctr(59)
                 oldMan.map = mainMap
                 
                 oldMan.lines = [
@@ -3375,8 +3375,8 @@ var gameInterval = setInterval(function() {
                     "He should be around here somewhere."
                 ]
                 
-                wayne.x = 37 * 75 + 37.5
-                wayne.y = 50 * 75 + 37.5
+                wayne.x = ctr(37)
+                wayne.y = ctr(50)
                 wayne.lines = [
                     "Hello!",
                     "I think the old man told you about this island's history,\nso I'll help you save it!",

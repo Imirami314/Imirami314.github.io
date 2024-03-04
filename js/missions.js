@@ -224,8 +224,8 @@ theWanderersRiddles.solve = function () {
 	}
 	
 	if (secrets[0][3] == true) {
-		theWanderer.x = 28 * 75 + 37.5
-		theWanderer.y = 55 * 75 + 37.5
+		theWanderer.x = ctr(28)
+		theWanderer.y = ctr(55)
 		theWanderer.lines = [
 			"`...", "You probably didn't expect me to be here already.",
 			"Congratulations on finding such a rare and mysterious item.\nI've only seen these items in ancient scrolls.",

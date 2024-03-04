@@ -44,9 +44,9 @@ Toggle.prototype.draw = function() {
     this.toggleCooldown -= 1 / (66 + (2 / 3))
     if (getBlockInfoByCords(this.x * 75, this.y * 75).id != 'I' && getBlockInfoByCords(this.x * 75, this.y * 75).id != 'i') {
         if (this.toggleState == 2) {
-            ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 55, 55, "rgb(100, 10, 175)")
+            ellipse(ctr(this.x), ctr(this.y), 55, 55, "rgb(100, 10, 175)")
         } else {
-            ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 55, 55, "rgb(255, 255, 0)")
+            ellipse(ctr(this.x), ctr(this.y), 55, 55, "rgb(255, 255, 0)")
         }
     }
 }
@@ -108,11 +108,11 @@ MultiToggle.prototype.draw = function () {
     this.cords.y = this.y
 
 	this.toggleCooldown -= 1 / (66 + (2 / 3))
-	ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 55, 55, "rgb(66, 135, 245)")
+	ellipse(ctr(this.x), ctr(this.y), 55, 55, "rgb(66, 135, 245)")
 	
 	if (this.toggleNum != 0 && this.toggleNum != this.blocks.length) {
 		ctx.fillStyle = 'rgb(0, 0, 0)'
-		ctx.fillText(this.toggleNum, this.x * 75 + 37.5, this.y * 75 + 37.5)
+		ctx.fillText(this.toggleNum, ctr(this.x), ctr(this.y))
 	}
 	
 }
@@ -145,9 +145,9 @@ LockToggle.prototype.draw = function() {
     this.cords.x = this.x
     this.cords.y = this.y
     if (!this.locked) {
-        ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 55, 55, "rgb(255, 0, 0)")
+        ellipse(ctr(this.x), ctr(this.y), 55, 55, "rgb(255, 0, 0)")
     } else {
-        ellipse(this.x * 75 + 37.5, this.y * 75 + 37.5, 55, 55, "rgb(0, 255, 0)")
+        ellipse(ctr(this.x), ctr(this.y), 55, 55, "rgb(0, 255, 0)")
     }
 }
 
@@ -202,10 +202,10 @@ Breezeway.prototype.activate = function() {
     if (keys.space && p.on(this.x, this.y) && this.cooldown <= 0) {
         
         setTimeout(() => {
-            p.goTo(this.tpx * 75 + 37.5, this.tpy * 75 + 37.5)
+            p.goTo(ctr(this.tpx), ctr(this.tpy))
         }, 1500)
 
-        cameraStart(this.tpx * 75 + 37.5, this.tpy * 75 + 37.5, 15, "AUTO", {
+        cameraStart(ctr(this.tpx), ctr(this.tpy), 15, "AUTO", {
             time: 3250
         })
 

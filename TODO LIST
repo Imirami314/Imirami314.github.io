@@ -16,6 +16,7 @@ One Time
 - Fix wanderer's lines
 - Fix breakable blocks
 - Fix remote NPC logic
+- Gale Cave is broken because not all interactives have cords.x and cords.y
 
 Continuous
 - Add sound effects for all blocks

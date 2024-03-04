@@ -1044,7 +1044,7 @@ mainMap.solve = function() {
     if (keys.space) {
         if (theBlockedEntrance.complete && p.on(252, 81)) {
             curMap = droptonCity
-            p.goTo(35 * 75 + 37.5, 27 * 75 + 37.5)
+            p.goTo(ctr(35), ctr(27))
         }
     }
 	
@@ -1132,7 +1132,7 @@ var johnHouse = new Landscape([
     '=======',
     '=======',
     '===|==='
-], 3 * 75 + 37.5, 5 * 75 + 37.5, 15, 8, "John's House")
+], ctr(3), ctr(5), 15, 8, "John's House")
 
 var ronHouse = new Landscape([
     '___|___',
@@ -1151,7 +1151,7 @@ var mikeHouse = new Landscape([
     '---------',
     '---------',
     '----|----',
-], 4 * 75 + 37.5, 6 * 75 + 37.5, 51, 8, "Mike's House")
+], ctr(4), ctr(6), 51, 8, "Mike's House")
 
 
 mikeHouse.solve = function () {
@@ -1173,7 +1173,7 @@ var lyraHouse = new Landscape([
     '.._..........',
     '.............',
     '......|......'
-], 7 * 75 + 37.5, 4 * 75 + 37.5, 13, 27, "Lyra's House")
+], ctr(7), ctr(4), 13, 27, "Lyra's House")
 
 var carolHouse = new Landscape([
     '=========',
@@ -1181,7 +1181,7 @@ var carolHouse = new Landscape([
     '===----@=',
     '=~=-----=',
     '====|====',
-], 4 * 75 + 37.5, 4 * 75 + 37.5, 38, 27, "Carol's House")
+], ctr(4), ctr(4), 38, 27, "Carol's House")
 
 var leyHouse = new Landscape([
     '.......',
@@ -1189,7 +1189,7 @@ var leyHouse = new Landscape([
     '.......',
     '.......',
     '...|...'
-], 3 * 75 + 37.5, 4 * 75 + 37.5, 19, 28, "Ley's House")
+], ctr(3), ctr(4), 19, 28, "Ley's House")
 
 var sarahsShop = new Landscape([
     'WWWWWWWWW',
@@ -1197,7 +1197,7 @@ var sarahsShop = new Landscape([
     'W,W...W,W',
     'W~W...W~W',
     'WWWW|WWWW',
-], 4 * 75 + 37.5, 4 * 75 + 37.5, 71, 22, "Sarah's Shop")
+], ctr(4), ctr(4), 71, 22, "Sarah's Shop")
 
 var rowansDojo = new Landscape([
     'BBBBBBBBBBB',
@@ -1211,7 +1211,7 @@ var rowansDojo = new Landscape([
     'B=B==B==B=B',
     'B=========B',
     'BBBBB|BBBBB',
-], 5 * 75 + 37.5, 10 * 75 + 37.5, 78, 42, "Rowan's Dojo")
+], ctr(5), ctr(10), 78, 42, "Rowan's Dojo")
 
 var wyattHouse = new Landscape([
     'BBBBBBBBB',
@@ -1287,7 +1287,7 @@ var rickHouse = new Landscape([
     '__________',
     'SS___SS___',
     '~S|__SSSSS'
-], 2 * 75 + 37.5, 4 * 75 + 37.5, 136, 23, "Rick's House")
+], ctr(2), ctr(4), 136, 23, "Rick's House")
 
 var confoundedCave = new Landscape([
     '_____SSSSS___S______)_S____________________________S',
@@ -1359,7 +1359,7 @@ var glaciaCenter = new Landscape([
     'WWWW......W',
     'W..W......W',
     'WWWWW|WWWWW',
-], 5 * 75 + 37.5, 7 * 75 + 37.5, 190, 16, "Glacia Center")
+], ctr(5), ctr(7), 190, 16, "Glacia Center")
 
 var trailShop = new Landscape([
 	'WWWWWWWWWWWWW',
@@ -1371,7 +1371,7 @@ var trailShop = new Landscape([
 	'W...........W',
 	'W...........W',
 	'WWWWWW|WWWWWW'
-], 6 * 75 + 37.5, 7 * 75 + 37.5, 165, 16, "Trail Shop")
+], ctr(6), ctr(7), 165, 16, "Trail Shop")
 
 var breezwayBuilds = new Landscape([
     'SSSSSSSSSSS',
@@ -1393,7 +1393,7 @@ var lonzoHouse = new Landscape([
     '_______',
     '_______',
     '___|___',
-], 3 * 75 + 37.5, 3 * 75 + 37.5, 228, 16, "Lonzo's House")
+], ctr(3), ctr(3), 228, 16, "Lonzo's House")
 
 var queensCastle = new Landscape([
     '___W___W_____________________________$$$$$$$',             
@@ -1417,7 +1417,7 @@ var queensCastle = new Landscape([
     'SSSSSzzzzzzzzzzzzzSSSSSSSSzSzzzzzSzzS_S_S_SS',
     'SSSSSzzzzzzzzzzzzzzzzzOSSSzSzzzzzSzzS_____zS',
     'SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',
-], 0 * 75 + 37.5, 0 * 75 + 37.5, 159, 4, "The Queen's Castle")
+], ctr(0), ctr(0), 159, 4, "The Queen's Castle")
 
 queensCastle.solve = function() {
     p.cordSave =    {
@@ -1494,7 +1494,7 @@ var galeCave = new Landscape([
     'zS______SSSSSS______________S__S_______SSSSS*SS*SS_______S__',
     'zSSSS_______________________S__S______SS*SSSOSSSSSS_____SS..',
     '|zzzz_______________________SSSS______SSSSSSSSSSSSS_____SSSS',
-], 32 * 75 + 37.5, 24 * 75 + 37.5, 156, 50, "Gale Cave")
+], ctr(32), ctr(24), 156, 50, "Gale Cave")
 // look at chat jumpscare
 galeCave.solve = function() {
     p.cordSave = {
@@ -1567,7 +1567,7 @@ var howlerHollow = new Landscape([
     '$$$$$$$S*_____*S$$$$$$$$$$$$$$',
     '$$$$$$$SSSSSSSSS$$$$$$$$$$$$$$',
     '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
-], 1 * 75 + 37.5, 1 * 75 + 37.5, null, null, "Howler Hollow")
+], ctr(1), ctr(1), null, null, "Howler Hollow")
 
 howlerHollow.solve = function() {
     lighting = 2000
@@ -1632,7 +1632,7 @@ var stormedRoom = new Landscape([
     'WzzzzzzzzzzzzzzWzzzzzzzzW',
     'WzzzzzzzzzWzzzzzWzzzzzzzW',
     'WWWWWWWWWWWWWWWWWWWWWWWWW'
-], 13 * 75 + 37.5, 23 * 75 + 37.5, 0, 0, "Stormed Room", function() {
+], ctr(13), ctr(23), 0, 0, "Stormed Room", function() {
     lighting = 2500
     if (bosses[1].health > 0) {
         bossfight = true
@@ -1677,7 +1677,7 @@ var droptonWaterWear = new Landscape([
     'W...............W',
     'W...............W',
     'WWWWWWWW|WWWWWWWW'
-], 8 * 75 + 37.5, 5 * 75 + 37.5, 216, 82, "Dropton Water Wear")
+], ctr(8), ctr(5), 216, 82, "Dropton Water Wear")
 
 var coralsWatercolors = new Landscape([
     "BBBBBBBBBBB",
@@ -1687,7 +1687,7 @@ var coralsWatercolors = new Landscape([
     "B,,.....,,B",
     "B~@.....@~B",
     "BBBBB|BBBBB",
-], 5 * 75 + 37.5, 6  * 75 + 37.5, 274, 75, "Coral's Watercolors")
+], ctr(5), ctr(6), 274, 75, "Coral's Watercolors")
 
 var droptonTunnels = new Landscape([
     'SS~SSSSSSS~SSSSSSSSSSSS~SSSSSS',
@@ -1731,7 +1731,7 @@ droptonTunnels.solve = function() {
         // Exit
         if (p.on(16, 16)) {
             curMap = mainMap
-            p.goTo(271 * 75 + 5, 78 * 75 + 37.5)
+            p.goTo(271 * 75 + 5, ctr(78))
         }
 
         if (p.on(0, 15)) {
@@ -1842,17 +1842,17 @@ droptonCity.solve = function() {
         // Houses/Rooms
         if (p.on(21, 31)) {
             curMap = droptonHall
-            p.goTo(7 * 75 + 37.5, 6 * 75 - 5)
+            p.goTo(ctr(7), 6 * 75 - 5)
         }
 
         if (p.on(2, 11)) {
             curMap = lochNessHouse
-            p.goTo(5 * 75 + 37.5, 4 * 75 + 37.5)
+            p.goTo(ctr(5), ctr(4))
         }
         
         if (p.on(35, 28) && theBlockedEntrance.complete) {
             curMap = mainMap
-            p.goTo(252 * 75 + 37.5, 80 * 75 + 37.5)
+            p.goTo(ctr(252), ctr(80))
         }
     }
 }
@@ -1917,7 +1917,7 @@ var droptonTown = new Landscape([
         // Houses/Rooms
         if (p.on(38, 19)) {
             curMap = droptonResearchFacility
-            p.goTo(4 * 75 + 37.5, 3 * 75 + 70)
+            p.goTo(ctr(4), 3 * 75 + 70)
         }
     }
 })
@@ -1933,7 +1933,7 @@ var droptonResearchFacility = new Landscape([
         // Exit
         if (p.on(4, 4)) {
             curMap = droptonTown
-            p.goTo(38 * 75 + 37.5, 20 * 75 + 5)
+            p.goTo(ctr(38), 20 * 75 + 5)
         }
     }
 })
@@ -1949,7 +1949,7 @@ var lochNessHouse = new Landscape([
     if (keys.space) {
         if (p.on(5, 5)) {
             curMap = droptonCity
-            p.goTo(2 * 75 + 37.5, 12 * 75 + 37.5)
+            p.goTo(ctr(2), ctr(12))
         }
     }
 })
@@ -2000,8 +2000,8 @@ abandonedChannel.solve = function() {
     }
     if (!cascadeEntered && cascade.map != abandonedChannel) {
         setTimeout(() => {
-            cascade.x = 9 * 75 + 37.5
-            cascade.y = 9 * 75 + 37.5
+            cascade.x = ctr(9)
+            cascade.y = ctr(9)
             cascade.map = abandonedChannel
 
             cascade.lines = [
@@ -2111,7 +2111,7 @@ var cryoUnderground = new Landscape([
     'OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOW~WWWWWWWW~~W', // hello
     'OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOWII~~~~~~i~~W',
     'OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOWWWWWWWWWWWWW'
-], 1 * 75 + 37.5, 1 * 75 + 37.5, 0, 0, "The Cryo Underground") // Don't enter from mainMap
+], ctr(1), ctr(1), 0, 0, "The Cryo Underground") // Don't enter from mainMap
 
 cryoUnderground.solve = function() {
     this.temperature = -1
@@ -2119,15 +2119,15 @@ cryoUnderground.solve = function() {
 
     if (keys.space) {
         if (p.on(8, 1)) { // Exit to Abandoned Channel
-            p.goTo(47 * 75 + 37.5, 19 * 75 + 37.5)
+            p.goTo(ctr(47), ctr(19))
             curMap = abandonedChannel
             
         }
 
         // if (p.on(42, 28)) {
         //    // curMap = stormedRoom
-        //     //p.x = 13 * 75 + 37.5
-        //     //p.y = 23 * 75 + 37.5
+        //     //p.x = ctr(13)
+        //     //p.y = ctr(23)
         //     //p.dir = "U"
         // }
     }
@@ -2188,7 +2188,7 @@ var drownedRoom = new Landscape([
     'W~.......~~~.......~~~.......~W',
     'W~~~~~~~~~~~~~~~~~~~~~~~~~~~~~W',
     'WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW',
-], 1 * 75 + 37.5, 1 * 75 + 37.5, 0, 0, "Drowned Room", function() {
+], ctr(1), ctr(1), 0, 0, "Drowned Room", function() {
 
 }) // Don't enter from mainMap
 

@@ -25,13 +25,13 @@ Chest.all = []
 
 Chest.prototype.draw = function() {
     if (!this.opened) {
-        ctx.drawImage(images.chestClosed, this.cords.x * 75, this.cords.y * 75, 75, 75)
+        ctx.drawImage(images.chestClosed, b(this.cords.x), b(this.cords.y), 75, 75)
         ctx.fillStyle = "rgb(200, 200, 0)"
     } else {
-        ctx.drawImage(images.chestOpen, this.cords.x * 75, this.cords.y * 75, 75, 75)
+        ctx.drawImage(images.chestOpen, b(this.cords.x), b(this.cords.y), 75, 75)
         ctx.fillStyle = "rgb(0, 255, 0)"
     }
-    //ctx.fillRect(this.cords.x * 75, this.cords.y * 75, 50, 50)
+    //ctx.fillRect(ctr(this.cords.x), ctr(this.cords.y), 50, 50)
     
 }
 

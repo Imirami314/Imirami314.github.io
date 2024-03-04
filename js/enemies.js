@@ -557,23 +557,23 @@ class Stormed extends Boss {
                 if (!this.windMode) {
                     this.scaleFactor -= 0.01
                     if (this.scaleFactor <= 0) {
-                        this.x = 17 * 75 + 37.5
-                        this.y = 17 * 75 + 37.5
+                        this.x = ctr(17)
+                        this.y = ctr(17)
                         this.phase = 3
                     }
                     
                 } else if (this.windMode) {
-                    this.x = 13 * 75 + 37.5
-                    this.y = 17 * 75 + 37.5
+                    this.x = ctr(13)
+                    this.y = ctr(17)
                     this.doWindMode()
                 }
             } else {
                 scene = "STORMED BOSS CUTSCENE PHASE 2"
                 this.phase2Played = true
                 this.windMode = true
-                this.x = 13 * 75 + 37.5
-                this.y = 17 * 75 + 37.5
-                p.goTo(13 * 75 + 37.5, 21 * 75 + 37.5)
+                this.x = ctr(13)
+                this.y = ctr(17)
+                p.goTo(ctr(13), ctr(21))
             }
         }
     }
@@ -1424,6 +1424,6 @@ const monsters = [
 
 const bosses = [
     new Darkened("Darkened Room", 712.5, 100),
-    new Stormed("Stormed Room", 13 * 75 + 37.5, 17 * 75 + 37.5),
-    new Drowned("Drowned Room", 15 * 75 + 37.5, 19 * 75 + 37.5),
+    new Stormed("Stormed Room", ctr(13), ctr(17)),
+    new Drowned("Drowned Room", ctr(15), ctr(19)),
 ]

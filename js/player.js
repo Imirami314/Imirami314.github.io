@@ -898,13 +898,13 @@ Player.prototype.displayMap = function() {
         // eiufhdglksdfjhg
         
         if (!!this.questPoint) {
-            var questPointParticles = new ParticleSystem(this.questPoint.x * 75 + 37.5, this.questPoint.y * 75 + 37.5, 10, 35 / mapScale, 0, 255, 0)
+            var questPointParticles = new ParticleSystem(ctr(this.questPoint.x), ctr(this.questPoint.y), 10, 35 / mapScale, 0, 255, 0)
 
             questPointParticles.create()
             questPointParticles.draw()
-            ellipse(this.questPoint.x * 75 + 37.5, this.questPoint.y * 75 + 37.5, 35 / mapScale, 35 / mapScale, "rgb(0, 250, 45)")
-            ellipse(this.questPoint.x * 75 + 37.5, this.questPoint.y * 75 + 37.5, 25 / mapScale, 25 / mapScale, "rgb(0, 200, 40)")
-            ellipse(this.questPoint.x * 75 + 37.5, this.questPoint.y * 75 + 37.5, 10 / mapScale, 10 / mapScale, "rgb(0, 250, 45)")
+            ellipse(ctr(this.questPoint.x), ctr(this.questPoint.y), 35 / mapScale, 35 / mapScale, "rgb(0, 250, 45)")
+            ellipse(ctr(this.questPoint.x), ctr(this.questPoint.y), 25 / mapScale, 25 / mapScale, "rgb(0, 200, 40)")
+            ellipse(ctr(this.questPoint.x), ctr(this.questPoint.y), 10 / mapScale, 10 / mapScale, "rgb(0, 250, 45)")
             
         }
         

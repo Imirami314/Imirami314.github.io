@@ -421,8 +421,8 @@ class NPC extends Entity {
                     this.pathPoint ++
                 
                     // Centers the NPC on their block before moving on to the next point
-                    // this.x = this.cords.x * 75 + 37.5
-                    // this.y = this.cords.y * 75 + 37.5
+                    // this.x = ctr(this.cords.x)
+                    // this.y = ctr(this.cords.y)
                     this.runPath(path)
                 }
             
