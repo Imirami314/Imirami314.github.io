@@ -526,10 +526,10 @@ class Rock {
                     case 'U':
                         if (getBlockInfoByCords(this.x, this.y - perSec(this.pushSpeedPerSec) - 10).through && getBlockInfoByCords(p.x, p.y - perSec(this.pushSpeedPerSec) - 10).through) {
                             if (keys.w) {
-                                p.y -= perSec(this.pushSpeedPerSec)
+                                p.manualMove(0, - perSec(this.pushSpeedPerSec))
                                 this.y -= perSec(this.pushSpeedPerSec)
                             } else if (keys.s) {
-                                p.y += perSec(this.pushSpeedPerSec)
+                                p.manualMove(0, perSec(this.pushSpeedPerSec))
                                 this.y += perSec(this.pushSpeedPerSec)
                             }
                         }
@@ -537,24 +537,22 @@ class Rock {
                     case 'D':
                         if (getBlockInfoByCords(this.x, this.y + perSec(this.pushSpeedPerSec) + 10).through && getBlockInfoByCords(p.x, p.y + perSec(this.pushSpeedPerSec) + 10).through) {
                             if (keys.w) {
-                                p.y -= perSec(this.pushSpeedPerSec)
+                                p.manualMove(0, - perSec(this.pushSpeedPerSec))
                                 this.y -= perSec(this.pushSpeedPerSec)
                             } else if (keys.s) {
-                                p.y += perSec(this.pushSpeedPerSec)
+                                p.manualMove(0, perSec(this.pushSpeedPerSec))
                                 this.y += perSec(this.pushSpeedPerSec)
                             }
-                            // p.y += perSec(this.pushSpeedPerSec)
-                            // this.y += perSec(this.pushSpeedPerSec)
                         }
                         break
                     case 'L':
                         if (getBlockInfoByCords(this.x - perSec(this.pushSpeedPerSec) - 10, this.y).through && getBlockInfoByCords(p.x - perSec(this.pushSpeedPerSec) - 10, p.y).through) {
                             if (keys.a) {
-                                p.x -= perSec(this.pushSpeedPerSec)
+                                p.manualMove(- perSec(this.pushSpeedPerSec), 0)
                                 this.x -= perSec(this.pushSpeedPerSec)
                                 this.rotate --
                             } else if (keys.d) {
-                                p.x += perSec(this.pushSpeedPerSec)
+                                p.manualMove(perSec(this.pushSpeedPerSec), 0)
                                 this.x += perSec(this.pushSpeedPerSec)
                                 this.rotate ++
                             }
@@ -564,11 +562,11 @@ class Rock {
                     case 'R':
                         if (getBlockInfoByCords(this.x + perSec(this.pushSpeedPerSec) + 10, this.y).through && getBlockInfoByCords(p.x + perSec(this.pushSpeedPerSec) + 10, p.y).through) {
                             if (keys.a) {
-                                p.x -= perSec(this.pushSpeedPerSec)
+                                p.manualMove(- perSec(this.pushSpeedPerSec), 0)
                                 this.x -= perSec(this.pushSpeedPerSec)
                                 this.rotate --
                             } else if (keys.d) {
-                                p.x += perSec(this.pushSpeedPerSec)
+                                p.manualMove(- perSec(this.pushSpeedPerSec), 0)
                                 this.x += perSec(this.pushSpeedPerSec)
                                 this.rotate ++
                             }
