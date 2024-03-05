@@ -417,7 +417,7 @@ Teleport.prototype.draw = function () {
 
 var prisonGuard = new NPC(ctr(19), ctr(2), "Prison Guard", imperilledPrison, "R", [""], "uh yeah")
 
-var oldMan = new NPC(5*75, 1*75, "Old Man", johnHouse, "D", [
+var oldMan = new NPC(b(5), b(1), "Old Man", johnHouse, "D", [
     "Huh? Who is there?",
     "Sorry, I can't see you very well.\nOld age has ruined my vision.",
     "Actually, could you do me a favor?\nFetch me my glasses, will you?",
@@ -655,8 +655,8 @@ var wayne = new NPC(48 * 75, 55 * 75, "Wayne", mainMap, "D", [
     "Oh! In that case, have you talked to that old guy?",
     "He wanted to meet you and tell you something\napparently..."
 ], "Resident - Chard Town\nHe is always outdoors, and loves to raft and swim whenever he gets the chance.", function(p, npc) {
-    var old_man = npcs.searchByName("Old Man")
-    if (old_man.glasses) {
+    // var old_man = npcs.searchByName("Old Man")
+    if (oldMan.glasses) {
         wayne.lines = [
             "Use the key I gave you to head east, towards the next village!"
         ]
@@ -668,7 +668,7 @@ var wayne = new NPC(48 * 75, 55 * 75, "Wayne", mainMap, "D", [
             y: 37
         }
 
-        wayne.action = function() {}
+        wayne.clearAction()
     }
 }, "after")
 
@@ -1495,7 +1495,14 @@ var kingJasper = new NPC(ctr(115), ctr(81), "King Jasper", mainMap, 'R', [
     ]
 }, "after")
 
-var npcs = NPC.all
+var npcs = []
+
+for (var npc of NPC.all) {
+    if (!npc.isModel) {
+        npcs.push(npc)
+    }
+}
+
 var shopMenus = [muhammadShop, blakeShop, caspianShop]
 
 npcs.searchByName = function(name) {
@@ -2159,6 +2166,14 @@ var models = {
     }
 }
 
+for (var modelType in models) {
+    for (var i in models[modelType]) {
+        let model = models[modelType][i]
+
+        model.isModel = true
+    }
+}
+
 const p = new Player(2 * 75, 2 * 75, npcs) // default x = width / 2, y = height / 2 helloooh
 
 const c121_31 = new Chest(mainMap, 121, 31, [
@@ -2375,6 +2390,9 @@ function saveGame() {
     for (var i in npcs) {
         var n = npcs[i]
         SAVING.npcs.push(npcs[i])
+        if (npcs[i].name == "Old Man") {
+            console.log(npcs[i].map)
+        }
         if (!!npcs[i].action) {
             SAVING.npcActions.push({
                 name: npcs[i].name,
@@ -2473,8 +2491,8 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = false
-    curMap = stoneheartSanctuary
+    dev = true
+    curMap = mainMap
     p.goTo(ctr(30), ctr(7))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
     p.equipped = [items.aquaLung]

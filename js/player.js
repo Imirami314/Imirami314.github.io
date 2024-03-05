@@ -1,7 +1,7 @@
 function Player(x, y, npcs) {
     Entity.call(this, curMap, x, y)
-    // this.x = x
-    // this.y = y
+
+    this.spaceActioned = false // Has a space key press done something else already
 
     this.buildMode = false
     this.buildable = false
@@ -562,6 +562,10 @@ Player.prototype.move = function() {
     if (curMap.temperature > this.resistances.heat) {
         this.health -= (1 / 66.6667) * (curMap.temperature - this.resistances.heat)    
     }
+
+    if (!keys.space) {
+        this.spaceActioned = false
+    }
 }
 
 Player.prototype.collide = function() {
@@ -664,6 +668,15 @@ Player.prototype.collide = function() {
         }
     } else {
         stopSound(this.blockOn.sound)
+    }
+}
+
+Player.prototype.onSpace = function(action) {
+    if (keys.space) {
+        if (!this.spaceActioned) {
+            this.spaceActioned = true
+            action()
+        }
     }
 }
 

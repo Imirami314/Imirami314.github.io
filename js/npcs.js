@@ -83,7 +83,7 @@ class NPC extends Entity {
         }
 
         this.shopMenu = shopMenu
-
+        
         NPC.all.push(this)
     }
 
@@ -217,7 +217,8 @@ class NPC extends Entity {
         } 
         
         ctx.restore()
-        if (Math.hypot((this.x - p.x), (this.y - p.y)) <= 100 && keys.space && this.lineNum < 0 && this.textCooldown <= 0 && CUR_SHOP_MENU == 0) {
+
+        if (keys.space && Math.hypot((this.x - p.x), (this.y - p.y)) <= 100 && this.lineNum < 0 && this.textCooldown <= 0 && CUR_SHOP_MENU == 0) {
             this.lineNum = 0
             this.textCooldown = 1
             this.dirSave = this.dir

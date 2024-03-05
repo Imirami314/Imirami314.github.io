@@ -285,7 +285,6 @@ theWanderersRiddlesGV.solve = function () {
 var leysGreatFear = new Mission("Ley's Great Fear", "Reward", null, 0)
 
 leysGreatFear.solve = function () {
-	console.log("ley mann")
 	ley.lines = ["Are they gone yet?!"]
 }
 

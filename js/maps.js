@@ -1984,8 +1984,6 @@ var abandonedChannel = new Landscape([
     'SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',
 ], null, null, null, null, "Abandoned Channel")
 
-// var growInterval = 0
-// var allSuspensia = false
 abandonedChannel.solve = function() {
     lighting = 2000
     // Places to go
