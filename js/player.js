@@ -2,6 +2,7 @@ function Player(x, y, npcs) {
     Entity.call(this, curMap, x, y)
 
     this.spaceActioned = false // Has a space key press done something else already
+    this.spaceActionRequests = []
 
     this.buildMode = false
     this.buildable = false
@@ -562,10 +563,6 @@ Player.prototype.move = function() {
     if (curMap.temperature > this.resistances.heat) {
         this.health -= (1 / 66.6667) * (curMap.temperature - this.resistances.heat)    
     }
-
-    if (!keys.space) {
-        this.spaceActioned = false
-    }
 }
 
 Player.prototype.collide = function() {
@@ -671,12 +668,31 @@ Player.prototype.collide = function() {
     }
 }
 
-Player.prototype.onSpace = function(action) {
+Player.prototype.onSpace = function(action, priority) {
     if (keys.space) {
-        if (!this.spaceActioned) {
-            this.spaceActioned = true
-            action()
+        // if (!this.spaceActioned) {
+        //     this.spaceActioned = true
+        //     action()
+        // }
+        this.spaceActionRequests.push({
+            action: action,
+            priority: priority || 1
+        })
+    }
+}
+
+Player.prototype.runSpaceAction = function() {
+    if (!this.spaceActioned && this.spaceActionRequests.length > 0 && keys.space) {
+        let highest = null;
+
+        for (let spaceActionRequest of this.spaceActionRequests) {
+            if (highest == null || spaceActionRequest.priority > highest.priority) {
+                highest = spaceActionRequest
+            }
         }
+
+        highest.action()
+        this.spaceActioned = true
     }
 }
 

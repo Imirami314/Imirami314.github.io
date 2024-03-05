@@ -3022,7 +3022,12 @@ var gameInterval = setInterval(function() {
             // Screen fade cover
             ctx.fillStyle = "rgb(0, 0, 0, " + Screen.fade + ")"
             ctx.fillRect(0, 0, width, height)
-            
+
+            if (!keys.space) {
+                p.spaceActioned = false
+            }
+
+            p.runSpaceAction()
         } else if (scene == "DARKENED BOSS CUTSCENE") {
             playMusic("Boss Cutscene")
             cutsceneFrame ++
