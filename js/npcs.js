@@ -309,6 +309,10 @@ class NPC extends Entity {
                             if (this.actionLine == "after") {
                                 this.action(p)
                             }
+
+                            if (this.remoteSpeak) {
+                                p.canMove = true
+                            }
                            // alert("true")
                             this.firstInteraction = false
                             this.lineNum = -1
