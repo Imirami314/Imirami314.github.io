@@ -566,7 +566,7 @@ class Rock {
                                 this.x -= perSec(this.pushSpeedPerSec)
                                 this.rotate --
                             } else if (keys.d) {
-                                p.manualMove(- perSec(this.pushSpeedPerSec), 0)
+                                p.manualMove(perSec(this.pushSpeedPerSec), 0)
                                 this.x += perSec(this.pushSpeedPerSec)
                                 this.rotate ++
                             }

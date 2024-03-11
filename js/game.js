@@ -2059,7 +2059,7 @@ var interactives = [
     }),
 
     // Stoneheart Sanctuary
-    new Rock(stoneheartSanctuary, ctr(2), ctr(8)), // Test rock
+    new Rock(stoneheartSanctuary, ctr(15), ctr(15)), // Test rock
 
     new RockDispenser(stoneheartSanctuary, b(1), b(2), ctr(2), ctr(2)),
 
@@ -2083,6 +2083,12 @@ var interactives = [
     new RaftDispenser(stoneheartSanctuary, b(6), b(9), ctr(6), ctr(8)),
 
     new RaftDispenser(stoneheartSanctuary, b(7), b(13), ctr(7), ctr(12)),
+
+    new RockDispenser(stoneheartSanctuary, b(12), b(13), ctr(13), ctr(13)),
+
+    new MultiToggle(stoneheartSanctuary, 15, 13, 13, 13, ['_', ',', '*', '!', '~']),
+
+    new RaftDispenser(stoneheartSanctuary, b(14), b(11), ctr(13), ctr(11), ['_', ',', '*', '!', '~']),
 ]
 
 var topInteractives = [] // Interactives that should be drawn on a higher layer, do not change manually
@@ -2497,7 +2503,7 @@ if (!!save) {
 function startPos() {
     dev = false
     curMap = stoneheartSanctuary
-    p.goTo(ctr(5), ctr(12))
+    p.goTo(ctr(14), ctr(15))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
     p.equipped = [items.aquaLung]
 
