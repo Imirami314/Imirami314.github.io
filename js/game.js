@@ -2059,7 +2059,7 @@ var interactives = [
     }),
 
     // Stoneheart Sanctuary
-    new Rock(stoneheartSanctuary, ctr(15), ctr(15)), // Test rock
+    new Rock(stoneheartSanctuary, ctr(18), ctr(14)), // Test rock
 
     new RockDispenser(stoneheartSanctuary, b(1), b(2), ctr(2), ctr(2)),
 
@@ -2089,6 +2089,20 @@ var interactives = [
     new MultiToggle(stoneheartSanctuary, 15, 13, 13, 13, ['_', ',', '*', '!', '~']),
 
     new RaftDispenser(stoneheartSanctuary, b(14), b(11), ctr(13), ctr(11), ['_', ',', '*', '!', '~']),
+
+    new RockSwitch(stoneheartSanctuary, 17, 16, function() {
+        stoneheartSanctuary.switch(19, 16, ')', '(')
+    }, function() {
+        stoneheartSanctuary.switch(19, 16, ')', '(')
+    }),
+
+    new RockSwitch(stoneheartSanctuary, 18, 12, function() {
+        stoneheartSanctuary.switch(20, 12, '~', '!')
+        stoneheartSanctuary.switch(20, 14, '~', '!')
+    }, function() {
+        stoneheartSanctuary.switch(20, 12, '~', '!')
+        stoneheartSanctuary.switch(20, 14, '~', '!')
+    })
 ]
 
 var topInteractives = [] // Interactives that should be drawn on a higher layer, do not change manually
@@ -2503,7 +2517,7 @@ if (!!save) {
 function startPos() {
     dev = false
     curMap = stoneheartSanctuary
-    p.goTo(ctr(14), ctr(15))
+    p.goTo(ctr(18), ctr(15))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
     p.equipped = [items.aquaLung]
 
