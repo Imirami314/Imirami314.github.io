@@ -208,7 +208,7 @@ GameAlert.prototype.drawMessage = function () {
 		
         if (this.showLines && this.lineNum < this.lines.length) {
 			if (!dev) {
-            	this.textCooldown -= 1 / (66 + 2/3)
+            	this.textCooldown -= perSec(1)
 			} else {
 				this.textCooldown -= 1 / 20
 			}
@@ -3783,5 +3783,9 @@ var gameInterval = setInterval(function() {
             }
         }
     }
+
+    requestAnimationFrame(game)
 }, 15)
+
+// game()
 // })();

@@ -162,7 +162,7 @@ class Darkened extends Boss {
             this.y -= 0.5
         }
         
-        this.tpTimer -= 1 / (66 + (2 / 3))
+        this.tpTimer -= perSec(1)
         // this.cords.x = Math.floor(this.x / 75)
         // this.cords.y = Math.floor(this.y / 75)
         // this.pdx = p.x - this.x
@@ -300,7 +300,7 @@ class Darkened extends Boss {
                     this.tpHitCount ++
                 }
             } else if (this.tping || this.playerDist >= 900) {
-                this.scaleFactor -= 1 / (66 + (2 / 3))
+                this.scaleFactor -= perSec(1)
                 if (this.scaleFactor > 0) {
                     this.scaleShift = 1
                     this.tpTimer = 3
@@ -319,7 +319,7 @@ class Darkened extends Boss {
                 }
             }
         } else if (this.phase == 2) {
-            this.spikeShotCooldown -= 1 / (66 + (2 / 3))
+            this.spikeShotCooldown -= perSec(1)
     
             if (this.tping) {
                 if (this.playerDist >= 300) {
@@ -473,9 +473,9 @@ class Stormed extends Boss {
         }
     
         // Update information for the boss
-        this.hitCooldown -= 1 / 66.67
+        this.hitCooldown -= perSec(1)
         if (this.phase == 2) {
-            this.windModeTimer -= 1 / 66.67
+            this.windModeTimer -= perSec(1)
         }
 
         this.updatePlayerInfo()
@@ -738,9 +738,9 @@ class Drowned extends Boss {
         }
     
         // Update information for the boss
-        this.hitCooldown -= 1 / 66.67
+        this.hitCooldown -= perSec(1)
         if (this.phase == 2) {
-            this.windModeTimer -= 1 / 66.67
+            this.windModeTimer -= perSec(1)
         }
 
         this.blockOn = curMap.getBlock(this.cords.x, this.cords.y)
@@ -843,10 +843,9 @@ class Drowned extends Boss {
     }
 
     phase2() {
-        // alert(this.on(15, 15))
         if (this.on(15, 15) && this.numMinions < 3 && !this.hasSummonedMinions) {
-            this.minionSummonTimer -= 1 / 66.67
-            this.bodyAngle += Math.PI * 2 / 66.67
+            this.minionSummonTimer -= perSec(1)
+            this.bodyAngle += perSec(Math.PI * 2)
             if (this.minionSummonTimer <= 0) {
                 this.summonMinion(this.x - 150 + this.numMinions * 150, this.y + 100)
                 this.minionSummonTimer = 1
@@ -979,7 +978,7 @@ class Splint extends Enemy {
         if (this.playerDist < 100 && this.hitCooldown <= 0) {
             this.hit()
         } else {
-            this.hitCooldown -= 1 / (66 + 2 / 3)
+            this.hitCooldown -= perSec(1)
         }
 
         if (this.hitting) { // Once hit is started, it finishes even if player is out of range
@@ -1101,7 +1100,7 @@ class Gale extends Enemy {
         if (this.playerDist < 100 && this.hitCooldown <= 0) {
             this.hit()
         } else {
-            this.hitCooldown -= 1 / (66 + 2 / 3)
+            this.hitCooldown -= perSec(1)
         }
 
         if (this.hitting) { // Once hit is started, it finishes even if player is out of range
@@ -1333,7 +1332,7 @@ class DrownedMinion extends Enemy {
         // this.pdy = p.y - this.y
         // this.dirCoefX = (this.pdx / Math.abs(this.pdx)) // Gives 1 or -1 depending on whether the player is to the left or right
         // this.dirCoefY = (this.pdy / Math.abs(this.pdy)) // Gives 1 or -1 depending on whether the player is above or below
-        this.hitCooldown -= 1 / (66 + 2 / 3)
+        this.hitCooldown -= perSec(1)
         
         if (!this.hitting) {
             if (Math.abs(this.pdx) >= 10) {

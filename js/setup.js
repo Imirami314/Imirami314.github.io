@@ -2,6 +2,10 @@ var tabIsActive = true
 var pauseGameLoop = false
 var readyStateConfirmed = false
 
+const FPS = 60
+const interval = 1000 / FPS
+var then;
+
 document.addEventListener("visibilitychange", (event) => {
     if (document.visibilityState == "visible") {
         tabIsActive = true
@@ -180,7 +184,7 @@ function ctr(n) {
 }
 
 function perSec(n) {
-    return n * 1 / 66.67
+    return n * 1 / FPS
 }
 
 var eventDelays = []

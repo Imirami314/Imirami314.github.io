@@ -106,10 +106,10 @@ function Player(x, y, npcs) {
 Player.prototype = Object.create(Entity.prototype)
 
 Player.prototype.draw = function() {
-    this.mapSwitchTimer -= 1 / (66 + (2 / 3))
+    this.mapSwitchTimer -= perSec(1)
     this.particle = new Particle(this.blockOn.name, this.dir)
-    this.doorCooldown -= 1 / (66 + (2 / 3))
-    this.hitCooldown -= 1 / (66 + (2 / 3))
+    this.doorCooldown -= perSec(1)
+    this.hitCooldown -= perSec(1)
     this.eatCooldown.run()
     this.cords.x = Math.floor(this.x / 75) // This regulates it, because you don't start at x-cord 0, you start at x-cord 10
     this.cords.y = Math.floor(this.y / 75) // Same thing as x-cord, but height / 2 is about half of width / 2, so it's 5 instead of 10
@@ -452,7 +452,7 @@ Player.prototype.move = function() {
         this.area = "Windy Wastelands"
 		
         if (!p.has(items.stormedsSword)) { // Once player has defeated Stormed, wind will stop
-            weather.wind.time += (1 / (66 + (2 / 3)))
+            weather.wind.time += (perSec(1))
             weather.wind.x = weather.wind.equation(weather.wind.time % 10)
             weather.wind.y = weather.wind.equation(weather.wind.time % 7)
 
@@ -557,11 +557,11 @@ Player.prototype.move = function() {
     
 
     if (Math.abs(curMap.temperature) > this.resistances.cold) {
-        this.health -= (1 / 66.6667) * (Math.abs(curMap.temperature) - this.resistances.cold)
+        this.health -= perSec(Math.abs(curMap.temperature) - this.resistances.cold)
     }
 
     if (curMap.temperature > this.resistances.heat) {
-        this.health -= (1 / 66.6667) * (curMap.temperature - this.resistances.heat)    
+        this.health -= perSec(curMap.temperature - this.resistances.heat)    
     }
 }
 
