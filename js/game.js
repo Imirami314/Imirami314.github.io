@@ -2059,7 +2059,7 @@ var interactives = [
     }),
 
     // Stoneheart Sanctuary
-    new Rock(stoneheartSanctuary, ctr(18), ctr(14)), // Test rock
+    new Rock(stoneheartSanctuary, ctr(18), ctr(12)), // Test rock
 
     new RockDispenser(stoneheartSanctuary, b(1), b(2), ctr(2), ctr(2)),
 
@@ -2099,10 +2099,38 @@ var interactives = [
     new RockSwitch(stoneheartSanctuary, 18, 12, function() {
         stoneheartSanctuary.switch(20, 12, '~', '!')
         stoneheartSanctuary.switch(20, 14, '~', '!')
+
+        stoneheartSanctuary.switch(23, 12, '~', '!')
+        stoneheartSanctuary.switch(23, 14, '~', '!')
     }, function() {
         stoneheartSanctuary.switch(20, 12, '~', '!')
         stoneheartSanctuary.switch(20, 14, '~', '!')
-    })
+
+        stoneheartSanctuary.switch(23, 12, '~', '!')
+        stoneheartSanctuary.switch(23, 14, '~', '!')
+    }),
+
+    new Toggle(stoneheartSanctuary, 21, 18, function() {
+        stoneheartSanctuary.changeBlock(23, 18, 'S')
+
+        stoneheartSanctuary.changeBlocks([
+            [21, 14], [22, 14],
+            [21, 15], [22, 15],
+            [21, 16], [22, 16],
+            [21, 17], [22, 17],
+        ], 'z')
+    }, function() {
+        stoneheartSanctuary.changeBlock(23, 18, 'z')
+
+        stoneheartSanctuary.changeBlocks([
+            [21, 14], [22, 14],
+            [21, 15], [22, 15],
+            [21, 16], [22, 16],
+            [21, 17], [22, 17],
+        ], '!')
+    }),
+
+    new RaftDispenser(stoneheartSanctuary, b(24), b(18), ctr(23), ctr(18)),
 ]
 
 var topInteractives = [] // Interactives that should be drawn on a higher layer, do not change manually
@@ -2516,8 +2544,8 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = false
-    curMap = stoneheartSanctuary
-    p.goTo(ctr(18), ctr(15))
+    curMap = mainMap
+    p.goTo(ctr(22), ctr(17))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
     p.equipped = [items.aquaLung]
 
