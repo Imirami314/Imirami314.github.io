@@ -52,7 +52,8 @@ Toggle.prototype.draw = function() {
 }
 
 Toggle.prototype.activate = function() {
-    if (!p.inRaft && keys.space && this.toggleCooldown <= 0 && p.cords.x == this.x && p.cords.y == this.y) {
+    if (!p.inRaft && keys.space && !p.spaceActioned && this.toggleCooldown <= 0 && p.cords.x == this.x && p.cords.y == this.y) {
+        p.spaceActioned = true
         playSound("Toggle")
         if (!!this.cameraX && !!this.cameraY) {
             cameraStart(this.cameraX, this.cameraY, 100, "AUTO", {
@@ -118,8 +119,9 @@ MultiToggle.prototype.draw = function () {
 }
 
 MultiToggle.prototype.activate = function () {
-	if (keys.space && this.toggleCooldown <= 0 && p.cords.x == this.x && p.cords.y == this.y) {
-		if (this.toggleNum > this.blocks.length - 1) {
+	if (keys.space && !p.spaceActioned && this.toggleCooldown <= 0 && p.cords.x == this.x && p.cords.y == this.y) {
+		p.spaceActioned = true
+        if (this.toggleNum > this.blocks.length - 1) {
 			this.toggleNum = 0
 		}
 		this.toggleNum ++
@@ -152,7 +154,8 @@ LockToggle.prototype.draw = function() {
 }
 
 LockToggle.prototype.activate = function() {
-    if (keys.space && p.cords.x == this.x && p.cords.y == this.y && !this.locked) {
+    if (keys.space && !p.spaceActioned && p.cords.x == this.x && p.cords.y == this.y && !this.locked) {
+        p.spaceActioned = true
         this.action()
 		
 		this.locked = true
@@ -199,8 +202,8 @@ Breezeway.prototype.update = function() {
 }
 
 Breezeway.prototype.activate = function() {
-    if (keys.space && p.on(this.x, this.y) && this.cooldown <= 0) {
-        
+    if (keys.space && !p.spaceActioned && p.on(this.x, this.y) && this.cooldown <= 0) {
+        p.spaceActioned = true
         setTimeout(() => {
             p.goTo(ctr(this.tpx), ctr(this.tpy))
         }, 1500)
@@ -336,7 +339,9 @@ Raft.prototype.update = function() {
 
 Raft.prototype.activate = function() {
     var playerDist = Math.hypot(this.x - p.x, this.y - p.y)
-    if (keys.space && playerDist <= 75 && this.enterRaftCooldown <= 0) {
+    if (keys.space && !p.spaceActioned && playerDist <= 75 && this.enterRaftCooldown <= 0) {
+        p.spaceActioned = true
+        
         if (!this.hasPlayer && !p.inRaft) {
             this.hasPlayer = true
             p.inRaft = true
@@ -462,7 +467,8 @@ RaftDispenser.prototype.activate = function() {
         p.cords.y == this.cords.y && 
         this.cooldown <= 0) {
 		
-		if (keys.space) {
+		if (keys.space && !p.spaceActioned) {
+            p.spaceActioned = true
 			if ((this.x - (this.dsx - 37.5) == 0) || (this.y - (this.dsy - 37.5) == 0)) {
 				this.enableAnimation = true
 			}
@@ -497,6 +503,7 @@ class Rock {
         this.setPosOffset = false
         this.posOffset = {}
 
+        this.isGrabbed = true
         this.pushDir = ''
         this.pushSpeedPerSec = 150
         this.rotate = 20
@@ -519,7 +526,9 @@ class Rock {
         this.checkDissolve()
         this.playerDist = entityDistance(this, p)
         if (this.playerDist < 100 && !this.isDissolved()) {
-            if (keys.space) {
+            if (keys.space && (!p.spaceActioned || this.isGrabbed)) {
+                p.spaceActioned = true
+                this.isGrabbed = true
                 p.canMove = false
                 p.dir = this.getPushDir()
                 switch (this.getPushDir()) {
@@ -575,6 +584,7 @@ class Rock {
                 }
             } else {
                 p.canMove = true
+                this.isGrabbed = false
             }
             
         }
@@ -782,7 +792,8 @@ class RockDispenser {
             p.cords.y == this.cords.y && 
             this.cooldown <= 0) {
             
-            if (keys.space) {
+            if (keys.space && !p.spaceActioned) {
+                p.spaceActioned = true
                 if ((this.x - (this.dsx - 37.5) == 0) || (this.y - (this.dsy - 37.5) == 0)) {
                     this.enableAnimation = true
                 }

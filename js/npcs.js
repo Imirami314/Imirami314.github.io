@@ -218,7 +218,9 @@ class NPC extends Entity {
         
         ctx.restore()
 
-        if (keys.space && Math.hypot((this.x - p.x), (this.y - p.y)) <= 100 && this.lineNum < 0 && this.textCooldown <= 0 && CUR_SHOP_MENU == 0) {
+        if (keys.space && !p.spaceActioned && !p.isTalking() && Math.hypot((this.x - p.x), (this.y - p.y)) <= 100 && this.lineNum < 0 && this.textCooldown <= 0 && CUR_SHOP_MENU == 0) {
+            p.spaceActioned = true
+
             this.lineNum = 0
             this.textCooldown = 1
             this.dirSave = this.dir
@@ -305,6 +307,7 @@ class NPC extends Entity {
                     }
                     
                     if (keys.space) {
+
                         if (this.lineNum + 1 == this.lines.length) {
                             if (this.actionLine == "after") {
                                 this.action(p)
@@ -313,7 +316,7 @@ class NPC extends Entity {
                             if (this.remoteSpeak) {
                                 p.canMove = true
                             }
-                           // alert("true")
+
                             this.firstInteraction = false
                             this.lineNum = -1
                             this.actionFinished = false
@@ -323,10 +326,6 @@ class NPC extends Entity {
                         } else {
                             this.lineNum ++
                             this.nextIndicatorY = 0
-                            if (curMap == mainMap) {
-                                // saveGame()
-                                // alert('game saved')
-                            }
                         }
                         this.textCooldown = 1
                         this.nextIndicator = false

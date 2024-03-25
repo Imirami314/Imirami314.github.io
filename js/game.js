@@ -2060,6 +2060,7 @@ var interactives = [
 
     // Stoneheart Sanctuary
     new Rock(stoneheartSanctuary, ctr(18), ctr(12)), // Test rock
+    new Rock(stoneheartSanctuary, ctr(21), ctr(15)), // Test rock
 
     new RockDispenser(stoneheartSanctuary, b(1), b(2), ctr(2), ctr(2)),
 
@@ -2110,27 +2111,13 @@ var interactives = [
         stoneheartSanctuary.switch(23, 14, '~', '!')
     }),
 
-    new Toggle(stoneheartSanctuary, 21, 18, function() {
-        stoneheartSanctuary.changeBlock(23, 18, 'S')
+    new RaftDispenser(stoneheartSanctuary, b(21), b(18), ctr(21), ctr(17)),
 
-        stoneheartSanctuary.changeBlocks([
-            [21, 14], [22, 14],
-            [21, 15], [22, 15],
-            [21, 16], [22, 16],
-            [21, 17], [22, 17],
-        ], 'z')
+    new RockSwitch(stoneheartSanctuary, 22, 16, function() {
+        curMap.switch(21, 17, '!', '~')
     }, function() {
-        stoneheartSanctuary.changeBlock(23, 18, 'z')
-
-        stoneheartSanctuary.changeBlocks([
-            [21, 14], [22, 14],
-            [21, 15], [22, 15],
-            [21, 16], [22, 16],
-            [21, 17], [22, 17],
-        ], '!')
-    }),
-
-    new RaftDispenser(stoneheartSanctuary, b(24), b(18), ctr(23), ctr(18)),
+        curMap.switch(21, 17, '!', '~')
+    })
 ]
 
 var topInteractives = [] // Interactives that should be drawn on a higher layer, do not change manually
@@ -2543,9 +2530,9 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = false
-    curMap = mainMap
-    p.goTo(ctr(22), ctr(17))
+    dev = true
+    curMap = stoneheartSanctuary
+    p.goTo(ctr(22), ctr(18))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
     p.equipped = [items.aquaLung]
 
@@ -3783,8 +3770,6 @@ var gameInterval = setInterval(function() {
             }
         }
     }
-
-    requestAnimationFrame(game)
 }, 15)
 
 // game()

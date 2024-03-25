@@ -101,6 +101,7 @@ function Player(x, y, npcs) {
     this.alertOpacity = 0
     this.curAlert = ""
     
+    this.spaceActioned = false // Has space already been used for an action
 }
 
 Player.prototype = Object.create(Entity.prototype)
@@ -113,6 +114,12 @@ Player.prototype.draw = function() {
     this.eatCooldown.run()
     this.cords.x = Math.floor(this.x / 75) // This regulates it, because you don't start at x-cord 0, you start at x-cord 10
     this.cords.y = Math.floor(this.y / 75) // Same thing as x-cord, but height / 2 is about half of width / 2, so it's 5 instead of 10
+
+    if (!keys.space) {
+        this.spaceActioned = false
+    } else {
+        console.log(this.spaceActioned)
+    }
 
     // Foods in this.curEating steadily give health
     for (var i in this.curEating) {
@@ -1271,6 +1278,17 @@ Player.prototype.nearNPC = function () {
         }
     }
     return false
+}
+
+Player.prototype.isTalking = function() {
+    let isPlayerTalking = false
+    npcs.forEach((npc) => {
+        if (npc.lineNum != -1) {
+            isPlayerTalking = true
+        }
+    })
+
+    return isPlayerTalking
 }
 
 Player.prototype.nearSign = function () {
