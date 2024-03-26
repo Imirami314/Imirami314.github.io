@@ -48,6 +48,9 @@ var alerts = [
 	new GameAlert(24, 8, ["This mysterious substance will come with a curse,\nThe player will perish, the raft alone may traverse."], cryoUnderground, "SIGN"),
 
     // Drowned Room
+
+    // Stoneheart Sanctuary
+    new GameAlert(25, 12, ["If you ever get stuck, unsure what to do,\nMaybe one's not enough, a greater number will do."], stoneheartSanctuary, "SIGN"),
 ]
 
 var teleports = [
@@ -2111,13 +2114,19 @@ var interactives = [
         stoneheartSanctuary.switch(23, 14, '~', '!')
     }),
 
-    new RaftDispenser(stoneheartSanctuary, b(21), b(18), ctr(21), ctr(17)),
+    new RaftDispenser(stoneheartSanctuary, b(21), b(18), ctr(22), ctr(18)),
 
     new RockSwitch(stoneheartSanctuary, 22, 16, function() {
         curMap.switch(21, 17, '!', '~')
     }, function() {
         curMap.switch(21, 17, '!', '~')
-    })
+    }),
+
+    new RockSwitch(stoneheartSanctuary, 25, 13, function() {
+        curMap.changeBlock(26, 14, '(')
+    }, function() {
+        curMap.changeBlock(26, 14, ')')
+    }),
 ]
 
 var topInteractives = [] // Interactives that should be drawn on a higher layer, do not change manually

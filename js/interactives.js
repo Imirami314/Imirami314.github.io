@@ -417,15 +417,15 @@ RaftDispenser.prototype.draw = function() {
     this.cords.y = Math.floor(this.y / 75)
     // Dispenser thing component
     ctx.fillStyle = "rgb(205, 125, 50)"
-    ctx.fillRect(this.x, this.y, 75, 75)
+    ctx.fillRect(this.x + 5, this.y + 5, 65, 65)
 	
     // Raft component
     ctx.fillStyle = "rgb(75, 55, 25)"
-    ctx.fillRect(this.x + 5 + this.animateX, this.y + 5 + this.animateY, 65, 65 - (this.cooldown * 65))
+    ctx.fillRect(this.x + 10 + this.animateX, this.y + 10 + this.animateY, 55, 55 - (this.cooldown * 55))
 
 	// Dispenser lid
 	ctx.fillStyle = "rgba(205, 125, 50, 0.5)"
-    ctx.fillRect(this.x, this.y, 75, 75)
+    ctx.fillRect(this.x + 3, this.y + 3, 69, 69)
 
 	
 	if (this.showAlert) {
@@ -742,15 +742,15 @@ class RockDispenser {
         this.cords.y = Math.floor(this.y / 75)
         // Dispenser thing component
         ctx.fillStyle = "rgb(100, 100, 100)"
-        ctx.fillRect(this.x, this.y, 75, 75)
+        ctx.fillRect(this.x + 5, this.y + 5, 65, 65)
         
         // Raft component
         ctx.fillStyle = "rgb(200, 200, 200)"
-        ctx.fillRect(this.x + 5 + this.animateX, this.y + 5 + this.animateY, 65, 65 - (this.cooldown * 65))
+        ctx.fillRect(this.x + 10 + this.animateX, this.y + 10 + this.animateY, 55, 55 - (this.cooldown * 55))
 
         // Dispenser lid
         ctx.fillStyle = "rgba(50, 50, 50, 0.5)"
-        ctx.fillRect(this.x, this.y, 75, 75)
+        ctx.fillRect(this.x + 3, this.y + 3, 69, 69)
 
         
         if (this.showAlert) {
