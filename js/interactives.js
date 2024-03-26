@@ -491,7 +491,7 @@ RaftDispenser.prototype.activate = function() {
 
 class Rock {
     static MAX_SIZE = 100
-    static DISSOLVE_SPEED = 175 // Per sec
+    static DISSOLVE_SPEED = 225 // Per sec
     constructor(map, x, y) {
         this.map = map
         this.spawnX = x
