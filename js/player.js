@@ -117,8 +117,6 @@ Player.prototype.draw = function() {
 
     if (!keys.space) {
         this.spaceActioned = false
-    } else {
-        console.log(this.spaceActioned)
     }
 
     // Foods in this.curEating steadily give health

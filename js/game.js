@@ -51,6 +51,7 @@ var alerts = [
 
     // Stoneheart Sanctuary
     new GameAlert(25, 12, ["If you ever get stuck, unsure what to do,\nMaybe one's not enough, a greater number will do."], stoneheartSanctuary, "SIGN"),
+    new GameAlert(30, 11, ["WARNING!\nRock Switches may be rigged!"], stoneheartSanctuary, "SIGN"),
 ]
 
 var teleports = [
@@ -1871,22 +1872,11 @@ var interactives = [
 
     // Abandoned Channel
     new LockToggle(abandonedChannel, 1, 16, function () {
-       // cascade.lines = ["Uh oh.", "Baba"]
-       // cascade.remote = true
-        
-        
+        cascade.clearAction()
 
-        cascade.action = function () {} // clears action
-        
-        // cameraStart(44 * 75, 8 * 75, 100, "NPC", {
-        //     lineStop: 1 // finishes when cascade stops talking
-        // })
-
-        
         curMap.changeBlock(6, 16, '~')
         curMap.changeBlock(7, 16, '~')
         curMap.changeBlock(1, 17, '~')
-
     }),
 
     new LockToggle(abandonedChannel, 22, 12, function () {
@@ -2127,6 +2117,39 @@ var interactives = [
     }, function() {
         curMap.changeBlock(26, 14, ')')
     }),
+
+    new RockDispenser(stoneheartSanctuary, b(31), b(12), ctr(31), ctr(11)),
+
+    // Bait (troll) switches
+    new RockSwitch(stoneheartSanctuary, 34, 13, function() {
+        stoneheartSanctuary.changeBlocks([[35, 12], [36, 12], [35, 13], [34, 14], [35, 15], [34, 16], [34, 17], [35, 17]], '!')
+    }, function() {
+        stoneheartSanctuary.changeBlocks([[35, 12], [36, 12], [35, 13], [34, 14], [35, 15], [34, 16], [34, 17], [35, 17]], '_')
+    }),
+
+    new RockSwitch(stoneheartSanctuary, 36, 15, function() {
+        stoneheartSanctuary.changeBlocks([[35, 12], [36, 12], [35, 13], [34, 14], [35, 15], [34, 16], [34, 17], [35, 17]], '!')
+    }, function() {
+        stoneheartSanctuary.changeBlocks([[35, 12], [36, 12], [35, 13], [34, 14], [35, 15], [34, 16], [34, 17], [35, 17]], '_')
+    }),
+
+    new RockSwitch(stoneheartSanctuary, 35, 16, function() {
+        stoneheartSanctuary.changeBlocks([[35, 12], [36, 12], [35, 13], [34, 14], [35, 15], [34, 16], [34, 17], [35, 17]], '!')
+    }, function() {
+        stoneheartSanctuary.changeBlocks([[35, 12], [36, 12], [35, 13], [34, 14], [35, 15], [34, 16], [34, 17], [35, 17]], '_')
+    }),
+
+    // Back to normal (lol)
+    new RaftDispenser(stoneheartSanctuary, b(32), b(19), ctr(33), ctr(19)),
+
+    new RockSwitch(stoneheartSanctuary, 35, 19, function() {
+        stoneheartSanctuary.changeBlock(36, 19, '(')
+    }, function() {
+        stoneheartSanctuary.changeBlock(36, 19, ')')
+    }),
+
+    new Breezeway(stoneheartSanctuary, 37, 11, 37, 19),
+    new Breezeway(stoneheartSanctuary, 37, 19, 37, 11),
 ]
 
 var topInteractives = [] // Interactives that should be drawn on a higher layer, do not change manually
