@@ -154,11 +154,10 @@ var bossDoors = [
 		enterFunction: function(p) {
 			saveGame()
 			
-			// p.x = stormedRoom.enterX
-			// p.y = stormedRoom.enterY
-			// curMap = stormedRoom
-			// cutsceneFrame = 0
-			// scene = "STORMED BOSS CUTSCENE"
+			p.goTo(drownedRoom.enterX, drownedRoom.enterY)
+			curMap = drownedRoom
+			cutsceneFrame = 0
+			// scene = "DROWNED BOSS CUTSCENE"
 		}
 	}
 ]
@@ -2563,8 +2562,8 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = true
-    curMap = stoneheartSanctuary
-    p.goTo(ctr(22), ctr(18))
+    curMap = mainMap
+    p.goTo(ctr(211), ctr(20))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
     p.equipped = [items.aquaLung]
 

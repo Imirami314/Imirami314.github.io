@@ -281,7 +281,7 @@ class Darkened extends Boss {
                     // this.move((p.x - this.x) / (33 + (1 / 3)), (p.y - this.y) / 100)
                     this.spearShift = 100
                     this.stuck = this.isStuck(this.speed * (p.x - this.x) * 5 / Math.abs(p.x - this.x), this.speed * (p.y - this.y) * 5 / Math.abs(p.y - this.y))
-                    this.move(this.speed * (p.x - this.x) * 5 / Math.abs(p.x - this.x), this.speed * (p.y - this.y) * 5 / Math.abs(p.y - this.y))
+                    this.move(this.speed * (p.x - this.x) * 5 / Math.abs(p.x - this.x), this.speed * (p.y - this.y) * 5 / Math.abs(p.y - this.y), true)
                     if (this.playerDist <= 225) {
                         p.getHit(3)
                         this.tpTimer = 3
@@ -612,7 +612,7 @@ class Drowned extends Boss {
         this.name = "Drowned"
         this.damage = 10
         this.maxHealth = 900
-        this.health = 400 // Default 900
+        this.health = 900 // Default 900
         this.animatedHealth = 900
 
         this.speed = 1.5
