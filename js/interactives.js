@@ -41,7 +41,7 @@ function Toggle(map, x, y, action1, action2, cameraX, cameraY) {
 Toggle.prototype.draw = function() {
     this.cords.x = this.x // creating coords for consistency on finding toggles
     this.cords.y = this.y
-    this.toggleCooldown -= 1 / (66 + (2 / 3))
+    this.toggleCooldown -= perSec(1)
     if (getBlockInfoByCords(this.x * 75, this.y * 75).id != 'I' && getBlockInfoByCords(this.x * 75, this.y * 75).id != 'i') {
         if (this.toggleState == 2) {
             ellipse(ctr(this.x), ctr(this.y), 55, 55, "rgb(100, 10, 175)")
@@ -108,7 +108,7 @@ MultiToggle.prototype.draw = function () {
     this.cords.x = this.x // creating coords for consistency on finding toggles
     this.cords.y = this.y
 
-	this.toggleCooldown -= 1 / (66 + (2 / 3))
+	this.toggleCooldown -= perSec(1)
 	ellipse(ctr(this.x), ctr(this.y), 55, 55, "rgb(66, 135, 245)")
 	
 	if (this.toggleNum != 0 && this.toggleNum != this.blocks.length) {
@@ -191,14 +191,14 @@ Breezeway.prototype.draw = function() {
     this.cords.x = this.x
     this.cords.y = this.y
 
-    this.centerRotation += Math.PI / 66.67
+    this.centerRotation += perSec(Math.PI)
 
     ctx.drawImage(images.breezewayBase, this.x * 75, this.y * 75, 75, 75)
     ctx.drawImage(images.breezewayCenter, this.x * 75, this.y * 75, 75, 75)
 }
 
 Breezeway.prototype.update = function() {
-    this.cooldown -= 1 / 66.67
+    this.cooldown -= perSec(1)
 }
 
 Breezeway.prototype.activate = function() {
@@ -323,7 +323,7 @@ Raft.prototype.move = function() {
 }
 
 Raft.prototype.update = function() {
-    this.enterRaftCooldown -= 1 / 66.67
+    this.enterRaftCooldown -= perSec(1)
     
     this.draw()
     this.move()
@@ -441,7 +441,7 @@ RaftDispenser.prototype.draw = function() {
 
 RaftDispenser.prototype.update = function() {
 	if (this.cooldown > 0) {
-    	this.cooldown -= 1 / (66 + (2 / 3))
+    	this.cooldown -= perSec(1)
 	}	
     this.cords.x = Math.floor(this.x / 75)
     this.cords.y = Math.floor(this.y / 75)
@@ -766,7 +766,7 @@ class RockDispenser {
 
     update() {
         if (this.cooldown > 0) {
-            this.cooldown -= 1 / (66 + (2 / 3))
+            this.cooldown -= perSec(1)
         }	
         this.cords.x = Math.floor(this.x / 75)
         this.cords.y = Math.floor(this.y / 75)

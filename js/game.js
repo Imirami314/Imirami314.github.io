@@ -206,7 +206,7 @@ GameAlert.prototype.drawMessage = function () {
     if (curMap == this.map) { 
 
         if (this.lineNum == 0 && !this.showLines) {
-            this.finishCooldown -= 1 / (66 + 2/3)
+            this.finishCooldown -= perSec(1)
         }
 		
         if (this.showLines && this.lineNum < this.lines.length) {
@@ -2657,7 +2657,7 @@ var gameInterval = setInterval(function() {
         ctx.fillRect(0, 0, width, height)
     
         for (var i in eventDelays) {
-            eventDelays[i].timer -= 1 / (66 + 2 / 3)
+            eventDelays[i].timer -= perSec(1)
             var e = eventDelays[i]
             if (e.timer > 0) {
                 e.f1()
@@ -3801,7 +3801,7 @@ var gameInterval = setInterval(function() {
             }
         }
     }
-}, 15)
+}, 1000 / 60)
 
 // game()
 // })();

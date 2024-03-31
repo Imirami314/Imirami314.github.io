@@ -793,7 +793,7 @@ class Drowned extends Boss {
         }
     
         if (this.preppingAttack) { // Slowly turn to indicate charging up attack
-            this.bodyAngle += (Math.PI / 66.67) / 5
+            this.bodyAngle += perSec(Math.PI) / 5
         }
     
         if (this.hitting && !this.stunned) { // Attack animation
@@ -802,7 +802,7 @@ class Drowned extends Boss {
                 if (Math.abs(this.ringSize / 2 - this.playerDist) <= 10) {
                     p.getHit(this.ringDamage)
                 }
-                this.ringOpacity -= 2 / 66.67
+                this.ringOpacity -= perSec(2)
             } else {
                 this.hitting = false
                 this.ringSize = 10
@@ -877,7 +877,7 @@ class Drowned extends Boss {
             }
     
             if (this.preppingAttack) { // Slowly turn to indicate charging up attack
-                this.bodyAngle += (Math.PI / 66.67) / 5
+                this.bodyAngle += perSec(1 / 5)
             }
         
             if (this.hitting && !this.stunned) { // Attack animation
@@ -886,7 +886,7 @@ class Drowned extends Boss {
                     if (Math.abs(this.ringSize / 2 - this.playerDist) <= 10) {
                         p.getHit(this.ringDamage)
                     }
-                    this.ringOpacity -= 2 / 66.67
+                    this.ringOpacity -= perSec(2)
                 } else {
                     this.hitting = false
                     this.ringSize = 10
@@ -1027,7 +1027,7 @@ class Splint extends Enemy {
 
         if (this.hitCooldown > 0) { // Re-adjust weapon position after a hit
             if (this.weaponPos < 0) {
-                this.weaponPos += Math.PI / 66
+                this.weaponPos += perSec(Math.PI)
             } else {
                 this.weaponPos = 0
             }
@@ -1150,7 +1150,7 @@ class Gale extends Enemy {
 
         if (this.hitCooldown > 0) { // Re-adjust weapon position after a hit
             if (this.weaponPos < 0) {
-                this.weaponPos += Math.PI / 66
+                this.weaponPos += perSec(Math.PI)
             } else {
                 this.weaponPos = 0
             }
@@ -1221,7 +1221,7 @@ class Patroller extends Enemy {
         this.shotCooldown.run()
 
         if (!this.canSeePlayer()) {
-            this.bodyAngle += Math.PI / 66.67
+            this.bodyAngle += perSec(Math.PI)
         } else {
             if (this.shotCooldown.ended()) {
                 this.shoot()

@@ -92,7 +92,7 @@ Screen.update = function() {
                 if (this.shakeTime < e.duration) {
                     this.shakeOffset.x = e.intensity * (Math.random() < 0.5 ? -1 : 1) // Returns either -1 or 1
                     this.shakeOffset.y = e.intensity * (Math.random() < 0.5 ? -1 : 1)
-                    this.shakeTime += 1 / 66.67
+                    this.shakeTime += perSec(1)
                 } else {
                     this.stopEffect("SHAKE")
                 }

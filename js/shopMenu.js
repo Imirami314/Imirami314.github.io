@@ -13,7 +13,7 @@ function ShopMenu(shopList) {
     ctx.roundRect(width / 8, height / 8, width * 3 / 4, height * 3 / 4, 10)
     ctx.fill()
 
-    PURCHASE_COOLDOWN -= 1 / (66 + (2 / 3))
+    PURCHASE_COOLDOWN -= perSec(1)
     for (var i in shopList) {
         var shopItem = shopList[i].item
 

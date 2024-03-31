@@ -369,7 +369,7 @@ class Cooldown {
     }
 
     run() {
-        this.time -= 1 / 66.67
+        this.time -= perSec(1)
     }
 
     ended() {

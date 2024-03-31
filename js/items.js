@@ -196,10 +196,20 @@ var items = {
                 "See ya later."
             ]
 
-            p.giveItem(items.steelSword, true)
+            smith.action = function() {
+                p.giveItem(items.steelSword, true)
+
+                smith.lines = [
+                    "Hope you enjoy that sword!",
+                    "It's not great, but it should do."
+                ]
+                smith.clearAction()
+            }
+
+            smith.actionLine = "after"
             
             smith.lineNum = 0
-            smith.talk(p)
+            // smith.talk(p)
 
             for (var i in p.inventory) {
                 var item = p.inventory[i]

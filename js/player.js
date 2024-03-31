@@ -122,7 +122,7 @@ Player.prototype.draw = function() {
     // Foods in this.curEating steadily give health
     for (var i in this.curEating) {
         var f = this.curEating[i]
-        var healthInc = (f.health * (1 / f.secs)) / 66.67
+        var healthInc = perSec(f.health * (1 / f.secs))
         this.health += healthInc
         f.healthAdded += healthInc
         if (f.healthAdded >= f.health) {
@@ -649,10 +649,10 @@ Player.prototype.collide = function() {
 
         // Hurt player when standing on harmful block
         if (!this.inRaft) {
-            this.health -= this.blockOn.dps / (66 + (2 / 3))
+            this.health -= perSec(this.blockOn.dps)
         } else {
             if (this.blockOn.id != "!") {
-                this.health -= this.blockOn.dps / (66 + (2 / 3))
+                this.health -= perSec(this.blockOn.dps)
             }
         }
     }
