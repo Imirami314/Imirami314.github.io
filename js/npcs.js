@@ -37,6 +37,9 @@ class NPC extends Entity {
             skinColor: "rgb(240, 181, 122)"
         } // Default properties
 
+        this.speechBubbleIndex = 0
+        this.speechBubbleAnimation = ["", ".", "..", "..."]
+
         this.action = action
         this.actionLine = actionLine
         this.actionFinished = false
@@ -94,8 +97,12 @@ class NPC extends Entity {
     
         if (!dev) {
             if (!cameraMoving) {
-                this.textCooldown -= 1 / (66 + (2 / 3))
-            }
+                if (this.lines[this.lineNum] != "...") {
+                    this.textCooldown -= 1 / (66 + (2 / 3))
+                } else {
+                    this.textCooldown -= 1 / 100
+                }
+            } 
             
         } else {
             this.textCooldown -= 1 / 20	
@@ -340,10 +347,16 @@ class NPC extends Entity {
                         ctx.fillStyle = "rgb(0, 0, 0)"
                         ctx.font = "15px serif"
                         ctx.textAlign = 'left'
-                        ctx.fillText(this.name, width / 4 + 10, height * 3 / 4 + 5)
+                        
+                        if (this.lines[this.lineNum] != "...") {
+                            ctx.fillText(this.name, width / 4 + 10, height * 3 / 4 + 5)
+                            this.speechBubbleIndex = 0
+                        }
                         ctx.textBaseline = 'middle'
-    
-                        // Small or big text
+                        
+
+                        
+                        // Special text cases
                         ctx.textAlign = 'center'
                         if (this.lines[this.lineNum].charAt(0) == "`") {
                             ctx.font = "15px serif"
@@ -352,6 +365,16 @@ class NPC extends Entity {
                             ctx.font = "20px serif"
                             ctx.fillStyle = "rgb(150, 0, 0)"
                             fillTextMultiLine(this.lines[this.lineNum].substring(1,(this.lines[this.lineNum]).length), width / 2, (height * 3 / 4) + 55)
+                        } else if (this.lines[this.lineNum] == "...") {
+                            ctx.textAlign = 'left'
+                            ctx.font = "40px serif"
+                            this.speechBubbleIndex += 0.08
+                            if (this.speechBubbleIndex >= 4) {
+                                this.speechBubbleIndex = 0
+                            }
+                            //console.log(Math.floor(this.speechBubbleIndex))
+                            fillTextMultiLine(this.speechBubbleAnimation[Math.floor(this.speechBubbleIndex)], width / 2 - 15, (height * 3 / 4) + 55)
+                            ctx.textAlign = 'center'
                         } else {
                             ctx.fillStyle = "rgb(0, 0, 0)"
                             ctx.font = "20px serif"
