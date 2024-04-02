@@ -34,7 +34,6 @@ function Player(x, y, npcs) {
     this.moving = false
 
     this.curEating = []
-    // this.eatCooldown = 0.5
     this.eatCooldown = new Cooldown(0.5)
 
     this.inventoryDisplay = false
@@ -85,6 +84,7 @@ function Player(x, y, npcs) {
         cold: 0, // Default 0
         heat: 0
     }
+    this.auraTimer = null
 
     this.can = {
         goUnderWater: false,
@@ -319,6 +319,7 @@ Player.prototype.draw = function() {
     if (mouseClicked && !keys.e && !this.mapOn && !this.hitting) {
         try {
             this.weapon.use(this)
+            this.eatCooldown.reset()
         } catch(error) {
             
         }
@@ -347,9 +348,6 @@ Player.prototype.HUD = function() {
     ctx.fillStyle = "rgb(255, 255, 255)"
     ctx.font = "20px serif"
     ctx.fillText("Trills: " + this.trills, 90, 25)
-
-    // ctx.fillStyle = "rgb(0, 0, 0)"
-    // ctx.fillRect(1285, 530, 100, 100)
 
     // Black backdrop for border
     ctx.fillStyle = "rgb(0, 0, 0)"
@@ -384,8 +382,7 @@ Player.prototype.HUD = function() {
         ctx.fillStyle = "rgb(255, 255, 255)"
         ctx.fillText("?", 1260, 565)
     }
-    
-    //
+
     for (var i = 0; i < monsters.length; i ++) {
         if (curMap.name == monsters[i].map && !monsters[i].dead) {
             if (monsters[i].playerDist < 750 && monsters[i].agro) {
@@ -411,6 +408,26 @@ Player.prototype.HUD = function() {
         ctx.restore()
     }
 
+    // Aura effects/resistances
+    if (this.auraTimer != null) {
+        this.auraTimer -= perSec(1)
+
+        if (this.auraTimer >= 0) {
+            ctx.fillStyle = "rgb(100, 100, 100)"
+            ctx.roundRect(width - 150, 100, 100, 50, 10)
+            ctx.fill()
+            ctx.fillStyle = "rgb(255, 255, 255)"
+            ctx.font = "20px serif"
+            ctx.textAlign = "center"
+
+            if (Math.floor(this.auraTimer) % 60 >= 10) {
+                ctx.fillText(`${Math.floor(this.auraTimer / 60)}:${Math.floor(this.auraTimer) % 60}`, width - 100, 130.5)
+            } else {
+                ctx.fillText(`${Math.floor(this.auraTimer / 60)}:0${Math.floor(this.auraTimer) % 60}`, width - 100, 130.5)
+            }
+        }
+    }
+
     // Special
     if (this.droptonDonations > 0 && this.droptonDonations < 250) {
         ctx.fillStyle = "rgb(50, 200, 200)"
@@ -419,7 +436,7 @@ Player.prototype.HUD = function() {
         ctx.fillStyle = "rgb(255, 255, 255)"
         ctx.font = "20px serif"
         ctx.textAlign = "center"
-        ctx.fillText(p.droptonDonations + "/250", 100, 155.5)
+        ctx.fillText(this.droptonDonations + "/250", 100, 155.5)
     }
 }
 

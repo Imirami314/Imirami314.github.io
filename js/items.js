@@ -229,10 +229,16 @@ var items = {
         ctx.drawImage(images.auraOfWarmth, x - 20, y - 20, 40, 40)
     },
     function() {
-        p.equip(this)
-
-        p.speedMultiplier = 0.75
+        p.speedMultiplier *= 0.75
         p.resistances.cold = 1
+
+        p.auraTimer = 600
+        setTimeout(() => {
+            p.auraTimer = null
+            p.speedMultiplier *= 4 / 3
+        }, 600 * 1000)
+
+        p.removeItem(this)
     }, "A mysterious item that grants you a moderate resistance to cold places, but at the cost of some of your speed.", "MISC"),
 	
 	shovel: new Item("Shovel", 0,
