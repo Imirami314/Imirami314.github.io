@@ -128,7 +128,7 @@ class Darkened extends Boss {
 
         this.spearShift = 0
 
-        this.phase = 1 // Default 1
+        this.phase = 2 // Default 1
         this.tpHitCount = 0
         this.tping = false
 
@@ -163,20 +163,10 @@ class Darkened extends Boss {
         }
         
         this.tpTimer -= perSec(1)
-        // this.cords.x = Math.floor(this.x / 75)
-        // this.cords.y = Math.floor(this.y / 75)
-        // this.pdx = p.x - this.x
-        // this.pdy = p.y - this.y
-        // this.playerDist = Math.hypot((p.x - this.x), (p.y - this.y))
-        // this.playerAngle = Math.atan2((p.y - this.y), (p.x - this.x)) + (Math.PI) / 2 // Gives angle direction of player
-        
-        this.spikeX = this.x + Math.cos(this.playerAngle - Math.PI / 3.3) * 112
-        this.spikeY = this.y + Math.sin(this.playerAngle - Math.PI / 3.3) * 112
+
+        this.spikeX = this.x + Math.cos(this.playerAngle - Math.PI / 3.3 + Math.PI / 2) * 112
+        this.spikeY = this.y + Math.sin(this.playerAngle - Math.PI / 3.3 + Math.PI / 2) * 112
         this.playerWandAngle = Math.atan2((p.y - this.spikeY), (p.x - this.spikeX))
-    
-        // this.move(this.speed * (p.x - this.x) / Math.abs(p.x - this.x), 0)
-        // this.move(0, this.speed * (p.y - this.y) / Math.abs(p.y - this.y))
-        
         
         if (this.map == curMap.name) {
             ctx.save()

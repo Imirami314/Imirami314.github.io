@@ -2577,8 +2577,8 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = true
-    curMap = stoneheartSanctuary
-    p.goTo(ctr(20), ctr(20))
+    curMap = darkenedRoom
+    p.goTo(ctr(15), ctr(15))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
     p.equipped = [items.aquaLung]
 
