@@ -935,15 +935,15 @@ var fum = new NPC(ctr(37), ctr(2), "Fum", galeCave, "D", [
 ], "hi")
 
 var muhammadShop = [
-    {item: items.auraOfWarmth, cost: 12, amount: 2}
+    {item: items.auraOfWarmth, cost: 25, amount: 2},
+    {item: food.apple(), cost: 10, amount: 5},
 ]
 
 var shopkeeperMuhammad = new NPC(58 * 75, ctr(33), "Shopkeeper Muhammad", galeCave, "L", [
     "Hello!",
-    "Would you like to purchase some auras?\nWe use all-natural ingredients.",
-    "By the way, if you're ever short on money, try killing\nsome Splints, monsters notorious for stealing.",
-    "If I remember correctly, there used to be plenty\nover at the Crooked Coast, south of Chard Town.",
-    "I don't know if they are still there, but\nit's worth checking out."
+    "Would you like to buy something? I sell food and auras,\nin case you need to deal with extreme temperatures.",
+    "You could probably get better prices at some other aura shop, though.",
+    "`ugh, why did I say that! Not a good business strategy!"
 ], "hi", function() {
     ShopMenu.open(muhammadShop)
 }, "after")
