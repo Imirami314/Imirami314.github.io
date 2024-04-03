@@ -35,6 +35,7 @@ function ShopMenu(shopList) {
             ctx.font = "20px serif"
             ctx.textAlign = "center"
             ctx.fillText("Cost: " + shopList[i].cost, width / 8 + i * 200 + 100, height / 8 + 175)
+            ctx.fillText("In stock: " + shopList[i].amount, width / 8 + i * 200 + 100, height / 8 + 225)
 
             // Bottom bar and text
             ctx.fillStyle = "rgb(90, 90, 90)"

@@ -755,6 +755,19 @@ var blanche = new NPC(ctr(180), ctr(19), "Blanche", mainMap, "D", [
     addMission(blancheAndBianca)
 }, "after")
 
+var frioShop = [
+    {item: food.cookie(), cost: 15, amount: 6},
+    {item: food.glaciaPie(), cost: 45, amount: 2},
+]
+
+var frio = new NPC(ctr(4), ctr(2), "Frio", friosFoodFrenzy, "D", [
+    "Hello, and welcome to Frio's Food Frenzy!",
+    "I'm just a LITTLE bit short on stock, so\nthere's not as many options as usual.",
+    "Nevertheless, here's what we have:",
+], "", function() {
+    ShopMenu.open(frioShop)
+}, "after")
+
 var piren = new NPC(ctr(192), ctr(33), "Piren", mainMap, 'L', [
     "Well hello there fellow Glacia resident!",
     "I'm glad somebody came over to talk to me.\nMy house is not in a great location for social interactions.",

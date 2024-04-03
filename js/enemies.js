@@ -1388,6 +1388,9 @@ const monsters = [
     new Splint("Main Map", ctr(153), ctr(64)),
     new Splint("Main Map", ctr(147), ctr(63)),
     new Splint("Main Map", ctr(171), ctr(56)),
+    new Splint("Main Map", ctr(224), ctr(46)),
+    new Splint("Main Map", ctr(216), ctr(48)),
+    new Splint("Main Map", ctr(215), ctr(50)),
 
     new Gale("Main Map", ctr(169), ctr(20)),
 

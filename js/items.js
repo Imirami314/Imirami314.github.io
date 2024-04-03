@@ -398,4 +398,7 @@ var food = {
     cake: function() {
         return new Food("Cake", "", 10, 120)
     },
+    glaciaPie: function() {
+        return new Food("Glacia Pie", "", 10, 10)
+    },
 }
