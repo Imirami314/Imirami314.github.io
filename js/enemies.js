@@ -958,21 +958,38 @@ class Splint extends Enemy {
     }
 
     draw() {
+        if (scene == "GAME") {
+            if (this.agro && this.playerDist >= 90 && !this.hitting) {
+                // this.move(Math.cos(this.playerAngle) * 2, Math.sin(this.playerAngle) * 2)
+                //this.updatePath()
+                this.movePathToPlayer()
+            }
 
-        if (this.agro && this.playerDist >= 90 && !this.hitting) {
-            // this.move(Math.cos(this.playerAngle) * 2, Math.sin(this.playerAngle) * 2)
-            //this.updatePath()
-            this.movePathToPlayer()
-        }
+            if (this.playerDist < 100 && this.hitCooldown <= 0) {
+                this.hit()
+            } else {
+                this.hitCooldown -= perSec(1)
+            }
 
-        if (this.playerDist < 100 && this.hitCooldown <= 0) {
-            this.hit()
-        } else {
-            this.hitCooldown -= perSec(1)
-        }
+            if (this.hitting) { // Once hit is started, it finishes even if player is out of range
+                this.hit()
+            }
 
-        if (this.hitting) { // Once hit is started, it finishes even if player is out of range
-            this.hit()
+            if (this.hitCooldown > 0) { // Re-adjust weapon position after a hit
+                if (this.weaponPos < 0) {
+                    this.weaponPos += perSec(Math.PI)
+                } else {
+                    this.weaponPos = 0
+                }
+            }
+    
+            if (this.isDead()) {
+                for (var i in monsters) {
+                    if (monsters[i] == this) {
+                        monsters.splice(i, 1)
+                    }
+                }
+            }
         }
         
         if (this.map == curMap.name) {
@@ -1013,22 +1030,6 @@ class Splint extends Enemy {
             ctx.fillStyle = "rgb(0, 0, 0)"
             ctx.fillRect(this.x - 35.5, this.y - 60, 10, 70)
             ctx.restore()
-        }
-
-        if (this.hitCooldown > 0) { // Re-adjust weapon position after a hit
-            if (this.weaponPos < 0) {
-                this.weaponPos += perSec(Math.PI)
-            } else {
-                this.weaponPos = 0
-            }
-        }
-
-        if (this.isDead()) {
-            for (var i in monsters) {
-                if (monsters[i] == this) {
-                    monsters.splice(i, 1)
-                }
-            }
         }
     }
 

@@ -3757,7 +3757,7 @@ var gameInterval = setInterval(function() {
 			for (var i in npcs) {
                 if (!!npcs[i].map) {
                     if (curMap.name == npcs[i].map.name) {
-                        	npcs[i].talk(p, npcs)
+                        npcs[i].talk(p, npcs)
                     }
                 }
             }
@@ -3791,9 +3791,9 @@ var gameInterval = setInterval(function() {
 
             if (camera.type == "NPC") { 
                 if (camera.npcName.lineNum == camera.lineStop) {        
-                        scene = "GAME"
-                        cameraMoving = false
-                        cameraEnd() 
+                    scene = "GAME"
+                    cameraMoving = false
+                    cameraEnd() 
                 } 
 			}
 
