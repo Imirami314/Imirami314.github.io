@@ -755,6 +755,15 @@ var blanche = new NPC(ctr(180), ctr(19), "Blanche", mainMap, "D", [
     addMission(blancheAndBianca)
 }, "after")
 
+var piren = new NPC(ctr(192), ctr(33), "Piren", mainMap, 'L', [
+    "Well hello there fellow Glacia resident!",
+    "I'm glad somebody came over to talk to me.\nMy house is not in a great location for social interactions.",
+    "...",
+    "Oh, you want to know why this little area is so green?\nWell, I take care to shovel as much snow around my house.",
+    "I've been getting sick of the snow recently, so I wanted\nto ensure that my home stays comfortable.",
+    "Anyway, it's nice to be able to talk to someone.",
+], "Resident - Glacia Village\ngug")
+
 var nevada = new NPC(ctr(5), b(3), "Nevada", breezwayBuilds, "D", [
     "Why hello there!",
     "I've never seen you before!",
@@ -970,7 +979,6 @@ var mildred = new NPC(ctr(6), 3 * 75, "Mildred", trailShop, "D", [
     ])
     mildred.lines = ["Glad you're back! Let me open up the shop menu for you."]		
 }, "after")
-
 
 var theWanderer = new NPC (60 * 75, 41 * 75, "The Wanderer", mainMap, "D",    [
 	"`...",
@@ -2580,7 +2588,7 @@ if (!!save) {
 function startPos() {
     dev = true
     curMap = mainMap
-    p.goTo(ctr(211), ctr(20))
+    p.goTo(ctr(204), ctr(34))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
     p.equipped = [items.aquaLung]
 

@@ -344,7 +344,7 @@ Player.prototype.HUD = function() {
         ctx.fill()
         ctx.stroke()
     }
-
+    
     ctx.fillStyle = "rgb(255, 255, 255)"
     ctx.font = "20px serif"
     ctx.fillText("Trills: " + this.trills, 90, 25)

@@ -103,7 +103,6 @@ class NPC extends Entity {
                     this.textCooldown -= 1 / 100
                 }
             } 
-            
         } else {
             this.textCooldown -= 1 / 20	
         }
@@ -237,7 +236,7 @@ class NPC extends Entity {
             this.textCooldown = 1
             this.remote = false
         }
-    
+
         if (this.showName) {
             ctx.fillStyle = "rgb(0, 0, 0)"
             ctx.textBaseline = 'middle'
@@ -245,10 +244,6 @@ class NPC extends Entity {
             ctx.textAlign = 'center'
             ctx.fillText(this.name, this.x, this.y - 40)
         }
-    
-        
-    
-        
     }
 
     talk(p, npcs) {
@@ -347,9 +342,9 @@ class NPC extends Entity {
                         ctx.fillStyle = "rgb(0, 0, 0)"
                         ctx.font = "15px serif"
                         ctx.textAlign = 'left'
+                        ctx.fillText(this.name, width / 4 + 10, height * 3 / 4 + 5)
                         
                         if (this.lines[this.lineNum] != "...") {
-                            ctx.fillText(this.name, width / 4 + 10, height * 3 / 4 + 5)
                             this.speechBubbleIndex = 0
                         }
                         ctx.textBaseline = 'middle'
