@@ -614,6 +614,7 @@ Player.prototype.collide = function() {
     if (this.doorCooldown <= 0) {
         if ((this.blockOn.name == "door" || this.blockOn.name == "hole") && keys.space) {
             this.canMove = false
+            this.inRaft = false
             
             Screen.fadeOut(0.05, function() {
                 // need to use 'p' instead of this due to scope

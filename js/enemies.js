@@ -128,7 +128,7 @@ class Darkened extends Boss {
 
         this.spearShift = 0
 
-        this.phase = 2 // Default 1
+        this.phase = 1 // Default 1
         this.tpHitCount = 0
         this.tping = false
 

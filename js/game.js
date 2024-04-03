@@ -2577,7 +2577,7 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = true
-    curMap = darkenedRoom
+    curMap = galeCave
     p.goTo(ctr(15), ctr(15))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
     p.equipped = [items.aquaLung]
@@ -2908,6 +2908,7 @@ var gameInterval = setInterval(function() {
                         p.goTo(ctr(47), ctr(19))
                         p.giveItem(items.drownedsScythe, true)
 
+                        abandonedChannel.changeBlock(45, 19, '_') // This block prevents suspensia from coming in anymore
                         abandonedChannel.changeBlock(47, 17, '_')
                         abandonedChannel.changeBlock(47, 16, 'O')
 
