@@ -2456,6 +2456,7 @@ function saveGame() {
             equipped: [],
             weaponIndex: p.weaponIndex,
             resistances: p.resistances,
+            auraTimer: p.auraTimer,
             trills: p.trills,
             can: p.can,
             droptonDonations: p.droptonDonations,
@@ -2591,7 +2592,7 @@ function clearSave() {
 
 var dev = false // Allows player to fly around through objects without getting hurt, purely for development purposes
 if (!!save) {
-    dev = JSON.parse(save.dev)
+    dev = JSON.parse(dev)
 }
 // ONLY TURN THIS ON USING CONSOLE
 // TO TURN DEV OFF, RELOAD
@@ -2602,7 +2603,7 @@ function startPos() {
     dev = true
     curMap = mainMap
     p.goTo(ctr(204), ctr(34))
-    p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
+    p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, items.aquaLung, food.cake()]
     p.equipped = [items.aquaLung]
 
     abandonedChannel.changeBlock(47, 17, '_')

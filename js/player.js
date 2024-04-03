@@ -192,6 +192,7 @@ Player.prototype.draw = function() {
             cold: 0,
             heat: 0
         }
+        this.auraTimer = save.player.auraTimer || null
 
         this.trills = save.player.trills
 
@@ -344,7 +345,7 @@ Player.prototype.HUD = function() {
         ctx.fill()
         ctx.stroke()
     }
-    
+
     ctx.fillStyle = "rgb(255, 255, 255)"
     ctx.font = "20px serif"
     ctx.fillText("Trills: " + this.trills, 90, 25)
@@ -1016,7 +1017,7 @@ Player.prototype.displayInventory = function() {
     for (var i in this.inventory) {
         try {
             var item = this.inventory[i]
-            var mouseItemDist = Math.hypot(mouseX - ((i % 8) * 100 + width / 8 + 100), mouseY - (height / 8 + 100 * (Math.floor(i / 8) + 1)))
+            let mouseItemDist = Math.hypot(mouseX - ((i % 8) * 100 + width / 8 + 100), mouseY - (height / 8 + 100 * (Math.floor(i / 8) + 1)))
             if (this.itemsMode == 'ALL') {
                 ellipse((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1), 90, 90, "rgba(0, 0, 255, 0.5)")
 
@@ -1099,50 +1100,19 @@ Player.prototype.displayInventory = function() {
         }
     }
 
-    // // Inventory/Food switcher
-    // if (this.itemsMode == "INVENTORY") {
-    //     // Deselected
-    //     ctx.fillStyle = "rgb(25, 25, 175)"
-    // } else {
-    //     // Selected
-    //     ctx.fillStyle = "rgb(50, 50, 255)"
-    // }
-    // ctx.lineWidth = 4
-    // ctx.roundRect(width * 3 / 4 - 60, height / 8, 50, 50, 5)
-    // ctx.fill()
-    // ctx.stroke()
-    // ctx.drawImage(images.foodIcon, width * 3 / 4 - 50, height / 8 + 10, 30, 30)
-
-    // if (this.itemsMode == "BASKET") {
-    //     // Deselected
-    //     ctx.fillStyle = "rgb(25, 25, 175)"
-    // } else {
-    //     // Selected
-    //     ctx.fillStyle = "rgb(50, 50, 255)"
-    // }
-    // ctx.roundRect(width * 3 / 4 - 120, height / 8, 50, 50, 5)
-    // ctx.fill()
-    // ctx.stroke()
-    // ctx.lineWidth = 0
-    // ctx.drawImage(images.inventoryIcon, width * 3 / 4 - 110, height / 8 + 10, 30, 30)
-
-    // if (mouseIsDown) {
-    //     if (mouseRect(width * 3 / 4 - 120, height / 8, 50, 50)) {
-    //         this.itemsMode = "FOOD"
-    //     }
-
-    //     if (mouseRect(width * 3 / 4 - 60, height / 8, 50, 50)) {
-    //         this.itemsMode = "ALL"
-    //     }
-    // }
-
     // Equipped items sidebar
     ctx.fillStyle = "rgba(25, 25, 255, 0.75)"
     ctx.roundRect(width * 3 / 4, height / 8, width / 8, height * 3 / 4, 10)
     ctx.fill()
     
     for (var i in this.equipped) {
-        this.equipped[i].draw(width * 13 / 16, height / 8 + 100 + i * 100)
+        let eqItem = this.equipped[i]
+        eqItem.draw(width * 13 / 16, height / 8 + 100 + i * 100)
+        let mouseItemDist = Math.hypot(mouseX - width * 13 / 16, mouseY - (height / 8 + 100 + i * 100))
+    
+        if (mouseItemDist <= 50 && mouseIsDown) {
+            this.dequip(eqItem)
+        }
     }
 
     // Border
