@@ -1481,18 +1481,18 @@ var kingJasper = new NPC(ctr(115), ctr(81), "King Jasper", mainMap, 'R', [
     "...",
     "Perfect! I was just talking to Mr. Wells about a famous Litholian legend.\nIt goes as follows:",
     "*As the island grows weak and the fortress appears,\nBring these words to a true hero's ears,",
-    "*Observe the bushes along the river that flows,\nAmong their numbers, a secret subtly shows,",
-    "*Two on the left, the other side three,\nFrom there, directly east, lies strange group of trees,",
-    "*These four wooded towers, with no shrubs beside,\nWhere the river runs by the one most north, head inside.",
+    "*The bushes along the river that flows,\nAmong their numbers, a subtly shows,",
+    "*Two on the left, the other side three,\nFrom there, point east, a strange group of trees,",
+    "*These four wooded towers, with no shrubs beside,\nThe northern-most river, head inside.",
     "That fortress mentioned at the beginning could be the\nlarge stone building that emerged in Southern Litholia. Unfortunately, nobody knows\nwhat it is nor how to get inside it.",
     "So, it's possible that this riddle is telling us how to enter it!",
 ], "The King of Litholia.", function() {
     kingJasper.lines = [
         "We need to to help us decipher the following riddle:",
         "*As the island grows weak and the fortress appears,\nBring these words to a true hero's ears,",
-        "*Observe the bushes along the river that flows,\nAmong their numbers, a secret subtly shows,",
-        "*Two on the left, the other side three,\nFrom there, directly east, lies strange group of trees,",
-        "*These four wooded towers, with no shrubs beside,\nWhere the river runs by the one most north, head inside.",
+        "*The bushes along the river that flows,\nAmong their numbers, a subtly shows,",
+        "*Two on the left, the other side three,\nFrom there, point east, a strange group of trees,",
+        "*These four wooded towers, with no shrubs beside,\nThe northern-most river, head inside.",
         "That fortress mentioned at the beginning could be the\nlarge stone building that emerged in Southern Litholia. Unfortunately, nobody knows\nwhat it is nor how to get inside it.",
         "Maybe the riddle tells us how to enter it!"
     ]
@@ -2446,7 +2446,7 @@ function saveGame() {
         interactives: [],
         lighting: lighting,
         dev: dev,
-        curMissions: []
+        curMissions: [],
     }
 
     SAVING.maps.push({
@@ -2551,6 +2551,8 @@ function saveGame() {
     curMissions.forEach((mission) => {
         SAVING.curMissions.push(mission)
     })
+
+    
     lset("curMissions", JSON.stringify(SAVING.curMissions))
     
     lset("lighting", SAVING.lighting)
@@ -2577,8 +2579,8 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = true
-    curMap = galeCave
-    p.goTo(ctr(15), ctr(15))
+    curMap = mainMap
+    p.goTo(ctr(211), ctr(20))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, food.cake()]
     p.equipped = [items.aquaLung]
 
