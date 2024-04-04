@@ -2601,8 +2601,8 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = true
-    curMap = mainMap
-    p.goTo(ctr(204), ctr(34))
+    curMap = darkenedRoom
+    p.goTo(ctr(2), ctr(4))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, items.aquaLung, food.cake()]
     p.equipped = [items.aquaLung]
 
@@ -3379,7 +3379,7 @@ var gameInterval = setInterval(function() {
                 
                 wayne.talkedTo = false
                 cutsceneFrame = 0
-        
+                Screen.effects = []
             }
         
             if (cutsceneFrame > 750) {
