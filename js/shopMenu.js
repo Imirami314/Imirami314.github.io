@@ -8,6 +8,7 @@ var PURCHASE_COOLDOWN = 0.5
  * @param {*} shopList List of items being sold
  */
 function ShopMenu(shopList) {
+    p.canMove = false
     // Entire panel background
     ctx.fillStyle = "rgb(100, 100, 120)"
     ctx.roundRect(width / 8, height / 8, width * 3 / 4, height * 3 / 4, 10)
@@ -80,12 +81,12 @@ function ShopMenu(shopList) {
     }
 
     if (keys.esc) {
+        p.canMove = true
         ShopMenu.close()
     }
 }
 
 ShopMenu.open = function(shopList) {
-    console.log(shopList.length)
     CUR_SHOP_MENU = shopList   
 }
 

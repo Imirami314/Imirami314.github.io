@@ -1053,7 +1053,7 @@ class Splint extends Enemy {
     }
 
     onKill() {
-        p.trills += Math.round(Math.random() * 4 + 1) // Random number of trills from 1 to 5
+        p.trills += Math.round(Math.random() * 7 + 1) // Random number of trills from 1 to 5
     }
 }
 
@@ -1272,7 +1272,7 @@ class Patroller extends Enemy {
     }
 
     onKill() {
-        p.trills += Math.round(Math.random() * 5 + 3) // Random number of trills from 3 to 8
+        p.trills += Math.round(Math.random() * 7 + 3) // Random number of trills from 3 to 10
     }
 }
 
@@ -1367,6 +1367,10 @@ const monsters = [
     new Splint("Main Map", 46 * 75, 18 * 75),
     new Splint("Main Map", 47 * 75, 18 * 75),
     new Splint("Main Map", 48 * 75, 18 * 75),
+    new Splint("Main Map", ctr(38), ctr(55)),
+    new Splint("Main Map", ctr(38), ctr(60)),
+    new Splint("Main Map", ctr(32), ctr(60)),
+    new Splint("Main Map", ctr(36), ctr(60)),
     new Splint("Main Map", 182 * 75, ctr(80)),
     new Splint("Main Map", 183 * 75, ctr(80)),
     new Splint("Main Map", 184 * 75, ctr(80)),

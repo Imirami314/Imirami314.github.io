@@ -8,6 +8,7 @@ var alerts = [
     new GameAlert(0, 0, ["WASD To Move\n[Space] To Continue"], imperilledPrison, "MESSAGE"),
 
     // Chard Region
+    new GameAlert(11, 44, ["Ruins of Western Chard Town:\n6 2 5 3 7 8 4 9 1"], mainMap, "SIGN"),
     new GameAlert(9, 53, ["Confounded Cave\nKEEP OUT!"], mainMap, "SIGN"),
     new GameAlert(1, 44, ["Got you! - Mike"], mainMap, "SIGN"),
     new GameAlert(70, 23, ["Sarah's Shop:\nOfficially open for business!"], mainMap, "SIGN"),
@@ -643,6 +644,15 @@ var wyatt = new NPC(ctr(2), ctr(3), "Wyatt", wyattHouse, "D", [
     "So you can, uh, leave now.",
     "...",
     "Bye."
+], "Resident - Chard Town\n")
+
+var hector = new NPC(ctr(17), ctr(57), "Hector", mainMap, "U", [
+    "Yo, what's up?",
+    "I'm working on building a door here for this so-called shop...",
+    "...but we just ran out of materials!",
+    "I'm thinking about asking somebody in charge for some more.",
+    "Say, would you be down to donate some materials?",
+    "I see you don't got any wood...\nWell, come back holding some if you're interested.",
 ], "Resident - Chard Town\n")
 
 var wayne = new NPC(48 * 75, 55 * 75, "Wayne", mainMap, "D", [
@@ -2601,8 +2611,8 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = true
-    curMap = darkenedRoom
-    p.goTo(ctr(2), ctr(4))
+    curMap = mainMap
+    p.goTo(ctr(26), ctr(48))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, items.aquaLung, food.cake()]
     p.equipped = [items.aquaLung]
 
