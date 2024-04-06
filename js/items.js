@@ -385,7 +385,7 @@ Food.prototype.use = function(p) {
     p.eat(this)
 }
 
-var food = {
+const food = {
     apple: function() {
         return new Food("Apple", images.apple, 3, 15)
     },
@@ -401,4 +401,15 @@ var food = {
     glaciaPie: function() {
         return new Food("Glacia Pie", "", 10, 10)
     },
+}
+
+class TrillSum {
+    constructor(amount) {
+        this.amount = amount;
+        this.name = this.amount + " Trills";
+    }
+
+    draw() {
+        // changeme: Add image for trills later
+    }
 }

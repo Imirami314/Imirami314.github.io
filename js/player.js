@@ -775,7 +775,11 @@ Player.prototype.dequip = function(item) {
  * @param {*} itemAlert Whether or not to display the new item panel
  */
 Player.prototype.giveItem = function(item, itemAlert) {
-    p.inventory.push(item)
+    if (item.constructor.name != "TrillSum") {
+        this.inventory.push(item)
+    } else {
+        this.trills += item.amount
+    }
 
     if (itemAlert) {
         this.newItemAlert = true

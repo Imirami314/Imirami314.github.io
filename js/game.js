@@ -2297,7 +2297,8 @@ const c121_31 = new Chest(mainMap, 121, 31, [
 ])
 
 const c92_37 = new Chest(mainMap, 92, 37, [
-    items.confoundedCaveKey
+    // items.confoundedCaveKey
+    new TrillSum(100)
 ])
 
 const c184_78 = new Chest(mainMap, 184, 78, [
