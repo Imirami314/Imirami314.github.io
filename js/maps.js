@@ -1674,6 +1674,9 @@ var encompassedLabyrinth = new Landscape([
 ], 10 * 75, 10 * 75, 252, 48, "Encompassed Labyrinth", function() {
     if (encompassedLabyrinth.bright) {
         setLighting(2500)
+
+        encompassedForest.brightened = true
+        encompassedForest.forestTeleport = false
     } else {
         lighting = 500
     }
@@ -2630,7 +2633,7 @@ var encompassedForest = new Region([{
     x2: 279,
     y2: 65
 }], function() {
-    lighting = 1000
+
     var randNPCDir = ["U", "R", "D", "L"]
     var randDir = ["Forward", "Right", "Backward", "Left"] // Changed UP and DOWN to FORWARD and BACKWARD because it makes more sense if it's relative to where he is pointing
     var pDir = ""
@@ -2639,13 +2642,15 @@ var encompassedForest = new Region([{
         forestTeleport = false
     }
 
-    // if (entityDistance(lostTraveler, p) <= 300) {
-    //     forestLoopStarted = true
-    //     forestTeleport = true
-    // }
-
-    forestLoopStarted = true
-    forestTeleport = true
+    if (!encompassedForest.brightened) {
+        setLighting(1000)
+        if (entityDistance(lostTraveler, p) <= 500) {
+            encompassedForest.forestLoopStarted = true
+            encompassedForest.forestTeleport = true
+        }
+    } else {
+        setLighting(2500)
+    }
 
     function moveLostToggle() {
         // Move lost traveler's toggle to next location in cycle
@@ -2656,7 +2661,7 @@ var encompassedForest = new Region([{
     }
 
     // Teleports the player in a seamless loop so it looks like the forest never ends
-    if (forestLoopStarted && forestTeleport) {
+    if (encompassedForest.forestLoopStarted && encompassedForest.forestTeleport) {
         if (p.x > 250 * 75 && p.x < 254 * 75) {
             if (p.y < 37 * 75){
                 p.y = 59 * 75
@@ -2718,7 +2723,7 @@ var encompassedForest = new Region([{
         lostTravelerToggle.toggleState = 1
     }
 }, function() {
-    if (lighting == 1000) {
+    if (!encompassedForest.brightened) {
         playMusic("Encompassed Forest Dark")
     } else {
         playMusic("Encompassed Forest")

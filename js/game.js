@@ -2613,7 +2613,7 @@ if (!!save) {
 function startPos() {
     dev = true
     curMap = mainMap
-    p.goTo(ctr(26), ctr(48))
+    p.goTo(ctr(252), ctr(30))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, items.aquaLung, food.cake()]
     p.equipped = [items.aquaLung]
 
@@ -3022,7 +3022,7 @@ var gameInterval = setInterval(function() {
             p.draw()
 
             ctx.save()
-            ctx.translate((-1 * p.x) + (width / 2), (-1 * p.y) + (height / 2))
+            ctx.translate((-1 * p.x) + (width / 2) + Screen.shakeOffset.x, (-1 * p.y) + (height / 2) + Screen.shakeOffset.y)
             curMap.drawNextLayer(p)
             ctx.restore()
     
