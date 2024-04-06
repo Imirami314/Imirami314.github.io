@@ -1967,16 +1967,16 @@ var abandonedChannel = new Landscape([
     'SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS',
     'SSS~~~~~~~~~~~~~SSSSSSSSSSSSSSSSS^^^^SSSSSSSSSSSSSS',
     'SSSSSSSS~~~~~~~~SSSSSSSSSSSSSSSSSSSS^SSSSSSSSSSSSSS',
-    'SSSSSSSS~~SSSSS~~SSSSSSSSSS^^^^^SSSS^SSSSSSSSSSSSSS',
-    'SSSSSSSS~~SSSSS~~SSSSSSSSSS^SSS^SSSS^^^^^SSSSSSSSSS',
-    'SSSSSSSS~~SSSSS~~SSSSSSSSSS^SSS^^^^^^SSS^SSSSSSSSSS',
-    'SSS~~~~~~~~~S~~~~SSSSSSSSSS^SSS^SSSSSSSS^SSSSSSSSSS',
-    'SSS~~~~~~~~SS~~SSSSSSSSSSSS^SSS^SSSSSSSSSSSSSSSSSSS',
-    '~~~~~SSSSSSS~~~S^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^S',
-    '~~~~~SSSSO~~~SSS^^SSSSSSSSS^SSS^SSSSSSSSSSSSSSSSSSS',
-    'S~~SSSSSS~~SSS^^^SSSSSSSSSS^SSS^SSSSS!~!~!~!SSSSSSS',
-    'S~~SSSS~~~~S^^^^SSSSSSSSSSS^SSS^SS^SS~~~~~~~_SSSSSS',
-    'S~~SSS~~~SSS^^^SSSSSSS~SSSS^^^^^^^^SS~SSSSSSSSSSSSS',
+    'SSSSSSSS~iSSSSS~~SSSSSSSSSS^^^^^SSSS^SSSSSSSSSSSSSS',
+    'SSSSSSSS~iSSSSS~~SSSSSSSSSS^SSS^SSSS^^^^^SSSSSSSSSS',
+    'SSSSSSSS~iSSSSSIISSSSSSSSSS^SSS^^^^^^SSS^SSSSSSSSSS',
+    'SSS~~~~~~~~iS~~~~SSSSSSSSSS^SSS^SSSSSSSS^SSSSSSSSSS',
+    'SSS~~iiiiiiSS~~SSSSSSSSSSSS^SSS^SSSSSSSSSSSSSSSSSSS',
+    'S~~~iSSSSSSS~~~S^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^S',
+    'S~~iiSSSSO~~~SSS^^SSSSSSSSS^SSS^SSSSSSSSSSSSSSSSSSS',
+    'S~iSSSSSS~~SSS^^^SSSSSSSSSS^SSS^SSSSS!~!~!~!SSSSSSS',
+    'S~iSSSS~~~~S^^^^SSSSSSSSSSS^SSS^SS^SS~~~~~~~_SSSSSS',
+    'S~iSSS~~~SSS^^^SSSSSSS~SSSS^^^^^^^^SS~SSSSSSSSSSSSS',
     'S~~SSS~~SS^^^^SSS~SSSS~SSSS^SSSSSSSSS~SSSSS~SSSSSSS',
     'S~~SSS~~S^^^^^SSS~SSSS~SSSS^SSSSSSSSS~~~~~~~SSSSSSS',
     'S~~SSS~~S^^^^^SSS~SS~~~~~SSSSSSSS~~~SSSSSSS~SSSSSSS',
@@ -2022,6 +2022,9 @@ abandonedChannel.solve = function() {
                 "It looks like this channel is splitting into two parts.\nSuspensia and water.",
                 "This seems like a perfect time to try out my new Suspenia boots!\nLet's hope they work though...",
                 "Unfortunately, I only have one pair, so I'll go on my own while you\nexplore other parts of this place.",
+                "...",
+                "Wait, you're right! It looks like ice is blocking the other way!",
+                "Lucky for me I always come prepared.\nI have a raft to break the ice!",
                 "You can track the water portion. Let's see if we find anything.",
                 "I'll call out if I need anything. Good luck!"
             ]
@@ -2029,33 +2032,45 @@ abandonedChannel.solve = function() {
             cascade.curPath = [
                 [11, 9],
             ]
-
             cascade.action = function() {
-                cascade.lines = [
-                    "Please explore the stone passage while I investigate this one.",
-                    "I already told you once, we haven't got time for dillydallying!"
-                ]
-                curMap.changeBlocks([[15, 3], [16,3]], '~')
+                cameraStart(ctr(16), ctr(6), 7, "NPC", {
+                    npcName: cascade,
+                    lineStop: 12
+                })
                 
-                cascade.curPath = [
-                    [10, 9],
-                    [10, 11],
-                    [7, 11],
-                    [7, 17],
-                    [9, 17],
-                    [9, 15],
-                    [10, 15],
-                    [17, 8],
-                    [27, 8],
-                    function() {
-                        cascade.dir = 'R'
-                        cascade.lines = [
-                            "Hmmm...",
-                        ]
-                    }
-                ]
+                cascade.action = function() {
+                    cascade.lines = [
+                        "Please explore the water passage while I investigate the suspensia.",
+                        "I already told you once, we haven't got time for dillydallying!"
+                    ]
+                    //curMap.changeBlocks([[15, 3], [16,3]], '~')
+                    interactives.push(new Raft(abandonedChannel, ctr(10), ctr(9)))
+                    cascade.curPath = [
+                        [10, 9],
+                        [10, 11],
+                        [7, 11],
+                        [7, 17],
+                        [9, 17],
+                        [9, 15],
+                        [10, 15],
+                        [17, 8],
+                        [27, 8],
+                        function() {
+                            cascade.dir = 'R'
+                            cascade.lines = [
+                                "Hmmm...",
+                            ]
+                        }
+                    ]
+                }
+                cascade.actionLine = "after"
             }
+            cascade.actionLine = 11
+            
+
+            
         }, 5000)
+        
 
         cascadeEntered = true
     }

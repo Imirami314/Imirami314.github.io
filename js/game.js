@@ -2664,30 +2664,32 @@ function startPos() {
 startPos()
 
 var suspensiaInterval = setInterval(function() { // Makes suspensia spread into water
-    var w = []
-    
-    for (var i = 1; i < curMap.arr.length; i ++) {
-        for (var j = 1; j < curMap.arr[i].length; j ++) {
-            if (i != 0 && j != 0 && i < curMap.arr.length - 1 && j < curMap.arr[i].length - 1) {
-                var char = curMap.getBlock(j, i)
-                
-                if (char == '~') {
-                    try {
-                        if (curMap.getBlock(j + 1, i) == '^' ||
-                        curMap.getBlock(j - 1, i) == '^' ||
-                        curMap.getBlock(j, i + 1) == '^' ||
-                        curMap.getBlock(j, i - 1) == '^') {
-                            w.push([j, i])    
-                        }
-                    } catch (e) {
+    if (scene == "GAME") {
+        var w = []
+        
+        for (var i = 1; i < curMap.arr.length; i ++) {
+            for (var j = 1; j < curMap.arr[i].length; j ++) {
+                if (i != 0 && j != 0 && i < curMap.arr.length - 1 && j < curMap.arr[i].length - 1) {
+                    var char = curMap.getBlock(j, i)
+                    
+                    if (char == '~') {
+                        try {
+                            if (curMap.getBlock(j + 1, i) == '^' ||
+                            curMap.getBlock(j - 1, i) == '^' ||
+                            curMap.getBlock(j, i + 1) == '^' ||
+                            curMap.getBlock(j, i - 1) == '^') {
+                                w.push([j, i])    
+                            }
+                        } catch (e) {
 
+                        }
                     }
                 }
             }
         }
-    }
 
-    curMap.changeBlocks(w, '^')
+        curMap.changeBlocks(w, '^')
+    }
 }, 1000)
 
 var gameInterval = setInterval(function() {
