@@ -1,5 +1,5 @@
 // Function wrapping prevents console from altering game variables
-// (function() {
+// window.app = (function() {
 curMap = mainMap
 
 var saveLoaded = false
@@ -98,7 +98,7 @@ function setLighting(value) {
         lighting -= 45
     }
     
-    if (Math.abs(lighting - value) <= 15) {
+    if (Math.abs(lighting - value) <= 45 / 2) {
         lighting = value
         return
     }
@@ -1003,7 +1003,7 @@ var mildred = new NPC(ctr(6), 3 * 75, "Mildred", trailShop, "D", [
     mildred.lines = ["Glad you're back! Let me open up the shop menu for you."]		
 }, "after")
 
-var theWanderer = new NPC (60 * 75, 41 * 75, "The Wanderer", mainMap, "D",    [
+var theWanderer = new NPC(60 * 75, 41 * 75, "The Wanderer", mainMap, "D",    [
 	"`...",
 	"Hey kid...",
 	"`I haven't seen you around before...",
@@ -1025,7 +1025,7 @@ var theWanderer = new NPC (60 * 75, 41 * 75, "The Wanderer", mainMap, "D",    [
 	"`Although first difficult to arrive at this sea,\nThe bottom right corner is the right place to be.",
 	"Find the location, then return here.\nGood luck!",
 	
-], "hi", function () {
+], "hi", function() {
     if (theWanderer.firstInteraction) {
         addMission(theWanderersRiddles)
     }
@@ -1034,12 +1034,31 @@ var theWanderer = new NPC (60 * 75, 41 * 75, "The Wanderer", mainMap, "D",    [
     }
 }, "after")
 
-var lostTraveler = new NPC (ctr(252), ctr(48), "Lost Traveler", mainMap, "D", [
+var lostTraveler = new NPC(ctr(252), ctr(48), "Lost Traveler", mainMap, "D", [
     "yellow...",
     "purple...",
     "...yellow...purple...yellow...purple..."
 ])
 
+var captainBora = new NPC(69420 * 75, 42069 * 75, "Captain Bora", mainMap, "D", [
+    "Oh wow, hello!",
+    "I didn't expect to see anyone here.",
+    "I don't really know what happened, I was walking through the forest and got lost.",
+    "Slowly, I felt like I was drifting off to sleep.\nNext thing I know, I'm awake and you're here!",
+    "I don't even know how much time has passed.\nI suppose I should head back to Glacia.",
+], "hi", function() {
+    captainBora.curPath = [
+        [251, 47],
+        [251, 43],
+        [252, 43],
+        [252, 29],
+        [227, 29],
+        [227, 29],
+        [227, 27],
+        [254, 27],
+        [254, 23],
+    ]
+}, "after")
 
 // Starts outside of the map because he doesn't exist until later in the game
 var drQua = new NPC(69420 * 75, 42069 * 75, "Dr. Qua", mainMap, 'L', [

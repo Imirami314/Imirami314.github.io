@@ -1677,6 +1677,9 @@ var encompassedLabyrinth = new Landscape([
 
         encompassedForest.brightened = true
         encompassedForest.forestTeleport = false
+
+        lostTraveler.goTo(ctr(69420), ctr(69420))
+        captainBora.goTo(ctr(252), ctr(47))
     } else {
         lighting = 500
     }
