@@ -2631,8 +2631,8 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = true
-    curMap = mainMap
-    p.goTo(ctr(252), ctr(30))
+    curMap = stoneheartSanctuary
+    p.goTo(ctr(12), ctr(10))
     p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, items.aquaLung, food.cake()]
     p.equipped = [items.aquaLung]
 
@@ -3862,6 +3862,10 @@ var gameInterval = setInterval(function() {
                     camera.stopTimerSet = true
                 }
 			}
+        } else if (scene == "CUTSCENE") {
+            if (!!curCutscene) {
+                curCutscene.draw()
+            }
 		} else if (scene == "DEATH") {
             ctx.fillStyle = "rgb(255, 255, 255)"
             ctx.textAlign = "center"

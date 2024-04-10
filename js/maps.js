@@ -1,4 +1,5 @@
 var curMap;
+var curCutscene; // Default null
 if (!!save) {
     // if (!!save.areas) {
     //     areas = save.areas
@@ -2641,8 +2642,8 @@ var encompassedForest = new Region([{
     var randDir = ["Forward", "Right", "Backward", "Left"] // Changed UP and DOWN to FORWARD and BACKWARD because it makes more sense if it's relative to where he is pointing
     var pDir = ""
     function changeDir () {
-        lostTraveler.dir = randNPCDir[Math.floor(Math.random() * 4)]
-        forestTeleport = false
+        // lostTraveler.dir = randNPCDir[Math.floor(Math.random() * 4)]
+        // forestTeleport = false
     }
 
     if (!encompassedForest.brightened) {
@@ -2668,7 +2669,7 @@ var encompassedForest = new Region([{
         if (p.x > 250 * 75 && p.x < 254 * 75) {
             if (p.y < 37 * 75){
                 p.y = 59 * 75
-                changeDir()
+                
                 pDir = "U"
                 
                 if (getBlockInfoByCords(lostTraveler.x, lostTraveler.y - 75).through) {
