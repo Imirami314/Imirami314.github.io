@@ -20,11 +20,13 @@ class Cutscene {
         this.curNode = 0
     }
 
+    // Starts playing the cutscene, you should use this function
     begin() {
         curCutscene = this
         scene = "CUTSCENE"
     }
 
+    // Don't use this function manually
     draw() {
         if (!!this.getNode()) {
             this.getNode().display(this)
@@ -45,6 +47,7 @@ class Cutscene {
         }
     }
 
+    // Or this one
     getNode() {
         let nodeResult;
         this.nodes.forEach((node) => {
@@ -56,6 +59,7 @@ class Cutscene {
         return nodeResult;
     }
 
+    // You should use this one though
     setLocation(x, y) {
         this.location.x = x
         this.location.y = y
