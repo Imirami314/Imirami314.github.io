@@ -68,6 +68,6 @@ Completed
 - Add player spear attack animation
 - Increase local storage space so it doesn't fill up
 - Fix event delay algorithm to make monsters turn red for 0.5 sec when hit
-- Make it so darkened doesn't keep shooting you after you beat him lol
+- Make it so noctos doesn't keep shooting you after you beat him lol
 - Finish shop menus and allow you to actually buy stuff
 - Fix missions/mission saving

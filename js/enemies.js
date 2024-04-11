@@ -109,11 +109,11 @@ class Boss extends Enemy {
 
 // Bosses
 
-class Darkened extends Boss {
+class Noctos extends Boss {
     constructor(map, spawnX, spawnY) {
         super(map, spawnX, spawnY)
 
-        this.name = "Darkened"
+        this.name = "Noctos"
         this.damage = 10
         this.maxHealth = 250
         this.health = 250 // Default 250
@@ -147,9 +147,9 @@ class Darkened extends Boss {
     draw() {
         if (scene === "GAME") {
             if (this.phase == 1) {
-                playMusic("Darkened Battle")
+                playMusic("Noctos Battle")
             } else if (this.phase == 2) {
-                playMusic("Darkened Battle Phase 2")
+                playMusic("Noctos Battle Phase 2")
             }
         }
         
@@ -1420,7 +1420,7 @@ const monsters = [
 ]
 
 const bosses = [
-    new Darkened("Darkened Room", 712.5, 100),
+    new Noctos("Noctos Room", 712.5, 100),
     new Stormed("Stormed Room", ctr(13), ctr(17)),
     new Drowned("Drowned Room", ctr(15), ctr(19)),
 ]

@@ -16,8 +16,8 @@ var fadeStarted
 
 var cutsceneFrame = 0 // DEFAULT 0
 
-// Darkened Boss Cutscene vars
-var darkenedScale = 1
+// Noctos Boss Cutscene vars
+var noctosScale = 1
 var defeatSquareX = width * 3 / 4
 var defeatSquareSpeed = 10
 var defeatSquareWidth = 50
@@ -89,7 +89,7 @@ var images = {
     steelFieldKey: initImage('sprites/items/steelFieldKey.png'),
     steelSword: initImage('sprites/items/steelSword.png'),
     confoundedCaveKey: initImage('sprites/items/confoundedCaveKey.png'),
-    spearOfTheDarkened: initImage('sprites/items/spearOfTheDarkened.png'),
+    spearOfNoctos: initImage('sprites/items/spearOfNoctos.png'),
     stormedSword: initImage('sprites/items/stormed-sword.png'),
     oldMansGlasses: initImage('sprites/items/oldMansGlasses.png'),
 	speedySnowPath: initImage('sprites/items/speedySnowPath.png'),
@@ -1321,7 +1321,7 @@ var confoundedCave = new Landscape([
     '____________________________________________________',
 ], 75, 75, 6, 52, "Confounded Cave")
 
-var darkenedRoom = new Landscape([
+var noctosRoom = new Landscape([
     '____________S_______',
     '____S_______________',
     '_______________S____',
@@ -1342,7 +1342,7 @@ var darkenedRoom = new Landscape([
     '__S_________________',
     '____________S_______',
     '_______S__________S_',
-], 75, 75, 0, 0, "Darkened Room", function() {
+], 75, 75, 0, 0, "Noctos Room", function() {
     if (bosses[0].health > 0) {
         bossfight = true
     } else {

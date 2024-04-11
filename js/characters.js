@@ -128,10 +128,10 @@ var dark = new DARKENED()
 
 var cutSceneFrame = 0
 var spearSpeed = 1
-var darkenedColor = 0
+var noctosColor = 0
 var spearSize = 0 // change triangle into circle
 var shootTriangle = 0
-var darkenedScale = 1
+var noctosScale = 1
 var fade = 0
 spearSize = 50
 setInterval(function() {
@@ -141,13 +141,13 @@ setInterval(function() {
     ctx.fillRect(0, 0, width, height) 
 
     if (cutSceneFrame > 100 && cutSceneFrame < 575) {
-		darkenedScale += 0.001
+		noctosScale += 0.001
 		if (spearSize > 0) {
 			spearSize -= 1
 		} else {
 			spearSize = 0
 		}
-		darkenedColor += 0.3
+		noctosColor += 0.3
 	}
 
 	if (cutSceneFrame > 100 && cutSceneFrame < 750) {
@@ -174,23 +174,23 @@ setInterval(function() {
 	if (cutSceneFrame )
 	// old.draw()
     ctx.translate(width / 2, height / 2)
-	ctx.scale(darkenedScale, darkenedScale)
+	ctx.scale(noctosScale, noctosScale)
 	ctx.translate(width / -2, height / -2)
 
 
 	
 	if (cutSceneFrame < 750) {
 	    // Body
-	    ellipse(width/2, height/2, 150, 150, "rgb("+ darkenedColor +", "+ darkenedColor +", "+ darkenedColor +")")
+	    ellipse(width/2, height/2, 150, 150, "rgb("+ noctosColor +", "+ noctosColor +", "+ noctosColor +")")
 	
 	    // Eyes
-		ellipse(width/2 - 30, height/2 - 35, 30, 30, "rgb("+ darkenedColor +", 50, 100)")
-	    ellipse(width/2 + 30, height/2 - 35, 30, 30, "rgb("+ darkenedColor +", 50, 100)")
+		ellipse(width/2 - 30, height/2 - 35, 30, 30, "rgb("+ noctosColor +", 50, 100)")
+	    ellipse(width/2 + 30, height/2 - 35, 30, 30, "rgb("+ noctosColor +", 50, 100)")
 	    
 	
 	    // Arms
-		ellipse(width/2 + 75, height/2, 40, 40, "rgb("+ darkenedColor +", 25, 50)")
-		ellipse(width/2 - 75, height/2, 40, 40, "rgb("+ darkenedColor +", 25, 50)")
+		ellipse(width/2 + 75, height/2, 40, 40, "rgb("+ noctosColor +", 25, 50)")
+		ellipse(width/2 - 75, height/2, 40, 40, "rgb("+ noctosColor +", 25, 50)")
     
 	}
     //ctx.save()
@@ -215,7 +215,7 @@ setInterval(function() {
     // Spear thing
     
     
-    triangle(width/2 + 50, height/2 - 80, width/2 + 68, height/2 - 115, width/2 + 86, height/2 - 80, "rgb(" + (darkenedColor) + ", 50, 100)")
+    triangle(width/2 + 50, height/2 - 80, width/2 + 68, height/2 - 115, width/2 + 86, height/2 - 80, "rgb(" + (noctosColor) + ", 50, 100)")
 	ctx.fillStyle = "rgb(0, 50, 50)"
     ctx.fillRect(width/2 + 60, height/2 - 80, 16, 180) // Center x = 63
 	ellipse(width/2 + 68, height/2 - 90, spearSize, spearSize, "rgb(0, 50, 100)")

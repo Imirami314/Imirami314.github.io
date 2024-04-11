@@ -132,3 +132,26 @@ var exampleCutscene = new Cutscene({
         scene = "GAME";
     }
 })
+
+var noctosCutscene = new Cutscene({
+    name: "Noctos Cutscene",
+    map: noctosRoom,
+    x: bosses[0].x - width / 2, y: bosses[0].y - height / 2,
+    length: 535,
+    nodes: [
+        {start: 0, display: (cutscene) => {
+            
+        }},
+        {start: 360, display: (cutscene) => {
+            
+        }},
+    ],
+    always: (cutscene) => {
+        playMusic("Boss Cutscene")
+
+        models.bosses.noctos.draw()
+    },
+    onEnd: (cutscene) => {
+        scene = "GAME";
+    }
+})

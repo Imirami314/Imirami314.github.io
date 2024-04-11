@@ -543,7 +543,7 @@ Player.prototype.move = function() {
     //         this.hitCooldown = 0.35
             
     //         switch (b.name) {
-    //             case "Darkened":
+    //             case "Noctos":
     //                 b.tpHitCount ++
     //                 break
     //             case "Stormed":
@@ -566,7 +566,7 @@ Player.prototype.move = function() {
         this.hitCooldown = 0.35
         
         switch (curBoss.name) {
-            case "Darkened":
+            case "Noctos":
                 curBoss.tpHitCount ++
                 break
             case "Stormed":

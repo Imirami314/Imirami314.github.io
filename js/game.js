@@ -129,10 +129,11 @@ var bossDoors = [
         map: confoundedCave,
         enterFunction: function(p) {
             saveGame()
-            p.x = darkenedRoom.enterX
-            p.y = darkenedRoom.enterY
-            curMap = darkenedRoom
-            scene = "DARKENED BOSS CUTSCENE"
+            // scene = "CUTSCENE"
+            noctosCutscene.begin()
+            p.x = noctosRoom.enterX
+            p.y = noctosRoom.enterY
+            curMap = noctosRoom
         }
     },
     {
@@ -889,7 +890,7 @@ var guardAlfred = new NPC(ctr(19), ctr(7), "Castle Guard Alfred", queensCastle, 
 var queenAlaska = new NPC(ctr(42), ctr(3), "Queen Alaska", queensCastle, "L", [
     "Welcome! I am Queen Alaska, but you can just\ncall me Alaska.",
     "I see your presence triggered my special\nwall, which means you are the person I'm supposed to meet.",
-    "So, is it true? Did you really venture into the Confounded Cave\nof Chard Town and defeat Darkened?",
+    "So, is it true? Did you really venture into the Confounded Cave\nof Chard Town and defeat Noctos?",
     "...",
     "That's incredible. You know, another Elemental Master was\ncaptured here, in Glacia.",
     "Unfortunately, almost nobody knows that the Elemental Masters exist anymore!",
@@ -897,7 +898,7 @@ var queenAlaska = new NPC(ctr(42), ctr(3), "Queen Alaska", queensCastle, "L", [
     "This leads me to believe that it's underground\nsomewhere. Specifically near Glacia Village.",
     "However, even if you do find where the prison is, it could be\nextremely dangerous to enter!",
     "Long ago, when the Elemental Masters were corrupted and\nrunning free, this specific one was notorious for causing\nannoying winds.",
-    "While Darkened had its magical spear to bring it power\n(which " + badGuy + " gave it), this Master, known as Stormed\nwould use a powerful sword.",
+    "While Noctos had its magical spear to bring it power\n(which " + badGuy + " gave it), this Master, known as Stormed\nwould use a powerful sword.",
     "Its strong control over wind and weather meant that\nthe people of Glacia were be best suited to\ncapture this beast.",
     "The leaders of this island's regions, like me,\nhave attempted to locate and take down these corrupted masters.",
     "However, the borders between the regions made this\nvery difficult. So, we need you to take the Masters out one at a time.",
@@ -2292,7 +2293,7 @@ if (!!save) {
 
 var models = {
     bosses: {
-        darkened: new Darkened(darkenedRoom, width / 2, height / 2),
+        noctos: new Noctos(noctosRoom, width / 2, height / 2),
         stormed: new Stormed(stormedRoom, width / 2, height / 2)
     },
     npcs: {
@@ -2462,9 +2463,9 @@ var secrets = Secret.all
 
 var opacity = 1
 
-// Darkened phase 2 cutscene variables
+// Noctos phase 2 cutscene variables
 var spearSpeed = 1
-var darkenedColor = 0
+var noctosColor = 0
 var spearSize = 0 // changes triangle into circle
 var shootTriangle = 0
 var fade = 0
@@ -2632,8 +2633,8 @@ if (!!save) {
 function startPos() {
     dev = true
     curMap = stoneheartSanctuary
-    p.goTo(ctr(12), ctr(10))
-    p.inventory = [items.spearOfTheDarkened, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, items.aquaLung, food.cake()]
+    p.goTo(ctr(31), ctr(15))
+    p.inventory = [items.spearOfNoctos, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, items.aquaLung, food.cake()]
     p.equipped = [items.aquaLung]
 
     abandonedChannel.changeBlock(47, 17, '_')
@@ -2801,7 +2802,7 @@ var gameInterval = setInterval(function() {
                 } else if (curMap == howlerHollow) {
                     playMusic("Howler Hollow")
                 } else if (curMap == stormedRoom) {
-                    playMusic("Darkened Battle") // Default ??? Need to make music for Stormed
+                    playMusic("Noctos Battle") // Default ??? Need to make music for Stormed
                 } else if (curMap == droptonTunnels) {
                     playMusic("Dropton City") // changeme later when we make new music
                 } else if (curMap == droptonCity) {
@@ -2811,7 +2812,9 @@ var gameInterval = setInterval(function() {
                 } else if (curMap == cryoUnderground) {
                     playMusic("Cryo Underground")
                 } else if (curMap == drownedRoom) {
-                    playMusic("Darkened Battle")
+                    playMusic("Noctos Battle")
+                } else if (curMap == stoneheartSanctuary) {
+                    playMusic("Stoneheart Sanctuary")
                 }
             }
             
@@ -2905,9 +2908,9 @@ var gameInterval = setInterval(function() {
             
             if (curBoss.health <= 0) {
                 bossfight = false
-                if (curMap == darkenedRoom) {
+                if (curMap == noctosRoom) {
                     Screen.fadeOut(0.005, function() {
-                        darkenedScale = 1
+                        noctosScale = 1
                         scene = "DARKENED BOSS CUTSCENE DEFEATED"
                     })
                 } else if (curMap == stormedRoom) {
@@ -3177,27 +3180,27 @@ var gameInterval = setInterval(function() {
             // ctx.fillStyle = "rgb(255, 50, 100)"
             ctx.save()
             ctx.translate(width / 2, height / 2)
-            ctx.scale(darkenedScale, darkenedScale)
+            ctx.scale(noctosScale, noctosScale)
             ctx.translate(width / -2, height / -2)
             if (cutsceneFrame >= 360) {
-                if (darkenedScale > 2) {
+                if (noctosScale > 2) {
                     ctx.translate(Math.random() * 10, Math.random() * 10)
                 }
-                darkenedRoom.draw(p, "Player View")
-            //     if (darkenedScale <= 2) {
-            //         darkenedScale += 0.03
+                noctosRoom.draw(p, "Player View")
+            //     if (noctosScale <= 2) {
+            //         noctosScale += 0.03
             //     }
-                if (darkenedScale <= 2) {
-                    darkenedScale += 0.05
+                if (noctosScale <= 2) {
+                    noctosScale += 0.05
                 }
             }
-            models.bosses.darkened.draw()
+            models.bosses.noctos.draw()
             ctx.restore()
-            if (darkenedScale > 2) {
+            if (noctosScale > 2) {
                 ctx.fillStyle = "rgb(150, 0, 0)"
                 ctx.font = "100px serif"
                 ctx.textAlign = "center"
-                ctx.fillText(models.bosses.darkened.name, width / 2, height / 4)
+                ctx.fillText(models.bosses.noctos.name, width / 2, height / 4)
             }
             
             if (cutsceneFrame < 360) {
@@ -3209,25 +3212,25 @@ var gameInterval = setInterval(function() {
             if (cutsceneFrame >= 535) {
                 scene = "GAME"
                 cutsceneFrame = 0
-                darkenedScale = 1
+                noctosScale = 1
             }
         } else if (scene == "DARKENED BOSS CUTSCENE PHASE 2") {
             if (cutsceneFrame == 0) {
-                darkenedScale = 1.5
+                noctosScale = 1.5
             }
             ctx.save()
             
             if (cutsceneFrame > 100 && cutsceneFrame < 575) {
                 ctx.translate(Math.random() * 20, Math.random() * 10)
-                darkenedScale -= 0.001
+                noctosScale -= 0.001
             }
             
             ctx.translate(width / 2, height / 2)
-            ctx.scale(darkenedScale, darkenedScale)
+            ctx.scale(noctosScale, noctosScale)
             ctx.translate(width / -2, height / -2)
             
             ctx.translate((-1 * p.x) + (width / 2), (-1 * p.y) + (height / 2))
-            darkenedRoom.draw(p, "Player View")
+            noctosRoom.draw(p, "Player View")
             
             ctx.translate(-1 * ((-1 * p.x) + (width / 2)), -1 * ((-1 * p.y) + (height / 2)))
             
@@ -3236,18 +3239,18 @@ var gameInterval = setInterval(function() {
             ellipse(width/2, height/2, 150, 150, "rgb(0, 0, 0)")
         
             // Eyes
-            ellipse(width/2 - 30, height/2 - 35, 30, 30, "rgb(" + (255 - (darkenedColor / 2)) + ", 50, 100)")
-            ellipse(width/2 + 30, height/2 - 35, 30, 30, "rgb(" + (255 - (darkenedColor / 2)) + ", 50, 100)")
+            ellipse(width/2 - 30, height/2 - 35, 30, 30, "rgb(" + (255 - (noctosColor / 2)) + ", 50, 100)")
+            ellipse(width/2 + 30, height/2 - 35, 30, 30, "rgb(" + (255 - (noctosColor / 2)) + ", 50, 100)")
             
         
             // Arms
-            ellipse(width/2 + 75, height/2, 40, 40, "rgb(" + (125 - darkenedColor) + ", 25, 50)")
-            ellipse(width/2 - 75, height/2, 40, 40, "rgb(" + (125 - darkenedColor) + ", 25, 50)")
+            ellipse(width/2 + 75, height/2, 40, 40, "rgb(" + (125 - noctosColor) + ", 25, 50)")
+            ellipse(width/2 - 75, height/2, 40, 40, "rgb(" + (125 - noctosColor) + ", 25, 50)")
             
             
             if (cutsceneFrame > 100 && cutsceneFrame < 575 && spearSpeed > 0) {
                 spearSpeed += 1 - (cutsceneFrame / 1000)
-                darkenedColor ++
+                noctosColor ++
                 if (spearSize < 50) 
                 spearSize += 0.15
             }
@@ -3258,21 +3261,21 @@ var gameInterval = setInterval(function() {
     
     
             // Spear thing
-            ctx.fillStyle = "rgb(" + (50 - darkenedColor) + ", 50, 50)"
+            ctx.fillStyle = "rgb(" + (50 - noctosColor) + ", 50, 50)"
             
             
             ctx.fillRect(width/2 + 60, height/2 - 80, 16, 180) // Center x = 63
             if (cutsceneFrame > 700) {
                 ellipse(width/2 + 68, height/2 - 90 - shootTriangle, 30, 30, "rgb(255 , 50, 100)")
             }
-            ellipse(width/2 + 68, height/2 - 90, spearSize, spearSize, "rgb(" + (255 - darkenedColor) + ", 50, 100)")
+            ellipse(width/2 + 68, height/2 - 90, spearSize, spearSize, "rgb(" + (255 - noctosColor) + ", 50, 100)")
             ctx.beginPath()
             
             
             
             
             if (cutsceneFrame < 700) {
-                triangle(width/2 + 50, height/2 - 80, width/2 + 68, height/2 - 115, width/2 + 86, height/2 - 80, "rgb(" + (255 - darkenedColor) + ", 50, 100)")
+                triangle(width/2 + 50, height/2 - 80, width/2 + 68, height/2 - 115, width/2 + 86, height/2 - 80, "rgb(" + (255 - noctosColor) + ", 50, 100)")
             }
             
             if (cutsceneFrame > 700) {
@@ -3292,7 +3295,7 @@ var gameInterval = setInterval(function() {
                 scene = "GAME"
                 fade = 0
                 cutsceneFrame = 0
-                darkenedScale = 0
+                noctosScale = 0
             }
             
             ctx.restore()
@@ -3309,13 +3312,13 @@ var gameInterval = setInterval(function() {
             ctx.fillRect(0, 0, width, height) 
         
             if (cutsceneFrame > 100 && cutsceneFrame < 575) {
-                darkenedScale += 0.001
+                noctosScale += 0.001
                 if (spearSize > 0) {
                     spearSize -= 1
                 } else {
                     spearSize = 0
                 }
-                darkenedColor += 0.3
+                noctosColor += 0.3
             }
     
             if (spearSize <= 0) {
@@ -3340,7 +3343,7 @@ var gameInterval = setInterval(function() {
                 curMap = mainMap
                 p.x = 6 * 75
                 p.y = 54 * 75
-                p.giveItem(items.spearOfTheDarkened, false)
+                p.giveItem(items.spearOfNoctos, false)
                 wayne.x = ctr(6)
                 wayne.y = ctr(46)
                 lighting = 5000
@@ -3378,8 +3381,8 @@ var gameInterval = setInterval(function() {
                     "You're back! Wait...",
                     "What's this you're holding?",
                     "...",
-                    "The Spear of the Darkened??? How did you get that?",
-                    "Did you really defeat the Darkened?",
+                    "The Spear of Noctos??? How did you get that?",
+                    "Did you really defeat the Noctos?",
                     "...",
                     "Wow!! I was planning on telling you more first, but\nyou've already gone and done it!",
                     "I still have a lot to tell you though.\nFollow me and I'll tell you more...",
@@ -3421,27 +3424,27 @@ var gameInterval = setInterval(function() {
             
             // old.draw()
             ctx.translate(width / 2, height / 2)
-            ctx.scale(darkenedScale, darkenedScale)
+            ctx.scale(noctosScale, noctosScale)
             ctx.translate(width / -2, height / -2)
     
             ctx.translate((-1 * p.x) + (width / 2), (-1 * p.y) + (height / 2))
-            darkenedRoom.draw(p, "Player View")
+            noctosRoom.draw(p, "Player View")
             ctx.translate(-1 * ((-1 * p.x) + (width / 2)), -1 * ((-1 * p.y) + (height / 2)))
         
         
             
             if (cutsceneFrame < 750) {
                 // Body
-                ellipse(width/2, height/2, 150, 150, "rgb("+ darkenedColor +", "+ darkenedColor +", "+ darkenedColor +")")
+                ellipse(width/2, height/2, 150, 150, "rgb("+ noctosColor +", "+ noctosColor +", "+ noctosColor +")")
             
                 // Eyes
-                ellipse(width/2 - 30, height/2 - 35, 30, 30, "rgb("+ darkenedColor +", 50, 100)")
-                ellipse(width/2 + 30, height/2 - 35, 30, 30, "rgb("+ darkenedColor +", 50, 100)")
+                ellipse(width/2 - 30, height/2 - 35, 30, 30, "rgb("+ noctosColor +", 50, 100)")
+                ellipse(width/2 + 30, height/2 - 35, 30, 30, "rgb("+ noctosColor +", 50, 100)")
                 
             
                 // Arms
-                ellipse(width/2 + 75, height/2, 40, 40, "rgb("+ darkenedColor +", 25, 50)")
-                ellipse(width/2 - 75, height/2, 40, 40, "rgb("+ darkenedColor +", 25, 50)")
+                ellipse(width/2 + 75, height/2, 40, 40, "rgb("+ noctosColor +", 25, 50)")
+                ellipse(width/2 - 75, height/2, 40, 40, "rgb("+ noctosColor +", 25, 50)")
             
             }
             //ctx.save()
@@ -3466,7 +3469,7 @@ var gameInterval = setInterval(function() {
             // Spear thing
             
             
-            triangle(width/2 + 50, height/2 - 80, width/2 + 68, height/2 - 115, width/2 + 86, height/2 - 80, "rgb(" + (darkenedColor) + ", 50, 100)")
+            triangle(width/2 + 50, height/2 - 80, width/2 + 68, height/2 - 115, width/2 + 86, height/2 - 80, "rgb(" + (noctosColor) + ", 50, 100)")
             ctx.fillStyle = "rgb(0, 50, 50)"
             ctx.fillRect(width/2 + 60, height/2 - 80, 16, 180) // Center x = 63
             ellipse(width/2 + 68, height/2 - 90, spearSize, spearSize, "rgb(0, 50, 100)")
@@ -3485,7 +3488,7 @@ var gameInterval = setInterval(function() {
                 
                 
             // }
-            // darkenedRoom.draw(p, "Player View")
+            // noctosRoom.draw(p, "Player View")
         } else if (scene == "SACRED STAR CUTSCENE") {
             cutsceneFrame ++
             playMusic("Sacred Star Cutscene")
@@ -3506,7 +3509,7 @@ var gameInterval = setInterval(function() {
                 confoundedCave.draw(p, "Cutscene View", 0 * 75 + (cutsceneFrame - 700) * 2, 10 * 75, 0.5)
                 ctx.restore()
                 if (cutsceneFrame < 1150) {
-                    cutsceneText = "Darkened is the Master of Night. However, the Darkened you battled is not the real one!"
+                    cutsceneText = "Noctos is the Master of Night. However, the Noctos you battled is not the real one!"
                 } else if (cutsceneFrame >= 1150 && cutsceneFrame < 1600) {
                     cutsceneText = badGuy + " provided the original masters with weapons to make them more powerful."
                 } else if (cutsceneFrame >= 1600 && cutsceneFrame < 2050) {
@@ -3563,7 +3566,7 @@ var gameInterval = setInterval(function() {
                 wayne.lines = [
                     "Hello!",
                     "I think the old man told you about this island's history,\nso I'll help you save it!",
-                    "Long ago, Darkened and the other masters were corrupted and\nwreaked havoc upon this island!",
+                    "Long ago, Noctos and the other masters were corrupted and\nwreaked havoc upon this island!",
                     "Although the islanders could not defeat them, they were able\ntemporarily imprison them.",
                     "Before they could do this, however, the masters built borders between\ndifferent regions of this island. This made it tougher for\nus islanders to work together.",
                     "These borders were designed to open for their masters. But, since you conquered\none of the them, we suspect these borders may open for you.",
@@ -3602,23 +3605,23 @@ var gameInterval = setInterval(function() {
             // ctx.fillStyle = "rgb(255, 50, 100)"
             ctx.save()
             ctx.translate(width / 2, height / 2)
-            ctx.scale(darkenedScale, darkenedScale)
+            ctx.scale(noctosScale, noctosScale)
             ctx.translate(width / -2, height / -2)
             if (cutsceneFrame >= 360) {
-                if (darkenedScale > 2) {
+                if (noctosScale > 2) {
                     ctx.translate(Math.random() * 10, Math.random() * 10)
                 }
                 stormedRoom.draw(p, "Player View")
-            //     if (darkenedScale <= 2) {
-            //         darkenedScale += 0.03
+            //     if (noctosScale <= 2) {
+            //         noctosScale += 0.03
             //     }
-                if (darkenedScale <= 2) {
-                    darkenedScale += 0.05
+                if (noctosScale <= 2) {
+                    noctosScale += 0.05
                 }
             }
             models.bosses.stormed.draw()
             ctx.restore()
-            if (darkenedScale > 2) {
+            if (noctosScale > 2) {
                 ctx.fillStyle = "rgb(150, 0, 0)"
                 ctx.font = "100px serif"
                 ctx.textAlign = "center"
@@ -3634,7 +3637,7 @@ var gameInterval = setInterval(function() {
             if (cutsceneFrame >= 535) {
                 scene = "GAME"
                 cutsceneFrame = 0
-                darkenedScale = 1
+                noctosScale = 1
             }
 		} else if (scene == "STORMED BOSS CUTSCENE PHASE 2") {
             cutsceneFrame ++

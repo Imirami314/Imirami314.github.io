@@ -46,11 +46,11 @@ Chest.prototype.open = function(p) {
 
 // Items
 var items = {
-    spearOfTheDarkened: new Item("Spear of the Darkened", 15, function(x, y) {
-        ctx.drawImage(images.spearOfTheDarkened, x - 15, y - 15, 50, 15)
+    spearOfNoctos: new Item("Spear of Noctos", 15, function(x, y) {
+        ctx.drawImage(images.spearOfNoctos, x - 15, y - 15, 50, 15)
     }, function(p) {
         p.spearAttack()
-    }, "A mystical spear you obtained after defeating Darkened, Master of Night.", "WEAPONS"),
+    }, "A mystical spear you obtained after defeating Noctos, Master of Night.", "WEAPONS"),
     stormedsSword: new Item("Stormed's Sword", 25, function(x, y) {
         ctx.save()
         ctx.translate(x + 45, y + 45)

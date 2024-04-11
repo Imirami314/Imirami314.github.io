@@ -412,12 +412,12 @@ var music = [
         audio: new Audio('audio/boss_cutscene.mp3')
 	},
 	{
-		name: "Darkened Battle",
-        audio: new Audio('audio/darkened_battle.mp3')
+		name: "Noctos Battle",
+        audio: new Audio('audio/noctos_battle.mp3')
 	},
     {
-		name: "Darkened Battle Phase 2",
-        audio: new Audio('audio/darkened_battle_phase_2.mp3')
+		name: "Noctos Battle Phase 2",
+        audio: new Audio('audio/noctos_battle_phase_2.mp3')
 	},
     {
 		name: "Sacred Star Cutscene",
@@ -478,6 +478,10 @@ var music = [
     {
         name: "Litholia",
         audio: new Audio('audio/litholia.mp3')
+    },
+    {
+        name: "Stoneheart Sanctuary",
+        audio: new Audio('audio/stoneheartSanctuary.mp3')
     },
     {
 		name: "New Location",
