@@ -2634,7 +2634,7 @@ function startPos() {
     dev = true
     curMap = stoneheartSanctuary
     p.goTo(ctr(31), ctr(15))
-    p.inventory = [items.spearOfNoctos, food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, items.aquaLung, food.cake()]
+    p.inventory = [items.spearOfNoctos, food.apple(), food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, items.aquaLung, food.cake()]
     p.equipped = [items.aquaLung]
 
     abandonedChannel.changeBlock(47, 17, '_')

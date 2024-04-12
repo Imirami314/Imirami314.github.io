@@ -1010,6 +1010,24 @@ Player.prototype.displayMap = function() {
         }
     }
 }
+// might clean up code later
+Player.prototype.numItems = function (item) {
+    var count = 0;
+    for (var i = 0; i < this.inventory.length; i++) {
+        var index = this.inventory[i];
+        if (item.constructor.name == 'Food') {
+            if (JSON.stringify(index) == JSON.stringify(item)) {
+                count++;
+                
+            }
+        } else {
+            if (index == item) {
+                count++;
+            }
+        }
+    }
+    return count;
+};
 
 Player.prototype.displayInventory = function() {
     ctx.fillStyle = "rgba(50, 50, 255, 0.9)"
@@ -1018,14 +1036,26 @@ Player.prototype.displayInventory = function() {
 
     var subcategory = []
 
-    for (var i in this.inventory) {
+    /* This is very weird code (lot of it was looking things up + Chat GPT), but it basically sorts through
+    an array to get rid of duplicates, and the stuff inside makes sure food functions are also accounted for*/
+    this.sortedInventory = this.inventory.filter((item, index, self) =>
+        index === self.findIndex((t) =>
+        typeof t === 'function' ? t.toString() === item.toString() : JSON.stringify(t) === JSON.stringify(item)
+    ));
+    
+    for (var i in this.sortedInventory) {
         try {
-            var item = this.inventory[i]
+            var item = this.sortedInventory[i]
             let mouseItemDist = Math.hypot(mouseX - ((i % 8) * 100 + width / 8 + 100), mouseY - (height / 8 + 100 * (Math.floor(i / 8) + 1)))
             if (this.itemsMode == 'ALL') {
                 ellipse((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1), 90, 90, "rgba(0, 0, 255, 0.5)")
 
                 item.draw((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1))
+                ctx.fillStyle = "rgb(0, 0, 0)"
+                ctx.textAlign = "center"
+                ctx.font = "25px serif"
+                ctx.fillText(this.numItems(item), (i % 8) * 100 + width / 8 + 130, height / 8 + 140 * (Math.floor(i / 8) + 1))
+                
                 if (mouseItemDist < 50) {
                     ctx.fillStyle = "rgb(0, 0, 0)"
                     ctx.textAlign = "center"
@@ -1051,6 +1081,10 @@ Player.prototype.displayInventory = function() {
                 var item = subcategory[i]
                 var mouseItemDist = Math.hypot(mouseX - ((i % 8) * 100 + width / 8 + 100), mouseY - (height / 8 + 100 * (Math.floor(i / 8) + 1)))
                 item.draw((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1))
+                ctx.fillStyle = "rgb(0, 0, 0)"
+                ctx.textAlign = "center"
+                ctx.font = "25px serif"
+                ctx.fillText(this.numItems(item), (i % 8) * 100 + width / 8 + 130, height / 8 + 140 * (Math.floor(i / 8) + 1))
                 if (mouseItemDist < 50) {
                     ctx.fillStyle = "rgb(0, 0, 0)"
                     ctx.textAlign = "center"
