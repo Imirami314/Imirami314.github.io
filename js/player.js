@@ -54,7 +54,7 @@ function Player(x, y, npcs) {
     this.region = null
     
     this.weaponIndex = 0
-    this.weapon = this.inventory[this.weaponIndex]
+    this.weapon = null
     this.equipped = [] // Things that the player has equipped (e.g. Aqua Lung), Default []
     this.weaponShift = {
         x: 0,
@@ -442,10 +442,12 @@ Player.prototype.HUD = function() {
 }
 
 Player.prototype.move = function() {
-    if (!!this.inventory[this.weaponIndex]) {
-        this.weapon = this.inventory[this.weaponIndex]
-    } else {
-        this.weaponIndex --
+    if (!!this.sortedInventory) {
+        if (!!this.sortedInventory[this.weaponIndex]) {
+            this.weapon = this.sortedInventory[this.weaponIndex]
+        } else {
+            this.weaponIndex --
+        }
     }
 
     if (this.spearHitting || this.swordHitting) {
@@ -1122,7 +1124,11 @@ Player.prototype.displayInventory = function() {
                     if (mouseIsDown) {
                         for (var j in this.sortedInventory) {
                             if (this.sortedInventory[j].name == item.name) {
-                                this.weaponIndex = j
+                                for (var k in this.inventory) {
+                                    if (item.name == this.inventory[k].name) {
+                                        this.weaponIndex = k
+                                    }
+                                }
                                 continue
                             }
                         }

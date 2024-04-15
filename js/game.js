@@ -2632,8 +2632,8 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = true
-    curMap = stoneheartSanctuary
-    p.goTo(ctr(31), ctr(15))
+    curMap = lithosRoom
+    p.goTo(ctr(15), ctr(15))
     p.inventory = [items.spearOfNoctos, items.spearOfNoctos, food.apple(), food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, items.aquaLung, food.cake()]
     p.equipped = [items.aquaLung]
 
