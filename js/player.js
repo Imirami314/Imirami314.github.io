@@ -1038,11 +1038,27 @@ Player.prototype.displayInventory = function() {
 
     /* This is very weird code (lot of it was looking things up + Chat GPT), but it basically sorts through
     an array to get rid of duplicates, and the stuff inside makes sure food functions are also accounted for*/
-    this.sortedInventory = this.inventory.filter((item, index, self) =>
-        index === self.findIndex((t) =>
-        typeof t === 'function' ? t.toString() === item.toString() : JSON.stringify(t) === JSON.stringify(item)
-    ));
-    
+    this.sortedInventory = [];
+    for (var i = 0; i < this.inventory.length; i++) {
+        var item = this.inventory[i];
+        var isDuplicate = false;
+        for (var j = 0; j < this.sortedInventory.length; j++) {
+            if (item.damage > 0) {
+                break
+            }
+
+            var sortedItem = this.sortedInventory[j];
+            if ((typeof sortedItem === 'function' && typeof item === 'function' && sortedItem.toString() === item.toString()) ||
+            (JSON.stringify(sortedItem) === JSON.stringify(item))) {
+                isDuplicate = true;
+                break;
+            }
+        }
+        if (!isDuplicate) {
+            this.sortedInventory.push(item);
+        }
+    }
+
     for (var i in this.sortedInventory) {
         try {
             var item = this.sortedInventory[i]
@@ -1051,10 +1067,16 @@ Player.prototype.displayInventory = function() {
                 ellipse((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1), 90, 90, "rgba(0, 0, 255, 0.5)")
 
                 item.draw((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1))
-                ctx.fillStyle = "rgb(0, 0, 0)"
-                ctx.textAlign = "center"
-                ctx.font = "25px serif"
-                ctx.fillText(this.numItems(item), (i % 8) * 100 + width / 8 + 130, height / 8 + 140 * (Math.floor(i / 8) + 1))
+
+                // Number of item (excluding weapons)
+                if (item.damage == 0 || item.constructor.name == 'Food') {
+                    ellipse((i % 8) * 100 + width / 8 + 130, height / 8 + 135 * (Math.floor(i / 8) + 1), 30, 30, "rgb(3, 136, 252)")
+                    ctx.fillStyle = "rgb(0, 0, 0)"
+                    ctx.textAlign = "center"
+                    ctx.font = "25px serif"
+                    ctx.fillText(this.numItems(item), (i % 8) * 100 + width / 8 + 130, height / 8 + 140 * (Math.floor(i / 8) + 1))
+                    
+                }
                 
                 if (mouseItemDist < 50) {
                     ctx.fillStyle = "rgb(0, 0, 0)"
@@ -1081,10 +1103,15 @@ Player.prototype.displayInventory = function() {
                 var item = subcategory[i]
                 var mouseItemDist = Math.hypot(mouseX - ((i % 8) * 100 + width / 8 + 100), mouseY - (height / 8 + 100 * (Math.floor(i / 8) + 1)))
                 item.draw((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1))
-                ctx.fillStyle = "rgb(0, 0, 0)"
-                ctx.textAlign = "center"
-                ctx.font = "25px serif"
-                ctx.fillText(this.numItems(item), (i % 8) * 100 + width / 8 + 130, height / 8 + 140 * (Math.floor(i / 8) + 1))
+                
+                if (item.damage == 0 || item.constructor.name == 'Food') {
+                    ellipse((i % 8) * 100 + width / 8 + 130, height / 8 + 135 * (Math.floor(i / 8) + 1), 30, 30, "rgb(3, 136, 252)")
+                    ctx.fillStyle = "rgb(0, 0, 0)"
+                    ctx.textAlign = "center"
+                    ctx.font = "25px serif"
+                    ctx.fillText(this.numItems(item), (i % 8) * 100 + width / 8 + 130, height / 8 + 140 * (Math.floor(i / 8) + 1))
+                    
+                }
                 if (mouseItemDist < 50) {
                     ctx.fillStyle = "rgb(0, 0, 0)"
                     ctx.textAlign = "center"
@@ -1093,8 +1120,8 @@ Player.prototype.displayInventory = function() {
                     ctx.font = "15px serif"
                     fillTextMultiLine(item.desc + "\nDamage: " + item.damage, width / 2, height / 2 + 150)
                     if (mouseIsDown) {
-                        for (var j in this.inventory) {
-                            if (this.inventory[j].name == item.name) {
+                        for (var j in this.sortedInventory) {
+                            if (this.sortedInventory[j].name == item.name) {
                                 this.weaponIndex = j
                                 continue
                             }
