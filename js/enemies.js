@@ -47,15 +47,15 @@ Enemy.prototype.pathToHome = function() {
     return this.pathTo(Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75))
 }
 
-Enemy.prototype.movePathToPlayer = function() {
-    this.movePathTo(p.cords.x, p.cords.y)
+Enemy.prototype.movePathToPlayer = function(angleSpeed) {
+    this.movePathTo(p.cords.x, p.cords.y, (angleSpeed ?? 0.2))
 }
 
-Enemy.prototype.movePathToHome = function() {
-    this.movePathTo(Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75))
+Enemy.prototype.movePathToHome = function(angleSpeed) {
+    this.movePathTo(Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75), (angleSpeed ?? 0.2))
 }
 
-Enemy.prototype.movePathTo = function(cordX, cordY) {
+Enemy.prototype.movePathTo = function(cordX, cordY, angleSpeed) {
     if (!!this.pathTo(cordX, cordY)[1] && this.pathTo(cordX, cordY).length > 0) {
         this.nextPoint = {
             x: this.pathTo(cordX, cordY)[1][0],
@@ -68,9 +68,9 @@ Enemy.prototype.movePathTo = function(cordX, cordY) {
         this.moveAngle = Math.atan2(dy, dx)
         if (Math.abs(this.moveAngle - this.curAngle) > 0.1) {
             if (this.curAngle < this.moveAngle) {
-                this.curAngle += 0.2
+                this.curAngle += angleSpeed
             } else {
-                this.curAngle -= 0.2
+                this.curAngle -= angleSpeed
             }
         }
         
@@ -99,7 +99,7 @@ class Boss extends Enemy {
         }
     
         if (this.health < this.animatedHealth && this.health > 0) {
-            this.animatedHealth --
+            this.animatedHealth -= 3
             this.beingHit = true
         } else {
             this.beingHit = false
@@ -941,30 +941,54 @@ class Lithos extends Boss {
         this.damage = 10
         this.maxHealth = 1600
         this.health = 1600 // Default 1600
-        this.animatedHealth = 250
+        this.animatedHealth = 1600
 
         this.speed = 2
-        this.playerDist = 100000 // idk man
+        this.moving = false
+        
+        this.playerDist = 69420 // Direct distance from player (I set it to 69420 because it gets updated anyway)
         this.playerAngle = 0
-
-        this.spearShift = 0
+        this.bodyAngle = 0
+        this.scaleFactor = 1
+        this.scaleShift = 1
 
         this.phase = 1 // Default 1
 
-        this.hittable = true
-        this.beingHit = false
+        this.hitCooldown = 1
+        this.hitting = false
+        this.hittable = true // Can boss be hit
+        this.beingHit = false // Is boss being hit
+        this.hitRegistered = false // Keeps track of whether damage has already been dealth
 
-        this.phase2Played = false // Check if phase 2 cutscene has played
+        this.phase2Played = false // Check if phase 2 cutscene has played, Default false
     }
 
     draw() {
-        if (scene === "GAME") {
+        if (this.map == curMap.name) {
+            ctx.save()
+            ctx.translate(this.x, this.y)
+            ctx.rotate(this.curAngle + Math.PI / 2) // DEFAULT ON
+            ctx.scale(this.scaleFactor * this.scaleShift, this.scaleFactor * this.scaleShift)
+            ctx.translate(-1 * this.x, -1 * this.y)
+    
+            // Body
             if (this.phase == 1) {
-                playMusic("Noctos Battle")
+                // Draw Phase 1
+                ellipse(this.x, this.y, 150, 150, "rgb(0, 0, 0)") // changeme to actual boss image
+                ctx.drawImage(images.rock, this.x - 100, this.y - 30, 60, 60)
+                ctx.drawImage(images.rock, this.x + 50, this.y - 30, 60, 60)
             } else if (this.phase == 2) {
-                playMusic("Noctos Battle Phase 2")
+                // Draw Phase 2
+                ellipse(this.x, this.y, 150, 150, "rgb(0, 0, 0)") // changeme to actual boss image
             }
+            
+            ctx.restore()
+            ctx.fillStyle = "rgb(0, 0, 0)"
         }
+    }
+
+    update() {
+        this.draw()
         
         // Makes it so the calculations don't divide by 0
         if ((p.x - this.x) == 0) {
@@ -974,192 +998,62 @@ class Lithos extends Boss {
         if ((p.y - this.y) == 0) {
             this.y -= 0.5
         }
-        
-        this.tpTimer -= perSec(1)
+    
+        // Update information for the boss
+        this.hitCooldown -= perSec(1)
 
-        this.spikeX = this.x + Math.cos(this.playerAngle - Math.PI / 3.3 + Math.PI / 2) * 112
-        this.spikeY = this.y + Math.sin(this.playerAngle - Math.PI / 3.3 + Math.PI / 2) * 112
-        this.playerWandAngle = Math.atan2((p.y - this.spikeY), (p.x - this.spikeX))
-        
-        if (this.map == curMap.name) {
-            ctx.save()
-            ctx.translate(this.x, this.y)
-            ctx.rotate(this.playerAngle + Math.PI / 2)
-            ctx.scale(this.scaleFactor * this.scaleShift, this.scaleFactor * this.scaleShift)
-            ctx.translate(-1 * this.x, -1 * this.y)
-            
-            // Speedy fade thing
-            if (this.spearShift == 100 && !this.stuck) {
-                ellipse(this.x, this.y + 10, 150, 150, "rgba(0, 0, 0, 0.3)")
-                ellipse(this.x, this.y + 20, 150, 150, "rgba(0, 0, 0, 0.2)")
-                ellipse(this.x, this.y + 45, 150, 150, "rgba(0, 0, 0, 0.1)")
-            }
-    
-            // Body
-            if (this.beingHit) {
-                
-                ellipse(this.x, this.y, 150, 150, "rgb(50, 0, 0)")
-            } else {
-                ellipse(this.x, this.y, 150, 150, "rgb(0, 0, 0)")
-            }
-        
-            // Eyes
-            if (this.phase == 1 || this.beingHit) {
-                ellipse(this.x - 30, this.y - 35, 30, 30, "rgb(255, 50, 100)")
-                ellipse(this.x + 30, this.y - 35, 30, 30, "rgb(255, 50, 100)")
-            } else if (this.phase == 2) {
-                ellipse(this.x - 30, this.y - 35, 30, 30, "rgb(0, 50, 100)")
-                ellipse(this.x + 30, this.y - 35, 30, 30, "rgb(0, 50, 100)")
-            }
-        
-            // Arms
-            if (this.phase == 1 || this.beingHit) {
-                ellipse(this.x + 75, this.y, 40, 40, "rgb(125, 25, 50)")
-                ellipse(this.x - 75, this.y, 40, 40, "rgb(125, 25, 50)")
-            } else if (this.phase == 2) {
-                ellipse(this.x + 75, this.y, 40, 40, "rgb(0, 25, 50)")
-                ellipse(this.x - 75, this.y, 40, 40, "rgb(0, 25, 50)")
-            }
-            ctx.translate(this.x + 55, this.y)
-            if (this.phase == 1) {
-                ctx.rotate(- Math.PI / 10)
-            } else if (this.phase == 2) {
-                // ctx.rotate(- Math.PI / 15)
-                ctx.rotate(0)
-            }
-            ctx.translate(-1 * (this.x + 55), -1 * this.y)
-            ctx.translate(0, -1 * this.spearShift)
-        
-            // Spear thing
-            if (this.phase == 1) {
-                ctx.fillStyle = "rgb(110, 60, 30)"
-            } else if (this.phase == 2) {
-                ctx.fillStyle = "rgb(50, 50, 50)"
-            }
-            
-            ctx.fillRect(this.x + 60, this.y - 80, 16, 180) // Center x = 63
-            ctx.beginPath()
-            
-            if (this.phase == 1) {
-                triangle(this.x + 50, this.y - 80, this.x + 68, this.y - 115, this.x + 86, this.y - 80, "rgb(255, 50, 100)")
-            } else if (this.phase == 2) {
-                ellipse(this.x + 68, this.y - 90, 30, 30, "rgb(0, 50, 100)")
-                // for (var i = 0; i < 6; i ++) {
-                //     triangle(this.x + 50, this.y - 80 + i * 15, this.x + 68, this.y - 115 + i * 15, this.x + 86, this.y - 80 + i * 15, "rgb(0, 50, 100)")
-                // }
-            }
-    
-            if (this.spikes.length == 0) {
-                
-            }
-            
-            ctx.restore()
-            ctx.fillStyle = "rgb(0, 0, 0)"
-            // ctx.fillText((this.playerWandAngle / Math.PI) + "pi", this.x + 200, this.y + 200)
-    
-            for (var i in this.spikes) {
-                var s = this.spikes[i]
-                if (s.moving) {
-                    ellipse(s.x, s.y, 30, 30, "rgb(255, 50, 100)")
-                }
-            }
+        if (this.phase == 2) {
+            this.windModeTimer -= perSec(1)
         }
-    }
 
-    update() {
-        this.draw()
         this.updatePlayerInfo()
         
-        if (this.health <= this.maxHealth / 2) {
-            this.phase = 2
-            if (!this.phase2Played) {
-                scene = "DARKENED BOSS CUTSCENE PHASE 2"
-                this.phase2Played = true
-            }
+        // Makes the angle pi instead of like 1835pi
+        this.bodyAngle = this.bodyAngle % (Math.PI * 2)
+        
+        // Amount x and y to move at a certain angle
+        this.xFactor = Math.cos(this.playerAngle)
+        this.yFactor = Math.sin(this.playerAngle)
+    
+        if (this.hitting) { // Attack animation
+            
         }
     
         if (this.phase == 1) {
-            if (!this.tping) {
-                if (this.tpTimer <= 0) {
-                    // this.move((p.x - this.x) / (33 + (1 / 3)), (p.y - this.y) / 100)
-                    this.spearShift = 100
-                    this.stuck = this.isStuck(this.speed * (p.x - this.x) * 5 / Math.abs(p.x - this.x), this.speed * (p.y - this.y) * 5 / Math.abs(p.y - this.y))
-                    this.move(this.speed * (p.x - this.x) * 5 / Math.abs(p.x - this.x), this.speed * (p.y - this.y) * 5 / Math.abs(p.y - this.y), true)
-                    if (this.playerDist <= 225) {
-                        p.getHit(3)
-                        this.tpTimer = 3
-                    }
-                    if (this.tpTimer <= -0.2) {
-                        this.tpTimer = 3
-                    }
-                } else {
-                    if (this.spearShift > 0) {
-                        this.spearShift --
-                    }
-                }
+            if (!this.hitting) { // Makes boss always face towards the player, but freeze when hitting
+                this.bodyAngle = this.playerAngle
+            }
+
+            this.movePathToPlayer(0.075)
             
-                if (this.tpHitCount % 10 == 0 && this.tpHitCount != 0) {
-                    this.tping = true
-                    this.tpHitCount ++
-                }
-            } else if (this.tping || this.playerDist >= 900) {
-                this.scaleFactor -= perSec(1)
-                if (this.scaleFactor > 0) {
-                    this.scaleShift = 1
-                    this.tpTimer = 3
-                } else {
-                    if (this.scaleShift != -1) {
-                        this.x = Math.random() * curMap.getDimensions().x * 75
-                        this.y = Math.random() * curMap.getDimensions().y * 75
-                    }
-                    this.scaleShift = -1
-                }
+            // Moves the boss, but prevents the boss from shaking while moving (moves only when not hitting)
+            // if (!this.hitting && this.playerDist > 100) {
+            //     this.moving = true
+            //     if (Math.abs(this.pdx) >= 10) {
+            //         this.move(this.dirCoefX * this.speed, 0)
+            //     }
         
-                if (Math.abs(this.scaleFactor) >= 1) {
-                    this.scaleFactor = 1
-                    this.scaleShift = 1
-                    this.tping = false
-                }
+            //     if (Math.abs(this.pdy) >= 10) {
+            //         this.move(0, this.dirCoefY * this.speed)
+            //     }
+            // } else {
+            //     this.moving = false
+            // }
+    
+            if (this.health <= this.maxHealth / 2 && !this.phase2Played) {
+                cutsceneFrame = 0
+                this.phase = 2
             }
         } else if (this.phase == 2) {
-            this.spikeShotCooldown -= perSec(1)
-    
-            if (this.tping) {
-                if (this.playerDist >= 300) {
-                    this.move(this.speed * (p.x - this.x) * 10 / Math.abs(p.x - this.x), this.speed * (p.y - this.y) * 10 / Math.abs(p.y - this.y))
-                } else {
-                    this.tping = false
-                }
-            }
-    
-            if (this.spikeShotCooldown <= 0 && !this.isDead()) {
-                this.spikes.push({
-                    x: this.spikeX,
-                    y: this.spikeY,
-                    dx: Math.cos(this.playerWandAngle) * 10,
-                    dy: Math.sin(this.playerWandAngle) * 10,
-                    moving: true
-                })
-                this.spikeShotRoundCount ++
-                if (this.spikeShotRoundCount == 5) {
-                    this.spikeShotCooldown = 3.5
-                    this.tping = true
-                    this.spikeShotRoundCount = 0
-                } else {
-                    this.spikeShotCooldown = 0.4
-                }
-            }
-            
-            for (var i in this.spikes) {
-                var s = this.spikes[i]
-                if (s.moving) {
-                    s.x += s.dx
-                    s.y += s.dy
-                    if (Math.hypot(s.x - p.x, s.y - p.y) <= 30) {
-                        p.getHit(2)
-                        this.spikes.splice(i, 1)
-                    }
-                }
+            if (this.phase2Played) {
+                
+            } else {
+                // scene = "STORMED BOSS CUTSCENE PHASE 2"
+                // this.phase2Played = true
+                // this.windMode = true
+                // this.x = ctr(13)
+                // this.y = ctr(17)
+                // p.goTo(ctr(13), ctr(21))
             }
         }
     }
@@ -1657,4 +1551,5 @@ const bosses = [
     new Noctos("Noctos Room", 712.5, 100),
     new Stormed("Stormed Room", ctr(13), ctr(17)),
     new Drowned("Drowned Room", ctr(15), ctr(19)),
+    new Lithos("Lithos Room", b(15), b(15)),
 ]

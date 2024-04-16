@@ -560,8 +560,8 @@ Player.prototype.move = function() {
 
     var bDist = entityDistance(this, curBoss)
     if (bDist <= 100 && mouseIsDown && !holding && this.hitCooldown <= 0 && curBoss.hittable) {
-        if (!!this.weapon.damage) {
-            curBoss.health -= this.weapon.damage
+        if (!!this.weapon) {
+            curBoss.health -= this.weapon.damage ?? 1
         } else {
             curBoss.health -= 1
         }
@@ -841,7 +841,7 @@ Player.prototype.hitEnemies = function() {
         var m = monsters[i]
         var mDist = entityDistance(this, m)
         this.mAngle = Math.atan2((m.y - this.y), (m.x - this.x))
-        if (mDist <= 150 && mouseIsDown && this.hitCooldown <= 0 && !m.isDead()) {
+        if (mDist <= 150 && mouseIsDown && !keys.e && this.hitCooldown <= 0 && !m.isDead()) {
             this.hitCooldown = 0.35
             if (!!this.weapon.damage) {
                 m.health -= (this.weapon.damage || 1.5)

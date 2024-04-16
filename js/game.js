@@ -2214,6 +2214,39 @@ var interactives = [
         stoneheartSanctuary.changeBlock(23, 24, '(')
     }, function() {
         stoneheartSanctuary.changeBlock(23, 24, ')')
+    }),
+
+    // Lithos Room
+    new RockDispenser(lithosRoom, b(10), b(20), ctr(11), ctr(20)),
+
+    new RockSwitch(lithosRoom, 19, 20, function() {
+        lithosRoom.changeBlocks([
+            [10, 14],
+            [10, 15],
+            [19, 14],
+            [19, 15],
+        ], 'S')
+
+        lithosRoom.changeBlocks([
+            [14, 14],
+            [15, 14],
+            [14, 15],
+            [15, 15],
+        ], '~')
+    }, function() {
+        lithosRoom.changeBlocks([
+            [10, 14],
+            [10, 15],
+            [19, 14],
+            [19, 15],
+        ], '_')
+
+        lithosRoom.changeBlocks([
+            [14, 14],
+            [15, 14],
+            [14, 15],
+            [15, 15],
+        ], '!')
     })
 ]
 
@@ -2631,9 +2664,9 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = true
+    dev = false
     curMap = lithosRoom
-    p.goTo(ctr(15), ctr(15))
+    p.goTo(ctr(18), ctr(15))
     p.inventory = [items.spearOfNoctos, items.spearOfNoctos, food.apple(), food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, items.aquaLung, food.cake()]
     p.equipped = [items.aquaLung]
 
@@ -2801,8 +2834,6 @@ var gameInterval = setInterval(function() {
                     }
                 } else if (curMap == howlerHollow) {
                     playMusic("Howler Hollow")
-                } else if (curMap == stormedRoom) {
-                    playMusic("Noctos Battle") // Default ??? Need to make music for Stormed
                 } else if (curMap == droptonTunnels) {
                     playMusic("Dropton City") // changeme later when we make new music
                 } else if (curMap == droptonCity) {
@@ -2811,8 +2842,6 @@ var gameInterval = setInterval(function() {
                     playMusic("Dropton City") // changeme later when we make new music
                 } else if (curMap == cryoUnderground) {
                     playMusic("Cryo Underground")
-                } else if (curMap == drownedRoom) {
-                    playMusic("Noctos Battle")
                 } else if (curMap == stoneheartSanctuary) {
                     playMusic("Stoneheart Sanctuary")
                 }
@@ -2851,7 +2880,8 @@ var gameInterval = setInterval(function() {
                 }
             }
 
-            for (let inter of interactives) { // Draws interactives that belong on a higher layer
+            for (var i in interactives) { // Draws interactives that belong on a higher layer
+                let inter = interactives[i]
                 if (inter.drawOnTop && curMap == interactives[i].map) {
                     inter.draw()
                 }
@@ -2964,6 +2994,7 @@ var gameInterval = setInterval(function() {
                     Screen.fadeOut(0.005, function() {
                         curMap = abandonedChannel
                         p.inRaft = false
+                        p.canMove = true
                         p.goTo(ctr(47), ctr(19))
                         p.giveItem(items.drownedsScythe, true)
 
