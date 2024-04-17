@@ -943,7 +943,7 @@ class Lithos extends Boss {
         this.health = 1600 // Default 1600
         this.animatedHealth = 1600
 
-        this.speed = 2
+        this.speed = 1.5
         this.moving = false
         
         this.playerDist = 69420 // Direct distance from player (I set it to 69420 because it gets updated anyway)
@@ -974,7 +974,8 @@ class Lithos extends Boss {
             // Body
             if (this.phase == 1) {
                 // Draw Phase 1
-                ellipse(this.x, this.y, 150, 150, "rgb(0, 0, 0)") // changeme to actual boss image
+                // ellipse(this.x, this.y, 150, 150, "rgb(0, 0, 0)") // changeme to actual boss image
+                ctx.drawImage(images.lithosPhase1, this.x - 75, this.y - 75, 150, 150)
                 ctx.drawImage(images.rock, this.x - 100, this.y - 30, 60, 60)
                 ctx.drawImage(images.rock, this.x + 50, this.y - 30, 60, 60)
             } else if (this.phase == 2) {

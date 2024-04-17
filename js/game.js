@@ -2233,6 +2233,22 @@ var interactives = [
             [14, 15],
             [15, 15],
         ], '~')
+
+        lithosRoom.changeBlocks([
+            [13, 10],
+            [14, 10],
+            [15, 10],
+            [16, 10]
+        ], '_')
+
+        lithosRoom.changeBlocks([
+            [12, 7],
+            [12, 8],
+            [12, 9],
+            [17, 7],
+            [17, 8],
+            [17, 9],
+        ], '$')
     }, function() {
         lithosRoom.changeBlocks([
             [10, 14],
@@ -2247,10 +2263,24 @@ var interactives = [
             [14, 15],
             [15, 15],
         ], '!')
+
+        lithosRoom.changeBlocks([
+            [13, 10],
+            [14, 10],
+            [15, 10],
+            [16, 10]
+        ], '$')
+
+        lithosRoom.changeBlocks([
+            [12, 7],
+            [12, 8],
+            [12, 9],
+            [17, 7],
+            [17, 8],
+            [17, 9],
+        ], '%')
     })
 ]
-
-var topInteractives = [] // Interactives that should be drawn on a higher layer, do not change manually
 
 /*
 t - Toggle
@@ -2664,7 +2694,7 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = false
+    dev = true
     curMap = lithosRoom
     p.goTo(ctr(18), ctr(15))
     p.inventory = [items.spearOfNoctos, items.spearOfNoctos, food.apple(), food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, items.aquaLung, food.cake()]

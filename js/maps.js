@@ -73,6 +73,8 @@ var images = {
     // Enemies
     splint: initImage('sprites/enemies/splint/splint.png'),
     splintHurt: initImage('sprites/enemies/splint/splint-hurt.png'),
+    patroller: initImage('sprites/enemies/patroller/patroller.png'),
+
     stormedPhase1: initImage('sprites/enemies/stormed/stormed-phase-1.png'),
     stormedPhase2: initImage('sprites/enemies/stormed/stormed-phase-2.png'),
     drownedPhase1: initImage('sprites/enemies/drowned/drowned-phase-1.png'),
@@ -80,7 +82,8 @@ var images = {
     drownedHurt: initImage('sprites/enemies/drowned/drowned-hurt.png'),
     drownedStunned: initImage('sprites/enemies/drowned/drowned-stunned.png'),
     drownedMinion: initImage('sprites/enemies/drowned/drowned-minion.png'),
-    patroller: initImage('sprites/enemies/patroller/patroller.png'),
+    lithosPhase1: initImage('sprites/enemies/lithos/lithos-phase-1.png'),
+    
 
     // Food
     apple: initImage('sprites/food/apple.png'),
