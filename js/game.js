@@ -2460,7 +2460,7 @@ const c10_1 = new Chest(cryoUnderground, 10, 1, [
 ])
 
 const c34_15 = new Chest(cryoUnderground, 34, 15, [
-    
+    new TrillSum(25)
 ])
 
 const c4_41 = new Chest(droptonCity, 4, 41, [
