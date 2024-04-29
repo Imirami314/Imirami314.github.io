@@ -1046,28 +1046,29 @@ mainMap.solve = function() {
                     [45, 23],
                     [56, 23],
                     function () {
-                        larisa.dir = "U"
-                        larisa.remote = true
-                        p.dir = "D"
-                        cameraStart(b(56), b(23), 5, "NPC", {
-                            npcName: larisa,
-                            lineStop: -1
-                        })
-                        larisa.lines = [
-                            "HUH?!",
-                            "Who are you?",
-                            "...",
-                            "Oh, you can talk!",
-                            "Anyways, it looks like you are stuck buddy!",
-                            "Maybe I should get someone. One of the important ones anyway.\nWait right here!"
-                        ]
-                        larisa.action = function () {
-                            Screen.fadeOut(0.05, function() {
-                                larisa.x = 1
-                                larisa.y = 1
-                            })
-                        }
-                        larisa.actionLine = "after"
+                        // Default ON
+                        // larisa.dir = "U"
+                        // larisa.remote = true
+                        // p.dir = "D"
+                        // cameraStart(b(56), b(23), 5, "NPC", {
+                        //     npcName: larisa,
+                        //     lineStop: -1
+                        // })
+                        // larisa.lines = [
+                        //     "HUH?!",
+                        //     "Who are you?",
+                        //     "...",
+                        //     "Oh, you can talk!",
+                        //     "Anyways, it looks like you are stuck buddy!",
+                        //     "Maybe I should get someone. One of the important ones anyway.\nWait right here!"
+                        // ]
+                        // larisa.action = function () {
+                        //     Screen.fadeOut(0.05, function() {
+                        //         larisa.x = 1
+                        //         larisa.y = 1
+                        //     })
+                        // }
+                        // larisa.actionLine = "after"
                     }
                 ]
             }, 3000)

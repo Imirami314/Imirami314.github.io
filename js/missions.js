@@ -75,7 +75,7 @@ var meetingTheQueen = new Mission("Meeting The Queen", "Main", null, 0)
 
 meetingTheQueen.solve = function () {
     // Change Nevada Lines
-    runOnce(() => {
+    
         if (nevada.firstInteraction) {
             nevada.firstInteraction = false
             nevada.lines = [
@@ -131,6 +131,8 @@ meetingTheQueen.solve = function () {
                 nevada.clearAction()
             }
         } else {
+            runOnce(() => {
+                //alert("uh yeah")
                 nevada.lines = [
                     "Hey again!",
                     "You talked to Lonzo?",
@@ -148,6 +150,7 @@ meetingTheQueen.solve = function () {
                     "...",
                     "Yes, I actually might know something about it. Follow me..."    
                 ]
+            
                 
                 nevada.action = function() {
                     Screen.fadeOut(0.05, function() {
@@ -172,23 +175,22 @@ meetingTheQueen.solve = function () {
                             "If you can get me all the materials, I'll start construction RIGHT away!"
                         ]
                         nevada.remote = true
-                        
+                        saveGame()    
             
             
                     })
                     nevada.clearAction()
                 }
-            
+            })
             
         }
         nevada.actionLine = "after"
-    })
+    
     
     // Fix once shop allows for non-trills?
     if (p.has(items.galeWing) && p.trills >= 50) {
         
         runOnce(() => {
-            
             nevada.lines = [
                 "Hi there, how's it going?",
                 "...",
@@ -204,10 +206,19 @@ meetingTheQueen.solve = function () {
                         "Now, why don't you try getting the item in the water?"
                     ]
                     nevada.remote = true
+                    saveGame()
                 })
+                nevada.clearAction()
             }
             nevada.actionLine = "after"
             
+        })
+    }
+
+    if (curMap == mainMap && keys.space && p.on(164, 23)) {
+        runOnce (() => {
+            p.giveItem(items.windyWastelandKey, true)
+            saveGame()
         })
     }
 
