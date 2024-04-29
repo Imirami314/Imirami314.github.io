@@ -2565,6 +2565,7 @@ function saveGame() {
         lighting: lighting,
         dev: dev,
         curMissions: [],
+        commandsRun: [],
     }
 
     SAVING.maps.push({
@@ -2676,6 +2677,13 @@ function saveGame() {
     lset("lighting", SAVING.lighting)
     lset("dev", dev)
 
+    commandsRun.forEach((command) => {
+        SAVING.commandsRun.push(command)
+    })
+
+    console.log(SAVING.commandsRun)
+    lset("commandsRun", JSON.stringify(SAVING.commandsRun))
+
     console.log("Saved game!")
 }
 
@@ -2696,7 +2704,7 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = true
+    dev = false
     curMap = lithosRoom
     p.goTo(ctr(18), ctr(15))
     p.inventory = [items.spearOfNoctos, items.spearOfNoctos, food.apple(), food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, items.aquaLung, food.cake()]

@@ -949,6 +949,7 @@ class Lithos extends Boss {
         this.playerDist = 69420 // Direct distance from player (I set it to 69420 because it gets updated anyway)
         this.playerAngle = 0
         this.bodyAngle = 0
+        this.armAngle = 0
         this.scaleFactor = 1
         this.scaleShift = 1
 
@@ -976,8 +977,14 @@ class Lithos extends Boss {
                 // Draw Phase 1
                 // ellipse(this.x, this.y, 150, 150, "rgb(0, 0, 0)") // changeme to actual boss image
                 ctx.drawImage(images.lithosPhase1, this.x - 75, this.y - 75, 150, 150)
-                ctx.drawImage(images.rock, this.x - 100, this.y - 30, 60, 60)
-                ctx.drawImage(images.rock, this.x + 50, this.y - 30, 60, 60)
+                ctx.drawImage(images.rock, this.x - 100, this.y - 30, 60, 60) // Left arm
+
+                ctx.save()
+                ctx.translate(this.x, this.y)
+                ctx.rotate(this.armAngle)
+                ctx.translate(- this.x, - this.y)
+                ctx.drawImage(images.rock, this.x + 50, this.y - 30, 60, 60) // Right arm
+                ctx.restore()
             } else if (this.phase == 2) {
                 // Draw Phase 2
                 ellipse(this.x, this.y, 150, 150, "rgb(0, 0, 0)") // changeme to actual boss image
@@ -1021,11 +1028,31 @@ class Lithos extends Boss {
         }
     
         if (this.phase == 1) {
-            if (!this.hitting) { // Makes boss always face towards the player, but freeze when hitting
-                this.bodyAngle = this.playerAngle
+            if (!this.hitting) {
+                // this.bodyAngle = this.playerAngle
+
+                this.armAngle = Math.min(0, this.armAngle + perSec(Math.PI / 2))
             }
 
-            this.movePathToPlayer(0.075)
+            if (this.playerDist <= 100 && this.hitCooldown <= 0) {
+                this.bodyAngle = this.playerAngle
+                this.hitting = true
+            } else {
+                this.movePathToPlayer(0.075)
+            }
+
+            if (this.hitting) { // Hit sequence
+                if (this.armAngle > - Math.PI / 2) { // Check if arm angle has exceeded max
+                    this.armAngle -= perSec(Math.PI / 2) * 6 // Change arm angle
+                } else { // If arm angle is at max
+                    if (this.playerDist <= 100) { // Deal damage if player is still in range
+                        p.getHit(4)
+                    }
+
+                    this.hitting = false
+                    this.hitCooldown = 1
+                }
+            }
             
             // Moves the boss, but prevents the boss from shaking while moving (moves only when not hitting)
             // if (!this.hitting && this.playerDist > 100) {

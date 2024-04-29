@@ -53,7 +53,8 @@ if (!!lget("player")) {
         interactives: JSON.parse(lget("interactives")),
         lighting: lget("lighting"),
         dev: lget("dev"),
-        curMissions: JSON.parse(lget("curMissions"))
+        curMissions: JSON.parse(lget("curMissions")),
+        commandsRun: JSON.parse(lget("commandsRun")),
     }
 }
 
@@ -193,12 +194,12 @@ function eventsDelay(f1, f2, delay) { // Must occur in animation loop
     eventDelays.push({f1: f1, f2: f2, delay: delay, timer: delay})
 }
 
-const commandsRun = []
+const commandsRun = save.commandsRun ?? []
 
 function runOnce(command) {
-    if (commandsRun.indexOf(JSON.stringify(command)) == -1) {
+    if (commandsRun.indexOf(command.toString()) == -1) {
         command()
-        commandsRun.push(JSON.stringify(command))
+        commandsRun.push(command.toString())
     }
 }
 
@@ -206,6 +207,10 @@ function entityDistance(entity1, entity2) {
     if (!!entity1.x && !!entity1.y && !!entity2.x && !!entity2.y) {
         return Math.hypot((entity1.x - entity2.x), (entity1.y - entity2.y))
     }
+}
+
+function poo() {
+    console.log('g')
 }
 
 function setIntervalX(callback, delay, repetitions) {

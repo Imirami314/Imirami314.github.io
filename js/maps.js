@@ -222,7 +222,7 @@ var blocks = [
         name: "stone tiles",
         through: true,
         dps: 0,
-        speed: 3
+        speed: 4
     },
     {
         id: "O",
@@ -359,7 +359,7 @@ var blocks = [
         through: true,
         dps: 0,
         speed: 4
-    }
+    },
 ]
 
 var flowers = [] // WIP
