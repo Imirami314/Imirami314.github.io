@@ -934,13 +934,13 @@ var mainMap = new Landscape([
     'T,,,,@s-@@,,@,,,,,,,,,--,,,,,,,,@@SS|SS@@,,,,,,,,,,,,,,,,,--,,,@TTTTTTTTTTTTTTTTTTTTTTTTTTTTSSS___S___S___S__S_______S____!!_________!!!!!S*******.tt.~~~~~.****zzW..W..W**.~~.,tt,.zzW...............Wzz**W.....W*******WW!!!!!z!SSSSS!zW*********SSSS__S__SSSS__S__SSSS*****,,,,,,,,,,,,,,,,,,,,',
     'T@TTT@s-@TT,,@,,,,,TTT--------------------------------------,,,@@@,,,,,,,,,,,,________,,,,TT!!_S__S___S___S__SSSSSSSSSS_______________!!!!S*******.,,.~~~~~.****zzW.WWW.W**.........zzW......WWW......Wzz**W.WWW.W*******WW!~~~zz!SSSSS!zW*********SSSS__S__SSSS__S__SSSS*****,,,,,,,,,,,,,,,,,,,,',
     'T@,,,@-s@@T~~~~~~~~~~W--------------------------------------,,,,,,,,,,,,,,,,,_~~~~~~~~_,,,TT!!_S______!!__S___________S___________________S*******..........****zzWWW|WWW***********zzWWWWWWWW|WWWWWWWWzz**WWW|WWW*******WW!z!!!z!SS|SS!zW*********SSSSSSSSSSSSSSSSSSSSSS*****,,,,,,,,,,,,,,,,,,,,',
-    'T@,,,@--s@T~~~~~~~~~~W--W~~~~~~~TTTTTTTTTTTTTTTTTTTT~TTTTTT,@~~~~~@,,,,,,,,,,_~~~~~~~~_,,,TTSS___SS___!!__S___________S___________________SzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzW!!z!W!z!!!z!!!zW*********SSSS__S__SSSS__S__SSSS*****,,,,,,,,,,,,,,,,,,,,',
-    'T,,,,@@-s@@T~~~~~~~~~W--W~~~~~~~T~~~~~~~~~~~~~~~~~~T~T,,,,T,,@~~~@,,,,WWW,,,,_~~~~~~~~_,,,TT!!SSSSS___S___S__SSSSSSS__S_____$__!!____SSSSSSzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz~!W!z!!!~!zzzW*********SSSS__S__SSSS__S__SSSS*****,,,,,,,,,,,,,,,,,,,,',
-    'T,,,,,@--s@T~~~~~~~~~W--W~~~~~~~T~~~~~~~~~~~~~~~~~~T~T,,,,TT,,@~@,,,,WWWWW,,,_~~~~~~~~_,,,TT__________S___S__S_____S__S____$$$_!!____SSSSSS*******************zz*ttttttt********zzTzzTTTTTTTTTTTTTTTTTTTTTTTTTTzzTTTTTTTTW!!!!W!~~zzz!WWWW*********SSSS__S__SSSS__S__SSSS*****,,,,,,,,,,,,,,,,,,,,',
-    'T,,,,,@@--@TTTTTTTTTTW--W@~~~~~~T~~~~~~~~~~~~~TTTT~T~TT,,,,T,,,,,,,WWWWWWWWW,_~~~~~~~~_,,,TT__________S___S__S___!!SSSS___$$$$$______SSSSSS*******************zzt~~~~~~~t*******zzTz,,,,,,t,,,,,,,,,,,,,,,,,,,Tzz**W*****WWWWWW!!!!WW!W**W****ttSSSSSSSSSSSSSddSSSSSSSSSSSSSTT,,,,,,,,,,,,,,,,,,,,',
-    'T,,,,,,,T--,,,,,,,,,@W--W@~~~~~~TTTTTTTTTTTTTTT~~~~~~~TTTTT,,,@~@,,WWWWWWWWW,_~~~~~~~~_,,,TTSSSSSSSSSSSSSSS__S___!!S______$$$$$_____SSSSSSS*******zzzzz*******zzt~~~~~~~t*******zzT,,,t~,,~,,,~t,,,,~,t~,,,,,,Tzz*WWW****WWWWWWWWWWWWWWWWW************************************,,,,,,,,,,,,,,,,,,,,',
-    'T,,,,,,,T--,,,,,,,,,,,--TTTTTTTTT-------------TTTTTTT~~~~~~,,@~~~@,WWWW|WWWW,_~~~~~~~~_,,,TT____!!___S_______S_____S______$$|$$_____SSSSSSS******zzzzzzz******zzt~~~~~~~t*******zzT,,,,,,,,,,,,,,,,,t,,,,,,,,,TzzWWWWW********************************************************,,,,,,,,,,,,,,,,,,,,',
-    'T,,,,,,,T-------------------------------------------TTTTTTT,@~~~~~@,,,---,,,,_~~~~~~~~_,,,TT____!!___S_____________S________________S!SS|SS*****zzzzzzzzz*****zzt~~~~~~~t*******zzTTTTTTTTTTTT,,,,,,,,,,,,t,,,TzzWWWWW********************************************************,,,,,,,,,,,,,,,,,,,,',
+    'T@,,,@--s@T~~~~~~~~~~W--W~~~~~~~TTTTTTTTTTTTTTTTTTTT,,,,,,,,@~~~~~@,,,,,,,,,,_~~~~~~~~_,,,TTSS___SS___!!__S___________S___________________SzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzW!!z!W!z!!!z!!!zW*********SSSS__S__SSSS__S__SSSS*****,,,,,,,,,,,,,,,,,,,,',
+    'T,,,,@@-s@@T~~~~~~~~~W--W~~~~~~~T~~~~~~~~~~~~~~~~~~T,,SSSSS,,@~~~@,,,,WWW,,,,_~~~~~~~~_,,,TT!!SSSSS___S___S__SSSSSSS__S_____$__!!____SSSSSSzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz~!W!z!!!~!zzzW*********SSSS__S__SSSS__S__SSSS*****,,,,,,,,,,,,,,,,,,,,',
+    'T,,,,,@--s@T~~~~~~~~~W--W~~~~~~~T~~~~~~~~~~~~~~~~~~T,,S~~~S,,,@~@,,,,WWWWW,,,_~~~~~~~~_,,,TT__________S___S__S_____S__S____$$$_!!____SSSSSS*******************zz*ttttttt********zzTzzTTTTTTTTTTTTTTTTTTTTTTTTTTzzTTTTTTTTW!!!!W!~~zzz!WWWW*********SSSS__S__SSSS__S__SSSS*****,,,,,,,,,,,,,,,,,,,,',
+    'T,,,,,@@--@TTTTTTTTTTW--W@~~~~~~T~~~~~~~~~~~~~TTTT~T,,S~O~S,,,,,,,,WWWWWWWWW,_~~~~~~~~_,,,TT__________S___S__S___!!SSSS___$$$$$______SSSSSS*******************zzt~~~~~~~t*******zzTz,,,,,,t,,,,,,,,,,,,,,,,,,,Tzz**W*****WWWWWW!!!!WW!W**W****ttSSSSSSSSSSSSSddSSSSSSSSSSSSSTT,,,,,,,,,,,,,,,,,,,,',
+    'T,,,,,,,T--,,,,,,,,,@W--W@~~~~~~TTTTTTTTTTTTTTT~~~~~,,S~~~S,,,@~@,,WWWWWWWWW,_~~~~~~~~_,,,TTSSSSSSSSSSSSSSS__S___!!S______$$$$$_____SSSSSSS*******zzzzz*******zzt~~~~~~~t*******zzT,,,t~,,~,,,~t,,,,~,t~,,,,,,Tzz*WWW****WWWWWWWWWWWWWWWWW************************************,,,,,,,,,,,,,,,,,,,,',
+    'T,,,,,,,T--,,,,,,,,,,,--TTTTTTTTT-------------------,,SSSSS,,@~~~@,WWWW|WWWW,_~~~~~~~~_,,,TT____!!___S_______S_____S______$$|$$_____SSSSSSS******zzzzzzz******zzt~~~~~~~t*******zzT,,,,,,,,,,,,,,,,,t,,,,,,,,,TzzWWWWW********************************************************,,,,,,,,,,,,,,,,,,,,',
+    'T,,,,,,,T-------------------------------------------,,,,,,,,@~~~~~@,,,---,,,,_~~~~~~~~_,,,TT____!!___S_____________S________________S!SS|SS*****zzzzzzzzz*****zzt~~~~~~~t*******zzTTTTTTTTTTTT,,,,,,,,,,,,t,,,TzzWWWWW********************************************************,,,,,,,,,,,,,,,,,,,,',
     'T,,,,,,,T--,,B,,T,,W,,--T~~~~~~~TT@@BBBBB@@-----------------------------------________,,,,TT_________SSSS_SSSS_____S________!!______SSS___S*****zzzzzzzzz*****zzt~~~~~~~t*******zzzzzzzzzzzzzTTTTTTT,,,,,,s,,,TzzWW|WW****************************************zzzz************,,,,,,,,,,,,,,,,,,,,',
     'TTTT,TTTT--,BBB,T,WWW,--T~~~~~~~--@BBBBBBB@----@@TT---------------------------,,,,,,,,,,,,TT____________S____SS____SSSSSSSS_!!______S!S___S*****zzzzzzzzz*****zzt~~~~~~~t***SSSSzzSSSSWWWWWWzzzzzzzTTTTTTTTTTTTzz*****************TTTTTTTTTTTTTTTTTTTTTTTTTTTT~~Tz************,,,,,,,,,,,,,,,,,,,,',
     'T///,///T--BBBBBTWWWWW--T~~~~~~~--BBBBBBBBB----@TTB@@-@@@TTTTTTT,,BBBTTTTTTT--,,,,,,,,,,,,TTSSSSSSSSSSSS_______SSS_S______S_________SSS___S*****zzzzzzzzz*****zzt~~~~~~~t***S~~SzzS~~SW....WT*****zzzz*****W***zz****************TT~~~~~~~~~~~~~~~~~~~~~~~~~~~~~Tz************,,,,,,,,,,,,,,,,,,,,',
@@ -1036,6 +1036,46 @@ var c = new Camera(200 * 75, 15 * 75, 15)
 
 
 mainMap.solve = function() {
+    //
+    if (curMap == mainMap) {
+        runOnce(() => {
+            setTimeout(() => {
+                larisa.x = ctr(45)
+                larisa.y = ctr(23)
+                larisa.curPath = [
+                    [45, 23],
+                    [56, 23],
+                    function () {
+                        larisa.dir = "U"
+                        larisa.remote = true
+                        p.dir = "D"
+                        cameraStart(b(56), b(23), 5, "NPC", {
+                            npcName: larisa,
+                            lineStop: -1
+                        })
+                        larisa.lines = [
+                            "HUH?!",
+                            "Who are you?",
+                            "...",
+                            "Oh, you can talk!",
+                            "Anyways, it looks like you are stuck buddy!",
+                            "Maybe I should get someone. One of the important ones anyway.\nWait right here!"
+                        ]
+                        larisa.action = function () {
+                            Screen.fadeOut(0.05, function() {
+                                larisa.x = 1
+                                larisa.y = 1
+                            })
+                        }
+                        larisa.actionLine = "after"
+                    }
+                ]
+            }, 3000)
+            
+        })
+    }
+
+
     // Encompassed Forest
     function correctDir() {
         var lostTravelerLine = lostTraveler.lines[0]
@@ -1098,7 +1138,7 @@ var imperilledPrison = new Landscape([
     '$_________________________________________________$',
     '$_________________________________________________$',
     '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$'
-], 75 + 37.5, 75 + 37.5, 1, 1, "Imperilled Prison")
+], 75 + 37.5, 75 + 37.5, 56, 20, "Imperilled Prison")
 
 var prisonCameraActivated = false
 
@@ -1111,21 +1151,26 @@ imperilledPrison.solve = function () {
             if (!prisonCameraActivated) {
                 cutsceneFrame ++
                 console.log(cutsceneFrame)
-                p.canMove = false
-                if (cutsceneFrame > 50) {
-                    alerts.push(new GameAlert(165, 17, ["WHAT? The alarm turned on?", "That must be an error..."], imperilledPrison, "NPC Prison Guard"))
-                    cameraStart(19 * 75, 2 * 75, 10, "", {})
-                    prisonGuard.lines = [
-                        "WHAT?! You escaped?!",
-                        "I don't have time to explain.\nNot that I could explain anyways...",
-                        "`I never thought this job would be eventful...\nI just do it for the trills.",
-                        "You have to follow me..."
-                    ]
-                    prisonCameraActivated = true
-                }
+                //p.canMove = false
+                // if (cutsceneFrame > 50) {
+                //     alerts.push(new GameAlert(165, 17, ["WHAT? The alarm turned on?", "That must be an error..."], imperilledPrison, "NPC Prison Guard"))
+                //     cameraStart(19 * 75, 2 * 75, 10, "", {})
+                //     prisonGuard.lines = [
+                //         "WHAT?! You escaped?!",
+                //         "I don't have time to explain.\nNot that I could explain anyways...",
+                //         "`I never thought this job would be eventful...\nI just do it for the trills.",
+                //         "You have to follow me..."
+                //     ]
+                //     prisonCameraActivated = true
+                // }
             }
 
         }
+    }
+
+    if (p.on(1, 1) && keys.space) {
+        curMap = mainMap
+        p.goTo(ctr(56), ctr(21))
     }
     
 }

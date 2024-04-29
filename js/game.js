@@ -478,6 +478,8 @@ var mike = new NPC(28 * 75, 44 * 75, "Mike", mainMap, "L", [
     "So, yeah. If you want these glasses, that's what you\ngotta do for me in return.",
 ], "Resident - Chard Town\nA curious child whose favorite spot is the Big Lake.") 
 
+var larisa = new NPC(20 * 75, 40 * 75, "Larisa", mainMap, "D", [])
+
 mike.action = function(p) {
     cameraStart(ctr(51), ctr(6), 25, "NPC", {
         npcName: mike,
