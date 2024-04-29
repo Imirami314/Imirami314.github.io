@@ -194,7 +194,11 @@ function eventsDelay(f1, f2, delay) { // Must occur in animation loop
     eventDelays.push({f1: f1, f2: f2, delay: delay, timer: delay})
 }
 
-const commandsRun = save.commandsRun ?? []
+let commandsRun = []
+
+if (!!save) {
+    commandsRun = save.commandsRun
+}
 
 function runOnce(command) {
     if (commandsRun.indexOf(command.toString()) == -1) {
