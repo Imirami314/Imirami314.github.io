@@ -149,7 +149,12 @@ var items = {
             } 
         }
     }, "A key that allows you to enter Steel Field. Be careful!", "KEYS"),
-    windyWastelandKey: new Item("Windy Wasteland Key", 0, function(x, y) {
+    castleKey: new Item("Castle Key", 0, function() {
+        ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
+    }, function (p) {
+
+    }, "A key to the Queen's Castle.", "KEYS"),
+    windyWastelandsKey: new Item("Windy Wastelands Key", 0, function(x, y) {
         ctx.drawImage(images.confoundedCaveKey, x - 15, y - 15, 35, 15)
     }, function(p) {
 

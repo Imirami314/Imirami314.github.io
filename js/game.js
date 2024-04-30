@@ -928,7 +928,7 @@ var queenAlaska = new NPC(ctr(42), ctr(3), "Queen Alaska", queensCastle, "L", [
         "Go*."
     ]
     lonzo.action = function(p) {
-        p.giveItem(items.windyWastelandKey, true)
+        p.giveItem(items.windyWastelandsKey, true)
 
         lonzo.lines = [
             "Go to the Windy Wastelands using the key!",

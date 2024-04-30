@@ -217,7 +217,7 @@ meetingTheQueen.solve = function () {
 
     if (curMap == mainMap && keys.space && p.on(164, 23)) {
         runOnce (() => {
-            p.giveItem(items.windyWastelandKey, true)
+            p.giveItem(items.castleKey, true)
             saveGame()
         })
     }
