@@ -3206,6 +3206,11 @@ var gameInterval = setInterval(function() {
             for (var i in curMissions) {
                 curMissions[i].alert("NEW")
 
+                if (!!curMissions[i].initalize && !curMissions[i].initializedVariables) {
+                    curMissions[i].initalize()
+                    curMissions[i].initializedVariables = true
+                }
+
                 if (!!curMissions[i].solve && !curMissions[i].complete) {
                     curMissions[i].solve()
                 }

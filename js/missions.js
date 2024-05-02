@@ -1,9 +1,12 @@
-function Mission(name, type, nodes, num, solve) {
+function Mission(name, type, nodes, num, initialize, solve) {
 	this.name = name
 	this.type = type
 	this.nodes = nodes
 	this.num = num
+    this.initialize = initialize
 	this.solve = solve
+
+    this.initializedVariables = false
 
 	this.curNode = 0 // How far the player has progressed the mission
 	
@@ -73,6 +76,11 @@ aStrangeWorld.solve = function () {
 
 var meetingTheQueen = new Mission("Meeting The Queen", "Main", null, 0)
 
+meetingTheQueen.initalize = function () {
+    this.enableBuy = false
+
+}
+
 meetingTheQueen.solve = function () {
     // Change Nevada Lines
     
@@ -124,10 +132,11 @@ meetingTheQueen.solve = function () {
                         "If you can get me all the materials, I'll start construction RIGHT away!"
                     ]
                     nevada.remote = true
-                    
-        
+            
+                    meetingTheQueen.enableBuy = true
         
                 })
+               
                 nevada.clearAction()
             }
         } else {
@@ -175,12 +184,20 @@ meetingTheQueen.solve = function () {
                             "If you can get me all the materials, I'll start construction RIGHT away!"
                         ]
                         nevada.remote = true
-                        saveGame()    
+                        saveGame()  
+
+                        nevada.action = function () {
+                            meetingTheQueen.enableBuy = true  
+                            nevada.clearAction()
+                        }
+                        nevada.actionLine = "after"
+                        
             
             
                     })
-                    nevada.clearAction()
+                    
                 }
+
             })
             
         }
@@ -188,7 +205,7 @@ meetingTheQueen.solve = function () {
     
     
     // Fix once shop allows for non-trills?
-    if (p.has(items.galeWing) && p.trills >= 50) {
+    if (meetingTheQueen.enableBuy && p.has(items.galeWing) && p.trills >= 50) {
         
         runOnce(() => {
             nevada.lines = [
@@ -218,7 +235,17 @@ meetingTheQueen.solve = function () {
     if (curMap == mainMap && keys.space && p.on(164, 23)) {
         runOnce (() => {
             p.giveItem(items.castleKey, true)
+            nevada.lines = ["Look at that!\nIt was the key!", "This is great! We must let Lonzo know!"]
+            
+            setTimeout(() => {
+                nevada.remote = true
+                cameraStart(nevada.x, nevada.y, 5, "NPC", {
+                    npcName: nevada,
+                    lineStop: -1
+                })
+            }, 1000)
             saveGame()
+
         })
     }
 

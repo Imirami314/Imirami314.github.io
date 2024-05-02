@@ -149,7 +149,7 @@ var items = {
             } 
         }
     }, "A key that allows you to enter Steel Field. Be careful!", "KEYS"),
-    castleKey: new Item("Castle Key", 0, function() {
+    castleKey: new Item("Castle Key", 0, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
     }, function (p) {
 
