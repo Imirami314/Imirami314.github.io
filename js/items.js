@@ -152,7 +152,17 @@ var items = {
     castleKey: new Item("Castle Key", 0, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
     }, function (p) {
-
+        if (p.cords.x == 160 && p.cords.y == 4) {
+            curMap = queensCastle
+            p.x = 37.5
+            p.y = 37.5
+            for (var i in p.inventory) {
+                var item = p.inventory[i]
+                if (item.name == this.name) {
+                    p.inventory.splice(i, 1)
+                }
+            }
+        }
     }, "A key to the Queen's Castle.", "KEYS"),
     windyWastelandsKey: new Item("Windy Wastelands Key", 0, function(x, y) {
         ctx.drawImage(images.confoundedCaveKey, x - 15, y - 15, 35, 15)

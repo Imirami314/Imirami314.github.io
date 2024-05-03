@@ -205,7 +205,7 @@ meetingTheQueen.solve = function () {
     
     
     // Fix once shop allows for non-trills?
-    if (meetingTheQueen.enableBuy && p.has(items.galeWing) && p.trills >= 50) {
+    if (meetingTheQueen.enableBuy && p.has(items.galeWing, 10) && p.trills >= 50) {
         
         runOnce(() => {
             nevada.lines = [
@@ -232,21 +232,38 @@ meetingTheQueen.solve = function () {
         })
     }
 
-    if (curMap == mainMap && keys.space && p.on(164, 23)) {
-        runOnce (() => {
-            p.giveItem(items.castleKey, true)
-            nevada.lines = ["Look at that!\nIt was the key!", "This is great! We must let Lonzo know!"]
-            
-            setTimeout(() => {
-                nevada.remote = true
-                cameraStart(nevada.x, nevada.y, 5, "NPC", {
-                    npcName: nevada,
-                    lineStop: -1
-                })
-            }, 1000)
-            saveGame()
+    if (curMap == mainMap && keys.space && p.on(164, 23) && !p.has(items.castleKey)) {
 
-        })
+        p.giveItem(items.castleKey, true)    
+        nevada.lines = ["Look at that!\nIt was the key!", "This is great! We must let Lonzo know!", "Go ahead and do the honors.\nI couldn't have done this without you!"]
+        lonzo.lines = [
+            "Hey there!",
+            "Any luck on finding the key?",
+            "...",
+            "WHAT?!?! YOU FOUND IT!",
+            "KDHF*&#)EUDUH(EWD)SDOSODDOS!!!",
+            "Thank you so much! This is great!",
+            "Now, like I said before, I don't fully remember where the secret entrance\nto the castle is",
+            "I hate asking for another favor, but I remember the Queen saying it was between red and blue.",
+            "Not sure if that will help at all, but maybe you can find something!"
+        ]
+        lonzo.action = function() {
+            lonzo.lines = [
+                "Hmm... the key... red and blue...",
+                "Sorry, I still can't remember.\nPlease help me find it!"
+            ]
+            lonzo.clearAction()
+        }
+        lonzo.actionLine = "after"
+        setTimeout(() => {
+            nevada.remote = true
+            cameraStart(nevada.x, nevada.y, 5, "NPC", {
+                npcName: nevada,
+                lineStop: -1
+            })
+        }, 1000)
+        saveGame()
+
     }
 
 

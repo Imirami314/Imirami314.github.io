@@ -725,12 +725,27 @@ Player.prototype.runSpaceAction = function() {
 /**
  * Sees if player has a certain item
  * @param {*} item Item to check
+ * @param {*} num Number of item that player must have (default 1)
  * @returns true or false
  */
-Player.prototype.has = function(item) {
-    for (var i in this.inventory) {
-        if (this.inventory[i] == item) {
+Player.prototype.has = function(item, num) {
+    if (!!num) {
+        var count = 0
+        for (var i in this.inventory) {
+            if (this.inventory[i] == item) {
+                count++
+            }
+        }
+        if (count >= num) {
             return true
+        } else {
+            return false  
+        }
+    } else {
+        for (var i in this.inventory) {
+            if (this.inventory[i] == item) {
+                return true
+            }
         }
     }
 
