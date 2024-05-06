@@ -244,7 +244,7 @@ var items = {
         ctx.drawImage(images.auraOfWarmth, x - 20, y - 20, 40, 40)
     },
     function() {
-        p.speedMultiplier *= 0.75
+        //p.speedMultiplier *= 0.75
         p.resistances.cold = 1
 
         p.auraTimer = 600

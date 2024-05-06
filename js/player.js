@@ -652,11 +652,11 @@ Player.prototype.collide = function() {
 
     // Secret Entrances
     
-    if (this.cords.x == 160 && this.cords.y == 4 && keys.q) {
-        curMap = queensCastle
-        this.x = 37.5
-        this.y = 37.5
-    }
+    // if (this.cords.x == 160 && this.cords.y == 4 && keys.q) {
+    //     curMap = queensCastle
+    //     this.x = 37.5
+    //     this.y = 37.5
+    // }
 
     // Colliding with block properties
     if (typeof this.blockOn.dps == 'number') {

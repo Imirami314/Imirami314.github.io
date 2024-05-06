@@ -911,6 +911,7 @@ var queenAlaska = new NPC(ctr(42), ctr(3), "Queen Alaska", queensCastle, "L", [
     "I'll call Lonzo to help you out. He'll be waiting for you at\nthe front of this castle.",
 	"Good luck my friend! You're definitely going to need it."
 ], "hi", function(p) {
+    meetingTheQueen.finish()
     lonzo.x = ctr(252)
     lonzo.y = ctr(21)
     lonzo.map = mainMap

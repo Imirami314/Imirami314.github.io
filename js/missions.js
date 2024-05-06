@@ -243,8 +243,8 @@ meetingTheQueen.solve = function () {
             "WHAT?!?! YOU FOUND IT!",
             "KDHF*&#)EUDUH(EWD)SDOSODDOS!!!",
             "Thank you so much! This is great!",
-            "Now, like I said before, I don't fully remember where the secret entrance\nto the castle is",
-            "I hate asking for another favor, but I remember the Queen saying it was between red and blue.",
+            "Now, like I said before, I don't fully remember where\nthe secret entrance to the castle is...",
+            "I hate asking for another favor, but I remember\nthe Queen saying it was between red and blue.",
             "Not sure if that will help at all, but maybe you can find something!"
         ]
         lonzo.action = function() {
