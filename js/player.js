@@ -41,6 +41,7 @@ function Player(x, y, npcs) {
     this.newItem = null
 
     this.inventory = [] // Default []
+    this.sortedInventory = []
     this.itemsMode = "ALL"
 
     this.waterParticles = new ParticleSystem(width / 2, height / 2, 5, 50, 0, 0, 100)
@@ -161,7 +162,6 @@ Player.prototype.draw = function() {
         this.inventory = [] // Clearing inventory before save reload
         for (var i in save.player.inventory) {
             var s = save.player.inventory[i]
-            console.log(s.name)
             for (var j in items) {
                 if (items[j].name == save.player.inventory[i].name) {
                     this.inventory.push(items[j])
@@ -178,7 +178,6 @@ Player.prototype.draw = function() {
         this.equipped = [] // Clearing equipped items before save reload
         for (var i in save.player.equipped) {
             var s = save.player.equipped[i]
-            console.log(s.name)
             for (var j in items) {
                 if (items[j].name == save.player.equipped[i].name) {
                     this.equipped.push(items[j])
@@ -186,7 +185,11 @@ Player.prototype.draw = function() {
             }
         }
 
+        this.updateSortedInventory()
         this.weaponIndex = save.player.weaponIndex
+        if (this.sortedInventory != []) {
+            this.weapon = this.sortedInventory[this.weaponIndex]
+        }
 
         this.resistances = save.player.resistances || {
             cold: 0,
@@ -446,7 +449,7 @@ Player.prototype.move = function() {
         if (!!this.sortedInventory[this.weaponIndex]) {
             this.weapon = this.sortedInventory[this.weaponIndex]
         } else {
-            this.weaponIndex --
+            this.weaponIndex = this.sortedInventory.length - 1
         }
     }
 
@@ -805,6 +808,8 @@ Player.prototype.giveItem = function(item, itemAlert) {
             this.newItemAlert = false
         }, 2000)
     }
+
+    this.updateSortedInventory()
 }
 
 Player.prototype.removeItem = function(item) {
@@ -821,6 +826,8 @@ Player.prototype.removeItem = function(item) {
             }
         }
     }
+
+    this.updateSortedInventory()
 }
 
 Player.prototype.eat = function(foodItem) {
@@ -834,6 +841,8 @@ Player.prototype.eat = function(foodItem) {
             }
         }
     })
+
+    this.updateSortedInventory()
 }
 
 Player.prototype.getClosestMonster = function() {
@@ -1046,15 +1055,7 @@ Player.prototype.numItems = function (item) {
     return count;
 };
 
-Player.prototype.displayInventory = function() {
-    ctx.fillStyle = "rgba(50, 50, 255, 0.9)"
-    ctx.roundRect(width / 8, height / 8, width * 3 / 4, height * 3 / 4, 10)
-    ctx.fill()
-
-    var subcategory = []
-
-    /* This is very weird code (lot of it was looking things up + Chat GPT), but it basically sorts through
-    an array to get rid of duplicates, and the stuff inside makes sure food functions are also accounted for*/
+Player.prototype.updateSortedInventory = function() {
     this.sortedInventory = [];
     for (var i = 0; i < this.inventory.length; i++) {
         var item = this.inventory[i];
@@ -1075,6 +1076,18 @@ Player.prototype.displayInventory = function() {
             this.sortedInventory.push(item);
         }
     }
+}
+
+Player.prototype.displayInventory = function() {
+    ctx.fillStyle = "rgba(50, 50, 255, 0.9)"
+    ctx.roundRect(width / 8, height / 8, width * 3 / 4, height * 3 / 4, 10)
+    ctx.fill()
+
+    var subcategory = []
+
+    /* This is very weird code (lot of it was looking things up + Chat GPT), but it basically sorts through
+    an array to get rid of duplicates, and the stuff inside makes sure food functions are also accounted for*/
+    // this.updateSortedInventory()
 
     for (var i in this.sortedInventory) {
         try {
@@ -1129,6 +1142,7 @@ Player.prototype.displayInventory = function() {
                     ctx.fillText(this.numItems(item), (i % 8) * 100 + width / 8 + 130, height / 8 + 140 * (Math.floor(i / 8) + 1))
                     
                 }
+
                 if (mouseItemDist < 50) {
                     ctx.fillStyle = "rgb(0, 0, 0)"
                     ctx.textAlign = "center"
