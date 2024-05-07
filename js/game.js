@@ -2224,64 +2224,86 @@ var interactives = [
 
     new RockSwitch(lithosRoom, 19, 20, function() {
         lithosRoom.changeBlocks([
-            [10, 14],
-            [10, 15],
-            [19, 14],
-            [19, 15],
-        ], 'S')
+            [6, 13],
+            [6, 14],
+            [6, 15],
+            [6, 16],
 
-        lithosRoom.changeBlocks([
-            [14, 14],
-            [15, 14],
-            [14, 15],
-            [15, 15],
-        ], '~')
-
-        lithosRoom.changeBlocks([
-            [13, 10],
-            [14, 10],
-            [15, 10],
-            [16, 10]
+            [23, 13],
+            [23, 14],
+            [23, 15],
+            [23, 16],
         ], '_')
+        // lithosRoom.changeBlocks([
+        //     [10, 14],
+        //     [10, 15],
+        //     [19, 14],
+        //     [19, 15],
+        // ], 'S')
 
-        lithosRoom.changeBlocks([
-            [12, 7],
-            [12, 8],
-            [12, 9],
-            [17, 7],
-            [17, 8],
-            [17, 9],
-        ], '$')
+        // lithosRoom.changeBlocks([
+        //     [14, 14],
+        //     [15, 14],
+        //     [14, 15],
+        //     [15, 15],
+        // ], '~')
+
+        // lithosRoom.changeBlocks([
+        //     [13, 10],
+        //     [14, 10],
+        //     [15, 10],
+        //     [16, 10]
+        // ], '_')
+
+        // lithosRoom.changeBlocks([
+        //     [12, 7],
+        //     [12, 8],
+        //     [12, 9],
+        //     [17, 7],
+        //     [17, 8],
+        //     [17, 9],
+        // ], '$')
     }, function() {
         lithosRoom.changeBlocks([
-            [10, 14],
-            [10, 15],
-            [19, 14],
-            [19, 15],
-        ], '_')
+            [6, 13],
+            [6, 14],
+            [6, 15],
+            [6, 16],
 
-        lithosRoom.changeBlocks([
-            [14, 14],
-            [15, 14],
-            [14, 15],
-            [15, 15],
+            [23, 13],
+            [23, 14],
+            [23, 15],
+            [23, 16],
         ], '!')
+        // lithosRoom.changeBlocks([
+        //     [10, 14],
+        //     [10, 15],
+        //     [19, 14],
+        //     [19, 15],
+        // ], '_')
 
-        lithosRoom.changeBlocks([
-            [13, 10],
-            [14, 10],
-            [15, 10],
-            [16, 10]
-        ], '$')
+        // lithosRoom.changeBlocks([
+        //     [14, 14],
+        //     [15, 14],
+        //     [14, 15],
+        //     [15, 15],
+        // ], '!')
 
-        lithosRoom.changeBlocks([
-            [12, 7],
-            [12, 8],
-            [12, 9],
-            [17, 7],
-            [17, 8],
-            [17, 9],
-        ], '%')
+        // lithosRoom.changeBlocks([
+        //     [13, 10],
+        //     [14, 10],
+        //     [15, 10],
+        //     [16, 10]
+        // ], '$')
+
+        // lithosRoom.changeBlocks([
+        //     [12, 7],
+        //     [12, 8],
+        //     [12, 9],
+        //     [17, 7],
+        //     [17, 8],
+        //     [17, 9],
+        // ], '%')
     })
 ]
 
@@ -2705,10 +2727,11 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = false
+    dev = true
     curMap = lithosRoom
     p.goTo(ctr(18), ctr(15))
     p.inventory = [items.spearOfNoctos, items.spearOfNoctos, food.apple(), food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, items.aquaLung, food.cake()]
+    p.updateSortedInventory()
     p.equipped = [items.aquaLung]
 
     abandonedChannel.changeBlock(47, 17, '_')

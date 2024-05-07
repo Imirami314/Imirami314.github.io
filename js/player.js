@@ -339,12 +339,12 @@ Player.prototype.draw = function() {
 Player.prototype.HUD = function() {
     ctx.strokeStyle = "rgba(0, 0, 0, 0)"
     ctx.fillStyle = "rgb(255, 255, 255)"
-    ctx.roundRect(40, 42.5, 120, 65, 10)
+    ctx.roundRect(40, 42.5, Math.max(120, this.animatedHealth * 10 + 20), 35, 10)
     ctx.fill()
 
     if (p.health > 0) {
         ctx.fillStyle = "rgb(0, 200, 0)"
-        ctx.roundRect(50, 50, this.animatedHealth * 10, 50, 10)
+        ctx.roundRect(50, 50, this.animatedHealth * 10, 20, 10)
         ctx.fill()
         ctx.stroke()
     }

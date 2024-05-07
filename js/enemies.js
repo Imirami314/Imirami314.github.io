@@ -943,7 +943,7 @@ class Lithos extends Boss {
         this.health = 1600 // Default 1600
         this.animatedHealth = 1600
 
-        this.speed = 1.5
+        this.speed = 2
         this.moving = false
         
         this.playerDist = 69420 // Direct distance from player (I set it to 69420 because it gets updated anyway)
