@@ -1039,6 +1039,7 @@ class Lithos extends Boss {
                 this.hitting = true
             } else {
                 this.movePathToPlayer(0.075)
+                console.log('moving')
             }
 
             if (this.hitting) { // Hit sequence
@@ -1155,7 +1156,7 @@ class Splint extends Enemy {
                 this.agro = false
 
                 if (this.playerDist >= this.deAgroDist * 1.5) { // Splint moves back to its home if the player gets far enough
-                    this.movePathToHome()
+                    // this.movePathToHome() Commented out because it was causing too much lag
                 }
             }
 
@@ -1261,7 +1262,7 @@ class Gale extends Enemy {
                 this.agro = false
 
                 if (this.playerDist >= this.deAgroDist * 1.5) { // Splint moves back to its home if the player gets far enough
-                    this.movePathToHome()
+                    // this.movePathToHome() Commented out because it was causing too much lag
                 }
             }
 
