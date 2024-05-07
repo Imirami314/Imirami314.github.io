@@ -101,6 +101,19 @@ function stopAtZero(num) {
     }
 }
 
+let randomsSeeded = []
+
+function randomSeed(seed) {
+    if (!!randomsSeeded[seed]) {
+        return randomsSeeded[seed]
+    } else {
+        let x = Math.sin(seed++) * 1000
+        let result = x - Math.floor(x)
+        randomsSeeded[seed] = result
+        return result
+    }
+}
+
 
 String.prototype.replaceAt = function(index, replacement) {
     return this.substring(0, index) + replacement + this.substring(index + replacement.length);
