@@ -499,17 +499,30 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
                     i * this.blockSize - p.y + height / 2 > -1 * this.blockSize &&
                     i * this.blockSize - p.y + height / 2 < height + this.blockSize)
             } else if (mode == "Map View") {
-                this.loadCase = (j * this.blockSize + p.mapPan.x < width / mapScale && 
-                    j * this.blockSize + p.mapPan.x > - width / mapScale && 
-                    i * this.blockSize + p.mapPan.y < height / mapScale && 
-                    i * this.blockSize + p.mapPan.y > - height / mapScale)
+                if (!p.canViewAllRegions) {
+                    this.loadCase = (j * this.blockSize + p.mapPan.x < width / mapScale && 
+                        j * this.blockSize + p.mapPan.x > - width / mapScale && 
+                        i * this.blockSize + p.mapPan.y < height / mapScale && 
+                        i * this.blockSize + p.mapPan.y > - height / mapScale) &&
+                        p.regionsDiscovered.indexOf(Region.getRegionFromCords(j, i)) != -1
+                } else {
+                    this.loadCase = (j * this.blockSize + p.mapPan.x < width / mapScale && 
+                        j * this.blockSize + p.mapPan.x > - width / mapScale && 
+                        i * this.blockSize + p.mapPan.y < height / mapScale && 
+                        i * this.blockSize + p.mapPan.y > - height / mapScale)
+                }
             } else if (mode == "Cutscene View") {
                 this.loadCase = (j * this.blockSize - cx > -1 * this.blockSize &&
                     j * this.blockSize - cx < width / cscale &&
                     i * this.blockSize - cy > -1 * this.blockSize &&
                     i * this.blockSize - cy < height / cscale + this.blockSize)
             } else if (mode == "Snippet View") {
-                this.loadCase = (Math.abs(j * 75 - p.x) <= 10 * 75 && Math.abs(i * 75 - p.y) <= 10 * 75)
+                if (!p.canViewAllRegions) {
+                    this.loadCase = (Math.abs(j * 75 - p.x) <= 10 * 75 && Math.abs(i * 75 - p.y) <= 10 * 75) &&
+                    p.regionsDiscovered.indexOf(Region.getRegionFromCords(j, i)) != -1
+                } else {
+                    this.loadCase = (Math.abs(j * 75 - p.x) <= 10 * 75 && Math.abs(i * 75 - p.y) <= 10 * 75)
+                }
 				// ctx.fillStyle = 'rgb(255, 255, 0)'
 				// ctx.fillRect(1255, 620, 1000, 1000)
             } else if (mode == "Camera View") {
@@ -2595,42 +2608,74 @@ function areaSearchByName(name) {
     return false
 }
 
-function Region(bounds, active, passive) {
-    this.bounds = bounds
+class Region {
+    constructor(name, bounds, active, passive) {
+        this.name = name
+        this.bounds = bounds
 
-    //this.music = music
-    this.musicStarted = false
-    this.musicStartDelay = 3.9
-    this.locationMusicPlayed = true
-    
-    this.inRegion = false
+        //this.music = music
+        this.musicStarted = false
+        this.musicStartDelay = 3.9
+        this.locationMusicPlayed = true
+        
+        this.inRegion = false
 
-    this.active = active
-    this.passive = passive
-    this.passiveRun = false
-}
+        this.active = active
+        this.passive = passive
+        this.passiveRun = false
+    }
 
-Region.prototype.update = function() {
-    this.inRegion = false
-    for (var i in this.bounds) {
-        var b = this.bounds[i]
-        if (p.cords.x >= b.x1 && p.cords.y >= b.y1 && p.cords.x <= b.x2 && p.cords.y <= b.y2 && curMap == mainMap) {
-            p.region = this
-            this.inRegion = true
-            this.passiveRun = false
+    update() {
+        this.inRegion = false
+        for (var i in this.bounds) {
+            var b = this.bounds[i]
+            if (p.cords.x >= b.x1 && p.cords.y >= b.y1 && p.cords.x <= b.x2 && p.cords.y <= b.y2 && curMap == mainMap) {
+                p.region = this
+                this.inRegion = true
+                this.passiveRun = false
+            }
+        }
+
+        if (this.inRegion) {
+            this.active()
+            if (!this.passiveRun) {
+                this.passive()
+                this.passiveRun = true
+            }
         }
     }
 
-    if (this.inRegion) {
-        this.active()
-        if (!this.passiveRun) {
-            this.passive()
-            this.passiveRun = true
-        }
+    static getRegionFromCords(blockX, blockY) {
+        let regionResult = null
+
+        regions.forEach((region) => {
+            for (var i in region.bounds) {
+                var b = region.bounds[i]
+                if (blockX >= b.x1 && blockY >= b.y1 && blockX <= b.x2 && blockY <= b.y2 && curMap == mainMap) {
+                    regionResult = region
+                }
+            }
+        })
+
+        return regionResult
     }
 }
 
-var chardTown = new Region([
+// Region.getRegionFromCords = function(blockX, blockY) {
+//     regions.forEach((region) => {
+//         console.log(region.name)
+//         for (var i in region.bounds) {
+//             var b = region.bounds[i]
+//             if (blockX >= b.x1 && blockY >= b.y1 && blockX <= b.x2 && blockY <= b.y2 && curMap == mainMap) {
+//                 return region
+//             }
+//         }
+//     })
+
+//     return null
+// }
+
+var chardTown = new Region("Chard Town", [
     {
         x1: 0,
         y1: 0,
@@ -2659,7 +2704,7 @@ var chardTown = new Region([
     playMusic("Chard")
 })
 
-var steelField = new Region([
+var steelField = new Region("Steel Field", [
     {
         x1: 67,
         y1: 1,
@@ -2678,7 +2723,7 @@ var steelField = new Region([
     playMusic("Steel Field")
 })
 
-var glaciaVillage = new Region([
+var glaciaVillage = new Region("Glacia Village", [
     {
         x1: 138,
         y1: 11,
@@ -2703,7 +2748,7 @@ var glaciaVillage = new Region([
     playMusic("Glacia Village")
 })
 
-var windyWastelands = new Region([{
+var windyWastelands = new Region("Windy Wastelands", [{
     x1: 139,
     y1: 32,
     x2: 189,
@@ -2714,7 +2759,7 @@ var windyWastelands = new Region([{
     playMusic("Windy Wastelands")
 })
 
-var encompassedForest = new Region([{
+var encompassedForest = new Region("Encompassed Forest", [{
     x1: 225,
     y1: 31,
     x2: 279,
@@ -2817,7 +2862,7 @@ var encompassedForest = new Region([{
     }
 })
 
-var droptonDrylands = new Region([
+var droptonDrylands = new Region("Dropton Drylands", [
     {
         x1: 197,
         y1: 66,
@@ -2832,7 +2877,7 @@ var droptonDrylands = new Region([
     playMusic("Dropton Drylands")
 })
 
-var fortuneField = new Region([
+var fortuneField = new Region("Fortune Field", [
     {
         x1: 123,
         y1: 62,
@@ -2851,7 +2896,7 @@ var fortuneField = new Region([
     // changeme Add music for Fortune Field
 })
 
-var litholia = new Region([
+var litholia = new Region("Litholia", [
     {
         x1: 92,
         y1: 52,

@@ -53,6 +53,10 @@ function Player(x, y, npcs) {
 	// x, y, vx, vy, size, r, g, b
     this.area = ""
     this.region = null
+    this.regionsDiscovered = [chardTown]
+    this.newRegionAlert = false
+    this.newRegion = null
+    this.canViewAllRegions = true
     
     this.weaponIndex = 0
     this.weapon = null
@@ -410,6 +414,24 @@ Player.prototype.HUD = function() {
         ctx.translate(- width / 2, - height / 2)
         this.newItem.draw(width / 2, height / 2)
         ctx.restore()
+    }
+
+    if (this.newRegionAlert) { // Displays new region alert when you discover a region (sometimes)
+        // ctx.fillStyle = "rgb(150, 150, 150, 0.7)"
+        // ctx.roundRect(width / 8, height / 4, width * 3 / 4, height / 2, 15)
+        // ctx.fill()
+        // ctx.fillStyle = "rgb(0, 0, 0)"
+        // ctx.textAlign = "center"
+        // ctx.font = "50px serif"
+        // ctx.fillText(this.newRegion.name, width / 2, height / 3)
+        ctx.fillStyle = "rgba(200, 200, 200, 0.5)"
+     	ctx.fillRect(0, height / 8 - 75, width, 150)
+		ctx.fillStyle = "rgb(0, 0, 0)"
+		ctx.font = "75px serif"
+		ctx.textAlign = 'center'
+		ctx.fillText(this.newRegion.name, width / 2, height / 8)
+		ctx.font = "30px serif"
+		ctx.fillText("Region Discovered", width / 2, height / 8 + 50)
     }
 
     // Aura effects/resistances
@@ -1035,7 +1057,31 @@ Player.prototype.displayMap = function() {
             }
         }
     }
+
+    if (!this.canViewAllRegions) {
+        let curRegion = Region.getRegionFromCords(this.cords.x, this.cords.y)
+        if (this.regionsDiscovered.indexOf(curRegion) == -1) {
+            this.addRegion(curRegion, true)
+        }
+    } else {
+        if (this.regionsDiscovered != regions) {
+            this.regionsDiscovered = regions
+        }
+    }
 }
+
+Player.prototype.addRegion = function(region, popup) {
+    this.regionsDiscovered.push(region)
+    if (popup) {
+        this.newRegionAlert = true
+        this.newRegion = region
+        setTimeout(() => {
+            this.newRegionAlert = false
+            this.newRegion = null
+        }, 5000)
+    }
+}
+
 // might clean up code later
 Player.prototype.numItems = function (item) {
     var count = 0;
