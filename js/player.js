@@ -1208,8 +1208,8 @@ Player.prototype.displayInventory = function() {
                     if (mouseIsDown) {
                         for (var j in this.sortedInventory) {
                             if (this.sortedInventory[j].name == item.name) {
-                                for (var k in this.inventory) {
-                                    if (item.name == this.inventory[k].name) {
+                                for (var k in this.sortedInventory) {
+                                    if (item.name == this.sortedInventory[k].name) {
                                         this.weaponIndex = k
                                     }
                                 }
