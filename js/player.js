@@ -523,7 +523,11 @@ Player.prototype.move = function() {
     
     if (!this.mapOn && this.canMove && !mouseIsDown && !this.inRaft && !this.hitting) {
         if (keys.w && this.stoppedDir != "U" && getBlockById(curMap.getBlock(Math.floor((this.x) / 75), Math.floor((this.y - this.speed) / 75))).through) {
-            this.y -= this.speed
+            if (keys.a || keys.d) {
+                this.y -= (this.speed / Math.sqrt(2))
+            } else {
+                this.y -= this.speed
+            }
             this.dir = "U"
             this.stoppedDir = ""
             this.moving = true
@@ -537,7 +541,12 @@ Player.prototype.move = function() {
         } 
         
         if (keys.s && this.stoppedDir != "D" && getBlockById(curMap.getBlock(Math.floor((this.x) / 75), Math.floor((this.y + this.speed) / 75))).through) {
-            this.y += this.speed
+            if (keys.a || keys.d) {
+                this.y += (this.speed / Math.sqrt(2))
+            } else {
+                this.y += this.speed
+            }
+            
             this.dir = "D"
             this.stoppedDir = ""
             this.moving = true
