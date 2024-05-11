@@ -534,7 +534,12 @@ Player.prototype.move = function() {
         } 
         
         if (keys.a && this.stoppedDir != "L" && getBlockById(curMap.getBlock(Math.floor((this.x - this.speed) / 75), Math.floor(this.y / 75))).through) {
-            this.x -= this.speed
+            if (keys.w || keys.s) {
+                this.x -= (this.speed / Math.sqrt(2))
+            } else {
+                this.x -= this.speed
+            }
+           
             this.dir = "L"
             this.stoppedDir = ""
             this.moving = true
@@ -553,7 +558,12 @@ Player.prototype.move = function() {
         }
         
         if (keys.d && this.stoppedDir != "R" && getBlockById(curMap.getBlock(Math.floor((this.x + this.speed) / 75), Math.floor(this.y / 75))).through) {
-            this.x += this.speed
+            if (keys.w || keys.s) {
+                this.x += (this.speed / Math.sqrt(2))
+            } else {
+                this.x += this.speed
+            }
+           
             this.dir = "R"
             this.stoppedDir = ""
             this.moving = true
