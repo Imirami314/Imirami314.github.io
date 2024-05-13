@@ -887,26 +887,43 @@ Player.prototype.eat = function(foodItem) {
 }
 
 Player.prototype.getClosestMonster = function() {
-    let closestDist = 1000000000
-    let closestMonster = 0;
-    monsters.forEach((m) => {
-        if (closestMonster == 0 || (entityDistance(p, closestMonster) < closestDist)) {
-            closestDist = entityDistance(p, closestMonster) < closestDist
-            closestMonster = m
-        }
-    })
+    let closestDist = 1000000000;
+    let closestMonster = null; // Initialize closestMonster as null
 
-    return closestMonster
+    monsters.forEach((m) => {
+        let dist = entityDistance(p, m); // Calculate distance to current monster
+        if (closestMonster == null || dist < closestDist) {
+            closestDist = dist;
+            closestMonster = m; // Update closestMonster with the current monster
+        }
+    });
+
+    return closestMonster;
+}
+
+Player.prototype.canHitClosestMonster = function () {
+    if ((this.getClosestMonster().x < this.x && this.dir == "L") ||
+        (this.getClosestMonster().x > this.x && this.dir == "R") ||
+        (this.getClosestMonster().y < this.y && this.dir == "U") ||
+        (this.getClosestMonster().y > this.y && this.dir == "D")
+        ) {
+            return true
+    }
+
+    
+
+    return false
 }
 
 Player.prototype.hitEnemies = function() {
     var monsterThatWasHitNum = null
     // For monsters
+    console.log(this.getClosestMonster().x)
     for (var i in monsters) {
         var m = monsters[i]
         var mDist = entityDistance(this, m)
         this.mAngle = Math.atan2((m.y - this.y), (m.x - this.x))
-        if (mDist <= 150 && mouseIsDown && !keys.e && this.hitCooldown <= 0 && !m.isDead()) {
+        if (mDist <= 150 && mouseIsDown && !keys.e && this.hitCooldown <= 0 && !m.isDead() && p.canHitClosestMonster()) {
             this.hitCooldown = 0.35
             if (!!this.weapon.damage) {
                 m.health -= (this.weapon.damage || 1.5)

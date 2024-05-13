@@ -74,7 +74,11 @@ Enemy.prototype.movePathTo = function(cordX, cordY, angleSpeed) {
             }
         }
         
-        this.move(dx * this.speed, dy * this.speed)
+        if (p.getClosestMonster() == this) {
+            this.move(dx * this.speed, dy * this.speed)
+        } else {
+            this.move(dx * (this.speed / 2), dy * (this.speed / 2))
+        }
     }
 }
 
