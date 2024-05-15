@@ -886,7 +886,7 @@ Player.prototype.eat = function(foodItem) {
     this.updateSortedInventory()
 }
 
-Player.prototype.getClosestMonster = function() {
+Player.prototype.closestEnemy = function() {
     let closestDist = 1000000000;
     let closestMonster = null; // Initialize closestMonster as null
 
@@ -901,11 +901,14 @@ Player.prototype.getClosestMonster = function() {
     return closestMonster;
 }
 
+
+
+
 Player.prototype.canHitClosestMonster = function () {
-    if ((this.getClosestMonster().x < this.x && this.dir == "L") ||
-        (this.getClosestMonster().x > this.x && this.dir == "R") ||
-        (this.getClosestMonster().y < this.y && this.dir == "U") ||
-        (this.getClosestMonster().y > this.y && this.dir == "D")
+    if ((this.closestEnemy().x < this.x && this.dir == "L") ||
+        (this.closestEnemy().x > this.x && this.dir == "R") ||
+        (this.closestEnemy().y < this.y && this.dir == "U") ||
+        (this.closestEnemy().y > this.y && this.dir == "D")
         ) {
             return true
     }
@@ -918,7 +921,6 @@ Player.prototype.canHitClosestMonster = function () {
 Player.prototype.hitEnemies = function() {
     var monsterThatWasHitNum = null
     // For monsters
-    console.log(this.getClosestMonster().x)
     for (var i in monsters) {
         var m = monsters[i]
         var mDist = entityDistance(this, m)

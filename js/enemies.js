@@ -39,6 +39,46 @@ Enemy.prototype.getClosestMonster = function() {
     return closest
 }
 
+Enemy.prototype.getClosestMonsterDist = function() {
+    var closest;
+    var closestDist = 2147483648
+
+    monsters.forEach((m) => {
+        if (entityDistance(this, m) < closestDist && m != this) {
+            closestDist = entityDistance(this, m)
+            closest = m
+        }
+    })
+
+    return closestDist
+}
+
+Enemy.prototype.queueNum = function() {
+    let queueNum = 1;
+    let closestDist = 1000000000;
+    let closestMonster = null; // Initialize closestMonster as null
+
+    monsters.forEach((m) => {
+        let dist = entityDistance(p, m); // Calculate distance to current monster
+        if (m === this) {
+            closestDist = dist;
+            closestMonster = m; // Update closestMonster with the current monster
+        }
+    });
+
+    if (closestMonster === null) {
+        return -1; // Return -1 if the monster is not found in the list
+    }
+
+    monsters.forEach((m) => {
+        if (m !== closestMonster && entityDistance(p, m) < closestDist) {
+            queueNum++; // Increment queueNum for each monster closer than the current closestMonster
+        }
+    });
+
+    return queueNum;
+}
+
 Enemy.prototype.pathToPlayer = function() {
     return this.pathTo(p.cords.x, p.cords.y)
 }
@@ -74,10 +114,12 @@ Enemy.prototype.movePathTo = function(cordX, cordY, angleSpeed) {
             }
         }
         
-        if (p.getClosestMonster() == this) {
+
+        // Enemy movement
+        if (p.closestEnemy() == this) {
             this.move(dx * this.speed, dy * this.speed)
-        } else {
-            this.move(dx * (this.speed / 2), dy * (this.speed / 2))
+        } else if ((this.getClosestMonsterDist() >= 150) || (this.getClosestMonsterDist < 150 && this.queueNum() < this.getClosestMonster.queueNum())) {
+            this.move(dx * (this.speed / this.queueNum()), dy * (this.speed / this.queueNum()))
         }
     }
 }
