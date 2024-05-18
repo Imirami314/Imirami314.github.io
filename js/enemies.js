@@ -66,19 +66,25 @@ Enemy.prototype.pathToHome = function() {
     return this.pathTo(Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75))
 }
 
-Enemy.prototype.movePathToPlayer = function(angleSpeed) {
+Enemy.prototype.addToQueue = function () {
     if (!Enemy.queue.includes(this)) {
         Enemy.queue.push(this)
     }
+}
 
+Enemy.prototype.removeFromQueue = function() {
+    if (Enemy.queue.includes(this)) {
+        Enemy.queue.splice(Enemy.queue.indexOf(this))
+    }
+}
+
+Enemy.prototype.movePathToPlayer = function(angleSpeed) {
+    this.addToQueue()
     this.movePathTo(p.cords.x, p.cords.y, (angleSpeed ?? 0.2))
 }
 
 Enemy.prototype.movePathToHome = function(angleSpeed) {
-
-    if (Enemy.queue.includes(this)) {
-        Enemy.queue.splice(Enemy.queue.indexOf(this))
-    }
+    this.removeFromQueue()
     this.movePathTo(Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75), (angleSpeed ?? 0.2))
 }
 
@@ -106,7 +112,9 @@ Enemy.prototype.movePathTo = function(cordX, cordY, angleSpeed) {
         console.log(Enemy.queue.length)
         if (p.closestEnemy() == this) {
             this.move(dx * this.speed, dy * this.speed)
-        } else if ((this.getClosestMonsterDist() >= 100) || (this.getClosestMonsterDist() < 100 && Enemy.queue.indexOf(this) < Enemy.queue.indexOf(this.getClosestMonster()))) {
+        } else if ((this.getClosestMonsterDist() >= 150) ||
+                   (this.getClosestMonsterDist() < 150 && Enemy.queue.indexOf(this) < Enemy.queue.indexOf(this.getClosestMonster()))) { 
+            // Checks if no monsters nearby OR close but only moves if it is closer in queue
             this.move(dx * (this.speed), dy * (this.speed))
         }
        
