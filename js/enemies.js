@@ -5,7 +5,12 @@ function Enemy(map, spawnX, spawnY) {
     this.lastPath = []
     this.moveAngle = 0
     this.curAngle = 0
+    
+    // The queue that determines which order enemies should attack first
+    this.queue = []
 }
+
+Enemy.queue = [];
 
 Enemy.prototype = Object.create(Entity.prototype)
 
@@ -53,32 +58,6 @@ Enemy.prototype.getClosestMonsterDist = function() {
     return closestDist
 }
 
-Enemy.prototype.queueNum = function() {
-    let queueNum = 1;
-    let closestDist = 1000000000;
-    let closestMonster = null; // Initialize closestMonster as null
-
-    monsters.forEach((m) => {
-        let dist = entityDistance(p, m); // Calculate distance to current monster
-        if (m === this) {
-            closestDist = dist;
-            closestMonster = m; // Update closestMonster with the current monster
-        }
-    });
-
-    if (closestMonster === null) {
-        return -1; // Return -1 if the monster is not found in the list
-    }
-
-    monsters.forEach((m) => {
-        if (m !== closestMonster && entityDistance(p, m) < closestDist) {
-            queueNum++; // Increment queueNum for each monster closer than the current closestMonster
-        }
-    });
-
-    return queueNum;
-}
-
 Enemy.prototype.pathToPlayer = function() {
     return this.pathTo(p.cords.x, p.cords.y)
 }
@@ -88,10 +67,18 @@ Enemy.prototype.pathToHome = function() {
 }
 
 Enemy.prototype.movePathToPlayer = function(angleSpeed) {
+    if (!Enemy.queue.includes(this)) {
+        Enemy.queue.push(this)
+    }
+
     this.movePathTo(p.cords.x, p.cords.y, (angleSpeed ?? 0.2))
 }
 
 Enemy.prototype.movePathToHome = function(angleSpeed) {
+
+    if (Enemy.queue.includes(this)) {
+        Enemy.queue.splice(Enemy.queue.indexOf(this))
+    }
     this.movePathTo(Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75), (angleSpeed ?? 0.2))
 }
 
@@ -114,14 +101,18 @@ Enemy.prototype.movePathTo = function(cordX, cordY, angleSpeed) {
             }
         }
         
-
+        
         // Enemy movement
+        console.log(Enemy.queue.length)
         if (p.closestEnemy() == this) {
             this.move(dx * this.speed, dy * this.speed)
-        } else if ((this.getClosestMonsterDist() >= 150) || (this.getClosestMonsterDist < 150 && this.queueNum() < this.getClosestMonster.queueNum())) {
-            this.move(dx * (this.speed / this.queueNum()), dy * (this.speed / this.queueNum()))
+        } else if ((this.getClosestMonsterDist() >= 100) || (this.getClosestMonsterDist() < 100 && Enemy.queue.indexOf(this) < Enemy.queue.indexOf(this.getClosestMonster()))) {
+            this.move(dx * (this.speed), dy * (this.speed))
         }
+       
     }
+
+    
 }
 
 class Boss extends Enemy {
