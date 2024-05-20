@@ -60,6 +60,7 @@ Enemy.prototype.getClosestMonsterDist = function() {
 
 Enemy.prototype.pathToPlayer = function() {
     return this.pathTo(p.cords.x, p.cords.y)
+    
 }
 
 Enemy.prototype.pathToHome = function() {
@@ -79,8 +80,11 @@ Enemy.prototype.removeFromQueue = function() {
 }
 
 Enemy.prototype.movePathToPlayer = function(angleSpeed) {
-    this.addToQueue()
-    this.movePathTo(p.cords.x, p.cords.y, (angleSpeed ?? 0.2))
+    let pRegion = Region.getRegionFromCords(p.cords.x, p.cords.y)
+    if (Region.getRegionFromCords(Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75)) == pRegion) {
+        this.addToQueue()
+        this.movePathTo(p.cords.x, p.cords.y, (angleSpeed ?? 0.2))
+    }
 }
 
 Enemy.prototype.movePathToHome = function(angleSpeed) {
