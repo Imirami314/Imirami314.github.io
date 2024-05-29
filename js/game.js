@@ -1,6 +1,6 @@
 // Function wrapping prevents console from altering game variables
 // window.app = (function() {
-curMap = mainMap
+curMap = imperilledPrison
 
 var saveLoaded = false
 
@@ -2398,7 +2398,7 @@ for (var modelType in models) {
     }
 }
 
-const p = new Player(2 * 75, 2 * 75, npcs) // default x = width / 2, y = height / 2 helloooh
+const p = new Player(ctr(25), ctr(10), npcs) // default x = width / 2, y = height / 2 helloooh
 
 const c121_31 = new Chest(mainMap, 121, 31, [
     items.heatHandle
@@ -2729,7 +2729,7 @@ if (!!save) {
 function startPos() {
     dev = true
     curMap = lithosRoom
-    p.goTo(ctr(18), ctr(15))
+    p.goTo(ctr(10), ctr(10))
     p.inventory = [items.spearOfNoctos, items.spearOfNoctos, food.apple(), food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, items.aquaLung, food.cake()]
     p.updateSortedInventory()
     p.equipped = [items.aquaLung]
@@ -2848,10 +2848,10 @@ var gameInterval = setInterval(function() {
 		} else if (scene == "GAME") {
             Screen.update()
             ctx.save()
-            ctx.translate((-1 * p.x) + (width / 2), (-1 * p.y) + (height / 2))
+            ctx.translate(Math.floor((-1 * p.x) + (width / 2)), Math.floor((-1 * p.y) + (height / 2)))
 
             // Screen Shake
-            ctx.translate(Screen.shakeOffset.x, Screen.shakeOffset.y)
+            ctx.translate(Math.floor(Screen.shakeOffset.x), Math.floor(Screen.shakeOffset.y))
 
             curMap.draw(p, "Player View")
             if (!!curMap.solve) {
@@ -3139,7 +3139,7 @@ var gameInterval = setInterval(function() {
             p.draw()
 
             ctx.save()
-            ctx.translate((-1 * p.x) + (width / 2) + Screen.shakeOffset.x, (-1 * p.y) + (height / 2) + Screen.shakeOffset.y)
+            ctx.translate(Math.floor((-1 * p.x) + (width / 2) + Screen.shakeOffset.x), Math.floor((-1 * p.y) + (height / 2) + Screen.shakeOffset.y))
             curMap.drawNextLayer(p)
             ctx.restore()
     

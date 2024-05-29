@@ -79,11 +79,15 @@ Enemy.prototype.removeFromQueue = function() {
     }
 }
 
-Enemy.prototype.movePathToPlayer = function(angleSpeed) {
-    let pRegion = Region.getRegionFromCords(p.cords.x, p.cords.y)
-    if (Region.getRegionFromCords(Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75)) == pRegion) {
-        this.addToQueue()
-        this.movePathTo(p.cords.x, p.cords.y, (angleSpeed ?? 0.2))
+Enemy.prototype.movePathToPlayer = function(angleSpeed, isBoss) {
+    if (!(isBoss ?? false)) {
+        let pRegion = Region.getRegionFromCords(p.cords.x, p.cords.y)
+        if (Region.getRegionFromCords(Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75)) == pRegion) {
+            this.addToQueue()
+            this.movePathTo(p.cords.x, p.cords.y, (angleSpeed ?? 0.2), (isBoss ?? false))
+        }
+    } else {
+        this.movePathTo(p.cords.x, p.cords.y, (angleSpeed ?? 0.2), (isBoss ?? false))
     }
 }
 
@@ -92,7 +96,7 @@ Enemy.prototype.movePathToHome = function(angleSpeed) {
     this.movePathTo(Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75), (angleSpeed ?? 0.2))
 }
 
-Enemy.prototype.movePathTo = function(cordX, cordY, angleSpeed) {
+Enemy.prototype.movePathTo = function(cordX, cordY, angleSpeed, isBoss) {
     if (!!this.pathTo(cordX, cordY)[1] && this.pathTo(cordX, cordY).length > 0) {
         this.nextPoint = {
             x: this.pathTo(cordX, cordY)[1][0],
@@ -113,13 +117,16 @@ Enemy.prototype.movePathTo = function(cordX, cordY, angleSpeed) {
         
         
         // Enemy movement
-        console.log(Enemy.queue.length)
-        if (p.closestEnemy() == this) {
-            this.move(dx * this.speed, dy * this.speed)
-        } else if ((this.getClosestMonsterDist() >= 150) ||
-                   (this.getClosestMonsterDist() < 150 && Enemy.queue.indexOf(this) < Enemy.queue.indexOf(this.getClosestMonster()))) { 
-            // Checks if no monsters nearby OR close but only moves if it is closer in queue
-            this.move(dx * (this.speed), dy * (this.speed))
+        if (!isBoss) {
+            if (p.closestEnemy() == this) {
+                this.move(dx * this.speed, dy * this.speed)
+            } else if ((this.getClosestMonsterDist() >= 150) ||
+                    (this.getClosestMonsterDist() < 150 && Enemy.queue.indexOf(this) < Enemy.queue.indexOf(this.getClosestMonster()))) { 
+                // Checks if no monsters nearby OR close but only moves if it is closer in queue
+                this.move(dx * (this.speed), dy * (this.speed))
+            }
+        } else {
+            this.move(dx * this.speed, dy * this.speed);
         }
        
     }
@@ -983,6 +990,8 @@ class Drowned extends Boss {
 }
 
 class Lithos extends Boss {
+    static SHRINK_SPEED = 0.001;
+
     constructor(map, spawnX, spawnY) {
         super(map, spawnX, spawnY)
 
@@ -1083,12 +1092,14 @@ class Lithos extends Boss {
                 this.armAngle = Math.min(0, this.armAngle + perSec(Math.PI / 2))
             }
 
-            if (this.playerDist <= 100 && this.hitCooldown <= 0) {
-                this.bodyAngle = this.playerAngle
-                this.hitting = true
+            if (this.playerDist <= 100) {
+                if (this.hitCooldown <= 0) {
+                    this.bodyAngle = this.playerAngle;
+                    this.hitting = true;
+                    this.hitCooldown = 1;
+                }
             } else {
-                this.movePathToPlayer(0.075)
-                console.log('moving')
+                this.movePathToPlayer(0.075, true);
             }
 
             if (this.hitting) { // Hit sequence
@@ -1100,23 +1111,18 @@ class Lithos extends Boss {
                     }
 
                     this.hitting = false
-                    this.hitCooldown = 1
+                    // this.hitCooldown = 1
                 }
             }
-            
-            // Moves the boss, but prevents the boss from shaking while moving (moves only when not hitting)
-            // if (!this.hitting && this.playerDist > 100) {
-            //     this.moving = true
-            //     if (Math.abs(this.pdx) >= 10) {
-            //         this.move(this.dirCoefX * this.speed, 0)
-            //     }
-        
-            //     if (Math.abs(this.pdy) >= 10) {
-            //         this.move(0, this.dirCoefY * this.speed)
-            //     }
-            // } else {
-            //     this.moving = false
-            // }
+
+            if (curMap.getBlock(this.cords.x, this.cords.y) == '~') {
+                if (this.scaleFactor - Lithos.SHRINK_SPEED > 0) {
+                    this.scaleFactor -= Lithos.SHRINK_SPEED;
+                    this.health -= Lithos.SHRINK_SPEED * this.maxHealth / 2;
+                } else {
+                    this.scaleFactor = 1;
+                }
+            }
     
             if (this.health <= this.maxHealth / 2 && !this.phase2Played) {
                 cutsceneFrame = 0
