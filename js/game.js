@@ -2777,6 +2777,10 @@ function startPos() {
         "Noobdy knows who he is, so he's known as The Wanderer.",
         "Anyway, I'd head over to Chard Town and talk to the Old Man. Otherwise,\nit means I came all this way for nothing!"
     ]
+
+    bosses[3].phase = 2;
+    bosses[3].phase2Played = true;
+    bosses[3].health = bosses[3].maxHealth / 2;
 }
 
 startPos()

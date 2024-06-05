@@ -990,7 +990,7 @@ class Drowned extends Boss {
 }
 
 class Lithos extends Boss {
-    static SHRINK_SPEED = 0.001;
+    static SHRINK_SPEED = 0.0015;
 
     constructor(map, spawnX, spawnY) {
         super(map, spawnX, spawnY)
@@ -1017,9 +1017,17 @@ class Lithos extends Boss {
         this.hitting = false
         this.hittable = true // Can boss be hit
         this.beingHit = false // Is boss being hit
-        this.hitRegistered = false // Keeps track of whether damage has already been dealth
+        this.hitRegistered = false // Keeps track of whether damage has already been dealt
+
+        this.waterDamageThisCycle = 0; // How much water damage has been taken this cycle (since last teleport or start of fight)
 
         this.phase2Played = false // Check if phase 2 cutscene has played, Default false
+
+        this.rockThrowCooldown = 0;
+        this.rockThrown = false;
+        this.numRockArms = 2;
+        this.curRockArm = null;
+        
     }
 
     draw() {
@@ -1045,7 +1053,16 @@ class Lithos extends Boss {
                 ctx.restore()
             } else if (this.phase == 2) {
                 // Draw Phase 2
-                ellipse(this.x, this.y, 150, 150, "rgb(0, 0, 0)") // changeme to actual boss image
+                ctx.drawImage(images.lithosPhase1, this.x - 75, this.y - 75, 150, 150) // changeme to actual boss image
+                ctx.drawImage(images.rock, this.x - 100, this.y - 30, 60, 60) // Left arm
+
+                ctx.save()
+                ctx.translate(this.x, this.y)
+                ctx.rotate(this.armAngle)
+                ctx.translate(- this.x, - this.y)
+                ctx.drawImage(images.rock, this.x + 50, this.y - 30, 60, 60) // Right arm
+                ctx.restore()
+                
             }
             
             ctx.restore()
@@ -1068,10 +1085,6 @@ class Lithos extends Boss {
         // Update information for the boss
         this.hitCooldown -= perSec(1)
 
-        if (this.phase == 2) {
-            this.windModeTimer -= perSec(1)
-        }
-
         this.updatePlayerInfo()
         
         // Makes the angle pi instead of like 1835pi
@@ -1086,51 +1099,10 @@ class Lithos extends Boss {
         }
     
         if (this.phase == 1) {
-            if (!this.hitting) {
-                // this.bodyAngle = this.playerAngle
-
-                this.armAngle = Math.min(0, this.armAngle + perSec(Math.PI / 2))
-            }
-
-            if (this.playerDist <= 100) {
-                if (this.hitCooldown <= 0) {
-                    this.bodyAngle = this.playerAngle;
-                    this.hitting = true;
-                    this.hitCooldown = 1;
-                }
-            } else {
-                this.movePathToPlayer(0.075, true);
-            }
-
-            if (this.hitting) { // Hit sequence
-                if (this.armAngle > - Math.PI / 2) { // Check if arm angle has exceeded max
-                    this.armAngle -= perSec(Math.PI / 2) * 6 // Change arm angle
-                } else { // If arm angle is at max
-                    if (this.playerDist <= 100) { // Deal damage if player is still in range
-                        p.getHit(4)
-                    }
-
-                    this.hitting = false
-                    // this.hitCooldown = 1
-                }
-            }
-
-            if (curMap.getBlock(this.cords.x, this.cords.y) == '~') {
-                if (this.scaleFactor - Lithos.SHRINK_SPEED > 0) {
-                    this.scaleFactor -= Lithos.SHRINK_SPEED;
-                    this.health -= Lithos.SHRINK_SPEED * this.maxHealth / 2;
-                } else {
-                    this.scaleFactor = 1;
-                }
-            }
-    
-            if (this.health <= this.maxHealth / 2 && !this.phase2Played) {
-                cutsceneFrame = 0
-                this.phase = 2
-            }
+            this.phase1();
         } else if (this.phase == 2) {
             if (this.phase2Played) {
-                
+                this.phase2();
             } else {
                 // scene = "STORMED BOSS CUTSCENE PHASE 2"
                 // this.phase2Played = true
@@ -1140,6 +1112,92 @@ class Lithos extends Boss {
                 // p.goTo(ctr(13), ctr(21))
             }
         }
+    }
+
+    phase1() {
+        if (!this.hitting) {
+            // this.bodyAngle = this.playerAngle
+
+            this.armAngle = Math.min(0, this.armAngle + perSec(Math.PI / 2))
+        }
+
+        if (this.playerDist <= 100) {
+            if (this.hitCooldown <= 0) {
+                this.bodyAngle = this.playerAngle;
+                this.hitting = true;
+                this.hitCooldown = 1;
+            }
+        } else {
+            this.movePathToPlayer(0.075, true);
+        }
+
+        if (this.hitting) { // Hit sequence
+            if (this.armAngle > - Math.PI / 2) { // Check if arm angle has exceeded max
+                this.armAngle -= perSec(Math.PI / 2) * 6 // Change arm angle
+            } else { // If arm angle is at max
+                if (this.playerDist <= 100) { // Deal damage if player is still in range
+                    p.getHit(4)
+                }
+
+                this.hitting = false
+                // this.hitCooldown = 1
+            }
+        }
+
+        if (curMap.getBlock(this.cords.x, this.cords.y) == '~') {
+            if (this.waterDamageThisCycle < this.maxHealth / 8) {
+                this.scaleFactor -= Lithos.SHRINK_SPEED;
+                let damage = Lithos.SHRINK_SPEED * this.maxHealth / 2;
+                this.health -= damage;
+                this.waterDamageThisCycle += damage;
+            } else {
+                this.waterDamageThisCycle = 0;
+                curMap.changeBlock(this.cords.x, this.cords.y, '_');
+            }
+        }
+
+        if (this.health <= this.maxHealth / 2 && !this.phase2Played) {
+            cutsceneFrame = 0
+            this.phase = 2
+        }
+    }
+
+    phase2() {
+        this.rockThrowCooldown -= perSec(1);
+
+        if (this.rockThrowCooldown <= 0) {
+            this.armAngle -= perSec(Math.PI / 2);
+            if (this.armAngle <= Math.PI / 4) {
+                this.throwRock();
+            }
+        }
+    }
+
+    throwRock() {
+        if (!this.rockThrown) {
+            this.curRockArm = new Rock(curMap, this.x, this.y);
+            this.curRockArm.moveDir = {
+                x: Math.cos(this.playerAngle),
+                y: Math.sin(this.playerAngle),
+            }
+            this.curRockArm.speed = 10;
+            interactives.push(this.curRockArm);
+            
+            this.numRockArms --;
+            this.rockThrown = true;
+        }
+
+        if (!!this.curRockArm && this.curRockArm.speed > 0) {
+            this.moveRocks();
+        } else {
+            return;
+        }
+    }
+
+    moveRocks() {
+        this.curRockArm.x += this.curRockArm.moveDir.x * this.curRockArm.speed;
+        this.curRockArm.y += this.curRockArm.moveDir.y * this.curRockArm.speed;
+        this.curRockArm.speed -= perSec(4);
     }
 }
 
