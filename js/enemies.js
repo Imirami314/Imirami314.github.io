@@ -1023,7 +1023,7 @@ class Lithos extends Boss {
 
         this.phase2Played = false // Check if phase 2 cutscene has played, Default false
 
-        this.rockThrowCooldown = 0;
+        this.rockThrowCooldown = 2;
         this.rockThrown = false;
         this.numRockArms = 2;
         this.curRockArm = null;
@@ -1053,15 +1053,19 @@ class Lithos extends Boss {
                 ctx.restore()
             } else if (this.phase == 2) {
                 // Draw Phase 2
+                ctx.save();
+                Rotate(this.x, this.y, this.playerAngle);
                 ctx.drawImage(images.lithosPhase1, this.x - 75, this.y - 75, 150, 150) // changeme to actual boss image
                 ctx.drawImage(images.rock, this.x - 100, this.y - 30, 60, 60) // Left arm
-
-                ctx.save()
-                ctx.translate(this.x, this.y)
-                ctx.rotate(this.armAngle)
-                ctx.translate(- this.x, - this.y)
-                ctx.drawImage(images.rock, this.x + 50, this.y - 30, 60, 60) // Right arm
-                ctx.restore()
+                if (!this.rockThrown) {
+                    ctx.save()
+                    ctx.translate(this.x, this.y)
+                    ctx.rotate(this.armAngle)
+                    ctx.translate(- this.x, - this.y)
+                    ctx.drawImage(images.rock, this.x + 50, this.y - 30, 60, 60) // Right arm
+                    ctx.restore()
+                }
+                ctx.restore();
                 
             }
             
@@ -1166,21 +1170,22 @@ class Lithos extends Boss {
         this.rockThrowCooldown -= perSec(1);
 
         if (this.rockThrowCooldown <= 0) {
-            this.armAngle -= perSec(Math.PI / 2);
-            if (this.armAngle <= Math.PI / 4) {
+                this.armAngle -= perSec(Math.PI * 1.5);
+            if (this.armAngle <= - Math.PI / 2) {
                 this.throwRock();
+                
             }
         }
     }
 
     throwRock() {
         if (!this.rockThrown) {
-            this.curRockArm = new Rock(curMap, this.x, this.y);
+            this.curRockArm = new Rock(curMap, this.x + Math.cos(this.playerAngle) * 50, this.y + Math.sin(this.playerAngle) * 50);
             this.curRockArm.moveDir = {
                 x: Math.cos(this.playerAngle),
                 y: Math.sin(this.playerAngle),
             }
-            this.curRockArm.speed = 10;
+            this.curRockArm.speed = 15;
             interactives.push(this.curRockArm);
             
             this.numRockArms --;

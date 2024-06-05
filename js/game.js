@@ -2823,6 +2823,10 @@ var gameInterval = setInterval(function() {
                 blocks[i].speed = 17.5
                 blocks[i].dps = 0
             }
+
+            if (keys.minus) {
+                clearSave();
+            }
         }
         
         elapsed ++
