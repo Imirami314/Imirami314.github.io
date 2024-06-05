@@ -307,7 +307,7 @@ function onKeyDown(event) {
             keys.minus = true
             break
         case 187:
-            keys.plus = false
+            keys.plus = true
             break
     }
 }
