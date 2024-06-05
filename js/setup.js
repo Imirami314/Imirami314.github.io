@@ -306,6 +306,9 @@ function onKeyDown(event) {
         case 189:
             keys.minus = true
             break
+        case 187:
+            keys.plus = false
+            break
     }
 }
 
@@ -353,6 +356,9 @@ function onKeyUp(event) {
 			break
         case 189:
             keys.minus = false
+            break
+        case 187:
+            keys.plus = false
             break
     }
 }

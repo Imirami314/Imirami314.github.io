@@ -2827,6 +2827,10 @@ var gameInterval = setInterval(function() {
             if (keys.minus) {
                 clearSave();
             }
+        } else {
+            if (keys.plus) {
+                dev = true;
+            }
         }
         
         elapsed ++

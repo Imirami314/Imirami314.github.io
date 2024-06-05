@@ -1185,7 +1185,7 @@ class Lithos extends Boss {
                 x: Math.cos(this.playerAngle),
                 y: Math.sin(this.playerAngle),
             }
-            this.curRockArm.speed = 15;
+            this.curRockArm.speed = 10;
             interactives.push(this.curRockArm);
             
             this.numRockArms --;
