@@ -1054,7 +1054,7 @@ class Lithos extends Boss {
             } else if (this.phase == 2) {
                 // Draw Phase 2
                 ctx.save();
-                Rotate(this.x, this.y, this.playerAngle);
+                
                 ctx.drawImage(images.lithosPhase1, this.x - 75, this.y - 75, 150, 150) // changeme to actual boss image
                 ctx.drawImage(images.rock, this.x - 100, this.y - 30, 60, 60) // Left arm
                 if (!this.rockThrown) {
@@ -1167,7 +1167,12 @@ class Lithos extends Boss {
     }
 
     phase2() {
+        this.speed = 3;
         this.rockThrowCooldown -= perSec(1);
+
+        if (!!!this.curRockArm || this.curRockArm.speed > 0) {
+            this.curAngle = this.playerAngle;
+        }
 
         if (this.rockThrowCooldown <= 0) {
                 this.armAngle -= perSec(Math.PI * 1.5);
@@ -1177,7 +1182,11 @@ class Lithos extends Boss {
         }
 
         if (!!this.curRockArm) {
-            this.checkRockCollisions();
+            if (this.curRockArm.size > 0) {
+                this.checkRockCollisions();
+            } else {
+                this.resetRockArm();
+            }
         }
     }
 
@@ -1209,17 +1218,47 @@ class Lithos extends Boss {
     }
 
     checkRockCollisions() {
-        if (lithosRoom.getBlock(Math.floor(this.curRockArm.x / 75), Math.floor(this.curRockArm.y / 75)) == '~') {
-            this.health --;
+        let rockArmBlock = lithosRoom.getBlock(Math.floor(this.curRockArm.x / 75), Math.floor(this.curRockArm.y / 75));
 
-            if (this.curRockArm.size <= 0) {
-                this.curRockArm = null;
-            }
+        if (rockArmBlock == '~') {
+            this.health --;
         }
 
         if (Math.hypot(p.x - this.curRockArm.x, p.y - this.curRockArm.y) <= 65 && this.curRockArm.speed > 0) {
             p.getHit(perSec(this.curRockArm.speed));
         }
+
+        if (this.curRockArm.speed <= 0) {
+            if (!!!getBlockById(rockArmBlock) || !getBlockById(rockArmBlock).through) { // When rock lands on a wall block or outside map (Lithos spins to reset rock cycle)
+                this.curAngle += perSec(Math.PI * 4);
+                if (this.curAngle >= Math.PI * 4) { // Arbitrary point to stop spinning
+                    this.resetRockArm();
+                }
+            } else if (getBlockById(rockArmBlock).through) { // If rock lands on a walkable block, Lithos will go get it
+                this.movePathToRockArm();
+
+                let rockArmDist = Math.hypot(this.x - this.curRockArm.x, this.y - this.curRockArm.y);
+                if (rockArmDist <= 115) {
+                    this.resetRockArm();
+                }
+            }
+        }
+    }
+
+    movePathToRockArm() {
+        this.movePathTo(Math.floor(this.curRockArm.x / 75), Math.floor(this.curRockArm.y / 75), 0.2, true);
+    }
+
+    resetRockArm() {
+        interactives.splice(interactives.indexOf(this.curRockArm), 1);
+        this.rockThrowCooldown = 2;
+        this.rockThrown = false;
+        this.numRockArms = 2;
+        this.curRockArm = null;
+        this.curAngle = 0;
+        this.armAngle = 0;
+
+        p.canMove = true // If player was moving the rock when it was grabbed, this enables them to move again
     }
 }
 

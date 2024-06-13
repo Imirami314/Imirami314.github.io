@@ -2730,7 +2730,7 @@ if (!!save) {
 function startPos() {
     dev = false
     curMap = lithosRoom;
-    p.goTo(ctr(6), ctr(1));
+    p.goTo(ctr(11), ctr(14));
     p.inventory = [items.drownedsScythe, items.stormedsSword, food.apple(), food.apple(), items.aquaLung]
     p.updateSortedInventory()
     p.equipped = [items.aquaLung]
