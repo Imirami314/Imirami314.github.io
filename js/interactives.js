@@ -525,7 +525,7 @@ class Rock {
     activate() {
         this.checkDissolve()
         this.playerDist = entityDistance(this, p)
-        if (this.playerDist < 100 && !this.isDissolved()) {
+        if (this.playerDist < 100 && !this.isDissolved() && (!!!this.speed || this.speed <= 0) /* This is to make sure the rock isn't moving (like being thrown by Lithos) */) {
             if (keys.space && (!p.spaceActioned || this.isGrabbed)) {
                 p.spaceActioned = true
                 this.isGrabbed = true

@@ -1055,7 +1055,7 @@ class Lithos extends Boss {
                 // Draw Phase 2
                 ctx.save();
                 
-                ctx.drawImage(images.lithosPhase1, this.x - 75, this.y - 75, 150, 150) // changeme to actual boss image
+                ctx.drawImage(images.lithosPhase2, this.x - 75, this.y - 75, 150, 150) // changeme to actual boss image
                 ctx.drawImage(images.rock, this.x - 100, this.y - 30, 60, 60) // Left arm
                 if (!this.rockThrown) {
                     ctx.save()
@@ -1137,14 +1137,14 @@ class Lithos extends Boss {
 
         if (this.hitting) { // Hit sequence
             if (this.armAngle > - Math.PI / 2) { // Check if arm angle has exceeded max
-                this.armAngle -= perSec(Math.PI / 2) * 6 // Change arm angle
+                this.armAngle -= perSec(2 * Math.PI); // Change arm angle
             } else { // If arm angle is at max
                 if (this.playerDist <= 100) { // Deal damage if player is still in range
                     p.getHit(4)
                 }
 
                 this.hitting = false
-                // this.hitCooldown = 1
+                this.hitCooldown = 1
             }
         }
 

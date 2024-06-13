@@ -349,7 +349,8 @@ Player.prototype.HUD = function() {
     ctx.fill()
 
     if (p.health > 0) {
-        ctx.fillStyle = "rgb(0, 200, 0)"
+        if (this.curEating.length > 0) ctx.fillStyle = "rgb(0, 200, 255)";
+        else ctx.fillStyle = "rgb(0, 200, 0)";
         ctx.roundRect(50, 50, this.animatedHealth * 10, 20, 10)
         ctx.fill()
         ctx.stroke()
@@ -994,7 +995,11 @@ Player.prototype.manualMove = function(x, y) {
 }
 
 Player.prototype.getHit = function(dmg) {
-    this.health -= dmg
+    this.health -= dmg;
+}
+
+Player.prototype.heal = function(health) {
+    this.health += health;
 }
 
 Player.prototype.shovel = function () {
