@@ -123,7 +123,7 @@ var blocks = [
         name: "grass",
         through: true,
         dps: 0,
-        speed: 4, // Default 4
+        speed: 5, // Default 4
         sound: "Grass Walking",
         img: images.grass
     },
@@ -132,7 +132,7 @@ var blocks = [
         name: "water",
         through: true,
         dps: 0,
-        speed: 2, // Default 2
+        speed: 3, // Default 2
         sound: "Splash",
 		img: images.water
     },
@@ -141,7 +141,7 @@ var blocks = [
         name: "stone",
         through: true,
         dps: 0,
-        speed: 4, // Default 4
+        speed: 5, // Default 4
         img: images.stone
     },
     {
@@ -163,7 +163,7 @@ var blocks = [
         name: "bush",
         through: true,
         dps: 0,
-        speed: 2
+        speed: 3
     },
     {
         id: "/",
@@ -1405,11 +1405,7 @@ var noctosRoom = new Landscape([
     '____________S_______',
     '_______S__________S_',
 ], 75, 75, 0, 0, "Noctos Room", function() {
-    if (bosses[0].health > 0) {
-        bossfight = true
-    } else {
-        bossfight = false
-    }
+    bossfight = (noctos.health > 0);
 }) // You don't enter through a door
 
 var glaciaCenter = new Landscape([
@@ -1706,11 +1702,7 @@ var stormedRoom = new Landscape([
     'WWWWWWWWWWWWWWWWWWWWWWWWW'
 ], ctr(13), ctr(23), 0, 0, "Stormed Room", function() {
     lighting = 2500
-    if (bosses[1].health > 0) {
-        bossfight = true
-    } else {
-        bossfight = false
-    }
+    bossfight = (stormed.health > 0);
 }) // Don't enter from mainMap
 
 var encompassedLabyrinth = new Landscape([
@@ -2161,8 +2153,11 @@ abandonedChannel.solve = function() {
 
     if (keys.space) {
         if (p.on(48, 19)) {
-            curMap = cryoUnderground
-            p.goTo(ctr(7), ctr(1))
+            Screen.fadeOut(0.05, function() {
+                p.goTo(ctr(7), ctr(1))
+                curMap = cryoUnderground
+                Screen.fadeIn(0.05);
+            });
         }
     }
 }
@@ -2189,7 +2184,7 @@ var cryoUnderground = new Landscape([
     'W~~~~~~~~~~I!!!~~~zz~~~W.W!W~~~~~~~~~~~WWWWWWWWWWW',
     'W~~~~~~~~~~I!!!~~~zz~~~W.W!W~WWWWWWWWWWWWWWWW~~WWW',
     'W~~~~~~~~~~I!!!~~~zz~~~W.W!W~zzz^^^^^^^^z^^^!!!WWW',
-    'W~~~~~~~~~~I!!!~~~zz~~~W.W!W~WWWWW.WWWWW.WWWWW.WWW',
+    'W~~~~~~~~~~I!!!~~~zz~~~W.W!W~WWWWW..WWWW.WWWWW.WWW',
     'W~IIIIiiiiii!!!~~~zz~~~W.W!W~S~~~~~~~~~~~.~~!~...W',
     'WWWWWWWWWWWWWWWWWW!!WWWW.W!WWWWWWWWWWWWWWWWWWWWWWW',
     'OOOOOOOOOOOOOOWWWW!!WW~~~~~WOOOOOOOOOWI~~~~~~~W~~W',
@@ -2210,9 +2205,11 @@ cryoUnderground.solve = function() {
 
     if (keys.space) {
         if (p.on(8, 1)) { // Exit to Abandoned Channel
-            p.goTo(ctr(47), ctr(19))
-            curMap = abandonedChannel
-            
+            Screen.fadeOut(0.05, () => {
+                p.goTo(ctr(47), ctr(19))
+                curMap = abandonedChannel
+                Screen.fadeIn(0.05);
+            })
         }
 
         // if (p.on(42, 28)) {
@@ -2280,7 +2277,7 @@ var drownedRoom = new Landscape([
     'W~~~~~~~~~~~~~~~~~~~~~~~~~~~~~W',
     'WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW',
 ], ctr(15), ctr(26), 0, 0, "Drowned Room", function() {
-
+    bossfight = (drowned.health > 0);
 }) // Don't enter from mainMap
 
 var fortuneFieldWaterTunnel146_88 = new Landscape([
@@ -2583,7 +2580,9 @@ var lithosRoom = new Landscape([
     '$%___%%%%%$%%%%%%%%$%%%%%___%$',
     '$%%%%%%%%%$%%%%%%%%$%%%%%%%%%$',
     '$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$',
-], b(15), ctr(19), null, null, "Lithos Room")
+], b(15), ctr(19), null, null, "Lithos Room", function() {
+    bossfight = (lithos.health > 0);
+})
 
 var areas = Landscape.all
 

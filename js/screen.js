@@ -86,6 +86,7 @@ Screen.update = function() {
                     }
                     this.fade = 0
                     this.stopEffect("FADE IN")
+                    p.canMove = true;
                 }
                 break
             case "SHAKE":

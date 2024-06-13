@@ -128,6 +128,11 @@ function fillTextMultiLine(text, x, y) {
     }
 }
 
+function displayText(text, x, y, size) {
+    ctx.font = `${size}px serif`;
+    ctx.fillText(text, x, y);
+}
+
 function splitEveryN(str, n) { // https://bobbyhadz.com/blog/javascript-split-string-substrings-n-characters
     const arr = [];
 
@@ -309,6 +314,9 @@ function onKeyDown(event) {
         case 187:
             keys.plus = true
             break
+        case 72:
+            keys.h = true
+            break
     }
 }
 
@@ -359,6 +367,9 @@ function onKeyUp(event) {
             break
         case 187:
             keys.plus = false
+            break
+        case 72:
+            keys.h = false
             break
     }
 }

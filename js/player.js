@@ -107,6 +107,8 @@ function Player(x, y, npcs) {
     this.curAlert = ""
     
     this.spaceActioned = false // Has space already been used for an action
+
+    this.controlsMenu = false;
 }
 
 Player.prototype = Object.create(Entity.prototype)
@@ -408,6 +410,8 @@ Player.prototype.HUD = function() {
         ctx.textAlign = "center"
         ctx.font = "50px serif"
         ctx.fillText(this.newItem.name, width / 2, height / 3)
+        ctx.font = "20px serif"
+        ctx.fillText("Item acquired!", width / 2, height / 3 + 25)
         ctx.save()
         ctx.translate(width / 2, height / 2)
         ctx.scale(3, 3)
@@ -463,6 +467,19 @@ Player.prototype.HUD = function() {
         ctx.font = "20px serif"
         ctx.textAlign = "center"
         ctx.fillText(this.droptonDonations + "/250", 100, 155.5)
+    }
+
+    if (keys.h) {
+        this.controlsMenu = true;
+    }
+
+    if (this.controlsMenu) {
+        this.showControlsMenu();
+    } else {
+        ctx.fillStyle = "rgb(255, 255, 255)";
+        ctx.font = "20px serif";
+
+        ctx.fillText("View controls (h)", 85, height - 25);
     }
 }
 
@@ -902,8 +919,6 @@ Player.prototype.closestEnemy = function() {
 }
 
 
-
-
 Player.prototype.canHitClosestMonster = function () {
     if ((this.closestEnemy().x < this.x && this.dir == "L") ||
         (this.closestEnemy().x > this.x && this.dir == "R") ||
@@ -1043,11 +1058,11 @@ Player.prototype.displayMap = function() {
         if (!!this.questPoint) {
             var questPointParticles = new ParticleSystem(ctr(this.questPoint.x), ctr(this.questPoint.y), 10, 35 / mapScale, 0, 255, 0)
 
-            questPointParticles.create()
-            questPointParticles.draw()
-            ellipse(ctr(this.questPoint.x), ctr(this.questPoint.y), 35 / mapScale, 35 / mapScale, "rgb(0, 250, 45)")
-            ellipse(ctr(this.questPoint.x), ctr(this.questPoint.y), 25 / mapScale, 25 / mapScale, "rgb(0, 200, 40)")
-            ellipse(ctr(this.questPoint.x), ctr(this.questPoint.y), 10 / mapScale, 10 / mapScale, "rgb(0, 250, 45)")
+            // questPointParticles.create()
+            // questPointParticles.draw()
+            // ellipse(ctr(this.questPoint.x), ctr(this.questPoint.y), 35 / mapScale, 35 / mapScale, "rgb(0, 250, 45)")
+            // ellipse(ctr(this.questPoint.x), ctr(this.questPoint.y), 25 / mapScale, 25 / mapScale, "rgb(0, 200, 40)")
+            // ellipse(ctr(this.questPoint.x), ctr(this.questPoint.y), 10 / mapScale, 10 / mapScale, "rgb(0, 250, 45)")
             
         }
         
@@ -1461,7 +1476,7 @@ Player.prototype.isTalking = function() {
     return isPlayerTalking
 }
 
-Player.prototype.nearSign = function () {
+Player.prototype.nearSign = function() {
     for (var i in alerts) {
         if (alerts[i].type == "SIGN" || alerts[i].type == "WANDERER SIGN") {
            if (alerts[i].map == curMap && 
@@ -1475,7 +1490,7 @@ Player.prototype.nearSign = function () {
     return false
 }
 
-Player.prototype.drawAlert = function () {
+Player.prototype.drawAlert = function() {
     if (!!this.blockOn.useDesc) {
         // ctx.roundRect(width / 2 - 100, height / 2 + 50, 200, 50, 10)
         // ctx.fill()
@@ -1507,4 +1522,35 @@ Player.prototype.drawAlert = function () {
     ctx.textAlign = "center"
     ctx.fillText(this.curAlert, width / 2, height - 75)
 
+}
+
+Player.prototype.showControlsMenu = function() {
+    ctx.fillStyle = "rgba(50, 50, 255, 0.85)" //"rgba(150, 60, 255)"
+    ctx.fillRect(width / 8, height / 8, width * 3 / 4, height * 3 / 4)
+
+    if (keys.esc) {
+        this.controlsMenu = false;
+    }
+    ctx.font = "50px serif";
+    ctx.fillStyle = "rgb(0, 0, 0)";
+    ctx.fillText("Controls:", width / 2, 150);
+    ctx.font = "20px serif";
+    ctx.fillText("Press esc to exit", width / 2, 175);
+
+    ctx.font = "30px serif";
+    ctx.textAlign = "left";
+    fillTextMultiLine("Move - W, A, S, D\nTalk - Space\nOpen/close map - Shift\nInventory - E\nSelect item in inventory - Click\nUse item - Click\nSave game - /", width / 8 + 20, 200);
+
+    ctx.textAlign = "center";
+
+    // Questions
+    ctx.font = "35px serif";
+    fillTextMultiLine("How do I use a key on a lock?", width / 2 + 200, 250);
+    ctx.font = "20px serif";
+    fillTextMultiLine("Stand on the lock block, hold the key\nand use it by clicking anywhere. The lock should\nopen a block for you to go through.", width / 2 + 200, 275);
+
+    ctx.font = "35px serif";
+    fillTextMultiLine("How do I enter/exit a raft?", width / 2 + 200, 400);
+    ctx.font = "20px serif";
+    fillTextMultiLine("If you're standing close enough, press space to enter.\nPressing space again will cause you to exit. Make sure you're\non a safe block before you exit!", width / 2 + 200, 425);
 }

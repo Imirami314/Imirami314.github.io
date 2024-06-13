@@ -46,6 +46,7 @@ var alerts = [
     new GameAlert(2, 16, ["[riddle]", abandonedChannel, "SIGN"]),
 
     // Cryo Underground
+    new GameAlert(6, 6, ["The spiral awaits you..."], cryoUnderground, "SIGN"),
 	new GameAlert(24, 8, ["This mysterious substance will come with a curse,\nThe player will perish, the raft alone may traverse."], cryoUnderground, "SIGN"),
 
     // Drowned Room
@@ -103,7 +104,7 @@ function setLighting(value) {
         return
     }
 }
-var lightingSize = 45
+var lightingSize = 75
 
 var SAVE_MENU = false
 
@@ -2727,12 +2728,13 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = true
-    curMap = lithosRoom
-    p.goTo(ctr(10), ctr(10))
-    p.inventory = [items.spearOfNoctos, items.spearOfNoctos, food.apple(), food.apple(), items.auraOfWarmth, items.drownedsScythe, items.stormedsSword, items.aquaLung, food.cake()]
+    dev = false
+    curMap = lithosRoom;
+    p.goTo(ctr(6), ctr(1));
+    p.inventory = [items.drownedsScythe, items.stormedsSword, food.apple(), food.apple(), items.aquaLung]
     p.updateSortedInventory()
     p.equipped = [items.aquaLung]
+    
 
     abandonedChannel.changeBlock(47, 17, '_')
     abandonedChannel.changeBlock(47, 16, 'O')
@@ -3194,8 +3196,10 @@ var gameInterval = setInterval(function() {
             if (SAVE_MENU) {
                 ctx.fillStyle = "rgb(0, 0, 0)"
                 ctx.fillRect(width - 200, 0, 200, 100)
+                // ctx.font = "25px serif";
                 ctx.fillStyle = "rgb(255, 255, 255)"
-                ctx.fillText("Game saved.", width - 100, 50)
+                displayText("Game saved.", width - 100, 50, 25);
+                // ctx.fillText("Game saved.", width - 100, 50)
                 var SAVE_MENU_TIMER = setTimeout(function() {
                     SAVE_MENU = false
                 }, 1500)

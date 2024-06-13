@@ -1173,8 +1173,11 @@ class Lithos extends Boss {
                 this.armAngle -= perSec(Math.PI * 1.5);
             if (this.armAngle <= - Math.PI / 2) {
                 this.throwRock();
-                
             }
+        }
+
+        if (!!this.curRockArm) {
+            this.checkRockCollisions();
         }
     }
 
@@ -1203,6 +1206,20 @@ class Lithos extends Boss {
         this.curRockArm.x += this.curRockArm.moveDir.x * this.curRockArm.speed;
         this.curRockArm.y += this.curRockArm.moveDir.y * this.curRockArm.speed;
         this.curRockArm.speed -= perSec(4);
+    }
+
+    checkRockCollisions() {
+        if (lithosRoom.getBlock(Math.floor(this.curRockArm.x / 75), Math.floor(this.curRockArm.y / 75)) == '~') {
+            this.health --;
+
+            if (this.curRockArm.size <= 0) {
+                this.curRockArm = null;
+            }
+        }
+
+        if (Math.hypot(p.x - this.curRockArm.x, p.y - this.curRockArm.y) <= 65 && this.curRockArm.speed > 0) {
+            p.getHit(perSec(this.curRockArm.speed));
+        }
     }
 }
 
@@ -1680,7 +1697,6 @@ const monsters = [
     new Splint("Gale Cave", 50 * 75, 33 * 75),
 
     new Splint("The Cryo Underground", 17 * 75, 1 * 75),
-    new Splint("The Cryo Underground", 18 * 75, 22 * 75),
     new Splint("The Cryo Underground", 22 * 75, 11 * 75),
     new Splint("The Cryo Underground", 43 * 75, 1 * 75),
     new Splint("The Cryo Underground", 45 * 75, 1 * 75),
@@ -1694,9 +1710,14 @@ const monsters = [
     new Patroller("Stoneheart Sanctuary", ctr(27), ctr(2)),
 ]
 
+const noctos = new Noctos("Noctos Room", 712.5, 100);
+const stormed = new Stormed("Stormed Room", ctr(13), ctr(17));
+const drowned = new Drowned("Drowned Room", ctr(15), ctr(19));
+const lithos = new Lithos("Lithos Room", b(15), b(15));
+
 const bosses = [
-    new Noctos("Noctos Room", 712.5, 100),
-    new Stormed("Stormed Room", ctr(13), ctr(17)),
-    new Drowned("Drowned Room", ctr(15), ctr(19)),
-    new Lithos("Lithos Room", b(15), b(15)),
+    noctos,
+    stormed,
+    drowned,
+    lithos
 ]
