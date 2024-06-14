@@ -19,6 +19,7 @@ class Cutscene {
 
         this.curFrame = 0;
         this.curNode = 0;
+        this.fade = 0;
     }
 
     // Starts playing the cutscene, you should use this function
@@ -50,6 +51,9 @@ class Cutscene {
         ctx.scale(1 / this.scale, 1 / this.scale);
 
         ctx.restore()
+        ctx.fillStyle = `rgba(0, 0, 0, ${this.fade})`;
+        ctx.fillRect(0, 0, width, height);
+
         this.curFrame ++
 
         if (!!this.always) {
@@ -179,14 +183,32 @@ const lithosCutscenePhase2 = new Cutscene({
     name: "Lithos Cutscene Phase 2",
     map: lithosRoom,
     x: lithos.x, y: lithos.y, scale: 1,
-    length: 535,
+    length: 310,
     nodes: [
         {start: 0, display: (cutscene) => {
-            cutscene.location.y += 10;
-            
+            lithos.manual = true;
+            lithos.curAngle = Math.PI / 2;
         }},
-        {start: 360, display: (cutscene) => {
-            
+        {start: 60, display: (cutscene) => {
+            if (lithos.curAngle < Math.PI * 6.5) {
+                lithos.curAngle += perSec(Math.PI * 4);
+
+                if (lithos.curAngle >= Math.PI * 4) {
+                    lithos.phase = 2;
+                }
+            } else {
+                lithos.curAngle = Math.PI * 6.5;
+            }
+        }},
+        {start: 200, display: (cutscene) => {
+            if (cutscene.scale < 1.5) {
+                cutscene.scale += perSec(1.5);
+            } else {
+                cutscene.scale = 1.5;
+            }
+        }},
+        {start: 240, display: (cutscene) => {
+            cutscene.fade += perSec(1);
         }},
     ],
     always: (cutscene) => {
@@ -201,6 +223,7 @@ const lithosCutscenePhase2 = new Cutscene({
     },
     onEnd: (cutscene) => {
         lithos.phase2Played = true;
+        lithos.manual = false;
         scene = "GAME";
     }
 })

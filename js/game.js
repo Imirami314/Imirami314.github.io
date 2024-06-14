@@ -2800,7 +2800,7 @@ function startPos() {
         "Anyway, I'd head over to Chard Town and talk to the Old Man. Otherwise,\nit means I came all this way for nothing!"
     ]
 
-    lithos.phase = 2;
+    // lithos.phase = 2;
     lithos.health = lithos.maxHealth / 2;
 }
 

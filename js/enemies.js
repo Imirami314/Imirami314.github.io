@@ -137,6 +137,8 @@ Enemy.prototype.movePathTo = function(cordX, cordY, angleSpeed, isBoss) {
 class Boss extends Enemy {
     constructor(map, spawnX, spawnY) {
         super(map, spawnX, spawnY)
+
+        this.manual = false; // Set to true if you want it to stop moving
     }
 
     healthBar() {
@@ -1027,7 +1029,6 @@ class Lithos extends Boss {
         this.rockThrown = false;
         this.numRockArms = 2;
         this.curRockArm = null;
-        
     }
 
     draw() {
@@ -1077,45 +1078,40 @@ class Lithos extends Boss {
     update() {
         this.draw()
         
-        // Makes it so the calculations don't divide by 0
-        if ((p.x - this.x) == 0) {
-            this.x -= 0.5
-        }
-        
-        if ((p.y - this.y) == 0) {
-            this.y -= 0.5
-        }
-    
-        // Update information for the boss
-        this.hitCooldown -= perSec(1)
-
-        this.updatePlayerInfo()
-        
-        // Makes the angle pi instead of like 1835pi
-        this.bodyAngle = this.bodyAngle % (Math.PI * 2)
-        
-        // Amount x and y to move at a certain angle
-        this.xFactor = Math.cos(this.playerAngle)
-        this.yFactor = Math.sin(this.playerAngle)
-    
-        if (this.hitting) { // Attack animation
+        if (!this.manual) {
+            // Makes it so the calculations don't divide by 0
+            if ((p.x - this.x) == 0) {
+                this.x -= 0.5
+            }
             
-        }
-    
-        if (this.phase == 1) {
-            this.phase1();
-        } else if (this.phase == 2) {
-            if (this.phase2Played) {
-                this.phase2();
-            } else {
-                scene = "CUTSCENE";
-                Cutscene.set(lithosCutscenePhase2);
-                // scene = "STORMED BOSS CUTSCENE PHASE 2"
-                // this.phase2Played = true
-                // this.windMode = true
-                // this.x = ctr(13)
-                // this.y = ctr(17)
-                // p.goTo(ctr(13), ctr(21))
+            if ((p.y - this.y) == 0) {
+                this.y -= 0.5
+            }
+        
+            // Update information for the boss
+            this.hitCooldown -= perSec(1)
+
+            this.updatePlayerInfo()
+            
+            // Makes the angle pi instead of like 1835pi
+            this.bodyAngle = this.bodyAngle % (Math.PI * 2)
+            
+            // Amount x and y to move at a certain angle
+            this.xFactor = Math.cos(this.playerAngle)
+            this.yFactor = Math.sin(this.playerAngle)
+        
+            if (this.hitting) { // Attack animation
+                
+            }
+        
+            if (this.phase == 1) {
+                this.phase1();
+            } else if (this.phase == 2) {
+                if (this.phase2Played) {
+                    this.phase2();
+                } else {
+                    
+                }
             }
         }
     }
@@ -1163,8 +1159,10 @@ class Lithos extends Boss {
         }
 
         if (this.health <= this.maxHealth / 2 && !this.phase2Played) {
-            cutsceneFrame = 0
-            this.phase = 2
+            // cutsceneFrame = 0
+            scene = "CUTSCENE";
+            Cutscene.set(lithosCutscenePhase2);
+            // this.phase = 2
         }
     }
 
