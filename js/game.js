@@ -376,7 +376,7 @@ GameAlert.prototype.drawMessage = function () {
 				
             }
             
-            if (keys.space && this.textCooldown <= 0) {
+            if (keys.space && !p.spaceActioned && this.textCooldown <= 0) {
                 this.lineNum ++;		
             }
         }
@@ -2106,9 +2106,6 @@ var interactives = [
     }),
 
     // Stoneheart Sanctuary
-    new Rock(stoneheartSanctuary, ctr(18), ctr(12)), // Test rock
-    new Rock(stoneheartSanctuary, ctr(21), ctr(15)), // Test rock
-
     new RockDispenser(stoneheartSanctuary, b(1), b(2), ctr(2), ctr(2)),
 
     new RaftDispenser(stoneheartSanctuary, b(18), b(3), ctr(18), ctr(2)),
@@ -2202,8 +2199,9 @@ var interactives = [
         stoneheartSanctuary.changeBlock(36, 19, ')')
     }),
 
-    new Breezeway(stoneheartSanctuary, 37, 11, 37, 19),
     new Breezeway(stoneheartSanctuary, 37, 19, 37, 11),
+    
+    new Breezeway(stoneheartSanctuary, 37, 11, 37, 19),
 
     new Toggle(stoneheartSanctuary, 25, 21, function() {
         stoneheartSanctuary.changeBlock(23, 22, '!')
@@ -2341,6 +2339,11 @@ if (!!save) {
                 interactives[i].dsx = inter.dsx
                 interactives[i].dsy = inter.dsy
             }
+
+            if (!!inter.pushSpeedPerSec) { // Check if it is a Rock
+                interactives[i].x = inter.x
+                interactives[i].y = inter.y
+            }
         } else { // If a new interactive has been created over the course of the game
             if (!!inter.enterRaftCooldown) { // Check if it is a Raft
                 for (var i in areas) {
@@ -2355,6 +2358,22 @@ if (!!save) {
                 // interactives[i].map = inter.map
                 } else {
                     interactives.push(new Raft(mainMap, inter.x, inter.y))
+                }
+            }
+
+            if (!!inter.pushSpeedPerSec) { // Check if it is a Rock
+                for (var i in areas) {
+                    var a = areas[i]
+                    if (inter.map.name == a.name) { // Search through all maps to find the correct one
+                        inter.map = a
+                    }
+                }
+                
+                if (inter.map != "Main Map") {
+                    interactives.push(new Rock(areaSearchByName(inter.map), inter.x, inter.y))
+                // interactives[i].map = inter.map
+                } else {
+                    interactives.push(new Rock(mainMap, inter.x, inter.y))
                 }
             }
         }
@@ -2383,7 +2402,8 @@ if (!!save) {
 var models = {
     bosses: {
         noctos: new Noctos(noctosRoom, width / 2, height / 2),
-        stormed: new Stormed(stormedRoom, width / 2, height / 2)
+        stormed: new Stormed(stormedRoom, width / 2, height / 2),
+        lithos: new Lithos(lithosRoom, width / 2, height / 2),
     },
     npcs: {
         oldMan: new NPC(0, 0, "Old Man", null, null, null, null),
@@ -2730,7 +2750,7 @@ if (!!save) {
 function startPos() {
     dev = false
     curMap = lithosRoom;
-    p.goTo(ctr(11), ctr(14));
+    p.goTo(ctr(9), ctr(1));
     p.inventory = [items.drownedsScythe, items.stormedsSword, food.apple(), food.apple(), items.aquaLung]
     p.updateSortedInventory()
     p.equipped = [items.aquaLung]
@@ -2780,9 +2800,8 @@ function startPos() {
         "Anyway, I'd head over to Chard Town and talk to the Old Man. Otherwise,\nit means I came all this way for nothing!"
     ]
 
-    // lithos.phase = 2;
-    // lithos.phase2Played = true;
-    // lithos.health = lithos.maxHealth / 2;
+    lithos.phase = 2;
+    lithos.health = lithos.maxHealth / 2;
 }
 
 startPos()

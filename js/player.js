@@ -1084,7 +1084,9 @@ Player.prototype.displayMap = function() {
         ctx.fillText("-", width / 2 + 35, height - 65)
 
 		for (var i in teleports) {
-			teleports[i].draw()
+            if (teleports[i].map == curMap) {
+			    teleports[i].draw()
+            }
 		}
 		
         if (keys.w) {

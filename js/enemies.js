@@ -990,7 +990,7 @@ class Drowned extends Boss {
 }
 
 class Lithos extends Boss {
-    static SHRINK_SPEED = 0.0015;
+    static SHRINK_SPEED = 0.001;
 
     constructor(map, spawnX, spawnY) {
         super(map, spawnX, spawnY)
@@ -1108,6 +1108,8 @@ class Lithos extends Boss {
             if (this.phase2Played) {
                 this.phase2();
             } else {
+                scene = "CUTSCENE";
+                Cutscene.set(lithosCutscenePhase2);
                 // scene = "STORMED BOSS CUTSCENE PHASE 2"
                 // this.phase2Played = true
                 // this.windMode = true
@@ -1215,13 +1217,17 @@ class Lithos extends Boss {
         this.curRockArm.x += this.curRockArm.moveDir.x * this.curRockArm.speed;
         this.curRockArm.y += this.curRockArm.moveDir.y * this.curRockArm.speed;
         this.curRockArm.speed -= perSec(4);
+
+        if (this.curRockArm.x < 0 || this.curRockArm.y < 0) {
+            this.resetRockArm();
+        }
     }
 
     checkRockCollisions() {
         let rockArmBlock = lithosRoom.getBlock(Math.floor(this.curRockArm.x / 75), Math.floor(this.curRockArm.y / 75));
 
         if (rockArmBlock == '~') {
-            this.health --;
+            this.health -= perSec(175);
         }
 
         if (Math.hypot(p.x - this.curRockArm.x, p.y - this.curRockArm.y) <= 65 && this.curRockArm.speed > 0) {

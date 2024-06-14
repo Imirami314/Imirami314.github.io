@@ -514,7 +514,7 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
                 }
             } else if (mode == "Cutscene View") {
                 this.loadCase = (j * this.blockSize - cx > -1 * this.blockSize &&
-                    j * this.blockSize - cx < width / cscale &&
+                    j * this.blockSize - cx < width / cscale + this.blockSize &&
                     i * this.blockSize - cy > -1 * this.blockSize &&
                     i * this.blockSize - cy < height / cscale + this.blockSize)
             } else if (mode == "Snippet View") {
@@ -2568,7 +2568,7 @@ var lithosRoom = new Landscape([
     '$%%%%%!%%%_%%%!!%%%_%%%!%%%%%$',
     '$%%%%%!%%%_%%%!!%%%_%%%!%%%%%$',
     '$%%%%%!%%%$%%%%%%%%$%%%!%%%%%$',
-    '$%%%%%$%%%$%%%%~%%%$%%%$%%%%%$',
+    '$%%%%%$%%%$%%%%%%%%$%%%$%%%%%$',
     '$%%%%%$%%%$%%%%%%%%$%%%$%%%%%$',
     '$$$$%%$%%%$$$$__$$$$%%%$%%$$$$',
     '$%%%%%$%%%%%%%%%%%%%%%%$%%%%%$',

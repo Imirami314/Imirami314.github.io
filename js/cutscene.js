@@ -10,14 +10,15 @@ class Cutscene {
             x: config.x,
             y: config.y
         };
+        this.scale = config.scale ?? 1;
         this.length = config.length;
         this.nodes = config.nodes;
 
         this.onEnd = config.onEnd;
         this.always = config.always;
 
-        this.curFrame = 0
-        this.curNode = 0
+        this.curFrame = 0;
+        this.curNode = 0;
     }
 
     // Starts playing the cutscene, you should use this function
@@ -32,8 +33,22 @@ class Cutscene {
             this.getNode().display(this)
         }
         ctx.save()
-        ctx.translate(- this.location.x, - this.location.y)
-        this.map.draw(p, "Cutscene View", width / 2, height / 2, 0.5)
+        ctx.translate(width / 2, height / 2)
+        ctx.scale(this.scale, this.scale);
+        ctx.translate(- width / 2, - height / 2)
+        ctx.translate(- this.location.x + width / 2, - this.location.y + height / 2)
+        this.map.draw(p, "Cutscene View", this.location.x * this.scale - width / 2, this.location.y * this.scale - height / 2, this.scale)
+        for (var i in bosses) {
+            if (curMap.name == bosses[i].map) {
+                curBoss = bosses[i]
+                if (curBoss.health > 0) {
+                    curBoss.update()
+                }
+            }
+        }
+
+        ctx.scale(1 / this.scale, 1 / this.scale);
+
         ctx.restore()
         this.curFrame ++
 
@@ -63,6 +78,10 @@ class Cutscene {
     setLocation(x, y) {
         this.location.x = x
         this.location.y = y
+    }
+
+    static set(cutscene) {
+        curCutscene = cutscene;
     }
 }
 
@@ -152,6 +171,36 @@ var noctosCutscene = new Cutscene({
         models.bosses.noctos.draw()
     },
     onEnd: (cutscene) => {
+        scene = "GAME";
+    }
+})
+
+const lithosCutscenePhase2 = new Cutscene({
+    name: "Lithos Cutscene Phase 2",
+    map: lithosRoom,
+    x: lithos.x, y: lithos.y, scale: 1,
+    length: 535,
+    nodes: [
+        {start: 0, display: (cutscene) => {
+            cutscene.location.y += 10;
+            
+        }},
+        {start: 360, display: (cutscene) => {
+            
+        }},
+    ],
+    always: (cutscene) => {
+        playMusic("Boss Cutscene")
+
+        // curBoss.update();
+        // models.bosses.lithos.x = width / 2;
+        // models.bosses.lithos.x = height / 2;
+        // models.bosses.lithos.draw();
+
+        // ellipse(300, 300, 50, 50, "rgb(0, 0, 0)");
+    },
+    onEnd: (cutscene) => {
+        lithos.phase2Played = true;
         scene = "GAME";
     }
 })
