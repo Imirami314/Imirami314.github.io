@@ -183,44 +183,45 @@ var noctosCutscene = new Cutscene({
 const lithosCutscene = new Cutscene({
     name: "Lithos Cutscene",
     map: lithosRoom,
-    x: lithos.x, y: lithos.y, scale: 1,
-    length: 310,
+    x: b(15), y: b(15) + 35, scale: 10,
+    length: 500,
     nodes: [
         {start: 0, display: (cutscene) => {
             lithos.manual = true;
             lithos.curAngle = Math.PI / 2;
+            cutscene.fade = 1;
+            cutscene.bossNameFade = 0;
         }},
         {start: 60, display: (cutscene) => {
-            if (lithos.curAngle < Math.PI * 6.5) {
-                lithos.curAngle += perSec(Math.PI * 4);
-
-                if (lithos.curAngle >= Math.PI * 4) {
-                    lithos.phase = 2;
-                }
-            } else {
-                lithos.curAngle = Math.PI * 6.5;
-            }
+            cutscene.fade = Math.max(0.75, cutscene.fade - perSec(0.25)); // Stops at 0.75
         }},
-        {start: 200, display: (cutscene) => {
-            if (cutscene.scale < 1.5) {
-                cutscene.scale += perSec(1.5);
-            } else {
-                cutscene.scale = 1.5;
-            }
+        {start: 180, display: (cutscene) => {
+            cutscene.fade = Math.max(0.5, cutscene.fade - perSec(0.25)); // Stops at 0.5
+            cutscene.scale = Math.max(5, cutscene.scale - perSec(5)); // Stops at 5
         }},
-        {start: 240, display: (cutscene) => {
+        {start: 280, display: (cutscene) => {
+            cutscene.fade = Math.max(0, cutscene.fade - perSec(0.25));  // Stops at 0
+            cutscene.scale = Math.max(1.25, cutscene.scale - perSec(5));  // Stops at 1.25
+        }},
+        {start: 310, display: (cutscene) => {
+            cutscene.bossNameFade += perSec(2);
+        }},
+        {start: 440, display: (cutscene) => {
             cutscene.fade += perSec(1);
-        }},
+            // cutscene.bossNameFade -= perSec(1);
+            cutscene.bossNameFade = 0;
+        }}
     ],
     always: (cutscene) => {
+        ctx.fillStyle = `rgba(150, 0, 0, ${cutscene.bossNameFade})`;
+        displayText("Lithos", width / 2, 600, 150);
         playMusic("Boss Cutscene");
     },
     onEnd: (cutscene) => {
-        lithos.phase2Played = true;
         lithos.manual = false;
         scene = "GAME";
     }
-})
+});
 
 const lithosCutscenePhase2 = new Cutscene({
     name: "Lithos Cutscene Phase 2",
@@ -229,8 +230,15 @@ const lithosCutscenePhase2 = new Cutscene({
     length: 310,
     nodes: [
         {start: 0, display: (cutscene) => {
-            lithos.manual = true;
+            lithos.goTo(b(15), b(15));
+            lithos.scaleFactor = 1;
+            lithos.armAngle = 0;
             lithos.curAngle = Math.PI / 2;
+
+            lithos.manual = true;
+
+            p.goTo(b(15), b(19));
+            p.dir = 'U';
         }},
         {start: 60, display: (cutscene) => {
             if (lithos.curAngle < Math.PI * 6.5) {
@@ -269,4 +277,60 @@ const lithosCutscenePhase2 = new Cutscene({
         lithos.manual = false;
         scene = "GAME";
     }
-})
+});
+
+const lithosCutsceneDeath = new Cutscene({
+    name: "Lithos Cutscene Death",
+    map: lithosRoom,
+    x: lithos.x, y: lithos.y, scale: 1,
+    length: 310,
+    nodes: [
+        {start: 0, display: (cutscene) => {
+            lithos.goTo(b(15), b(15));
+            lithos.scaleFactor = 1;
+            lithos.armAngle = 0;
+            lithos.curAngle = Math.PI / 2;
+
+            lithos.manual = true;
+
+            p.goTo(b(15), b(19));
+            p.dir = 'U';
+        }},
+        {start: 60, display: (cutscene) => {
+            if (lithos.curAngle < Math.PI * 6.5) {
+                lithos.curAngle += perSec(Math.PI * 4);
+
+                if (lithos.curAngle >= Math.PI * 4) {
+                    lithos.phase = 2;
+                }
+            } else {
+                lithos.curAngle = Math.PI * 6.5;
+            }
+        }},
+        {start: 200, display: (cutscene) => {
+            if (cutscene.scale < 1.5) {
+                cutscene.scale += perSec(1.5);
+            } else {
+                cutscene.scale = 1.5;
+            }
+        }},
+        {start: 240, display: (cutscene) => {
+            cutscene.fade += perSec(1);
+        }},
+    ],
+    always: (cutscene) => {
+        playMusic("Boss Cutscene")
+
+        // curBoss.update();
+        // models.bosses.lithos.x = width / 2;
+        // models.bosses.lithos.x = height / 2;
+        // models.bosses.lithos.draw();
+
+        // ellipse(300, 300, 50, 50, "rgb(0, 0, 0)");
+    },
+    onEnd: (cutscene) => {
+        lithos.phase2Played = true;
+        lithos.manual = false;
+        scene = "GAME";
+    }
+});

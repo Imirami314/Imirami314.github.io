@@ -169,11 +169,12 @@ var bossDoors = [
 		map: stoneheartSanctuary,
 		enterFunction: function(p) {
 			saveGame();
-			
+			Cutscene.set(lithosCutscene);
+            scene = "CUTSCENE";
+
+            
 			p.goTo(lithosRoom.enterX, lithosRoom.enterY);
 			curMap = lithosRoom;
-            Cutscene.set(lithosCutscene);
-            scene = "CUTSCENE";
 			// scene = "DROWNED BOSS CUTSCENE"
 		}
 	}

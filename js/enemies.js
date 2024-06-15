@@ -1185,6 +1185,7 @@ class Lithos extends Boss {
             if (this.curRockArm.size > 0) {
                 this.checkRockCollisions();
             } else {
+                curMap.changeBlock(Math.floor(this.curRockArm.x / 75), Math.floor(this.curRockArm.y / 75), '_');
                 this.resetRockArm();
             }
         }
