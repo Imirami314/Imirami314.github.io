@@ -34,21 +34,22 @@ class Cutscene {
             this.getNode().display(this)
         }
         ctx.save()
-        ctx.translate(width / 2, height / 2)
+
+        ctx.translate(width / 2, height / 2);
         ctx.scale(this.scale, this.scale);
-        ctx.translate(- width / 2, - height / 2)
-        ctx.translate(- this.location.x + width / 2, - this.location.y + height / 2)
-        this.map.draw(p, "Cutscene View", this.location.x * this.scale - width / 2, this.location.y * this.scale - height / 2, this.scale)
+        ctx.translate(- width / 2, - height / 2);
+
+        ctx.translate(- this.location.x + width / 2, - this.location.y + height / 2);
+        this.map.draw(p, "Cutscene View", this.location.x * this.scale, this.location.y * this.scale, this.scale);
+
         for (var i in bosses) {
             if (curMap.name == bosses[i].map) {
-                curBoss = bosses[i]
+                curBoss = bosses[i];
                 if (curBoss.health > 0) {
-                    curBoss.update()
+                    curBoss.update();
                 }
             }
         }
-
-        ctx.scale(1 / this.scale, 1 / this.scale);
 
         ctx.restore()
         ctx.fillStyle = `rgba(0, 0, 0, ${this.fade})`;
@@ -175,6 +176,48 @@ var noctosCutscene = new Cutscene({
         models.bosses.noctos.draw()
     },
     onEnd: (cutscene) => {
+        scene = "GAME";
+    }
+})
+
+const lithosCutscene = new Cutscene({
+    name: "Lithos Cutscene",
+    map: lithosRoom,
+    x: lithos.x, y: lithos.y, scale: 1,
+    length: 310,
+    nodes: [
+        {start: 0, display: (cutscene) => {
+            lithos.manual = true;
+            lithos.curAngle = Math.PI / 2;
+        }},
+        {start: 60, display: (cutscene) => {
+            if (lithos.curAngle < Math.PI * 6.5) {
+                lithos.curAngle += perSec(Math.PI * 4);
+
+                if (lithos.curAngle >= Math.PI * 4) {
+                    lithos.phase = 2;
+                }
+            } else {
+                lithos.curAngle = Math.PI * 6.5;
+            }
+        }},
+        {start: 200, display: (cutscene) => {
+            if (cutscene.scale < 1.5) {
+                cutscene.scale += perSec(1.5);
+            } else {
+                cutscene.scale = 1.5;
+            }
+        }},
+        {start: 240, display: (cutscene) => {
+            cutscene.fade += perSec(1);
+        }},
+    ],
+    always: (cutscene) => {
+        playMusic("Boss Cutscene");
+    },
+    onEnd: (cutscene) => {
+        lithos.phase2Played = true;
+        lithos.manual = false;
         scene = "GAME";
     }
 })

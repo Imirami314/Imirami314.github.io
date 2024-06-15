@@ -513,10 +513,11 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
                         i * this.blockSize + p.mapPan.y > - height / mapScale)
                 }
             } else if (mode == "Cutscene View") {
-                this.loadCase = (j * this.blockSize - cx > -1 * this.blockSize &&
-                    j * this.blockSize - cx < width / cscale + this.blockSize &&
-                    i * this.blockSize - cy > -1 * this.blockSize &&
-                    i * this.blockSize - cy < height / cscale + this.blockSize)
+                // this.loadCase = (j * this.blockSize - cx > -1 * this.blockSize &&
+                //     j * this.blockSize - cx < (width + this.blockSize) / cscale &&
+                //     i * this.blockSize - cy > -1 * this.blockSize &&
+                //     i * this.blockSize - cy < (height + this.blockSize) / cscale)
+                this.loadCase = true; // temp
             } else if (mode == "Snippet View") {
                 if (!p.canViewAllRegions) {
                     this.loadCase = (Math.abs(j * 75 - p.x) <= 10 * 75 && Math.abs(i * 75 - p.y) <= 10 * 75) &&

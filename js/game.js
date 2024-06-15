@@ -162,6 +162,20 @@ var bossDoors = [
 			cutsceneFrame = 0
 			// scene = "DROWNED BOSS CUTSCENE"
 		}
+	},
+    {
+		x: 6,
+		y: 20,
+		map: stoneheartSanctuary,
+		enterFunction: function(p) {
+			saveGame();
+			
+			p.goTo(lithosRoom.enterX, lithosRoom.enterY);
+			curMap = lithosRoom;
+            Cutscene.set(lithosCutscene);
+            scene = "CUTSCENE";
+			// scene = "DROWNED BOSS CUTSCENE"
+		}
 	}
 ]
 
@@ -2749,8 +2763,8 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = false
-    curMap = lithosRoom;
-    p.goTo(ctr(9), ctr(1));
+    curMap = stoneheartSanctuary;
+    p.goTo(ctr(6), ctr(20));
     p.inventory = [items.drownedsScythe, items.stormedsSword, food.apple(), food.apple(), items.aquaLung]
     p.updateSortedInventory()
     p.equipped = [items.aquaLung]
@@ -2801,7 +2815,9 @@ function startPos() {
     ]
 
     // lithos.phase = 2;
-    lithos.health = lithos.maxHealth / 2;
+    // lithos.health = lithos.maxHealth / 2;
+    // scene = "CUTSCENE";
+    // Cutscene.set(lithosCutscenePhase2);
 }
 
 startPos()
@@ -2995,7 +3011,7 @@ var gameInterval = setInterval(function() {
     
             for (var i in bossDoors) {
                 var b = bossDoors[i]
-                if (keys.space && p.cords.x == b.x && p.cords.y == b.y && b.map == curMap) {
+                if (keys.space && !p.spaceActioned && p.cords.x == b.x && p.cords.y == b.y && b.map == curMap) {
                     b.enterFunction(p)
                 }
             }
