@@ -1318,6 +1318,12 @@ Player.prototype.displayInventory = function() {
     
         if (mouseItemDist <= 50 && mouseIsDown) {
             this.dequip(eqItem)
+
+            switch (eqItem.name) {
+                case "Aqua Lung":
+                    this.can.goUnderWater = false;
+                    break;
+            }
         }
     }
 

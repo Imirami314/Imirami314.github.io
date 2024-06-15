@@ -431,8 +431,10 @@ var deltasLostTreasure = new Mission("Delta's Lost Treasure", "Reward", null, 0,
 	}
 })
 
-var berylsSpecialBracelet = new Mission("Beryl's Special Bracelet", "Reward", null, 0, function() {
-	if (entityDistance(p, beryl) && p.weapon.name == "Beryl's Bracelet" && mouseIsDown) {
+var berylsSpecialBracelet = new Mission("Beryl's Special Bracelet", "Reward", null, 0);
+
+berylsSpecialBracelet.solve = function() {
+	if (entityDistance(p, beryl) <= 100 && p.weapon.name == "Beryl's Bracelet" && mouseIsDown) {
 		beryl.lines = [
 			"Wh-what? Am I dreaming?",
 			"You found my bracelet!",
@@ -459,7 +461,7 @@ var berylsSpecialBracelet = new Mission("Beryl's Special Bracelet", "Reward", nu
 
 		beryl.lineNum = 0
 	}
-})
+}
 
 
 var missions = Mission.all

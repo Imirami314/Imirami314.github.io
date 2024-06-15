@@ -1223,30 +1223,37 @@ class Lithos extends Boss {
     }
 
     checkRockCollisions() {
-        let rockArmBlock = lithosRoom.getBlock(Math.floor(this.curRockArm.x / 75), Math.floor(this.curRockArm.y / 75));
+        if (!(Math.floor(this.curRockArm.x / 75) >= curMap.getDimensions().x ||
+            Math.floor(this.curRockArm.y / 75) >= curMap.getDimensions().y ||
+            Math.floor(this.curRockArm.x / 75) < 0 ||
+            Math.floor(this.curRockArm.y / 75) < 0)) {
+            let rockArmBlock = lithosRoom.getBlock(Math.floor(this.curRockArm.x / 75), Math.floor(this.curRockArm.y / 75));
 
-        if (rockArmBlock == '~') {
-            this.health -= perSec(175);
-        }
+            if (rockArmBlock == '~') {
+                this.health -= perSec(175);
+            }
 
-        if (Math.hypot(p.x - this.curRockArm.x, p.y - this.curRockArm.y) <= 65 && this.curRockArm.speed > 0) {
-            p.getHit(perSec(this.curRockArm.speed));
-        }
+            if (Math.hypot(p.x - this.curRockArm.x, p.y - this.curRockArm.y) <= 65 && this.curRockArm.speed > 0) {
+                p.getHit(perSec(this.curRockArm.speed));
+            }
 
-        if (this.curRockArm.speed <= 0) {
-            if (!!!getBlockById(rockArmBlock) || !getBlockById(rockArmBlock).through) { // When rock lands on a wall block or outside map (Lithos spins to reset rock cycle)
-                this.curAngle += perSec(Math.PI * 4);
-                if (this.curAngle >= Math.PI * 4) { // Arbitrary point to stop spinning
-                    this.resetRockArm();
-                }
-            } else if (getBlockById(rockArmBlock).through) { // If rock lands on a walkable block, Lithos will go get it
-                this.movePathToRockArm();
+            if (this.curRockArm.speed <= 0) {
+                if (!!!getBlockById(rockArmBlock) || !getBlockById(rockArmBlock).through) { // When rock lands on a wall block or outside map (Lithos spins to reset rock cycle)
+                    this.curAngle += perSec(Math.PI * 4);
+                    if (this.curAngle >= Math.PI * 4) { // Arbitrary point to stop spinning
+                        this.resetRockArm();
+                    }
+                } else if (getBlockById(rockArmBlock).through) { // If rock lands on a walkable block, Lithos will go get it
+                    this.movePathToRockArm();
 
-                let rockArmDist = Math.hypot(this.x - this.curRockArm.x, this.y - this.curRockArm.y);
-                if (rockArmDist <= 115) {
-                    this.resetRockArm();
+                    let rockArmDist = Math.hypot(this.x - this.curRockArm.x, this.y - this.curRockArm.y);
+                    if (rockArmDist <= 115) {
+                        this.resetRockArm();
+                    }
                 }
             }
+        } else {
+            this.resetRockArm();
         }
     }
 

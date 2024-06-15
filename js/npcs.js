@@ -321,6 +321,7 @@ class NPC extends Entity {
 
                             this.firstInteraction = false
                             this.lineNum = -1
+                            this.textCooldown = 1;
                             this.actionFinished = false
                             this.talkedTo = true
                             this.remoteSpeak = false

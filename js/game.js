@@ -1518,7 +1518,7 @@ var jade = new NPC(ctr(4), ctr(2), "Jade", litholianHistoryCenter, 'U', [
     jade.lines = [
         "Oh, you again!\nI assume you want to learn about Litholia's history.",
         "I could talk about it for hours, but I won't\nbore you with all the details.",
-        "Litholia used to be connected to Steel Field to the North,\nbut then a wall was built between the two by Bouldered, Master of Land.",
+        "Litholia used to be connected to Steel Field to the North,\nbut then a wall was built between the two by a creature known as Lithos.",
         "And now, lava has been mysteriously seeping out of the ground!",
         "If it gets any worse, the people of Litholia will have to leave!!",
         "...",
@@ -1551,9 +1551,9 @@ var kingJasper = new NPC(ctr(115), ctr(81), "King Jasper", mainMap, 'R', [
     "...",
     "Perfect! I was just talking to Mr. Wells about a famous Litholian legend.\nIt goes as follows:",
     "*As the island grows weak and the fortress appears,\nBring these words to a true hero's ears,",
-    "*The bushes along the river that flows,\nAmong their numbers, a subtly shows,",
+    "*The bushes along the river that flows,\nAmong their numbers, a secret subtly shows,",
     "*Two on the left, the other side three,\nFrom there, point east, a strange group of trees,",
-    "*These four wooded towers, with no shrubs beside,\nThe northern-most river, head inside.",
+    "*These four wooded towers have no shrubs beside,\nWhere the northern-most one meets river, head inside.",
     "That fortress mentioned at the beginning could be the\nlarge stone building that emerged in Southern Litholia. Unfortunately, nobody knows\nwhat it is nor how to get inside it.",
     "So, it's possible that this riddle is telling us how to enter it!",
 ], "The King of Litholia.", function() {
@@ -2101,6 +2101,8 @@ var interactives = [
     new RaftDispenser(litholianLegendPassageways, b(38), b(1), ctr(37), ctr(1)),
 
     new RaftDispenser(litholianLegendPassageways, b(20), b(10), ctr(20), ctr(9)),
+
+    new RaftDispenser(litholianLegendPassageways, b(21), b(23), ctr(22), ctr(23)),
 
     // Stoneheart Fortress
     new RockDispenser(stoneheartFortress, b(11), b(2), ctr(12), ctr(2)),
