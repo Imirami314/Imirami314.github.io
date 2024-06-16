@@ -1238,7 +1238,7 @@ class Lithos extends Boss {
             }
 
             if (this.curRockArm.speed <= 0) {
-                if (!!!getBlockById(rockArmBlock) || !getBlockById(rockArmBlock).through) { // When rock lands on a wall block or outside map (Lithos spins to reset rock cycle)
+                if (!getBlockById(rockArmBlock).through) { // When rock lands on a wall block or outside map (Lithos spins to reset rock cycle)
                     this.curAngle += perSec(Math.PI * 4);
                     if (this.curAngle >= Math.PI * 4) { // Arbitrary point to stop spinning
                         this.resetRockArm();

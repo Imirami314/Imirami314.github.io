@@ -64,7 +64,7 @@ var items = {
     }, function() {
         p.swordAttack()
     }, "A mystical sword you obtained after defeating Stormed, Master of Wind.", "WEAPONS"),
-    drownedsScythe: new Item("Drowned's Scythe", 35, function(x, y) {
+    drownedsScythe: new Item("Drowned's Scythe", 905, function(x, y) {
         ctx.save()
         ctx.translate(x + 45, y + 45)
         ctx.rotate(Math.PI / 2) // Flip image vertically

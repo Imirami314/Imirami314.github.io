@@ -283,54 +283,42 @@ const lithosCutsceneDeath = new Cutscene({
     name: "Lithos Cutscene Death",
     map: lithosRoom,
     x: lithos.x, y: lithos.y, scale: 1,
-    length: 310,
+    length: 330,
     nodes: [
         {start: 0, display: (cutscene) => {
-            lithos.goTo(b(15), b(15));
-            lithos.scaleFactor = 1;
-            lithos.armAngle = 0;
-            lithos.curAngle = Math.PI / 2;
+            // Set cutscene to lithos's newest location
+            cutscene.location = {
+                x: lithos.x,
+                y: lithos.y
+            }
 
+            lithos.health = 1; // Makes him not dead so that he shows up in cutscene
             lithos.manual = true;
-
-            p.goTo(b(15), b(19));
-            p.dir = 'U';
+            lithos.curAngle = Math.PI / 2;
         }},
-        {start: 60, display: (cutscene) => {
-            if (lithos.curAngle < Math.PI * 6.5) {
-                lithos.curAngle += perSec(Math.PI * 4);
-
-                if (lithos.curAngle >= Math.PI * 4) {
-                    lithos.phase = 2;
-                }
-            } else {
-                lithos.curAngle = Math.PI * 6.5;
-            }
+        {start: 30, display: (cutscene) => {
+            lithos.curAngle += perSec(Math.PI * 2);
+            cutscene.scale += perSec(1);
         }},
-        {start: 200, display: (cutscene) => {
-            if (cutscene.scale < 1.5) {
-                cutscene.scale += perSec(1.5);
-            } else {
-                cutscene.scale = 1.5;
-            }
+        {start: 180, display: (cutscene) => {
+            lithos.curAngle += perSec(Math.PI * 6);
+            lithos.scaleFactor -= perSec(2);
+            cutscene.scale -= perSec(5);
         }},
-        {start: 240, display: (cutscene) => {
+        {start: 210, display: (cutscene) => {
+            // Break
+        }},
+        {start: 270, display: (cutscene) => {
             cutscene.fade += perSec(1);
         }},
     ],
     always: (cutscene) => {
-        playMusic("Boss Cutscene")
-
-        // curBoss.update();
-        // models.bosses.lithos.x = width / 2;
-        // models.bosses.lithos.x = height / 2;
-        // models.bosses.lithos.draw();
-
-        // ellipse(300, 300, 50, 50, "rgb(0, 0, 0)");
     },
     onEnd: (cutscene) => {
-        lithos.phase2Played = true;
-        lithos.manual = false;
+        curMap = mainMap;
+        p.goTo(ctr(105), ctr(94));
+        lithos.health = 0;
         scene = "GAME";
+        console.log(Screen.effects);
     }
 });

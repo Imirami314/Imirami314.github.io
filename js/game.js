@@ -2766,8 +2766,8 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = false
-    curMap = stoneheartSanctuary;
-    p.goTo(ctr(6), ctr(20));
+    curMap = lithosRoom;
+    p.goTo(ctr(15), ctr(17));
     p.inventory = [items.drownedsScythe, items.stormedsSword, food.apple(), food.apple(), items.aquaLung]
     p.updateSortedInventory()
     p.equipped = [items.aquaLung]
@@ -2821,6 +2821,9 @@ function startPos() {
     // lithos.health = lithos.maxHealth / 2;
     // scene = "CUTSCENE";
     // Cutscene.set(lithosCutscenePhase2);
+    lithos.health = 0;
+    lithos.x += 500;
+    lithos.phase2Played = true;
 }
 
 startPos()
@@ -3168,6 +3171,11 @@ var gameInterval = setInterval(function() {
                             "That means that the next location for you to head to is [insert location]."
                         ]
                     })
+                } else if (curMap == lithosRoom) {
+                    Screen.fadeOut(0.05, function() {
+                        Cutscene.set(lithosCutsceneDeath);
+                        scene = "CUTSCENE";
+                    });
                 }
             }
             
