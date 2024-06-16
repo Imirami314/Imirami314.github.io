@@ -2821,9 +2821,9 @@ function startPos() {
     // lithos.health = lithos.maxHealth / 2;
     // scene = "CUTSCENE";
     // Cutscene.set(lithosCutscenePhase2);
-    lithos.health = 0;
-    lithos.x += 500;
-    lithos.phase2Played = true;
+    // lithos.health = 0;
+    // lithos.x += 500;
+    // lithos.phase2Played = true;
 }
 
 startPos()
