@@ -63,6 +63,10 @@ Screen.stopEffect = function(type) {
     }
 }
 
+Screen.clearEffects = function() {
+    this.effects = [];
+}
+
 Screen.update = function() {
     for (var i in this.effects) {
         var e = this.effects[i]

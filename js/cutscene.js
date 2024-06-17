@@ -62,8 +62,8 @@ class Cutscene {
         }
 
         if (!!this.onEnd && this.curFrame >= this.length) {
-            this.onEnd(this)
             curCutscene = null;
+            this.onEnd(this);
         }
     }
 
@@ -318,7 +318,50 @@ const lithosCutsceneDeath = new Cutscene({
         curMap = mainMap;
         p.goTo(ctr(105), ctr(94));
         lithos.health = 0;
+        Screen.clearEffects(); // Necessary to prevent a second fade out idk why
         scene = "GAME";
-        console.log(Screen.effects);
+
+        mainMap.changeBlocks([
+            [97, 57],
+            [103, 58],
+            [107, 57],
+            [107, 57],
+            [109, 56],
+            [109, 57],
+            [110, 57],
+            [109, 58],
+            [112, 56],
+            [113, 56],
+            [114, 56],
+            [115, 56],
+            [113, 57],
+            [114, 57],
+            [115, 57],
+            [113, 58],
+            [116, 61],
+            [117, 61],
+            [115, 62],
+            [116, 62],
+            [117, 62],
+            [116, 63],
+            [121, 56],
+            [120, 55],
+            [121, 55],
+            [122, 55],
+            [120, 57],
+            [121, 57],
+            [122, 57],
+            [119, 58],
+            [120, 58],
+            [121, 58],
+            [119, 59],
+            [120, 59],
+            [123, 58],
+            [119, 65],
+            [118, 66],
+            [119, 66],
+            [117, 67],
+            [118, 67],
+        ], '_'); // Removes a lot of lava from Litholia (changeme add more)
     }
 });

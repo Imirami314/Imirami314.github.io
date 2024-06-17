@@ -58,13 +58,10 @@ var items = {
         ctx.translate(- 45 - x, - 45 - y)
         ctx.drawImage(images.stormedSword, x - 15, y + 45, 25, 75)
         ctx.restore()
-        
-
-        //ellipse(x, y, 10, 10, "rgb(0, 0, 0)") // changeme to real image for Stormed's Sword
     }, function() {
         p.swordAttack()
     }, "A mystical sword you obtained after defeating Stormed, Master of Wind.", "WEAPONS"),
-    drownedsScythe: new Item("Drowned's Scythe", 905, function(x, y) {
+    drownedsScythe: new Item("Drowned's Scythe", 35, function(x, y) {
         ctx.save()
         ctx.translate(x + 45, y + 45)
         ctx.rotate(Math.PI / 2) // Flip image vertically

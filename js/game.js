@@ -2824,6 +2824,7 @@ function startPos() {
     // lithos.health = 0;
     // lithos.x += 500;
     // lithos.phase2Played = true;
+    lithos.health = 0;
 }
 
 startPos()
