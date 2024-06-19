@@ -124,8 +124,14 @@ var items = {
                 ]
 
                 wayne.action = function() {
-                    p.giveItem(items.steelFieldKey);
+                    wayne.lines = [
+                        "Use the key I gave you to head east, towards the next village!"
+                    ]
+                    
+                    p.giveItem(items.steelFieldKey, true);
                     aStrangeWorld.setInstructions("You located Wayne in a small pool and he gave you a special key.\nAccording to him, the key will open the lock in Northern Chard Town which will let you into Steel Field!\nOnce you get there, be careful. It's not the safest place ever...");
+
+                    wayne.clearAction();
                 }
                 wayne.actionLine = "after";
 
@@ -136,17 +142,20 @@ var items = {
         ctx.drawImage(images.steelFieldKey, x - 15, y - 10, 35, 12.5)
     }, function(p) {
         if (p.cords.x == 66 && p.cords.y == 10) { // Map Lock from main village to steel field or whatever
-            var itemFound = false
-            for (var i in p.inventory) {
-                var item = p.inventory[i]
-                if (item.name == this.name) {
-                    p.inventory.splice(i, 1)
-                    itemFound = true
-                }
-            }
-            if (itemFound) {
-                curMap.changeBlock(67, 10, "_")
-            } 
+            // var itemFound = false
+            // for (var i in p.inventory) {
+            //     var item = p.inventory[i]
+            //     if (item.name == this.name) {
+            //         p.inventory.splice(i, 1)
+            //         itemFound = true
+            //     }
+            // }
+            // if (itemFound) {
+            //     curMap.changeBlock(67, 10, "_")
+            // }
+            
+            p.removeItem(this);
+            curMap.changeBlock(67, 10, "_")
         }
     }, "A key that allows you to enter Steel Field. Be careful!", "KEYS"),
     castleKey: new Item("Castle Key", 0, function(x, y) {

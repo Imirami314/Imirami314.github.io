@@ -343,6 +343,7 @@ GameAlert.prototype.drawMessage = function () {
                         this.hasItem = true
                     }
                 }
+
                 if (this.showKeyAlert) {
                     if (!this.hasItem) {
                         ctx.fillStyle = "rgb(255, 255, 255)"
@@ -691,12 +692,6 @@ var wayne = new NPC(48 * 75, 55 * 75, "Wayne", mainMap, "D", [
 ], "Resident - Chard Town\nHe is always outdoors, and loves to raft and swim whenever he gets the chance.", function(p, npc) {
     // var old_man = npcs.searchByName("Old Man")
     if (oldMan.glasses) {
-        wayne.lines = [
-            "Use the key I gave you to head east, towards the next village!"
-        ]
-
-        // Location of Smith the Blacksmith's house
-        p.giveItem(items.steelFieldKey, true)
         p.questPoint = {
             x: 130,
             y: 37
@@ -1570,6 +1565,12 @@ var kingJasper = new NPC(ctr(115), ctr(81), "King Jasper", mainMap, 'R', [
     ]
 }, "after")
 
+const pearl = new NPC(ctr(93), ctr(78), "Border Guard Pearl", mainMap, 'R', [
+    "Hello there.",
+    "You don't seem like you're from Litholia.\nMy name is Pearl, and I've been assigned to guard this strangle border here.",
+    "We don't really know what it is, but I'm here in case it causes something dangerous.",
+])
+
 var npcs = []
 
 for (var npc of NPC.all) {
@@ -1712,6 +1713,8 @@ var interactives = [
 
     new Breezeway(mainMap, 114, 99, 118, 95),
     new Breezeway(mainMap, 118, 95, 114, 99),
+
+    new RaftDispenser(mainMap, b(91), b(75), ctr(91), ctr(76)),
 
     // Confounded Cave
 
@@ -2779,63 +2782,9 @@ function startPos() {
 
 
     litholia.hasSetLeaderPositions = true;
-    
-
-    abandonedChannel.changeBlock(47, 17, '_')
-    abandonedChannel.changeBlock(47, 16, 'O')
-
-    ariel.goTo(ctr(16), ctr(33))
-    ariel.lines = [
-        "Hi again!",
-        "The earthquakes seem to have stopped!\nI don't know how, but I'm not complaining!"
-    ]
-
-    walter.goTo(ctr(35), ctr(10))
-    walter.dir = 'D'
-    walter.lines = [
-        "The water's gotten so much calmer and more peaceful...",
-        "Still, I'm curious where all that shaking was coming from.",
-        "I wish President Wells would just tell everybody!"
-    ]
-
-    presidentWells.map = droptonCity
-    presidentWells.goTo(ctr(42), ctr(3))
-    presidentWells.dir = 'D'
-    presidentWells.lines = [
-        "For the last time, I'm not letting people--huh?",
-        "Woah! It's you! You're back!",
-        "And in one piece too! I'll be honest, I was\nstarting to doubt that you'd show up.",
-        "I presume you are the reason the shaking stopped.\nI want to hear all about how you did it!",
-        "Also, some character named Wayne showed up and\nclaimed he knew you. He said he had to tell you something\nimportant.",
-        "I don't know if he's telling the truth or not, but\nhe should be waiting in the Dropton Tunnels."
-    ]
-
-    presidentWells.clearAction()
-
-    wayne.map = droptonTunnels
-    wayne.hasAquaLung = true
-    wayne.goTo(ctr(28), ctr(23))
-    wayne.lines = [
-        "Aye matey! It's good to see you again!",
-        "I hear you've been working with President Wells to help Dropton!",
-        "The old man sent for me to get you. He's still in Chard Town\nand he has some important information that you 'need to know'.",
-        "It is a long journey though. I would know, I had to\ntravel for such a long time to get here!",
-        "There are rumors about a way to teleport around the island.\nApparently some anonymous man from Chard Town has found a way.",
-        "Noobdy knows who he is, so he's known as The Wanderer.",
-        "Anyway, I'd head over to Chard Town and talk to the Old Man. Otherwise,\nit means I came all this way for nothing!"
-    ]
-
-    // lithos.phase = 2;
-    // lithos.health = lithos.maxHealth / 2;
-    // scene = "CUTSCENE";
-    // Cutscene.set(lithosCutscenePhase2);
-    // lithos.health = 0;
-    // lithos.x += 500;
-    // lithos.phase2Played = true;
-    // lithos.health = 0;
 }
 
-// startPos()
+startPos()
 
 var suspensiaInterval = setInterval(function() { // Makes suspensia spread into water
     if (scene == "GAME") {

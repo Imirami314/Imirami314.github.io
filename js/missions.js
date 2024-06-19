@@ -445,7 +445,7 @@ var deltasLostTreasure = new Mission("Delta's Lost Treasure", "Reward", "[insert
 	}
 })
 
-var berylsSpecialBracelet = new Mission("Beryl's Special Bracelet", "Reward", "[insert description]");
+var berylsSpecialBracelet = new Mission("Beryl's Special Bracelet", "Reward", "[insert description]", "[insert instructions]");
 
 berylsSpecialBracelet.solve = function() {
 	if (entityDistance(p, beryl) <= 100 && p.weapon.name == "Beryl's Bracelet" && mouseIsDown) {
@@ -476,6 +476,8 @@ berylsSpecialBracelet.solve = function() {
 		beryl.lineNum = 0
 	}
 }
+
+const journeyToLuminosIsle = new Mission("Journey to Luminos Isle", "Main", "Now that you've defeated Lithos, it's time to make your way to the final\ncity, Luminos Isle! Once you're there, you need to look for the leader, Empress Aurora.", "According to Wayne, the only way to get to Luminos Isle is to head to Dawn's Landing.\nFrom there, you can make your way up to the sky where Luminos Isle is.");
 
 
 var missions = Mission.all

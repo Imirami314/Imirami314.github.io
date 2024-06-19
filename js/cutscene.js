@@ -334,7 +334,7 @@ const lithosCutsceneDeath = new Cutscene({
             "In that case, thank you!",
             "Ah yes, one last thing...\nSome strange man entered Litholia and said he was looking for you.",
             "I don't know where he is, but Litholia is small.\nI'm sure you'll be able to find him!",
-            "Anyway, I've got to go soon some sort of secret meeting.",
+            "Anyway, I've got to go soon to some sort of secret meeting.",
             "The leaders of the other regions on this island will be there.\nApparently the borders dividing us have mysteriously opened.",
             "So I guess I'll see you later!"
         ];
@@ -388,5 +388,43 @@ const lithosCutsceneDeath = new Cutscene({
             [117, 67],
             [118, 67],
         ], '_'); // Removes a lot of lava from Litholia (changeme add more)
+
+        wayne.map = mainMap;
+        wayne.goTo(ctr(100), ctr(58));
+        wayne.dir = 'R';
+        wayne.lines = [
+            "At last, we meet again!",
+            "It was quite a journey to find you.\nSo, I'm checking out this place while I'm here.",
+            "I take it you've defeated Lithos, the master of stone. Very impressive!",
+            "You've got one more elemental master to take down, then it's time to fight " + badGuy + "!",
+            "You'll need to head to Luminos Isle, a city in the sky!\nI've never been, but it's supposed to be amazing!",
+            "There, you'll need to meet with their head, Empress Aurora.\nShe'll give you the details.",
+            "I don't know what sort of details she'll tell you, I'm just the messenger.",
+            "Ah yes! One more thing...",
+            "To get to Luminos Isle, you'll need to head to Dawn's Landing, which is west of here.\nIt's also directly south of Chard Town. Kind of a full circle, huh?",
+            "I recommend you make your way there as soon as possible!\nIf all goes well, I'll see you there.",
+            "Goodbye!"
+        ];
+        wayne.action = function() {
+            addMission(journeyToLuminosIsle);
+
+            wayne.lines = [
+                "One more elemental master to go. You're so close!",
+                "Remember, to get to Luminos Isle, you first need\nto get to Dawn's Landing which is west of here.",
+                "Good luck!"
+            ];
+
+            wayne.clearAction();
+        }
+        wayne.actionLine = "after";
+
+        mainMap.changeBlocks([[92, 75], [92, 76], [92, 77]], "_");
+        alerts.push(new GameAlert(92, 75, ["SEGREME STONE FO RETSAM WEN A SA SKAERB LLAW EHT"], mainMap, "SIGN"));
+
+        pearl.lines = [
+            "Hello there!",
+            "I've been guarding the border over here for a while, and suddenly\nit opened!",
+            "I'm going to stay here to make sure nothing weird happens,\nso if you want to cross, do it at your own risk!"
+        ];
     }
 });
