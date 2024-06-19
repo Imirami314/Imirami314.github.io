@@ -2406,6 +2406,8 @@ if (!!save) {
                 savedMission.curNode = mission.curNode
                 savedMission.newMission = mission.newMission
                 savedMission.complete = mission.complete
+                savedMission.desc = mission.desc;
+                savedMission.instructions = mission.instructions;
                 savedMission.completionPopup = mission.completionPopup
 
                 addMission(missions[i])
@@ -2766,11 +2768,14 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = false
-    curMap = lithosRoom;
-    p.goTo(ctr(15), ctr(17));
+    curMap = mainMap;
+    p.goTo(ctr(105), ctr(94));
     p.inventory = [items.drownedsScythe, items.stormedsSword, food.apple(), food.apple(), items.aquaLung]
     p.updateSortedInventory()
     p.equipped = [items.aquaLung]
+    lithosCutsceneDeath.onEnd();
+
+
     litholia.hasSetLeaderPositions = true;
     
 
@@ -2825,7 +2830,7 @@ function startPos() {
     // lithos.health = 0;
     // lithos.x += 500;
     // lithos.phase2Played = true;
-    lithos.health = 0;
+    // lithos.health = 0;
 }
 
 startPos()
@@ -3283,7 +3288,15 @@ var gameInterval = setInterval(function() {
                 p.displayNPCList()	
             }
 
-            p.displayMap()
+            if (keys.m) {
+                p.displayMissionsList();
+            }
+
+            if (p.mapOn) {
+                p.displayMapScreen();
+            }
+            
+            p.updateViewableRegions();
             
             if (p.health <= 0) {
                 Screen.fadeOut(0.01, function() {
@@ -3307,8 +3320,6 @@ var gameInterval = setInterval(function() {
                     curMissions[i].alert("COMPLETE")
                 }
             }
-            
-            
             
             if (keys.shift) {
                 // Screen.fadeOut(255, 255, 255, 0.01)

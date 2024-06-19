@@ -119,6 +119,14 @@ String.prototype.replaceAt = function(index, replacement) {
     return this.substring(0, index) + replacement + this.substring(index + replacement.length);
 }
 
+function fill(r, g, b, a) {
+    if (!!a) {
+        ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${a})`;
+    } else {
+        ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+    }
+}
+
 function fillTextMultiLine(text, x, y) {
     var lineHeight = ctx.measureText("M").width * 1.2;
     var lines = text.split("\n");
@@ -130,7 +138,7 @@ function fillTextMultiLine(text, x, y) {
 
 function displayText(text, x, y, size) {
     ctx.font = `${size}px serif`;
-    ctx.fillText(text, x, y);
+    fillTextMultiLine(text, x, y);
 }
 
 function splitEveryN(str, n) { // https://bobbyhadz.com/blog/javascript-split-string-substrings-n-characters
@@ -317,6 +325,9 @@ function onKeyDown(event) {
         case 72:
             keys.h = true
             break
+        case 77:
+            keys.m = true
+            break
     }
 }
 
@@ -332,7 +343,7 @@ function onKeyUp(event) {
         case 65: 
             keys.a = false
             break
-        	case 87:
+        case 87:
             keys.w = false
         	break
         case 32:
@@ -370,6 +381,9 @@ function onKeyUp(event) {
             break
         case 72:
             keys.h = false
+            break
+        case 77:
+            keys.m = false
             break
     }
 }

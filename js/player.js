@@ -20,6 +20,7 @@ function Player(x, y, npcs) {
     this.doorCooldown = 0.1
     
     this.mapOn = false
+    this.shiftScreenDisplay = "MAP"; // MAP, MISSIONS, NPCS
     this.mapSwitchTimer = 0.3
     this.mapPan = {
         x: 0,
@@ -28,6 +29,8 @@ function Player(x, y, npcs) {
     
     this.npcs = npcs
     this.npcInfoDisplay = false // When pressing 'n' and clicking on npc this becomes true
+
+    this.missionBeingDisplayed = null; // The current mission being viewed in the Mission List menu
     
     this.loadSaveComplete = false
 
@@ -1037,87 +1040,46 @@ Player.prototype.shovel = function () {
     }
 }
 
-Player.prototype.displayMap = function() {
-    if (this.mapOn) {
-        ctx.fillStyle = "rgb(0, 0, 0)"
-        ctx.fillRect(0, 0, width, height)
-        ctx.save()
-        ctx.translate(width / 2, height / 2)
-        ctx.scale(mapScale, mapScale) 
-        ctx.translate(width / -2, height / -2)
-        ctx.translate(this.mapPan.x, this.mapPan.y)
-        
-        curMap.draw(p, "Map View")
-        ellipse(this.x, this.y, 50, 50, "rgb(255, 0, 0)")
-		
-        for (var i in this.tracking) {
-            var t = this.tracking[i]
-            models.npcs.oldMan.x = t.x
-            models.npcs.oldMan.y = t.y
-            models.npcs.oldMan.draw()
-            // ellipse(t.x, t.y, 75, 75, "rgb(0, 0, 0)"
-        }
+Player.prototype.displayMapScreen = function() {
+    // Black backdrop
+    ctx.fillStyle = "rgb(0, 0, 0)"
+    ctx.fillRect(0, 0, width, height)
 
-        // eiufhdglksdfjhg
-        
-        if (!!this.questPoint) {
-            var questPointParticles = new ParticleSystem(ctr(this.questPoint.x), ctr(this.questPoint.y), 10, 35 / mapScale, 0, 255, 0)
+    if (this.shiftScreenDisplay == "MAP") {
+        this.displayMap();
+    } else if (this.shiftScreenDisplay == "MISSIONS") {
+        this.displayMissionList();
+    }
 
-            // questPointParticles.create()
-            // questPointParticles.draw()
-            // ellipse(ctr(this.questPoint.x), ctr(this.questPoint.y), 35 / mapScale, 35 / mapScale, "rgb(0, 250, 45)")
-            // ellipse(ctr(this.questPoint.x), ctr(this.questPoint.y), 25 / mapScale, 25 / mapScale, "rgb(0, 200, 40)")
-            // ellipse(ctr(this.questPoint.x), ctr(this.questPoint.y), 10 / mapScale, 10 / mapScale, "rgb(0, 250, 45)")
-            
-        }
-        
-        ctx.restore()
-        ctx.fillStyle = "rgb(0, 0, 0)"
-        ctx.roundRect(width / 2 - 60, height - 100, 50, 50, 5)
-        ctx.fill()
-        ctx.roundRect(width / 2 + 10, height - 100, 50, 50, 5)
-        ctx.fill()
-        ctx.fillStyle = "rgb(255, 255, 255)"
-        ctx.font = "50px serif"
-        ctx.textAlign = "center"
-        ctx.fillText("+", width / 2 - 35, height - 65)
-        ctx.fillText("-", width / 2 + 35, height - 65)
+    for (var i = 0; i < 3; i ++) {
+        let sections = ["MISSIONS", "MAP", "NPCS"];
+        let sectionHeaders = ["Mission List", "Map", "Character List"];
 
-		for (var i in teleports) {
-            if (teleports[i].map == curMap) {
-			    teleports[i].draw()
-            }
-		}
-		
-        if (keys.w) {
-            this.mapPan.y += 25 / mapScale
-        }
+        if (this.shiftScreenDisplay == sections[i]) ctx.fillStyle = "rgb(0, 150, 255)";
+        else ctx.fillStyle = "rgb(0, 75, 255)";
 
-        if (keys.a) {
-            this.mapPan.x += 25 / mapScale
-        }
+        ctx.fillRect(i * width / 3, -5, width / 3, 50);
 
-        if (keys.s) {
-            this.mapPan.y -= 25 / mapScale
-        }
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = "rgb(0, 0, 0)";
+        ctx.rect(i * width / 3, -5, width / 3, 50);
+        ctx.stroke();
 
-        if (keys.d) {
-            this.mapPan.x -= 25 / mapScale
-        }
+        ctx.fillStyle = "rgb(0, 0, 0)";
+        displayText(sectionHeaders[i], width / 6 + i * width / 3, 30, 30);
 
         if (mouseIsDown) {
-            if (mouseY > height - 100 && mouseY < height - 50) {
-                if (mouseX > width / 2 - 60 && mouseX < width / 2 - 10 && mapScale < 0.45) { // Zoom in button
-                    mapScale *= 1.03
-                }
-                
-                if (mouseX > width / 2 + 10 && mouseX < width / 2 + 60 && mapScale > 0.13) { // Zoom out button
-                    mapScale /= 1.03
+            if (mouseY <= 45) {
+                if (mouseX >= i * width / 3 && mouseX < (i + 1) * width / 3) {
+                    this.shiftScreenDisplay = sections[i];
                 }
             }
         }
     }
+}
 
+Player.prototype.updateViewableRegions = function() {
+    // Update regions that have been discovered
     if (!this.canViewAllRegions) {
         let curRegion = Region.getRegionFromCords(this.cords.x, this.cords.y)
         if (this.regionsDiscovered.indexOf(curRegion) == -1) {
@@ -1126,6 +1088,82 @@ Player.prototype.displayMap = function() {
     } else {
         if (this.regionsDiscovered != regions) {
             this.regionsDiscovered = regions
+        }
+    }
+}
+
+Player.prototype.displayMap = function() {
+    ctx.save()
+    ctx.translate(width / 2, height / 2)
+    ctx.scale(mapScale, mapScale) 
+    ctx.translate(width / -2, height / -2)
+    ctx.translate(this.mapPan.x, this.mapPan.y)
+    
+    curMap.draw(p, "Map View")
+    ellipse(this.x, this.y, 50, 50, "rgb(255, 0, 0)")
+    
+    for (var i in this.tracking) {
+        var t = this.tracking[i]
+        models.npcs.oldMan.x = t.x
+        models.npcs.oldMan.y = t.y
+        models.npcs.oldMan.draw()
+        // ellipse(t.x, t.y, 75, 75, "rgb(0, 0, 0)"
+    }
+    
+    if (!!this.questPoint) {
+        var questPointParticles = new ParticleSystem(ctr(this.questPoint.x), ctr(this.questPoint.y), 10, 35 / mapScale, 0, 255, 0)
+
+        // questPointParticles.create()
+        // questPointParticles.draw()
+        // ellipse(ctr(this.questPoint.x), ctr(this.questPoint.y), 35 / mapScale, 35 / mapScale, "rgb(0, 250, 45)")
+        // ellipse(ctr(this.questPoint.x), ctr(this.questPoint.y), 25 / mapScale, 25 / mapScale, "rgb(0, 200, 40)")
+        // ellipse(ctr(this.questPoint.x), ctr(this.questPoint.y), 10 / mapScale, 10 / mapScale, "rgb(0, 250, 45)")
+        
+    }
+    
+    ctx.restore()
+    ctx.fillStyle = "rgb(0, 0, 0)"
+    ctx.roundRect(width / 2 - 60, height - 100, 50, 50, 5)
+    ctx.fill()
+    ctx.roundRect(width / 2 + 10, height - 100, 50, 50, 5)
+    ctx.fill()
+    ctx.fillStyle = "rgb(255, 255, 255)"
+    ctx.font = "50px serif"
+    ctx.textAlign = "center"
+    ctx.fillText("+", width / 2 - 35, height - 65)
+    ctx.fillText("-", width / 2 + 35, height - 65)
+
+    for (var i in teleports) {
+        if (teleports[i].map == curMap) {
+            teleports[i].draw()
+        }
+    }
+    
+    if (keys.w) {
+        this.mapPan.y += 25 / mapScale
+    }
+
+    if (keys.a) {
+        this.mapPan.x += 25 / mapScale
+    }
+
+    if (keys.s) {
+        this.mapPan.y -= 25 / mapScale
+    }
+
+    if (keys.d) {
+        this.mapPan.x -= 25 / mapScale
+    }
+
+    if (mouseIsDown) {
+        if (mouseY > height - 100 && mouseY < height - 50) {
+            if (mouseX > width / 2 - 60 && mouseX < width / 2 - 10 && mapScale < 0.45) { // Zoom in button
+                mapScale *= 1.03
+            }
+            
+            if (mouseX > width / 2 + 10 && mouseX < width / 2 + 60 && mapScale > 0.13) { // Zoom out button
+                mapScale /= 1.03
+            }
         }
     }
 }
@@ -1467,6 +1505,62 @@ Player.prototype.displayNPCInfo = function(n) {
 
 
 	ctx.textAlign = 'center'
+}
+
+Player.prototype.displayMissionList = function() {
+    let sortedMissions = sortMissionsByType(curMissions);
+
+    const missionBoxColors = {
+        MAIN: "rgb(0, 50, 255)",
+        ABILITY: "rgb(100, 50, 200)",
+        REWARD: "rgb(200, 200, 0)",
+    }
+
+    fill(0, 100, 255);
+    ctx.fillRect(0, 0, width, height);
+
+    if (sortedMissions.length > 0) {
+        for (let i in sortedMissions) {
+            let m = sortedMissions[i];
+
+            // ctx.textAlign = "left";
+            if (m.type == "Main") ctx.fillStyle = missionBoxColors.MAIN;
+            else if (m.type == "Ability") ctx.fillStyle = missionBoxColors.ABILITY;
+            else if (m.type == "Reward") ctx.fillStyle = missionBoxColors.REWARD;
+            ctx.fillRect(20, 75 + i * 75, 420, 50);
+            fill(0, 0, 0);
+            displayText(m.name, 230, 105 + i * 75, 25);
+
+            // Sets current mission being displayed to be whichever one is clicked on
+            if (mouseIsDown) {
+                if (mouseX >= 20 && mouseX <= 440) {
+                    if (mouseY >= 75 + i * 75 &&
+                        mouseY <= 125 + i * 75) {
+                        this.missionBeingDisplayed = sortedMissions[i];
+                    }
+                }
+            }
+
+            ctx.textAlign = "center"; // Reset text align
+        }
+
+        // Vertical border line
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+        ctx.moveTo(width / 3, 45);
+        ctx.lineTo(width / 3, height);
+        ctx.stroke();
+
+        // Specific mission information
+        if (this.missionBeingDisplayed != null) {
+            displayText(this.missionBeingDisplayed.name, width * 2 / 3, 125, 50);
+            displayText(`${this.missionBeingDisplayed.type} Mission`, width * 2 / 3, 150, 15);
+            displayText(this.missionBeingDisplayed.desc + "\n\n" + this.missionBeingDisplayed.instructions, width * 2 / 3, 200, 20);
+        }
+    } else {
+        fill(0, 0, 0);
+        displayText("No missions yet!", width / 2, height / 2, 75);
+    }
 }
 
 Player.prototype.nearNPC = function () {

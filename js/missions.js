@@ -1,14 +1,16 @@
-function Mission(name, type, nodes, num, initialize, solve) {
+function Mission(name, type, desc, instructions, solve) {
 	this.name = name
 	this.type = type
-	this.nodes = nodes
-	this.num = num
-    this.initialize = initialize
+	// this.nodes = nodes
+    this.desc = desc;
+    this.instructions = instructions;
+	// this.num = num
+    // this.initialize = initialize
 	this.solve = solve
 
-    this.initializedVariables = false
+    // this.initializedVariables = false
 
-	this.curNode = 0 // How far the player has progressed the mission
+	// this.curNode = 0
 	
 	this.newMission = true
 	this.newMissionFrame = 0
@@ -27,6 +29,18 @@ Mission.prototype.drawDesc = function () {
 	ctx.font = "20px serif"
 	ctx.textAlign = 'center'
 	ctx.fillText(this.type + "mission - " + this.name, 50, this.num * 20, width / 2, height / 2)
+}
+
+Mission.prototype.setDesc = function(newDesc) {
+    this.desc = newDesc;
+}
+
+Mission.prototype.setInstructions = function(newInstructions) {
+    this.instructions = newInstructions;
+}
+
+Mission.prototype.addInstructions = function(newInstructions) {
+    this.instructions += newInstructions;
 }
 
 Mission.prototype.alert = function(t) {
@@ -68,13 +82,13 @@ Mission.prototype.finish = function() {
 }
 
 // MAIN MISSIONS
-var aStrangeWorld = new Mission("A Strange World", "Main", null, 0)
+var aStrangeWorld = new Mission("A Strange World", "Main", "You've awoken in a new, yet familiar world. There's a lot to explore, but you need to start somewhere.", "The Old Man of Chard Town has asked you to fetch his glasses from some kid near the big lake.")
 
 aStrangeWorld.solve = function () {
 	
 }
 
-var meetingTheQueen = new Mission("Meeting The Queen", "Main", null, 0)
+var meetingTheQueen = new Mission("Meeting The Queen", "Main", "[insert description]", "[insert instructions]")
 
 meetingTheQueen.initalize = function () {
     this.enableBuy = false
@@ -271,7 +285,7 @@ meetingTheQueen.solve = function () {
 }
 
 // ABILITY MISSIONS
-var theWanderersRiddles = new Mission("The Wanderer's Riddles", "Ability", null, 0)
+var theWanderersRiddles = new Mission("The Wanderer's Riddles", "Ability", "[insert description]", "[insert instructions]")
 
 theWanderersRiddles.solve = function () {
 	if (getGameAlertInfoByCords(10, 7, mainMap).playerRead) {	// makes sure message is correct			
@@ -326,7 +340,7 @@ theWanderersRiddles.solve = function () {
 }
 
 // Wanderer riddle with specific locations will be specified as initials
-var theWanderersRiddlesGV = new Mission("The Wanderer's Riddles - Glacia Village", "Ability", null, 0)
+var theWanderersRiddlesGV = new Mission("The Wanderer's Riddles - Glacia Village", "Ability", "[insert description]", "[insert instructions]")
 
 theWanderersRiddlesGV.solve = function () {
     // console.log(getBlockInfoByCords(202 * 75, 24 * 75).id)
@@ -337,19 +351,19 @@ theWanderersRiddlesGV.solve = function () {
 
 
 // REWARD MISSIONS 
-var leysGreatFear = new Mission("Ley's Great Fear", "Reward", null, 0)
+var leysGreatFear = new Mission("Ley's Great Fear", "Reward", "[insert description]", "[insert instructions]")
 
 leysGreatFear.solve = function () {
 	ley.lines = ["Are they gone yet?!"]
 }
 
-var davidsDreamPond = new Mission("David's Dream Pond", "Reward", null, 0)
+var davidsDreamPond = new Mission("David's Dream Pond", "Reward", "[insert description]", "[insert instructions]")
 
-var blancheAndBianca = new Mission("Blanche and Bianca", "Reward", null, 0, function() {
+var blancheAndBianca = new Mission("Blanche and Bianca", "Reward", "[insert description]", "[insert instructions]", function() {
 
 })
 
-var theBlockedEntrance = new Mission("The Blocked Entrance", "Reward", null, 0)
+var theBlockedEntrance = new Mission("The Blocked Entrance", "Reward", "[insert description]", "[insert instructions]")
 
 theBlockedEntrance.solve = function () {
     if (droptonCity.checkBlocks([
@@ -408,7 +422,7 @@ theBlockedEntrance.solve = function () {
    
 }
 
-var deltasLostTreasure = new Mission("Delta's Lost Treasure", "Reward", null, 0, function() {
+var deltasLostTreasure = new Mission("Delta's Lost Treasure", "Reward", "[insert description]", "[insert instructions]", function() {
 	if (entityDistance(p, delta) <= 100 && p.weapon.name == 'Light Container' && mouseIsDown) {
 		delta.lines = [
 			"Did you find the treasure?",
@@ -431,7 +445,7 @@ var deltasLostTreasure = new Mission("Delta's Lost Treasure", "Reward", null, 0,
 	}
 })
 
-var berylsSpecialBracelet = new Mission("Beryl's Special Bracelet", "Reward", null, 0);
+var berylsSpecialBracelet = new Mission("Beryl's Special Bracelet", "Reward", "[insert description]");
 
 berylsSpecialBracelet.solve = function() {
 	if (entityDistance(p, beryl) <= 100 && p.weapon.name == "Beryl's Bracelet" && mouseIsDown) {
@@ -465,7 +479,26 @@ berylsSpecialBracelet.solve = function() {
 
 
 var missions = Mission.all
-var curMissions = []
+var curMissions = [];
+curMissions = missions;
+
+function sortMissionsByType(missionArr) {
+    let sortedMissions = [];
+
+    missionArr.forEach((m) => {
+        if (m.type == "Main") sortedMissions.push(m);
+    });
+
+    missionArr.forEach((m) => {
+        if (m.type == "Ability") sortedMissions.push(m);
+    });
+
+    missionArr.forEach((m) => {
+        if (m.type == "Reward") sortedMissions.push(m);
+    });
+
+    return sortedMissions;
+}
 
 function addMission(mission) {
 	if (curMissions.indexOf(mission) == -1) {
