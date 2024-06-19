@@ -445,7 +445,7 @@ berylsSpecialBracelet.solve = function() {
 		]
 
 		beryl.action = function() {
-			p.trills += 50
+			p.giveItem(TrillSum(50));
 			p.removeItem(items.berylsBracelet)
 
 			beryl.lines = [

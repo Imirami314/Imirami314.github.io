@@ -2771,6 +2771,7 @@ function startPos() {
     p.inventory = [items.drownedsScythe, items.stormedsSword, food.apple(), food.apple(), items.aquaLung]
     p.updateSortedInventory()
     p.equipped = [items.aquaLung]
+    litholia.hasSetLeaderPositions = true;
     
 
     abandonedChannel.changeBlock(47, 17, '_')

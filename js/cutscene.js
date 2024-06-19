@@ -321,6 +321,31 @@ const lithosCutsceneDeath = new Cutscene({
         Screen.clearEffects(); // Necessary to prevent a second fade out idk why
         scene = "GAME";
 
+        kingJasper.map = mainMap;
+        kingJasper.goTo(ctr(105), ctr(87));
+        kingJasper.lines = [
+            "Oh, it's you again!",
+            "Hold on, were you in that stone fortress just now?",
+            "...",
+            "You were?? What was in there?",
+            "...",
+            "Incredible! I had only heard of Lithos in stories before.",
+            "I assume Lithos was responsible for all the lava rising into Litholia,\nsince it seems to have receded now.",
+            "In that case, thank you!",
+            "Ah yes, one last thing...\nSome strange man entered Litholia and said he was looking for you.",
+            "I don't know where he is, but Litholia is small.\nI'm sure you'll be able to find him!",
+            "Anyway, I've got to go soon some sort of secret meeting.",
+            "The leaders of the other regions on this island will be there.\nApparently the borders dividing us have mysteriously opened.",
+            "So I guess I'll see you later!"
+        ];
+
+        kingJasper.action = function() {
+            
+        };
+        
+
+        console.log(kingJasper.cords)
+        console.log(kingJasper.map)
         mainMap.changeBlocks([
             [97, 57],
             [103, 58],
