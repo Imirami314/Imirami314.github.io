@@ -107,6 +107,8 @@ var items = {
                     x: 45,
                     y: 55
                 }
+
+                aStrangeWorld.setInstructions("You've given the Old Man his glasses, and he recognizes you as the legend who once\nbattled " + badGuy + "! Now, he asks you to look for Wayne, an avid swimmer who is somewhere in Chard Town.");
                 
                 old_man.lineNum = 0
                 old_man.talk(p)
@@ -121,12 +123,13 @@ var items = {
                     "Good luck, you're gonna need it.\nAnd don't worry! I'll be around."
                 ]
 
-                for (var i in p.inventory) {
-                    var item = p.inventory[i]
-                    if (item.name == this.name) {
-                        p.inventory.splice(i, 1)
-                    }
+                wayne.action = function() {
+                    p.giveItem(items.steelFieldKey);
+                    aStrangeWorld.setInstructions("You located Wayne in a small pool and he gave you a special key.\nAccording to him, the key will open the lock in Northern Chard Town which will let you into Steel Field!\nOnce you get there, be careful. It's not the safest place ever...");
                 }
+                wayne.actionLine = "after";
+
+                p.removeItem(this);
             }
         }, "A pair of glasses that Mike gave you for the old man.", "MISC"),
     steelFieldKey: new Item("Steel Field Key", 0, function(x, y) {

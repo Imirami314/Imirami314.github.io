@@ -344,20 +344,20 @@ var theWanderersRiddlesGV = new Mission("The Wanderer's Riddles - Glacia Village
 
 theWanderersRiddlesGV.solve = function () {
     // console.log(getBlockInfoByCords(202 * 75, 24 * 75).id)
-    if (getBlockInfoByCords(202 * 75, 24 * 75).id == "-") { // Default WATER
+    if (curMap == mainMap && getBlockInfoByCords(202 * 75, 24 * 75).id == "-") { // Default WATER
         
     }
 }
 
 
 // REWARD MISSIONS 
-var leysGreatFear = new Mission("Ley's Great Fear", "Reward", "[insert description]", "[insert instructions]")
+var leysGreatFear = new Mission("Ley's Great Fear", "Reward", "Ley lives in Chard Town, and he is terrified of monsters.\nSomehow, you managed to find him hiding from a group of monsters near his house.\nNow, he's begging you to kill them for him!", "The monsters in question are directly northeast of his house.\nAlthough it might be dangerous, Ley promises to reward you if you are successful!")
 
 leysGreatFear.solve = function () {
 	ley.lines = ["Are they gone yet?!"]
 }
 
-var davidsDreamPond = new Mission("David's Dream Pond", "Reward", "[insert description]", "[insert instructions]")
+var davidsDreamPond = new Mission("David's Dream Pond", "Reward", "David Swimmer loves to swim! He wishes one day to find\na great big pond that he could swim in forever!", "Unfortunately, he's explored all the bodies of water in Chard Town and\nnone are big enough. Maybe somewhere you'll find the pond of David's dreams!")
 
 var blancheAndBianca = new Mission("Blanche and Bianca", "Reward", "[insert description]", "[insert instructions]", function() {
 
@@ -480,7 +480,6 @@ berylsSpecialBracelet.solve = function() {
 
 var missions = Mission.all
 var curMissions = [];
-curMissions = missions;
 
 function sortMissionsByType(missionArr) {
     let sortedMissions = [];

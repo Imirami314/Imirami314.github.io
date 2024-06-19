@@ -215,117 +215,119 @@ Player.prototype.draw = function() {
         this.loadSaveComplete = true
     }
 
-    if (this.blockOn.name == "water" && !this.inRaft) {
-        this.waterParticles.create()
-        this.waterParticles.draw()
-    } else if (this.blockOn.name == "lava" && !this.inRaft) {
-        this.lavaParticles.create()
-        this.lavaParticles.draw()
-    } else if (this.blockOn.name == "speedy snow") {
-        this.windParticles.create()
-        this.windParticles.draw()
-    } else if (this.blockOn.name == "suspensia") {
-		this.suspensiaParticles.create()
-		this.suspensiaParticles.draw()
-	} else if (this.blockOn.name == "teleport") {
-		this.teleportParticles.create()
-		this.teleportParticles.draw()
-	} else if (this.blockOn.name == "stun") {
-        this.stunParticles.create()
-        this.stunParticles.draw()
-    }
+    if (!this.mapOn) {
+        if (this.blockOn.name == "water" && !this.inRaft) {
+            this.waterParticles.create()
+            this.waterParticles.draw()
+        } else if (this.blockOn.name == "lava" && !this.inRaft) {
+            this.lavaParticles.create()
+            this.lavaParticles.draw()
+        } else if (this.blockOn.name == "speedy snow") {
+            this.windParticles.create()
+            this.windParticles.draw()
+        } else if (this.blockOn.name == "suspensia") {
+            this.suspensiaParticles.create()
+            this.suspensiaParticles.draw()
+        } else if (this.blockOn.name == "teleport") {
+            this.teleportParticles.create()
+            this.teleportParticles.draw()
+        } else if (this.blockOn.name == "stun") {
+            this.stunParticles.create()
+            this.stunParticles.draw()
+        }
 
-    switch (this.dir) {
-        case "D":
-            // Body
-            ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
+        switch (this.dir) {
+            case "D":
+                // Body
+                ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
 
-            // Eyes
-            ellipse((width / 2) - 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
-            ellipse((width / 2) + 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
+                // Eyes
+                ellipse((width / 2) - 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
+                ellipse((width / 2) + 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
 
-            ctx.save()
+                ctx.save()
 
-            // Rotation based on weapon angle
-            ctx.translate(width / 2, height / 2)
-            ctx.rotate(- this.weaponAngle)
-            ctx.translate(- width / 2, - height / 2)
-            // Rotation based on player dir
-            ctx.translate(width / 2 - 30, height / 2 - 15)
-            ctx.rotate(Math.PI / 2)
-            ctx.translate(- width / 2, - height / 2)
+                // Rotation based on weapon angle
+                ctx.translate(width / 2, height / 2)
+                ctx.rotate(- this.weaponAngle)
+                ctx.translate(- width / 2, - height / 2)
+                // Rotation based on player dir
+                ctx.translate(width / 2 - 30, height / 2 - 15)
+                ctx.rotate(Math.PI / 2)
+                ctx.translate(- width / 2, - height / 2)
 
-            if (this.inventory.length >= 1) {
-                try {
-                    !!this.weapon ? this.weapon.draw(width / 2 + 15 + this.weaponShift.x, height / 2 + this.weaponShift.y) : 0
-                } catch(error) {
-                    console.log(error)
+                if (this.inventory.length >= 1) {
+                    try {
+                        !!this.weapon ? this.weapon.draw(width / 2 + 15 + this.weaponShift.x, height / 2 + this.weaponShift.y) : 0
+                    } catch(error) {
+                        console.log(error)
+                    }
                 }
-            }
-            ctx.restore()
-            break
-        case "R":
-            // Body
-            ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
+                ctx.restore()
+                break
+            case "R":
+                // Body
+                ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
 
-            // Eyes
-            ellipse((width / 2) + 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
+                // Eyes
+                ellipse((width / 2) + 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
 
-            ctx.save()
-            // Rotation based on weapon angle
-            ctx.translate(width / 2, height / 2)
-            ctx.rotate(- this.weaponAngle)
-            ctx.translate(- width / 2, - height / 2)
-            if (this.inventory.length >= 1) {
-                try {
-                    !!this.weapon ? this.weapon.draw(width / 2 + 15 + this.weaponShift.x, height / 2 + this.weaponShift.y + 15) : 0
-                } catch(error) {
-                    console.log(error)
+                ctx.save()
+                // Rotation based on weapon angle
+                ctx.translate(width / 2, height / 2)
+                ctx.rotate(- this.weaponAngle)
+                ctx.translate(- width / 2, - height / 2)
+                if (this.inventory.length >= 1) {
+                    try {
+                        !!this.weapon ? this.weapon.draw(width / 2 + 15 + this.weaponShift.x, height / 2 + this.weaponShift.y + 15) : 0
+                    } catch(error) {
+                        console.log(error)
+                    }
+                } 
+                ctx.restore()
+                break
+            case "L": 
+                ctx.save()
+                ctx.translate(width / 2, height / 2)
+                ctx.scale(-1, 1)
+                ctx.rotate(- this.weaponAngle)
+                ctx.translate(- width / 2, - height / 2)
+                if (this.inventory.length >= 1) {
+                    try {
+                        !!this.weapon ? this.weapon.draw(width / 2 + 15 + this.weaponShift.x, height / 2 + this.weaponShift.y + 15) : 0
+                    } catch(error) {
+                        console.log(error)
+                    }
                 }
-            } 
-            ctx.restore()
-            break
-        case "L": 
-            ctx.save()
-            ctx.translate(width / 2, height / 2)
-            ctx.scale(-1, 1)
-            ctx.rotate(- this.weaponAngle)
-            ctx.translate(- width / 2, - height / 2)
-            if (this.inventory.length >= 1) {
-                try {
-                    !!this.weapon ? this.weapon.draw(width / 2 + 15 + this.weaponShift.x, height / 2 + this.weaponShift.y + 15) : 0
-                } catch(error) {
-                    console.log(error)
+                ctx.restore()
+
+                // Body
+                ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
+
+                // Eyes
+                ellipse((width / 2) - 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
+                break
+            case "U":
+                ctx.save()
+                ctx.translate(width / 2, height / 2)
+                ctx.rotate(- this.weaponAngle)
+                ctx.translate(- width / 2, - height / 2)
+                ctx.translate(width / 2 + 30, height / 2 + 15)
+                ctx.rotate(- Math.PI / 2)
+                ctx.translate(- width / 2, - height / 2)
+                if (this.inventory.length >= 1) {
+                    try {
+                        !!this.weapon ? this.weapon.draw(width / 2 + 15 + this.weaponShift.x, height / 2 + this.weaponShift.y) : 0
+                    } catch(error) {
+                        console.log(error)
+                    }
                 }
-            }
-            ctx.restore()
+                ctx.restore()
 
-            // Body
-            ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
-
-            // Eyes
-            ellipse((width / 2) - 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
-            break
-        case "U":
-            ctx.save()
-            ctx.translate(width / 2, height / 2)
-            ctx.rotate(- this.weaponAngle)
-            ctx.translate(- width / 2, - height / 2)
-            ctx.translate(width / 2 + 30, height / 2 + 15)
-            ctx.rotate(- Math.PI / 2)
-            ctx.translate(- width / 2, - height / 2)
-            if (this.inventory.length >= 1) {
-                try {
-                    !!this.weapon ? this.weapon.draw(width / 2 + 15 + this.weaponShift.x, height / 2 + this.weaponShift.y) : 0
-                } catch(error) {
-                    console.log(error)
-                }
-            }
-            ctx.restore()
-
-            // Body
-            ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
-            // No eyes are shown in the up position
+                // Body
+                ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
+                // No eyes are shown in the up position
+        }
     }
     
 
@@ -946,10 +948,10 @@ Player.prototype.hitEnemies = function() {
         this.mAngle = Math.atan2((m.y - this.y), (m.x - this.x))
         if (mDist <= 150 && mouseIsDown && !keys.e && this.hitCooldown <= 0 && !m.isDead() && p.canHitClosestMonster()) {
             this.hitCooldown = 0.35
-            if (!!this.weapon.damage) {
-                m.health -= (this.weapon.damage || 1.5)
+            if (!!this.weapon) {
+                m.health -= this.weapon.damage;
             } else {
-                m.health -= 1
+                m.health --;
             }
 
             // if (m.health <= 0 && !m.haveTrillsBeenAwarded) {
@@ -1553,7 +1555,7 @@ Player.prototype.displayMissionList = function() {
 
         // Specific mission information
         if (this.missionBeingDisplayed != null) {
-            displayText(this.missionBeingDisplayed.name, width * 2 / 3, 125, 50);
+            displayText(this.missionBeingDisplayed.name, width * 2 / 3, 120, 50);
             displayText(`${this.missionBeingDisplayed.type} Mission`, width * 2 / 3, 150, 15);
             displayText(this.missionBeingDisplayed.desc + "\n\n" + this.missionBeingDisplayed.instructions, width * 2 / 3, 200, 20);
         }

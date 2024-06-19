@@ -321,7 +321,6 @@ GameAlert.prototype.drawMessage = function () {
 				this.showLines = false
 				p.canMove = true
 			}
-			console.log(this.lineNum)
 			
 		}
     }
@@ -506,6 +505,8 @@ mike.action = function(p) {
         x: 51,
         y: 8
     }
+
+    aStrangeWorld.setInstructions("You asked Mike for the Old Man's glasses, but he says you need to do something in return.\nHis mom is a journalist, and she's been looking for you ever since you escape that ancient prison.\nMike says that if you go meet her, he'll give you the glasses.");
 }
 mike.actionLine = 7
 
@@ -632,6 +633,8 @@ var mikesMom = new NPC(300, 300, "Mike's Mom", mikeHouse, "R", [
                 mike.dir = 'L'
             }
         ]
+
+        aStrangeWorld.setInstructions("Mike gave you the Old Man's glasses! Now you need to head back to the Old Man's house and give them to him!");
     }
     mike.actionLine = "after"
     // Second location of mike to get the glasses
@@ -639,8 +642,7 @@ var mikesMom = new NPC(300, 300, "Mike's Mom", mikeHouse, "R", [
         x: 27,
         y: 44
     }
-
-	
+    aStrangeWorld.setInstructions("You met Mike's Mom who is a journalist, but unfortunately she can't write\n a story on you right now. Maybe if you come back later, she will!\nNow, go back to Mike and, if he holds up his end of the deal, he'll give you the glasses.");
 }, 0)
 
 var rowan = new NPC(ctr(7), ctr(6), "Rowan", rowansDojo, "L", [
@@ -2833,7 +2835,7 @@ function startPos() {
     // lithos.health = 0;
 }
 
-startPos()
+// startPos()
 
 var suspensiaInterval = setInterval(function() { // Makes suspensia spread into water
     if (scene == "GAME") {
@@ -3257,28 +3259,28 @@ var gameInterval = setInterval(function() {
                     SAVE_MENU = false
                 }, 1500)
             }
-    
-            // Alert to open door, talk to NPC, etc
-            p.drawAlert()
 
-            // NPCS speech bubbles
             
-            for (var i in npcs) {
-                if (!!npcs[i].map) {
-                    if (curMap.name == npcs[i].map.name) {
-                        npcs[i].talk(p, npcs)
+            if (!p.mapOn) {
+                p.HUD()
+
+                // Alert to open door, talk to NPC, etc
+                p.drawAlert()
+
+                // NPCS speech bubbles
+                for (var i in npcs) {
+                    if (!!npcs[i].map) {
+                        if (curMap.name == npcs[i].map.name) {
+                            npcs[i].talk(p, npcs)
+                        }
                     }
                 }
+                
+                // Block Alert bubbles
+                for (var i = 0; i < alerts.length; i ++) {
+                    alerts[i].drawMessage()
+                }
             }
-            
-            // Block Alert bubbles
-            for (var i = 0; i < alerts.length; i ++) {
-                alerts[i].drawMessage()
-            }
-
-            
-
-            p.HUD()
 
             if (keys.e) {
                 p.displayInventory()
