@@ -383,6 +383,8 @@ class NPC extends Entity {
                                 triangle(width / 2 - 10, height - 60 + this.nextIndicatorY, width/2 + 10, height - 60 + this.nextIndicatorY, width/2, height - 40 + this.nextIndicatorY, "rgb(0, 0, 0)")
                             }
                         }
+
+                        ctx.textBaseline = "alphabetic"; // reset to default
                     } else {
                         this.lines[this.lineNum].update()
                     }
