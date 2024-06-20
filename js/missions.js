@@ -445,7 +445,7 @@ var deltasLostTreasure = new Mission("Delta's Lost Treasure", "Reward", "[insert
 	}
 })
 
-var berylsSpecialBracelet = new Mission("Beryl's Special Bracelet", "Reward", "[insert description]", "[insert instructions]");
+var berylsSpecialBracelet = new Mission("Beryl's Special Bracelet", "Reward", "Beryl seems to know where King Jasper is. Or at least, he\ndid until he lost his special bracelet. Without it, he's too worried to think about\nanything else. If you bring it back to him, he might remember\nKing Jasper's whereabouts.", "He says that he put it temporarily in a safe chest near the northern Litholian border\nbut then lava began to seep out of the ground and now he can't get to it!\nMaybe there's a way to get around the lava...");
 
 berylsSpecialBracelet.solve = function() {
 	if (entityDistance(p, beryl) <= 100 && p.weapon.name == "Beryl's Bracelet" && mouseIsDown) {

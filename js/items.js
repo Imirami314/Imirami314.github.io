@@ -389,8 +389,15 @@ var items = {
     }, "A painting by Coral featuring the stunning lake of Dropton.", "MISC"),
     berylsBracelet: new Item("Beryl's Bracelet", 0, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
-    })
-
+    }),
+    mineraGroveKey: new Item("Minera Grove Key", 0, function(x, y) {
+        ellipse(x, y, 10, 10, "rgb(0, 0, 0)"); // changeme to Minera Grove Key image
+    }, function(p) {
+        if (mouseIsDown && curMap == mainMap && p.on(83, 76)) {
+            p.removeItem(this);
+            mainMap.changeBlock(82, 76, '_');
+        }
+    }, "Yet another special key given to you by Wayne. It should allow you to\ncross the western border of Litholia into Minera Grove.", "KEYS")
 } // Puzzle Keys are not included as they vary depending on where they came from
 
 function Food(name, img, health, secs) {

@@ -412,6 +412,10 @@ const lithosCutsceneDeath = new Cutscene({
         wayne.action = function() {
             addMission(journeyToLuminosIsle);
 
+            setTimeout(() => {
+                p.giveItem(items.mineraGroveKey, true);
+            }, 2000)
+
             wayne.lines = [
                 "One more elemental master to go. You're so close!",
                 "Remember, to get to Luminos Isle, you first need\nto get to Dawn's Landing which is west of here.",

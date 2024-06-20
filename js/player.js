@@ -494,7 +494,7 @@ Player.prototype.move = function() {
         if (!!this.sortedInventory[this.weaponIndex]) {
             this.weapon = this.sortedInventory[this.weaponIndex]
         } else {
-            this.weaponIndex = this.sortedInventory.length - 1
+            this.weaponIndex = this.sortedInventory.length - 1;
         }
     }
 
@@ -1260,7 +1260,11 @@ Player.prototype.displayInventory = function() {
                     ctx.font = "50px serif"
                     ctx.fillText(item.name, width / 2, height / 2 + 120)
                     ctx.font = "15px serif"
-                    fillTextMultiLine((item.desc || "") + "\nDamage: " + (item.damage || 0), width / 2, height / 2 + 150)
+                    if (!!!item.range || item.category != "WEAPONS") {
+                        fillTextMultiLine((item.desc || "") + "\nDamage: " + (item.damage || 0), width / 2, height / 2 + 150);
+                    } else {
+                        fillTextMultiLine((item.desc || "") + "\nDamage: " + (item.damage || 0) + "\nRange: " + (item.range), width / 2, height / 2 + 150);
+                    }
                     if (mouseIsDown) {
                         this.weaponIndex = i
                     }
@@ -1295,13 +1299,11 @@ Player.prototype.displayInventory = function() {
                     ctx.font = "50px serif"
                     ctx.fillText(item.name, width / 2, height / 2 + 120)
                     ctx.font = "15px serif"
-                    // if (!!!item.range) {
-                    //     alert(item.name)
-                    //     fillTextMultiLine(item.desc + "\nDamage: " + item.damage, width / 2, height / 2 + 150)
-                    // } else {
-                        // alert(item.range)
-                    fillTextMultiLine(item.desc + "\nDamage: " + item.damage + "\nRange: " + item.range, width / 2, height / 2 + 150)
-                    // }
+                    if (!!!item.range || item.category != "WEAPONS") {
+                        fillTextMultiLine(item.desc + "\nDamage: " + item.damage, width / 2, height / 2 + 150);
+                    } else {
+                        fillTextMultiLine(item.desc + "\nDamage: " + item.damage + "\nRange: " + item.range, width / 2, height / 2 + 150);
+                    }
                     if (mouseIsDown) {
                         for (var j in this.sortedInventory) {
                             if (this.sortedInventory[j].name == item.name) {

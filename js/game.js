@@ -2780,6 +2780,15 @@ function startPos() {
     p.equipped = [items.aquaLung]
     lithosCutsceneDeath.onEnd();
 
+    addMission(journeyToLuminosIsle);
+    p.giveItem(items.mineraGroveKey, false);
+
+    wayne.lines = [
+        "One more elemental master to go. You're so close!",
+        "Remember, to get to Luminos Isle, you first need\nto get to Dawn's Landing which is west of here.",
+        "Good luck!"
+    ];
+
 
     litholia.hasSetLeaderPositions = true;
 }
