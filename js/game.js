@@ -1568,7 +1568,36 @@ const pearl = new NPC(ctr(93), ctr(78), "Border Guard Pearl", mainMap, 'R', [
     "Hello there.",
     "You don't seem like you're from Litholia.\nMy name is Pearl, and I've been assigned to guard this strangle border here.",
     "We don't really know what it is, but I'm here in case it causes something dangerous.",
-])
+]);
+
+const rangerGunther = new NPC(ctr(74), ctr(70), "Ranger Gunther", mainMap, 'R', [
+    "Oh, hello! It's nice to finally see another person!",
+    "I'm Gunther, and I'm the ranger for this grove here.",
+    "Unfortunately, this grove is infested with Splints!\nThey love to dig holes and live underground.",
+    "And they are pranksters, too. They blocked the pathway to Dawn's\nLanding with trees!",
+    "When I try to remove the trees, the Splints show up and scare me away.",
+    "...",
+    "You're trying to get to Dawn's Landing too? Well then, how about\nwe both try and fix this problem together?",
+    "...",
+    "Great! Let me take you to the area in question. Follow me!"
+], "Ranger - Minera Grove\nHe manages Minera Grove, and he's trying to deal with the Splint infestation there.", function() {
+    cameraStart(ctr(45), ctr(69), 25, "NPC", {
+        npcName: rangerGunther,
+        lineStop: 5
+    })
+
+    rangerGunther.action = function(p) {
+        if (rangerGunther.firstInteraction) {
+            addMission(mineraGrovePranksters);
+
+            rangerGunther.curPath = rangerGunther.pathTo(46, 69);
+            rangerGunther.lines = [
+                "Let me take you to where the Splints blocked the path.\nFollow me!"
+            ]
+        }
+    }
+    rangerGunther.actionLine = "after"
+}, 3)
 
 var npcs = []
 
@@ -2774,11 +2803,11 @@ if (!!save) {
 function startPos() {
     dev = false
     curMap = mainMap;
-    p.goTo(ctr(105), ctr(94));
     p.inventory = [items.hydrosScythe, items.stormedsSword, food.apple(), food.apple(), items.aquaLung]
     p.updateSortedInventory()
     p.equipped = [items.aquaLung]
     lithosCutsceneDeath.onEnd();
+    p.goTo(ctr(81), ctr(76));
 
     addMission(journeyToLuminosIsle);
     p.giveItem(items.mineraGroveKey, false);

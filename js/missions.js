@@ -479,6 +479,8 @@ berylsSpecialBracelet.solve = function() {
 
 const journeyToLuminosIsle = new Mission("Journey to Luminos Isle", "Main", "Now that you've defeated Lithos, it's time to make your way to the final\ncity, Luminos Isle! Once you're there, you need to look for the leader, Empress Aurora.", "According to Wayne, the only way to get to Luminos Isle is to head to Dawn's Landing.\nFrom there, you can make your way up to the sky where Luminos Isle is.");
 
+const mineraGrovePranksters = new Mission("Pranksters of Minera Grove", "Main", "To reach Dawn's Landing, you need to cross through Minera Grove. Unfortunately,\nSplints are hiding underneath the grove and have blocked Dawn's Landing with trees.\nYou need to help Ranger Gunther deal with the Splints and find a way past the trees.", "");
+
 
 var missions = Mission.all
 var curMissions = [];

@@ -59,7 +59,7 @@ function Player(x, y, npcs) {
     this.regionsDiscovered = [chardTown]
     this.newRegionAlert = false
     this.newRegion = null
-    this.canViewAllRegions = false
+    this.canViewAllRegions = true
     
     this.weaponIndex = 0
     this.weapon = null
