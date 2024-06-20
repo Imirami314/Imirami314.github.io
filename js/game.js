@@ -2623,6 +2623,7 @@ function saveGame() {
             trills: p.trills,
             can: p.can,
             droptonDonations: p.droptonDonations,
+            regionsDiscovered: p.regionsDiscovered,
         },
         npcs: [],
         npcActions: [],
@@ -2792,7 +2793,7 @@ function startPos() {
     litholia.hasSetLeaderPositions = true;
 }
 
-// startPos()
+startPos()
 
 var suspensiaInterval = setInterval(function() { // Makes suspensia spread into water
     if (scene == "GAME") {

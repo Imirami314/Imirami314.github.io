@@ -211,6 +211,10 @@ Player.prototype.draw = function() {
         this.can = save.player.can
 
         this.droptonDonations = save.player.droptonDonations
+
+        for (let savedRegion of save.player.regionsDiscovered) {
+            this.regionsDiscovered.push(regions.find((region) => (region.name == savedRegion.name)));
+        }
         
         this.loadSaveComplete = true
     }
