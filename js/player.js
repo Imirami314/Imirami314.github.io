@@ -59,7 +59,7 @@ function Player(x, y, npcs) {
     this.regionsDiscovered = [chardTown]
     this.newRegionAlert = false
     this.newRegion = null
-    this.canViewAllRegions = true
+    this.canViewAllRegions = false
     
     this.weaponIndex = 0
     this.weapon = null
@@ -626,7 +626,12 @@ Player.prototype.move = function() {
     // var bDist = Math.hypot((this.x - b.x), (this.y - b.y))
 
     var bDist = entityDistance(this, curBoss)
-    if (bDist <= this.weapon.range && mouseIsDown && !holding && this.hitCooldown <= 0 && curBoss.hittable) {
+    this.rangeToCheck = 100; // So that it doesn't get range of undefined item
+    if (!!this.weapon) {
+        this.rangeToCheck = this.weapon.range;
+    }
+
+    if (bDist <= this.rangeToCheck && mouseIsDown && !holding && this.hitCooldown <= 0 && curBoss.hittable) {
         if (!!this.weapon) {
             curBoss.health -= this.weapon.damage ?? 1
         } else {
@@ -946,7 +951,7 @@ Player.prototype.hitEnemies = function() {
         var m = monsters[i]
         var mDist = entityDistance(this, m)
         this.mAngle = Math.atan2((m.y - this.y), (m.x - this.x))
-        if (mDist <= this.weapon.range && mouseIsDown && !keys.e && this.hitCooldown <= 0 && !m.isDead() && p.canHitClosestMonster()) {
+        if (mDist <= this.rangeToCheck && mouseIsDown && !keys.e && this.hitCooldown <= 0 && !m.isDead() && p.canHitClosestMonster()) {
             this.hitCooldown = 0.35
             if (!!this.weapon) {
                 m.health -= this.weapon.damage;
@@ -1082,7 +1087,7 @@ Player.prototype.displayMapScreen = function() {
 
 Player.prototype.updateViewableRegions = function() {
     // Update regions that have been discovered
-    if (!this.canViewAllRegions) {
+    if (!this.canViewAllRegions && curMap == mainMap) {
         let curRegion = Region.getRegionFromCords(this.cords.x, this.cords.y)
         if (this.regionsDiscovered.indexOf(curRegion) == -1) {
             this.addRegion(curRegion, true)

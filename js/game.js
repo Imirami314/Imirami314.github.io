@@ -411,7 +411,7 @@ Teleport.prototype.draw = function () {
         ctx.scale(mapScale, mapScale) 
         ctx.translate(width / -2, height / -2)
         ctx.translate(p.mapPan.x, p.mapPan.y)
-        
+
         ellipse(this.x, this.y, 50, 50, "rgb(0, 255, 255)");
 		
 		
@@ -2792,7 +2792,7 @@ function startPos() {
     litholia.hasSetLeaderPositions = true;
 }
 
-startPos()
+// startPos()
 
 var suspensiaInterval = setInterval(function() { // Makes suspensia spread into water
     if (scene == "GAME") {

@@ -2687,8 +2687,14 @@ var chardTown = new Region("Chard Town", [
         x1: 0,
         y1: 15,
         x2: 91,
+        y2: 49
+    },
+    {
+        x1: 0,
+        y1: 50,
+        x2: 56,
         y2: 60
-    }
+    },
 ], function() {
     setLighting(5000)
 
@@ -2915,6 +2921,12 @@ var litholia = new Region("Litholia", [
         y1: 52,
         x2: 138,
         y2: 61
+    },
+    {
+        x1: 83,
+        y1: 74,
+        x2: 91,
+        y2: 78,
     }
 ], function() {
     setLighting(5000)
