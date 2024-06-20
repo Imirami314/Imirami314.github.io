@@ -62,16 +62,16 @@ var items = {
     }, function() {
         p.swordAttack()
     }, "A mystical sword you obtained after defeating Stormed, Master of Wind.", "WEAPONS", 100),
-    drownedsScythe: new Item("Drowned's Scythe", 20, function(x, y) {
+    hydrosScythe: new Item("Hydros's Scythe", 20, function(x, y) {
         ctx.save()
         ctx.translate(x + 45, y + 45)
         ctx.rotate(Math.PI / 2) // Flip image vertically
         ctx.translate(- 45 - x, - 45 - y)
-        ctx.drawImage(images.drownedScythe, x - 30, y + 45, 33.3, 90)
+        ctx.drawImage(images.hydrosScythe, x - 30, y + 45, 33.3, 90)
         ctx.restore()
     }, function() {
         p.swordAttack()
-    }, "A mystical scythe you obtained after defeating Drowned, Master of Water.", "WEAPONS", 150),
+    }, "A mystical scythe you obtained after defeating Hydros, Master of Water.", "WEAPONS", 150),
     lithosArm: new Item("Lithos's Arm", 35, function(x, y) {
         ctx.drawImage(images.rock, x - 27.5, y - 27.5, 55, 55);
     }, function() {

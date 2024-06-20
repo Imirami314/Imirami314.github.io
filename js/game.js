@@ -49,7 +49,7 @@ var alerts = [
     new GameAlert(6, 6, ["The spiral awaits you..."], cryoUnderground, "SIGN"),
 	new GameAlert(24, 8, ["This mysterious substance will come with a curse,\nThe player will perish, the raft alone may traverse."], cryoUnderground, "SIGN"),
 
-    // Drowned Room
+    // Hydros Room
 
     // Stoneheart Sanctuary
     new GameAlert(25, 12, ["If you ever get stuck, unsure what to do,\nMaybe one's not enough, a greater number will do."], stoneheartSanctuary, "SIGN"),
@@ -157,8 +157,8 @@ var bossDoors = [
 		enterFunction: function(p) {
 			saveGame()
 			
-			p.goTo(drownedRoom.enterX, drownedRoom.enterY)
-			curMap = drownedRoom
+			p.goTo(hydrosRoom.enterX, hydrosRoom.enterY)
+			curMap = hydrosRoom
 			cutsceneFrame = 0
 			// scene = "DROWNED BOSS CUTSCENE"
 		}
@@ -2078,22 +2078,22 @@ var interactives = [
 
     new RaftDispenser(cryoUnderground, 48 * 75, 32 * 75, ctr(47), ctr(32)),
 
-    // Drowned Room
-    new RaftDispenser(drownedRoom, 15 * 75, 25 * 75, ctr(15), ctr(24)),
+    // Hydros Room
+    new RaftDispenser(hydrosRoom, 15 * 75, 25 * 75, ctr(15), ctr(24)),
 
-    new RaftDispenser(drownedRoom, 5 * 75, 25 * 75, ctr(5), ctr(24)),
+    new RaftDispenser(hydrosRoom, 5 * 75, 25 * 75, ctr(5), ctr(24)),
 
-    new RaftDispenser(drownedRoom, 25 * 75, 25 * 75, ctr(25), ctr(24)),
+    new RaftDispenser(hydrosRoom, 25 * 75, 25 * 75, ctr(25), ctr(24)),
 
-    new RaftDispenser(drownedRoom, 5 * 75, 15 * 75, ctr(6), ctr(15)),
+    new RaftDispenser(hydrosRoom, 5 * 75, 15 * 75, ctr(6), ctr(15)),
 
-    new RaftDispenser(drownedRoom, 25 * 75, 15 * 75, ctr(24), ctr(15)),
+    new RaftDispenser(hydrosRoom, 25 * 75, 15 * 75, ctr(24), ctr(15)),
 
-    new RaftDispenser(drownedRoom, 5 * 75, 5 * 75, ctr(5), ctr(6)),
+    new RaftDispenser(hydrosRoom, 5 * 75, 5 * 75, ctr(5), ctr(6)),
 
-    new RaftDispenser(drownedRoom, 15 * 75, 5 * 75, ctr(15), ctr(6)),
+    new RaftDispenser(hydrosRoom, 15 * 75, 5 * 75, ctr(15), ctr(6)),
 
-    new RaftDispenser(drownedRoom, 25 * 75, 5 * 75, ctr(25), ctr(6)),
+    new RaftDispenser(hydrosRoom, 25 * 75, 5 * 75, ctr(25), ctr(6)),
 
     // Fortune Field Water Tunnels
     new RaftDispenser(fortuneFieldWaterTunnel146_88, b(10), b(4), ctr(11), ctr(4)),
@@ -2775,7 +2775,7 @@ function startPos() {
     dev = false
     curMap = mainMap;
     p.goTo(ctr(105), ctr(94));
-    p.inventory = [items.drownedsScythe, items.stormedsSword, food.apple(), food.apple(), items.aquaLung]
+    p.inventory = [items.hydrosScythe, items.stormedsSword, food.apple(), food.apple(), items.aquaLung]
     p.updateSortedInventory()
     p.equipped = [items.aquaLung]
     lithosCutsceneDeath.onEnd();
@@ -2983,7 +2983,7 @@ var gameInterval = setInterval(function() {
             for (var i in monsters) {
                 if (curMap.name == monsters[i].map && !monsters[i].isDead()) {
                     monsters[i].draw(p)
-                    if (!!monsters[i].update && !(monsters[i] instanceof DrownedMinion)) {
+                    if (!!monsters[i].update && !(monsters[i] instanceof HydrosMinion)) {
                         monsters[i].update()
                     }
 
@@ -3067,13 +3067,13 @@ var gameInterval = setInterval(function() {
                         mainMap.changeBlock(257, 29, 'z')
                         alerts.push(new GameAlert(258, 29, ["SEGREME DNIW FO RETSAM WEN A SA SKAERB LLAW EHT"], mainMap, "SIGN"))
                     })
-                } else if (curMap == drownedRoom) {
+                } else if (curMap == hydrosRoom) {
                     Screen.fadeOut(0.005, function() {
                         curMap = abandonedChannel
                         p.inRaft = false
                         p.canMove = true
                         p.goTo(ctr(47), ctr(19))
-                        p.giveItem(items.drownedsScythe, true)
+                        p.giveItem(items.hydrosScythe, true)
 
                         abandonedChannel.changeBlock(45, 19, '_') // This block prevents suspensia from coming in anymore
                         abandonedChannel.changeBlock(47, 17, '_')
@@ -3125,7 +3125,7 @@ var gameInterval = setInterval(function() {
                             "Oh, you're back!",
                             "I assume Wayne made it to Dropton City, then.",
                             "...",
-                            "And you destroyed the corrupted Drowned? That's amazing!",
+                            "And you destroyed the corrupted Hydros? That's amazing!",
                             "That means that the next location for you to head to is [insert location]."
                         ]
                     })

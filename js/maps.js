@@ -77,11 +77,11 @@ var images = {
 
     stormedPhase1: initImage('sprites/enemies/stormed/stormed-phase-1.png'),
     stormedPhase2: initImage('sprites/enemies/stormed/stormed-phase-2.png'),
-    drownedPhase1: initImage('sprites/enemies/drowned/drowned-phase-1.png'),
-    drownedPhase2: initImage('sprites/enemies/drowned/drowned-phase-2.png'),
-    drownedHurt: initImage('sprites/enemies/drowned/drowned-hurt.png'),
-    drownedStunned: initImage('sprites/enemies/drowned/drowned-stunned.png'),
-    drownedMinion: initImage('sprites/enemies/drowned/drowned-minion.png'),
+    hydrosPhase1: initImage('sprites/enemies/hydros/hydros-phase-1.png'),
+    hydrosPhase2: initImage('sprites/enemies/hydros/hydros-phase-2.png'),
+    hydrosHurt: initImage('sprites/enemies/hydros/hydros-hurt.png'),
+    hydrosStunned: initImage('sprites/enemies/hydros/hydros-stunned.png'),
+    hydrosMinion: initImage('sprites/enemies/hydros/hydros-minion.png'),
     lithosPhase1: initImage('sprites/enemies/lithos/lithos-phase-1.png'),
     lithosPhase2: initImage('sprites/enemies/lithos/lithos-phase-2.png'),
     
@@ -98,7 +98,7 @@ var images = {
     oldMansGlasses: initImage('sprites/items/oldMansGlasses.png'),
 	speedySnowPath: initImage('sprites/items/speedySnowPath.png'),
     auraOfWarmth: initImage('sprites/items/auraOfWarmth.png'),
-    drownedScythe: initImage('sprites/items/drownedScythe.png'),
+    hydrosScythe: initImage('sprites/items/hydrosScythe.png'),
 
     // Icons
     sacredStar: initImage('sprites/icons/sacredStar.png'),
@@ -2246,7 +2246,7 @@ cryoUnderground.solve = function() {
 	}
 }
 
-var drownedRoom = new Landscape([
+var hydrosRoom = new Landscape([
     'WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW',
     'W~~~~~~~~~~~~~W^W~~~~~~~~~~~~~W',
     'W~.......~~~.......~~~.......~W',
@@ -2278,8 +2278,8 @@ var drownedRoom = new Landscape([
     'W~.......~~~.......~~~.......~W',
     'W~~~~~~~~~~~~~~~~~~~~~~~~~~~~~W',
     'WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW',
-], ctr(15), ctr(26), 0, 0, "Drowned Room", function() {
-    bossfight = (drowned.health > 0);
+], ctr(15), ctr(26), 0, 0, "Hydros Room", function() {
+    bossfight = (hydros.health > 0);
 }) // Don't enter from mainMap
 
 var fortuneFieldWaterTunnel146_88 = new Landscape([

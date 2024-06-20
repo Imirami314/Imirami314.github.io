@@ -653,11 +653,11 @@ class Stormed extends Boss {
     }
 }
 
-class Drowned extends Boss {
+class Hydros extends Boss {
     constructor(map, x, y) {
         super(map, x, y)
 
-        this.name = "Drowned"
+        this.name = "Hydros"
         this.damage = 10
         this.maxHealth = 900
         this.health = 900 // Default 900
@@ -686,7 +686,7 @@ class Drowned extends Boss {
 
         this.phase2Played = false // Check if phase 2 cutscene has played, Default false
 
-        this.prepAngleCounter = 0 // Angle for where Drowned pulls back for a bit before hitting
+        this.prepAngleCounter = 0 // Angle for where Hydros pulls back for a bit before hitting
         this.ringSize = 10
         this.ringOpacity = 1
 
@@ -709,7 +709,7 @@ class Drowned extends Boss {
             if (this.phase == 1) {
                 if (this.beingHit) {
                     ctx.save()
-                    ctx.drawImage(images.drownedHurt, this.x - 75, this.y - 75, 150, 150)
+                    ctx.drawImage(images.hydrosHurt, this.x - 75, this.y - 75, 150, 150)
                     ctx.restore()
                 } else {
                     // Ring
@@ -720,15 +720,15 @@ class Drowned extends Boss {
                     ctx.stroke()
     
                     if (!this.stunned) {
-                        ctx.drawImage(images.drownedPhase1, this.x - 75, this.y - 75, 150, 150)
+                        ctx.drawImage(images.hydrosPhase1, this.x - 75, this.y - 75, 150, 150)
                     } else {
-                        ctx.drawImage(images.drownedStunned, this.x - 75, this.y - 75, 150, 150)
+                        ctx.drawImage(images.hydrosStunned, this.x - 75, this.y - 75, 150, 150)
                     }
                 }
             } else if (this.phase == 2) {
                 if (this.beingHit) {
                     ctx.save()
-                    ctx.drawImage(images.drownedHurt, this.x - 75, this.y - 75, 150, 150)
+                    ctx.drawImage(images.hydrosHurt, this.x - 75, this.y - 75, 150, 150)
                     ctx.restore()
                 } else {
                     // Ring
@@ -742,13 +742,13 @@ class Drowned extends Boss {
                     ctx.lineWidth = 15
                     ctx.stroke()
     
-                    ctx.drawImage(images.drownedPhase2, this.x - 75, this.y - 75, 150, 150)
+                    ctx.drawImage(images.hydrosPhase2, this.x - 75, this.y - 75, 150, 150)
                 }
             }
     
             if (this.hitting) {
                 // Arms and weapons
-                ctx.drawImage(images.drownedScythe, this.x, this.y - 150, 105, 150) // Scythe
+                ctx.drawImage(images.hydrosScythe, this.x, this.y - 150, 105, 150) // Scythe
                 if (this.phase == 1) {
                     ellipse(this.x - 85, this.y, 40, 40, "rgb(0, 50, 150)") // Left arm
                     ellipse(this.x + 85, this.y, 40, 40, "rgb(0, 50, 150)") // Right arm
@@ -757,7 +757,7 @@ class Drowned extends Boss {
                     ellipse(this.x + 85, this.y, 40, 40, "rgb(150, 50, 150)") // Right arm
                 }
             } else {
-                ctx.drawImage(images.drownedScythe, this.x, this.y - 150, 105, 150) // Scythe
+                ctx.drawImage(images.hydrosScythe, this.x, this.y - 150, 105, 150) // Scythe
                 if (this.phase == 1) {
                     ellipse(this.x - 85, this.y, 40, 40, "rgb(0, 50, 150)") // Left arm
                     ellipse(this.x + 85, this.y, 40, 40, "rgb(0, 50, 150)") // Right arm
@@ -914,7 +914,7 @@ class Drowned extends Boss {
             this.activateMinions()
     
     
-            // Attacks that Drowned itself does (just like phase 1)
+            // Attacks that Hydros itself does (just like phase 1)
             if (this.playerDist <= 200 && !this.preppingAttack) {
                 setTimeout(() => {
                     this.hitting = true
@@ -958,14 +958,14 @@ class Drowned extends Boss {
     }
 
     summonMinion(x, y) {
-        var minion = new DrownedMinion("Drowned Room", x, y)
+        var minion = new HydrosMinion("Hydros Room", x, y)
         monsters.push(minion)
         this.numMinions ++
     }
 
     displayMinions() {
         monsters.forEach((m) => {
-            if (m instanceof DrownedMinion && !m.isDead()) {
+            if (m instanceof HydrosMinion && !m.isDead()) {
                 m.draw()
             }
         })
@@ -973,7 +973,7 @@ class Drowned extends Boss {
 
     activateMinions() {
         monsters.forEach((m) => {
-            if (m instanceof DrownedMinion && !m.isDead()) {
+            if (m instanceof HydrosMinion && !m.isDead()) {
                 m.update()
             }
         })
@@ -1617,7 +1617,7 @@ class Patroller extends Enemy {
     }
 }
 
-class DrownedMinion extends Enemy {
+class HydrosMinion extends Enemy {
     constructor(map, spawnX, spawnY) {
         super(map, spawnX, spawnY)
         this.damage = 0.5
@@ -1641,7 +1641,7 @@ class DrownedMinion extends Enemy {
         ctx.translate(this.x, this.y)
         ctx.rotate(this.playerAngle + Math.PI / 2)
         ctx.translate(- (this.x), - (this.y))
-        ctx.drawImage(images.drownedMinion, this.x - 25, this.y - 27.25, 50, 54.5)
+        ctx.drawImage(images.hydrosMinion, this.x - 25, this.y - 27.25, 50, 54.5)
     
         // Arms
         ellipse(this.x - 25, this.y, 12.5, 12.5, "rgb(90, 30, 90)")
@@ -1763,12 +1763,12 @@ const monsters = [
 
 const noctos = new Noctos("Noctos Room", 712.5, 100);
 const stormed = new Stormed("Stormed Room", ctr(13), ctr(17));
-const drowned = new Drowned("Drowned Room", ctr(15), ctr(19));
+const hydros = new Hydros("Hydros Room", ctr(15), ctr(19));
 const lithos = new Lithos("Lithos Room", b(15), b(15));
 
 const bosses = [
     noctos,
     stormed,
-    drowned,
+    hydros,
     lithos
 ]
