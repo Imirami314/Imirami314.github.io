@@ -1,4 +1,4 @@
-function Item(name, damage, draw, use, desc, category) {
+function Item(name, damage, draw, use, desc, category, range) {
     this.name = name
     this.damage = damage
     this.x = null
@@ -6,6 +6,7 @@ function Item(name, damage, draw, use, desc, category) {
     this.use = use
     this.desc = desc || "[no description]"
     this.category = category || "MISC"
+    this.range = range ?? 100;
     this.draw = draw
 }
 
@@ -50,7 +51,7 @@ var items = {
         ctx.drawImage(images.spearOfNoctos, x - 15, y - 15, 50, 15)
     }, function(p) {
         p.spearAttack()
-    }, "A mystical spear you obtained after defeating Noctos, Master of Night.", "WEAPONS"),
+    }, "A mystical spear you obtained after defeating Noctos, Master of Night.", "WEAPONS", 125),
     stormedsSword: new Item("Stormed's Sword", 25, function(x, y) {
         ctx.save()
         ctx.translate(x + 45, y + 45)
@@ -60,8 +61,8 @@ var items = {
         ctx.restore()
     }, function() {
         p.swordAttack()
-    }, "A mystical sword you obtained after defeating Stormed, Master of Wind.", "WEAPONS"),
-    drownedsScythe: new Item("Drowned's Scythe", 35, function(x, y) {
+    }, "A mystical sword you obtained after defeating Stormed, Master of Wind.", "WEAPONS", 100),
+    drownedsScythe: new Item("Drowned's Scythe", 20, function(x, y) {
         ctx.save()
         ctx.translate(x + 45, y + 45)
         ctx.rotate(Math.PI / 2) // Flip image vertically
@@ -70,7 +71,12 @@ var items = {
         ctx.restore()
     }, function() {
         p.swordAttack()
-    }, "A mystical scythe you obtained after defeating Drowned, Master of Water.", "WEAPONS"),
+    }, "A mystical scythe you obtained after defeating Drowned, Master of Water.", "WEAPONS", 150),
+    lithosArm: new Item("Lithos's Arm", 35, function(x, y) {
+        ctx.drawImage(images.rock, x - 27.5, y - 27.5, 55, 55);
+    }, function() {
+        p.swordAttack();  
+    }, "A mystical, well, arm that you obtained after defeating Lithos, Master of Stone", "WEAPONS", 90),
     oldMansGlasses: new Item("Old Man's Glasses", 0, function(x, y) {
             ctx.drawImage(images.oldMansGlasses, x - 15, y - 15, 35, 15)
         }, function(p) {
@@ -153,7 +159,7 @@ var items = {
             // if (itemFound) {
             //     curMap.changeBlock(67, 10, "_")
             // }
-            
+
             p.removeItem(this);
             curMap.changeBlock(67, 10, "_")
         }

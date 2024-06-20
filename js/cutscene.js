@@ -321,6 +321,8 @@ const lithosCutsceneDeath = new Cutscene({
         Screen.clearEffects(); // Necessary to prevent a second fade out idk why
         scene = "GAME";
 
+        p.giveItem(items.lithosArm);
+
         kingJasper.map = mainMap;
         kingJasper.goTo(ctr(105), ctr(87));
         kingJasper.lines = [
@@ -400,9 +402,11 @@ const lithosCutsceneDeath = new Cutscene({
             "You'll need to head to Luminos Isle, a city in the sky!\nI've never been, but it's supposed to be amazing!",
             "There, you'll need to meet with their head, Empress Aurora.\nShe'll give you the details.",
             "I don't know what sort of details she'll tell you, I'm just the messenger.",
-            "Ah yes! One more thing...",
             "To get to Luminos Isle, you'll need to head to Dawn's Landing, which is west of here.\nIt's also directly south of Chard Town. Kind of a full circle, huh?",
-            "I recommend you make your way there as soon as possible!\nIf all goes well, I'll see you there.",
+            "Ah yes! One more thing...",
+            "There's a locked door on the west side of Litholia that you'll need to open.\nThe Old Man gave me a key that I'm supposed to give you now.",
+            "I don't know where he gets all these keys from, but it should open that door.",
+            "I recommend you begin your journey as soon as possible!\nIf all goes well, I'll see you there.",
             "Goodbye!"
         ];
         wayne.action = function() {

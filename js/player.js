@@ -258,7 +258,7 @@ Player.prototype.draw = function() {
 
                 if (this.inventory.length >= 1) {
                     try {
-                        !!this.weapon ? this.weapon.draw(width / 2 + 15 + this.weaponShift.x, height / 2 + this.weaponShift.y) : 0
+                        !!this.weapon ? this.weapon.draw(width / 2 + 30 + this.weaponShift.x, height / 2 + this.weaponShift.y) : 0
                     } catch(error) {
                         console.log(error)
                     }
@@ -317,7 +317,7 @@ Player.prototype.draw = function() {
                 ctx.translate(- width / 2, - height / 2)
                 if (this.inventory.length >= 1) {
                     try {
-                        !!this.weapon ? this.weapon.draw(width / 2 + 15 + this.weaponShift.x, height / 2 + this.weaponShift.y) : 0
+                        !!this.weapon ? this.weapon.draw(width / 2 + 30 + this.weaponShift.x, height / 2 + this.weaponShift.y) : 0
                     } catch(error) {
                         console.log(error)
                     }
@@ -626,7 +626,7 @@ Player.prototype.move = function() {
     // var bDist = Math.hypot((this.x - b.x), (this.y - b.y))
 
     var bDist = entityDistance(this, curBoss)
-    if (bDist <= 100 && mouseIsDown && !holding && this.hitCooldown <= 0 && curBoss.hittable) {
+    if (bDist <= this.weapon.range && mouseIsDown && !holding && this.hitCooldown <= 0 && curBoss.hittable) {
         if (!!this.weapon) {
             curBoss.health -= this.weapon.damage ?? 1
         } else {
@@ -946,7 +946,7 @@ Player.prototype.hitEnemies = function() {
         var m = monsters[i]
         var mDist = entityDistance(this, m)
         this.mAngle = Math.atan2((m.y - this.y), (m.x - this.x))
-        if (mDist <= 150 && mouseIsDown && !keys.e && this.hitCooldown <= 0 && !m.isDead() && p.canHitClosestMonster()) {
+        if (mDist <= this.weapon.range && mouseIsDown && !keys.e && this.hitCooldown <= 0 && !m.isDead() && p.canHitClosestMonster()) {
             this.hitCooldown = 0.35
             if (!!this.weapon) {
                 m.health -= this.weapon.damage;
@@ -1295,7 +1295,13 @@ Player.prototype.displayInventory = function() {
                     ctx.font = "50px serif"
                     ctx.fillText(item.name, width / 2, height / 2 + 120)
                     ctx.font = "15px serif"
-                    fillTextMultiLine(item.desc + "\nDamage: " + item.damage, width / 2, height / 2 + 150)
+                    // if (!!!item.range) {
+                    //     alert(item.name)
+                    //     fillTextMultiLine(item.desc + "\nDamage: " + item.damage, width / 2, height / 2 + 150)
+                    // } else {
+                        // alert(item.range)
+                    fillTextMultiLine(item.desc + "\nDamage: " + item.damage + "\nRange: " + item.range, width / 2, height / 2 + 150)
+                    // }
                     if (mouseIsDown) {
                         for (var j in this.sortedInventory) {
                             if (this.sortedInventory[j].name == item.name) {
