@@ -412,8 +412,7 @@ Teleport.prototype.draw = function () {
         ctx.translate(width / -2, height / -2)
         ctx.translate(p.mapPan.x, p.mapPan.y)
         
-        
-        ellipse(this.x, this.y, 50, 50, "rgb(0, 255, 255)")
+        ellipse(this.x, this.y, 50, 50, "rgb(0, 255, 255)");
 		
 		
 		ctx.restore()
