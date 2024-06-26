@@ -700,6 +700,13 @@ var wayne = new NPC(48 * 75, 55 * 75, "Wayne", mainMap, "D", [
     }
 }, "after")
 
+const ash = new NPC(b(3), ctr(1), "Ash", ashHouse, "L", [
+    "Hello. You're a new face.\nI don't meet very many new people in Steel Field.",
+    "You might be wonderin' what I'm doing.\nI've been tryin' to grow plants in my own house...",
+    "...but the environment in Steel Field ain't exactly\nhealthy for plants. So, it's been a struggle.",
+    "Anyway, I gotta get back to watering these plants."
+], "Resident - Steel Field\nAlthough he lives in Steel Field, he enjoys gardening.");
+
 var smith = new NPC(4 * 75, 1 * 75, "Smith the Blacksmith", smithHouse, "D", [
     "Hey!",
     "Who are you??",
@@ -1581,7 +1588,7 @@ const rangerGunther = new NPC(ctr(74), ctr(70), "Ranger Gunther", mainMap, 'R', 
     "...",
     "Great! Let me take you to the area in question. Follow me!"
 ], "Ranger - Minera Grove\nHe manages Minera Grove, and he's trying to deal with the Splint infestation there.", function() {
-    cameraStart(ctr(45), ctr(69), 25, "NPC", {
+    cameraStart(ctr(45), ctr(69), 50, "NPC", {
         npcName: rangerGunther,
         lineStop: 5
     })
@@ -1590,10 +1597,34 @@ const rangerGunther = new NPC(ctr(74), ctr(70), "Ranger Gunther", mainMap, 'R', 
         if (rangerGunther.firstInteraction) {
             addMission(mineraGrovePranksters);
 
-            rangerGunther.curPath = rangerGunther.pathTo(46, 69);
+            let path = rangerGunther.pathTo(51, 69);
+            path.push(function() {
+                rangerGunther.lines = [
+                    "This is the spot! As you can probably tell,\nthe path was supposed to go past here...",
+                    "But these trees are in the way!",
+                    "It also looks like there's\ a hole behind those trees...\n...maybe that's how the Splints are able to cross it.",
+                    "That means there must be another connecting hole on this side.",
+                    "Could search for a connecting hole in Minera Grove?\nThen we might be able to cross to Dawn's Landing!"
+                ]
+
+                rangerGunther.action = function() {
+                    rangerGunther.lines = [
+                        "Huh?",
+                        "...",
+                        "Oh, right, I need to let you into the restricted parts of\nthe grove. Otherwise, how would you be able to help me?",
+                        "Here, take this. It should allow you to go wherever you want in the grove."
+                    ]
+
+                    p.giveItem(items.rangerPermit);
+                }
+            });
+
+            rangerGunther.curPath = path;
             rangerGunther.lines = [
                 "Let me take you to where the Splints blocked the path.\nFollow me!"
             ]
+
+            rangerGunther.clearAction();
         }
     }
     rangerGunther.actionLine = "after"

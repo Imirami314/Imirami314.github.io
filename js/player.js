@@ -1542,23 +1542,27 @@ Player.prototype.displayMissionList = function() {
         for (let i in sortedMissions) {
             let m = sortedMissions[i];
 
-            // ctx.textAlign = "left";
+            // Sets mission box colors (depending on mission type)
             if (m.type == "Main") ctx.fillStyle = missionBoxColors.MAIN;
             else if (m.type == "Ability") ctx.fillStyle = missionBoxColors.ABILITY;
             else if (m.type == "Reward") ctx.fillStyle = missionBoxColors.REWARD;
-            ctx.fillRect(20, 75 + i * 75, 420, 50);
-            fill(0, 0, 0);
-            displayText(m.name, 230, 105 + i * 75, 25);
 
             // Sets current mission being displayed to be whichever one is clicked on
-            if (mouseIsDown) {
-                if (mouseX >= 20 && mouseX <= 440) {
-                    if (mouseY >= 75 + i * 75 &&
-                        mouseY <= 125 + i * 75) {
+            
+            if (mouseX >= 20 && mouseX <= 440) {
+                if (mouseY >= 75 + i * 75 &&
+                    mouseY <= 125 + i * 75) {
+                    fill(100, 100, 100); // Grey hover color for mission boxes
+                    if (mouseIsDown) {
                         this.missionBeingDisplayed = sortedMissions[i];
                     }
                 }
             }
+
+            // Draws mission boxes
+            ctx.fillRect(20, 75 + i * 75, 420, 50);
+            fill(0, 0, 0);
+            displayText(m.name, 230, 105 + i * 75, 25);
 
             ctx.textAlign = "center"; // Reset text align
         }

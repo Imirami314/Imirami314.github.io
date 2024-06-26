@@ -397,7 +397,12 @@ var items = {
             p.removeItem(this);
             mainMap.changeBlock(82, 76, '_');
         }
-    }, "Yet another special key given to you by Wayne. It should allow you to\ncross the western border of Litholia into Minera Grove.", "KEYS")
+    }, "Yet another special key given to you by Wayne. It should allow you to\ncross the western border of Litholia into Minera Grove.", "KEYS"),
+    rangerPermit: new Item("Ranger Permit", 0, function(x, y) {
+        ellipse(x, y, 10, 10, "rgb(0, 0, 0)"); // changeme to Ranger Permit image
+    }, function(p) {
+        
+    }, "A permit that allows you to enter the restricted areas of Minera Grove.\nTechnically, this makes you an official ranger!")
 } // Puzzle Keys are not included as they vary depending on where they came from
 
 function Food(name, img, health, secs) {
