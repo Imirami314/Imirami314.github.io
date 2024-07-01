@@ -120,6 +120,7 @@ class NPC extends Entity {
                 ellipse(this.x + 26, this.y + 20, 15, 15, "rgb(227, 174, 95")
                 ellipse(this.x - 26, this.y + 20, 15, 15, "rgb(227, 174, 95")
                 if (this.glasses) {
+                    ctx.lineWidth = 1;
                     ctx.strokeStyle = "rgba(100, 100, 100, 0.7)"
                     ctx.beginPath();
                     ctx.arc(this.x - 11, this.y - 12, 10, 0, Math.PI);

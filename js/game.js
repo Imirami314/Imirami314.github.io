@@ -7,7 +7,7 @@ var saveLoaded = false
 var alerts = [
     new GameAlert(0, 0, ["WASD To Move\n[Space] To Continue"], imperilledPrison, "MESSAGE"),
 
-    // Chard Region
+    // Chard Town
     new GameAlert(11, 44, ["Ruins of Western Chard Town:\n6 2 5 3 7 8 4 9 1"], mainMap, "SIGN"),
     new GameAlert(9, 53, ["Confounded Cave\nKEEP OUT!"], mainMap, "SIGN"),
     new GameAlert(1, 44, ["Got you! - Mike"], mainMap, "SIGN"),
@@ -54,6 +54,9 @@ var alerts = [
     // Stoneheart Sanctuary
     new GameAlert(25, 12, ["If you ever get stuck, unsure what to do,\nMaybe one's not enough, a greater number will do."], stoneheartSanctuary, "SIGN"),
     new GameAlert(30, 11, ["WARNING!\nRock Switches may be rigged!"], stoneheartSanctuary, "SIGN"),
+
+    // Minera Grove
+    new GameAlert(62, 62, ["Restricted Area!\nTo access, please see a park ranger for assistance."], mainMap, "SIGN"),
 ]
 
 var teleports = [
@@ -296,6 +299,8 @@ GameAlert.prototype.drawMessage = function () {
                 }
                 
             }
+
+            ctx.textBaseline = 'alphabetic'; // reset text baselin
     
             if (this.textCooldown <= 0 && keys.space) {
                 this.lineNum ++
