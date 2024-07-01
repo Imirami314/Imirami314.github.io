@@ -9,7 +9,7 @@ if (!!save) {
     }
 }
 
-var badGuy = "hunk" // DEFAULT TBD
+const badGuy = "Omnos" // DEFAULT TBD
 
 var fadeOut = 0
 var fadeStarted

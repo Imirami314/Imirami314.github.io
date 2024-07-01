@@ -28,7 +28,10 @@ function Player(x, y, npcs) {
     }
     
     this.npcs = npcs
-    this.npcInfoDisplay = false // When pressing 'n' and clicking on npc this becomes true
+    this.npcScrollSpeed = 0.5;
+    this.npcScrollShift = 0;
+    this.npcBeingDisplayed = null;
+    // this.npcInfoDisplay = false // When pressing 'n' and clicking on npc this becomes true
 
     this.missionBeingDisplayed = null; // The current mission being viewed in the Mission List menu
     
@@ -1060,6 +1063,8 @@ Player.prototype.displayMapScreen = function() {
         this.displayMap();
     } else if (this.shiftScreenDisplay == "MISSIONS") {
         this.displayMissionList();
+    } else if (this.shiftScreenDisplay == "NPCS") {
+        this.displayNPCList();
     }
 
     for (var i = 0; i < 3; i ++) {
@@ -1453,77 +1458,113 @@ Player.prototype.breakBlock = function () {
 }
 
 Player.prototype.displayNPCList = function () {
-	ctx.fillStyle = "rgba(50, 50, 255, 0.5)"
-    ctx.fillRect(width / 8, height / 8, width * 3 / 4, height * 3 / 4)
+	// ctx.fillStyle = "rgba(50, 50, 255, 0.5)"
+    // ctx.fillRect(width / 8, height / 8, width * 3 / 4, height * 3 / 4)
+
+    // Blue background
+    fill(0, 100, 255);
+    ctx.fillRect(0, 0, width, height);
+
 	for (var i in npcs) {
+        let npcDisplayX = (i % 5) * 150 + 100;
+        let npcDisplayY = (height / 9 + 100 * (Math.floor(i / 5) + 1)) + this.npcScrollShift;
         
-        var mouseNPCDist = Math.hypot(mouseX - ((i % 9) * 100 + width / 9 + 100), mouseY - (height / 9 + 100 * (Math.floor(i / 9) + 1)))
-    	if (npcs[i].talkedTo) {
-        	npcs[i].drawFace((i % 9) * 100 + width / 9 + 100, height / 9 + 100 * (Math.floor(i / 9) + 1)) 	
-		} else {
-			ellipse((i % 9) * 100 + width / 9 + 100, height / 9 + 100 * (Math.floor(i / 9) + 1), 50, 50, "rgb(99, 133, 130)")
-			ctx.fillStyle = "rgb(0, 0, 0)"
-			ctx.textAlign = "center"
-			ctx.font = "30px serif"
-			ctx.fillText("?", (i % 9) * 100 + width / 9 + 100, height / 9 + 100 * (Math.floor(i / 9) + 1))
-		}
-		
+        var mouseNPCDist = Math.hypot(mouseX - npcDisplayX, mouseY - npcDisplayY);
+
+        // Handle clicking on NPC face (to display information in the right side panel)
         if (mouseNPCDist < 50) {
-            ctx.fillStyle = "rgb(0, 0, 0)"
-            ctx.textAlign = "center"
-			if (npcs[i].talkedTo) {
-                ctx.font = "50px serif"
-            	ctx.fillText(npcs[i].name, width / 2, height / 2 + 120)
-                if (mouseIsDown && !this.npcInfoDisplay) {
-					this.npcDisplayed = npcs[i]
-					
-                    this.npcInfoDisplay = true
-					
-					
-                }
-			} else {
-				ctx.fillText("???", width / 2, height / 2 + 120)
-				ctx.font = "20px serif"
-				ctx.textAlign = "center"
-				ctx.fillText("You haven't talked to this character yet.", width / 2, height / 2 + 160)
-			}
+            fill(0, 75, 235);
+            ctx.fillRect(npcDisplayX - 75, npcDisplayY - 50, 150, 100);
+            if (mouseIsDown) {
+                this.npcBeingDisplayed = npcs[i];
+            }
         }
 
-    	if (this.npcInfoDisplay) {
-     		this.displayNPCInfo(this.npcDisplayed)
-		} 
+
+        // Draw npc faces or question mark for unmet npcs
+        if (npcs[i].talkedTo) {
+            fill(0, 0, 0);
+            displayText(npcs[i].name, npcDisplayX, npcDisplayY - 35, 15)
+            npcs[i].drawFace(npcDisplayX, npcDisplayY) 	
+        } else {
+            // Undiscovered NPC face
+            ellipse(npcDisplayX, npcDisplayY, 50, 50, "rgb(99, 133, 130)")
+            ctx.fillStyle = "rgb(0, 0, 0)"
+            ctx.textAlign = "center"
+            displayText("?", npcDisplayX, npcDisplayY + 10, 30);
+        }
+
+        // Scrolling with W and S
+        if (keys.w) {
+            this.npcScrollShift = Math.min(0, this.npcScrollShift + this.npcScrollSpeed);
+        }
+
+        if (keys.s) {
+            this.npcScrollShift = Math.max(- ((npcs.length - npcs.length % 5) / 5 + 1) * 100 + 500, this.npcScrollShift - this.npcScrollSpeed);
+        }
     }
+
+    // Vertical border line
+    ctx.beginPath();
+    ctx.lineWidth = 1;
+    ctx.moveTo(800, 45);
+    ctx.lineTo(800, height);
+    ctx.stroke();
+
+    // Scroll controls text
+    fill(0, 100, 235);
+    ctx.fillRect(0, 45, 800, 80);
+    fill(0, 0, 0);
+    displayText("W to scroll up -- S to scroll down", 275, 95, 30);
+
+    // Number of NPCs discovered text
+    displayText(`${npcs.getNumTalkedTo()}/${npcs.length}`, 700, 95, 30);
+
+    // Display NPC information
+    this.displayNPCInfo(this.npcBeingDisplayed);
 }
 
 Player.prototype.displayNPCInfo = function(n) {
-    if (keys.b) {
-        this.npcInfoDisplay = false
-    } 
-    console.log(this.npcInfoDisplay)
-    ctx.fillStyle = "rgba(50, 50, 255, 0.5)" //"rgba(150, 60, 255)"
-    ctx.fillRect(width / 8, height / 8, width * 3 / 4, height * 3 / 4)
+    if (n != null) {
+        if (n.talkedTo) {
+            // Display NPC name
+            displayText(n.name, (width + 800) / 2, 150, 50);
 
-    // Draw scaled up NPC face
-    ctx.save()
-	ctx.translate(width / 4, height / 2)
-	ctx.scale(5, 5)
-    
-	ctx.translate(-1 * width / 4, -1 * height / 2)
-	n.drawFace(width / 4, height / 2)
-    ctx.restore()
+            // Draw scaled up NPC face
+            ctx.save()
+                ctx.translate((width + 800) / 2, height / 2)
+                ctx.scale(5, 5)
+                ctx.translate(-1 * (width + 800) / 2, -1 * height / 2)
+                n.drawFace((width + 800) / 2, height / 2)
+            ctx.restore()
+            
+            this.descNewLine = n.desc.indexOf("\n");
+            ctx.textAlign = 'center';
 
-	ctx.fillStyle = "rgba(0, 0, 0)"
-	ctx.font = "30px serif"
-	ctx.fillText(n.name, width / 4, height * 3 / 4)
-	ctx.font = "20px serif"
-	ctx.textAlign = 'center'
-	this.descNewLine = n.desc.indexOf("\n")
-	ctx.fillText(n.desc.substring(0, this.descNewLine), width / 4, height * 3 / 4 + 30)
-	ctx.textAlign = 'left'
-	ctx.fillText(n.desc.substring(this.descNewLine, n.desc.length), width * 3 / 8, height / 2)
+            // Short description (e.g. "Resident - Chard Town") (before the \n)
+            displayText(n.desc.substring(0, this.descNewLine), (width + 800) / 2, 175, 20);
 
+            // Long description (after the \n)
+            displayText(n.desc.substring(this.descNewLine, n.desc.length), (width + 800) / 2, height / 2 + 135, 25);
+        } else {
+            // Draw scaled up question mark face
+            ctx.save()
+                ctx.translate((width + 800) / 2, height / 2)
+                ctx.scale(5, 5)
+                ctx.translate(-1 * (width + 800) / 2, -1 * height / 2)
+                
+                ellipse((width + 800) / 2, height / 2, 50, 50, "rgb(99, 133, 130)")
+                ctx.fillStyle = "rgb(0, 0, 0)"
+                ctx.textAlign = "center"
+                displayText("?", (width + 800) / 2, height / 2 + 10, 30);
+            ctx.restore()
 
-	ctx.textAlign = 'center'
+            ctx.textAlign = 'center';
+            displayText("You haven't met this character yet!", (width + 800) / 2, height / 2 + 160, 25);
+        }
+    } else {
+        displayText("Select a character to\nview their details!", (width + 800) / 2, height / 2, 35);
+    }
 }
 
 Player.prototype.displayMissionList = function() {
@@ -1535,6 +1576,7 @@ Player.prototype.displayMissionList = function() {
         REWARD: "rgb(200, 200, 0)",
     }
 
+    // Blue background
     fill(0, 100, 255);
     ctx.fillRect(0, 0, width, height);
 

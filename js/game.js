@@ -440,7 +440,7 @@ Teleport.prototype.draw = function () {
 
 //
 
-var prisonGuard = new NPC(ctr(19), ctr(2), "Prison Guard", imperilledPrison, "R", [""], "uh yeah")
+var prisonGuard = new NPC(ctr(19), ctr(2), "Prison Guard", imperilledPrison, "R", [""], "Guard - Imperilled Prison\nHe has been assigned to guard the Imperilled Prison\never since it mysteriously showed up. But he didn't know\nyou were in there!")
 
 var oldMan = new NPC(b(5), b(1), "Old Man", johnHouse, "D", [
     "Huh? Who is there?",
@@ -448,7 +448,7 @@ var oldMan = new NPC(b(5), b(1), "Old Man", johnHouse, "D", [
     "Actually, could you do me a favor?\nFetch me my glasses, will you?",
     "One of the children near the big lake has taken them.",
     "Please go now."
-], "yay", function(p) {
+], "Advisor - Chard Town\nA wise old man with a mysterious past.\nNobody truly knows who he is yet, but he\ncertainly knows a lot.", function(p) {
     // Original location of mike
     p.questPoint = {
         x: 27,
@@ -470,7 +470,7 @@ var john = new NPC(ctr(17), ctr(9), "John", mainMap, "D", [
     "And yes, I don't know his real name. He refuses to tell anyone, so\nwe just call him the old man.",
     "I've been taking care of him recently as his age is getting to him.\nHe's in my house right now.",
     "Anyway, I'll see you later!"
-], "", function(p) {
+], "Resident - Chard Town\nThe current caretaker for the Old Man. He's relatively\nunremarkable, but he's a nice guy.", function(p) {
 
 }, "after")
 
@@ -481,7 +481,7 @@ var ron = new NPC(150, 300, "Ron", ronHouse, "D", [
     "Yeah I know, my house is gross.\nNot sure why I chose my house to be stone.",
     "If I were to choose again, I would've made it wood.",
     "It's really expensive though.\n100 wood planks! In the end it isn't really worth it."
-], "hi", function(p) {
+], "Resident - Chard Town\nA tired man living in a stone house.\nHe really regrets not making it out of wood instead.", function(p) {
     
 }, 0)
 
@@ -496,10 +496,7 @@ var mike = new NPC(28 * 75, 44 * 75, "Mike", mainMap, "L", [
     "My mom is a journalist, so she knows about your escape,\nor whatever it is.",
     "She's been trying to get a hold of you for an interview for\nages! I'm sure she'd love it if you paid her a visit.",
     "So, yeah. If you want these glasses, that's what you\ngotta do for me in return.",
-], "Resident - Chard Town\nA curious child whose favorite spot is the Big Lake.") 
-
-var larisa = new NPC(20 * 75, 40 * 75, "Larisa", mainMap, "D", [])
-
+], "Resident - Chard Town\nA curious child whose favorite spot is the Big Lake.")
 mike.action = function(p) {
     cameraStart(ctr(51), ctr(6), 25, "NPC", {
         npcName: mike,
@@ -515,6 +512,8 @@ mike.action = function(p) {
 }
 mike.actionLine = 7
 
+var larisa = new NPC(20 * 75, 40 * 75, "Larisa", mainMap, "D", [], "Resident - Chard Town\n[insert description]")
+
 var david = new NPC(ctr(16), ctr(16), "David Swimmer", mainMap, "D", [
     "In case you're wondering, yes, my last name is actually Swimmer.",
     "I don't know what my parents were thinking.",
@@ -524,11 +523,10 @@ var david = new NPC(ctr(16), ctr(16), "David Swimmer", mainMap, "D", [
     addMission(davidsDreamPond)
 }, "after")
 
-
 var lyra = new NPC(ctr(6), ctr(1), "Lyra", lyraHouse, "D", [
     "`What happened to all of the cool weapons?\nAll the weapons nowadays are the same.",
     "`It sure would be nice to see something new for a change..."
-])
+], "Resident - Chard Town\nA young fighter with a passion for weapons.\nShe wishes she lived somewhere that had more need for\nsomeone like her.")
 
 var carol = new NPC(ctr(5), ctr(1), "Carol", carolHouse, "R", [
     "AAAH!",
@@ -553,7 +551,7 @@ var ley = new NPC(ctr(17), ctr(29), "Ley", mainMap, "D", [
     "Could you please get rid of all of them?",
     "...",
     "Thank you! Let me know once you're done\nso I can go over there again!"
-], "Resident - Chard Town\nA coward at times, but loves both the outdoors and spending time at home.", function(p) {
+], "Resident - Chard Town\nA coward at times, but loves both the outdoors and spending\ntime at home.", function(p) {
     cameraStart(44 * 75, 19 * 75, 15, "NPC", {
         npcName: ley,
         lineStop: 7
@@ -578,7 +576,7 @@ var sarah = new NPC(ctr(4), ctr(1), "Sarah", sarahsShop, "D", [
     "Hello there, good sir! I'm opening a\nshop here in Chard Town!",
     "Right now I just sell food, but one day I'll\nbe making billions of trills!",
     "Want to buy something? You'd be my very first customer!"
-], "Resident - Chard Town\nAn aspiring businesswoman with big ambitions. Everybody starts small, though.", function(p) {
+], "Resident - Chard Town\nAn aspiring businesswoman with big ambitions.\nEverybody starts small, though.", function(p) {
     ShopMenu.open(sarahShopMenu)
 }, "after")
 
@@ -595,7 +593,7 @@ var mikesMom = new NPC(300, 300, "Mike's Mom", mikeHouse, "R", [
     "You have seen him? That's a relief. Could you please tell him to come back home?",
     "...",
     "Thank you!"
-], "Resident - Chard Town\nMike's Mother. An enthusiastic journalist who loves meeting new people and making new friends.", function(p) {
+], "Resident - Chard Town\nMike's mother. An enthusiastic journalist who loves\nmeeting new people and making new friends.", function(p) {
     mike.lines = [
         "Hi.",
         "Did you talk to my mom?",
@@ -660,7 +658,7 @@ var rowan = new NPC(ctr(7), ctr(6), "Rowan", rowansDojo, "L", [
     "Then, get out of their range. This will leave you with an opening to\nattack before they can hit you again!",
     "Hopefully these tips will prove themselves helpful to you. And hopefully,\none day, my dojo will have real students!",
     "See ya."
-], "Resident - Chard Town\nA skilled fighter who wants to teach the world! He doesn't have any students yet, though.", function(p) {
+], "Resident - Chard Town\nA skilled fighter who wants to teach the world!\nHe doesn't have any students yet, though.", function(p) {
     
 }, "after")
 
@@ -670,7 +668,7 @@ var wyatt = new NPC(ctr(2), ctr(3), "Wyatt", wyattHouse, "D", [
     "So you can, uh, leave now.",
     "...",
     "Bye."
-], "Resident - Chard Town\n")
+], "Resident - Chard Town\nA slightly suspicious resident who (supposedly) has\nnothing to hide. I'd keep an eye on him...")
 
 var hector = new NPC(ctr(17), ctr(57), "Hector", mainMap, "U", [
     "Yo, what's up?",
@@ -679,7 +677,7 @@ var hector = new NPC(ctr(17), ctr(57), "Hector", mainMap, "U", [
     "I'm thinking about asking somebody in charge for some more.",
     "Say, would you be down to donate some materials?",
     "I see you don't got any wood...\nWell, come back holding some if you're interested.",
-], "Resident - Chard Town\n")
+], "Builder - Chard Town\nThe lead construction worker for Chard Town.\nHe's working on a special project right now,\nbut he needs more funds to make it happen.")
 
 var wayne = new NPC(48 * 75, 55 * 75, "Wayne", mainMap, "D", [
     "Aye matey! What brings you to this foreign land?",
@@ -693,7 +691,7 @@ var wayne = new NPC(48 * 75, 55 * 75, "Wayne", mainMap, "D", [
     "...",
     "Oh! In that case, have you talked to that old guy?",
     "He wanted to meet you and tell you something\napparently..."
-], "Resident - Chard Town\nHe is always outdoors, and loves to raft and swim whenever he gets the chance.", function(p, npc) {
+], "Traveler - Chard Town\nHe is always outdoors, and loves to raft\nand swim whenever he gets the chance.", function(p, npc) {
     // var old_man = npcs.searchByName("Old Man")
     if (oldMan.glasses) {
         p.questPoint = {
@@ -720,7 +718,7 @@ var smith = new NPC(4 * 75, 1 * 75, "Smith the Blacksmith", smithHouse, "D", [
     "I normally give a little somethin' to people who\ncome here, but I'm gonna need you to get me somethin' too.",
     "Could you fetch me a Heat Handle? I need it if you want me to help you.",
     "See ya!"
-], "Resident - Steel Field\nEveryone's go to blacksmith. Go to him if you want a weapon made quick for a low price.")
+], "Blacksmith - Steel Field\nEveryone's go to blacksmith. Go to him if you want a weapon made quick for a low price.")
 
 var rick = new NPC(9 * 75, 2 * 75, "Rick Ashley", rickHouse, "L", [
     "I'm feeling lonely.",
@@ -741,7 +739,7 @@ var rocky = new NPC(119 * 75, 17 * 75, "Rocky", mainMap, "R", [
     ".....",
     "ok...",
     "uh, bye."
-], "hi", function(p, npc) {
+], "Resident - Steel Field\nA boring ass rock who wastes his life\nsitting in one place.", function(p, npc) {
     this.curPath = [
         [119, 3],
         [134, 3],
@@ -1636,6 +1634,17 @@ const rangerGunther = new NPC(ctr(74), ctr(70), "Ranger Gunther", mainMap, 'R', 
 }, 3)
 
 var npcs = []
+
+npcs.getNumTalkedTo = function() {
+    let count = 0;
+    this.forEach((npc) => {
+        if (npc.talkedTo) {
+            count ++;
+        }
+    });
+
+    return count;
+}
 
 for (var npc of NPC.all) {
     if (!npc.isModel) {
@@ -3309,13 +3318,9 @@ var gameInterval = setInterval(function() {
                 p.displayInventory()
             }
             
-            if (keys.n) {
-                p.displayNPCList()	
-            }
-
-            if (keys.m) {
-                p.displayMissionsList();
-            }
+            // if (keys.n) {
+            //     p.displayNPCList()	
+            // }
 
             if (p.mapOn) {
                 p.displayMapScreen();

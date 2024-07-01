@@ -43,7 +43,7 @@ class NPC extends Entity {
         this.action = action
         this.actionLine = actionLine
         this.actionFinished = false
-        this.talkedTo = true // Default false
+        this.talkedTo = false // Default false
 
         this.pathPoint = 0
         this.pathPointReached = false
@@ -111,6 +111,57 @@ class NPC extends Entity {
         
         ctx.save()
     
+        this.drawFeatures();
+    
+        let npcPulsation = Math.sin(elapsed / 15) * 2
+        ellipse(this.x, this.y, 50 + npcPulsation, 50 + npcPulsation, this.properties.skinColor)
+    
+        switch (this.dir) {
+            case "D":
+                ellipse(this.x - 10, this.y - 10, 10, 10, this.properties.eyeColor)
+                ellipse(this.x + 10, this.y - 10, 10, 10, this.properties.eyeColor)
+                break
+            case "R":
+                ellipse(this.x + 10, this.y - 10, 10, 10, this.properties.eyeColor)
+                break
+            case "L":
+                ellipse(this.x - 10, this.y - 10, 10, 10, this.properties.eyeColor)
+                break
+        }
+    
+        if (this.name == "Old Man") { // accesories (walking stick, hat, glasses)
+            
+        } else if (this.name == "Wayne") {
+            // ctx.fillStyle = ""
+            // ellipse(this.x, this.y - 40, 20, 400, "rgb(0, 0, 0)");		
+            
+        } 
+        
+        ctx.restore()
+
+        if (keys.space && !p.spaceActioned && !p.isTalking() && Math.hypot((this.x - p.x), (this.y - p.y)) <= 100 && this.lineNum < 0 && this.textCooldown <= 0 && CUR_SHOP_MENU == 0) {
+            p.spaceActioned = true
+
+            this.lineNum = 0
+            this.textCooldown = 1
+            this.dirSave = this.dir
+        } else if (this.remote) {
+            this.remoteSpeak = true
+            this.lineNum = 0
+            this.textCooldown = 1
+            this.remote = false
+        }
+
+        if (this.showName) {
+            ctx.fillStyle = "rgb(0, 0, 0)"
+            ctx.textBaseline = 'middle'
+            ctx.font = "20px serif"
+            ctx.textAlign = 'center'
+            ctx.fillText(this.name, this.x, this.y - 40)
+        }
+    }
+
+    drawFeatures() {
         switch (this.name) {
             case "Old Man":
                 triangle(this.x - 22, this.y + 10, this.x + 22, this.y + 10, this.x, this.y + 40, "rgb(100, 100, 100)")
@@ -166,6 +217,7 @@ class NPC extends Entity {
                 this.properties.skinColor = "rgb(225, 225, 225)"
                 this.properties.eyeColor = "rgb(0, 0, 0)"
                 triangle(this.x - 15, this.y - 20, this.x + 15, this.y - 20, this.x, this.y - 60, "rgb(160, 255, 255)")
+                break
             case "Isa":
                 this.properties.skinColor = "rgb(225, 225, 225)"
                 this.properties.eyeColor = "rgb(200, 200, 255)"
@@ -197,53 +249,6 @@ class NPC extends Entity {
                 ctx.fillRect(this.x - 35, this.y - 25, 70, 5)
                 ctx.fillRect(this.x - 20, this.y - 35, 40, 10)
                 break
-        }
-    
-        let npcPulsation = Math.sin(elapsed / 15) * 2
-        ellipse(this.x, this.y, 50 + npcPulsation, 50 + npcPulsation, this.properties.skinColor)
-    
-        switch (this.dir) {
-            case "D":
-                ellipse(this.x - 10, this.y - 10, 10, 10, this.properties.eyeColor)
-                ellipse(this.x + 10, this.y - 10, 10, 10, this.properties.eyeColor)
-                break
-            case "R":
-                ellipse(this.x + 10, this.y - 10, 10, 10, this.properties.eyeColor)
-                break
-            case "L":
-                ellipse(this.x - 10, this.y - 10, 10, 10, this.properties.eyeColor)
-                break
-        }
-    
-        if (this.name == "Old Man") { // accesories (walking stick, hat, glasses)
-            
-        } else if (this.name == "Wayne") {
-            // ctx.fillStyle = ""
-            // ellipse(this.x, this.y - 40, 20, 400, "rgb(0, 0, 0)");		
-            
-        } 
-        
-        ctx.restore()
-
-        if (keys.space && !p.spaceActioned && !p.isTalking() && Math.hypot((this.x - p.x), (this.y - p.y)) <= 100 && this.lineNum < 0 && this.textCooldown <= 0 && CUR_SHOP_MENU == 0) {
-            p.spaceActioned = true
-
-            this.lineNum = 0
-            this.textCooldown = 1
-            this.dirSave = this.dir
-        } else if (this.remote) {
-            this.remoteSpeak = true
-            this.lineNum = 0
-            this.textCooldown = 1
-            this.remote = false
-        }
-
-        if (this.showName) {
-            ctx.fillStyle = "rgb(0, 0, 0)"
-            ctx.textBaseline = 'middle'
-            ctx.font = "20px serif"
-            ctx.textAlign = 'center'
-            ctx.fillText(this.name, this.x, this.y - 40)
         }
     }
 
