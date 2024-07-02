@@ -43,7 +43,7 @@ class NPC extends Entity {
         this.action = action
         this.actionLine = actionLine
         this.actionFinished = false
-        this.talkedTo = false // Default false
+        this.talkedTo = true // Default false
 
         this.pathPoint = 0
         this.pathPointReached = false
@@ -481,6 +481,7 @@ class NPC extends Entity {
     }
 
     drawFace(faceX, faceY) {
+        // ctx.strokeStyle = "rgba(0, 0, 0, 0)";
         ellipse(faceX, faceY, 50, 50, this.properties.skinColor)
         ellipse(faceX - 10, faceY - 10, 10, 10, this.properties.eyeColor)
         ellipse(faceX + 10, faceY - 10, 10, 10, this.properties.eyeColor)

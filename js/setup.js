@@ -179,6 +179,7 @@ manualDialogue.stop = function() {
 
 function ellipse(x, y, w, h, color) {
     ctx.beginPath();
+    ctx.strokeStyle = "rgba(0, 0, 0, 0)";
     ctx.fillStyle = color;
     ctx.arc(x, y, w / 2, 0, 2 * Math.PI, true);
     ctx.lineWidth = 3;
@@ -541,6 +542,10 @@ var music = [
     {
         name: "Stoneheart Sanctuary",
         audio: new Audio('audio/stoneheartSanctuary.mp3')
+    },
+    {
+        name: "Minera Grove",
+        audio: new Audio('audio/mineraGrove.mp3')
     },
     {
 		name: "New Location",

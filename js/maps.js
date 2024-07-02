@@ -3008,7 +3008,7 @@ var mineraGrove = new Region("Minera Grove", [
     }
 
 }, function() {
-    playMusic("Litholia")
+    playMusic("Minera Grove")
 });
 
 

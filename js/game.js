@@ -1590,7 +1590,7 @@ const rangerGunther = new NPC(ctr(74), ctr(70), "Ranger Gunther", mainMap, 'R', 
     "You're trying to get to Dawn's Landing too? Well then, how about\nwe both try and fix this problem together?",
     "...",
     "Great! Let me take you to the area in question. Follow me!"
-], "Ranger - Minera Grove\nHe manages Minera Grove, and he's trying to deal with the Splint infestation there.", function() {
+], "Ranger - Minera Grove\nThe manager of Minera Grove. Recently, he's\nbeen trying to deal with the Splint infestation there.", function() {
     cameraStart(ctr(45), ctr(69), 50, "NPC", {
         npcName: rangerGunther,
         lineStop: 5
@@ -2862,6 +2862,7 @@ function startPos() {
         "Remember, to get to Luminos Isle, you first need\nto get to Dawn's Landing which is west of here.",
         "Good luck!"
     ];
+    wayne.clearAction();
 
 
     litholia.hasSetLeaderPositions = true;

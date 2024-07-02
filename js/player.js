@@ -20,7 +20,7 @@ function Player(x, y, npcs) {
     this.doorCooldown = 0.1
     
     this.mapOn = false
-    this.shiftScreenDisplay = "MAP"; // MAP, MISSIONS, NPCS
+    this.shiftScreenDisplay = "NPCS"; // MAP, MISSIONS, NPCS, Default MAP
     this.mapSwitchTimer = 0.3
     this.mapPan = {
         x: 0,
@@ -1506,6 +1506,7 @@ Player.prototype.displayNPCList = function () {
 
     // Vertical border line
     ctx.beginPath();
+    ctx.strokeStyle = "rgb(0, 0, 0)";
     ctx.lineWidth = 1;
     ctx.moveTo(800, 45);
     ctx.lineTo(800, height);
