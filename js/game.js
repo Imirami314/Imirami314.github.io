@@ -1578,7 +1578,7 @@ const pearl = new NPC(ctr(93), ctr(78), "Border Guard Pearl", mainMap, 'R', [
     "Hello there.",
     "You don't seem like you're from Litholia.\nMy name is Pearl, and I've been assigned to guard this strangle border here.",
     "We don't really know what it is, but I'm here in case it causes something dangerous.",
-]);
+], "[insert description]");
 
 const rangerGunther = new NPC(ctr(74), ctr(70), "Ranger Gunther", mainMap, 'R', [
     "Oh, hello! It's nice to finally see another person!",

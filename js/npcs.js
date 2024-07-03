@@ -43,7 +43,8 @@ class NPC extends Entity {
         this.action = action
         this.actionLine = actionLine
         this.actionFinished = false
-        this.talkedTo = true // Default false
+
+        this.talkedTo = false // Default false (NPC List)
 
         this.pathPoint = 0
         this.pathPointReached = false

@@ -1492,11 +1492,16 @@ Player.prototype.displayNPCList = function () {
 
         // Handle clicking on NPC face (to display information in the right side panel)
         if (mouseNPCDist < 50) {
-            fill(0, 75, 235);
+            fill(64, 124, 255);
             ctx.fillRect(npcDisplayX - 75, npcDisplayY - 50, 150, 100);
             if (mouseIsDown) {
                 this.npcBeingDisplayed = npcs[i];
             }
+        }
+        
+        if (this.npcBeingDisplayed == npcs[i]) {
+            fill(0, 75, 235);
+            ctx.fillRect(npcDisplayX - 75, npcDisplayY - 50, 150, 100);
         }
 
         // Draw npc faces or question mark for unmet npcs
