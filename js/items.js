@@ -401,8 +401,15 @@ var items = {
     rangerPermit: new Item("Ranger Permit", 0, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)"); // changeme to Ranger Permit image
     }, function(p) {
-        
-    }, "A permit that allows you to enter the restricted areas of Minera Grove.\nTechnically, this makes you an official ranger!")
+        // changeme to add future restricted areas
+        if (p.on(61, 61)) {
+            mainMap.changeBlock(61, 60, ',');
+        }
+
+        if (p.on(79, 54)) {
+            mainMap.changeBlock(80, 54, ',');
+        }
+    }, "A permit that allows you to enter the restricted areas of Minera Grove.\nTechnically, this makes you an official ranger!", "MISC")
 } // Puzzle Keys are not included as they vary depending on where they came from
 
 function Food(name, img, health, secs) {

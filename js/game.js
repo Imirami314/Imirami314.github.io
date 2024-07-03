@@ -2848,7 +2848,7 @@ if (!!save) {
 function startPos() {
     dev = false
     curMap = mainMap;
-    p.inventory = [items.hydrosScythe, items.stormedsSword, food.apple(), food.apple(), items.aquaLung]
+    p.inventory = [items.hydrosScythe, items.stormedsSword, food.apple(), food.apple(), items.aquaLung, items.rangerPermit]
     p.updateSortedInventory()
     p.equipped = [items.aquaLung]
     lithosCutsceneDeath.onEnd();
