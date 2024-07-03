@@ -1457,15 +1457,34 @@ Player.prototype.breakBlock = function () {
     // }
 }
 
+// Scroll feature for NPC list
+window.addEventListener("wheel", function(event) {
+   
+    p.handleNPCScroll(event); 
+    
+});
+
+Player.prototype.handleNPCScroll = function(event) {
+    // Update npcScrollShift based on the scroll direction
+    if (this.mapOn) {
+        let scrollAmount = event.deltaY * 0.4; // Adjust the multiplier to control the scroll speed
+
+        this.npcScrollShift = Math.max(
+            -((npcs.length - npcs.length % 5) / 5 + 1) * 100 + 500,
+            Math.min(0, this.npcScrollShift - scrollAmount)
+        );
+    }
+};
+
 Player.prototype.displayNPCList = function () {
-	// ctx.fillStyle = "rgba(50, 50, 255, 0.5)"
+    // ctx.fillStyle = "rgba(50, 50, 255, 0.5)"
     // ctx.fillRect(width / 8, height / 8, width * 3 / 4, height * 3 / 4)
 
     // Blue background
     fill(0, 100, 255);
     ctx.fillRect(0, 0, width, height);
 
-	for (var i in npcs) {
+    for (var i in npcs) {
         let npcDisplayX = (i % 5) * 150 + 100;
         let npcDisplayY = (height / 9 + 100 * (Math.floor(i / 5) + 1)) + this.npcScrollShift;
         
@@ -1480,27 +1499,17 @@ Player.prototype.displayNPCList = function () {
             }
         }
 
-
         // Draw npc faces or question mark for unmet npcs
         if (npcs[i].talkedTo) {
             fill(0, 0, 0);
-            displayText(npcs[i].name, npcDisplayX, npcDisplayY - 35, 15)
-            npcs[i].drawFace(npcDisplayX, npcDisplayY) 	
+            displayText(npcs[i].name, npcDisplayX, npcDisplayY - 35, 15);
+            npcs[i].drawFace(npcDisplayX, npcDisplayY);
         } else {
             // Undiscovered NPC face
-            ellipse(npcDisplayX, npcDisplayY, 50, 50, "rgb(99, 133, 130)")
-            ctx.fillStyle = "rgb(0, 0, 0)"
-            ctx.textAlign = "center"
+            ellipse(npcDisplayX, npcDisplayY, 50, 50, "rgb(99, 133, 130)");
+            ctx.fillStyle = "rgb(0, 0, 0)";
+            ctx.textAlign = "center";
             displayText("?", npcDisplayX, npcDisplayY + 10, 30);
-        }
-
-        // Scrolling with W and S
-        if (keys.w) {
-            this.npcScrollShift = Math.min(0, this.npcScrollShift + this.npcScrollSpeed);
-        }
-
-        if (keys.s) {
-            this.npcScrollShift = Math.max(- ((npcs.length - npcs.length % 5) / 5 + 1) * 100 + 500, this.npcScrollShift - this.npcScrollSpeed);
         }
     }
 
@@ -1515,14 +1524,15 @@ Player.prototype.displayNPCList = function () {
     fill(0, 100, 235);
     ctx.fillRect(0, 45, 800, 80);
     fill(0, 0, 0);
-    displayText("W to scroll up -- S to scroll down", 275, 95, 30);
+    displayText("Scroll up/down", 275, 95, 30);
 
     // Number of NPCs discovered text
     displayText(`${npcs.getNumTalkedTo()}/${npcs.length}`, 700, 95, 30);
 
     // Display NPC information
     this.displayNPCInfo(this.npcBeingDisplayed);
-}
+};
+
 
 Player.prototype.displayNPCInfo = function(n) {
     if (n != null) {
