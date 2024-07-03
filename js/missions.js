@@ -52,7 +52,7 @@ Mission.prototype.alert = function(t) {
 		ctx.fillStyle = "rgb(0, 0, 0)"
 		ctx.font = "75px serif"
 		ctx.textAlign = 'center'
-		ctx.fillText(this.name, width / 2, height / 8 - 25)
+		ctx.fillText(this.name, width / 2, height / 8)
 		ctx.font = "30px serif"
 		ctx.fillText("New " + this.type + " Mission", width / 2, height / 8 + 50)
 		setTimeout(() => { 
