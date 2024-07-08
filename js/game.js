@@ -718,7 +718,7 @@ var smith = new NPC(4 * 75, 1 * 75, "Smith the Blacksmith", smithHouse, "D", [
     "I normally give a little somethin' to people who\ncome here, but I'm gonna need you to get me somethin' too.",
     "Could you fetch me a Heat Handle? I need it if you want me to help you.",
     "See ya!"
-], "Blacksmith - Steel Field\nEveryone's go to blacksmith. Go to him if you want a weapon made quick for a low price.")
+], "Blacksmith - Steel Field\nEveryone's go to blacksmith. He's very handy\nif you want a weapon made quick for a low price.")
 
 var rick = new NPC(9 * 75, 2 * 75, "Rick Ashley", rickHouse, "L", [
     "I'm feeling lonely.",
@@ -761,7 +761,7 @@ var kori = new NPC(178 * 75, 13 * 75, "Kori", mainMap, "L", [
     "...",
     "Huh. That's weird.",
     "Anyways, I'll see you later!"
-], "hi")
+], "Resident - Glacia Village\nShe enjoys gardening, but doesn't\nreally know what she's doing.")
 
 var isa = new NPC(2 * 75 + 75, 7 * 75, "Isa", glaciaCenter, "R", [
     "Hello, welcome to the Glacia center.",
@@ -775,7 +775,7 @@ var isa = new NPC(2 * 75 + 75, 7 * 75, "Isa", glaciaCenter, "R", [
     "Wait, you're not joking?",
     "Oh, uh, I can't help you then. Maybe ask Lonzo.\nHe knows a lot of weird, uh, stuff.",
     "Everybody thinks he's crazy, but uh, I would ask him.\nSee you later."
-], "hi")
+], "Manager - Glacia Center\nThe manager of Glacia Center in Glacia Village.\nUnfortunately, her job isn't very exciting, so she's\nalways glad when somebody stops by.")
 
 var blanche = new NPC(ctr(180), ctr(19), "Blanche", mainMap, "D", [
     "Oh, hello...",
@@ -786,7 +786,7 @@ var blanche = new NPC(ctr(180), ctr(19), "Blanche", mainMap, "D", [
     "Now I don't know where she is or if she's coming back...",
     "Hey, could you help me? All you'd have to do is\ngo into the forest and find her.",
     "I'm too scared to go again...\nBianca is much braver than I am."
-], "Resident - Glacia Village", function() {
+], "Resident - Glacia Village\nShe's very cautious to try anything, but keeps getting\ndragged into adventures by her friend Bianca.", function() {
     addMission(blancheAndBianca)
 }, "after")
 
@@ -799,7 +799,7 @@ var frio = new NPC(ctr(4), ctr(2), "Frio", friosFoodFrenzy, "D", [
     "Hello, and welcome to Frio's Food Frenzy!",
     "I'm just a LITTLE bit short on stock, so\nthere's not as many options as usual.",
     "Nevertheless, here's what we have:",
-], "", function() {
+], "Shopkeeper - Glacia Village\nHe loves food, and wants to share it with the world!\nBut, he's realized that selling it in a cold place like\nGlacia Village is a big challenge.", function() {
     ShopMenu.open(frioShop)
 }, "after")
 
@@ -810,7 +810,7 @@ var piren = new NPC(ctr(192), ctr(33), "Piren", mainMap, 'L', [
     "Oh, you want to know why this little area is so green?\nWell, I take care to shovel as much snow around my house.",
     "I've been getting sick of the snow recently, so I wanted\nto ensure that my home stays comfortable.",
     "Anyway, it's nice to be able to talk to someone.",
-], "Resident - Glacia Village\ngug")
+], "Resident - Glacia Village\nA social guy who really hates snow.\nSo much, in fact, that instead of making friends, he spends\nhis day shoveling the snow around his house.")
 
 var nevada = new NPC(ctr(5), b(3), "Nevada", breezwayBuilds, "D", [
     "Why hello there!",
@@ -825,7 +825,7 @@ var nevada = new NPC(ctr(5), b(3), "Nevada", breezwayBuilds, "D", [
     "He lives right next to me, to the east.",
     "You can come back here once you're done!"
 
-], "Resident - Glacia Village", function () {
+], "Manager - Breezeway Builds\nThe current head of Breezeway Builds.\nShe also has a passion for interior design!", function () {
     nevada.lines = [
         "Sorry, you might wanna talk to Lonzo first\nto learn more about this stuff.",
         "Come back here when you're done!"
@@ -909,7 +909,7 @@ var guardAlfred = new NPC(ctr(19), ctr(7), "Castle Guard Alfred", queensCastle, 
     "The queen instructed us to tell visitors to stand on the white\nblock in front of her throne.",
     "So far, no visitor's presence opened the door,\nso we are starting to lose hope.",
     "Anyway, you may now proceed."
-], "hi")
+], "Guard - Queen Alaska's Castle\nA loyal guard to Queen Alaska's castle.\nThis job is temporary as he's planning to open\nhis own shop someday!")
 
 var queenAlaska = new NPC(ctr(42), ctr(3), "Queen Alaska", queensCastle, "L", [
     "Welcome! I am Queen Alaska, but you can just\ncall me Alaska.",
@@ -932,7 +932,7 @@ var queenAlaska = new NPC(ctr(42), ctr(3), "Queen Alaska", queensCastle, "L", [
     "However, we suspect it could be somewhere in the perilous Windy Wastelands.\nIf you do go there, please be extremely careful.",
     "I'll call Lonzo to help you out. He'll be waiting for you at\nthe front of this castle.",
 	"Good luck my friend! You're definitely going to need it."
-], "hi", function(p) {
+], "Queen - Glacia Village\nA strong, fearless leader who's always up for a challenge.\nShe works closely with the other regional leaders,\nso she's always up to date on what's going on.", function(p) {
     meetingTheQueen.finish()
     lonzo.x = ctr(252)
     lonzo.y = ctr(21)
@@ -969,13 +969,13 @@ var fee = new NPC(ctr(46), ctr(16), "Fee", galeCave, "D", [
     "Lemme guess, you came to talk to me for a word of advice.",
     "I always just go with the flow...",
     "Also, have you seen three other people that look like me?\nThey're in this cave somewhere..."
-], "hi")
+], "Brother - Gale Cave\nOne of the 4 brothers of Gale Cave.")
 
 var fi = new NPC(ctr(4), ctr(16), "Fi", galeCave, "D", [
     "Hey pal, want a word of advice?",
     "If you ever hit rock bottom, the only way is up.",
     "By the way, where'd fee, fo, and fum go?"
-], "hi")
+], "Brother - Gale Cave\nOne of the 4 brothers of Gale Cave.")
 
 var fo = new NPC(ctr(5), ctr(9), "Fo", galeCave, "D", [
     "This cave has been dark for so long...",
@@ -984,13 +984,13 @@ var fo = new NPC(ctr(5), ctr(9), "Fo", galeCave, "D", [
     "Am I forgetting something?",
     "...",
     "Anyway, I've been looking for my brothers, but I can't see\nanything!"
-], "hi")
+], "Brother - Gale Cave\nOne of the 4 brothers of Gale Cave.")
 
 var fum = new NPC(ctr(37), ctr(2), "Fum", galeCave, "D", [
     "HEY YOU! WHAT ARE YOU DOING?",
     "Hah, I'm just messin' with you.", "When things get heated, always stay calm.",
     "You have any idea why the cave is so dark?"
-], "hi")
+], "Brother - Gale Cave\nOne of the 4 brothers of Gale Cave.")
 
 var muhammadShop = [
     {item: items.auraOfWarmth, cost: 25, amount: 2},
@@ -1002,7 +1002,7 @@ var shopkeeperMuhammad = new NPC(58 * 75, ctr(33), "Shopkeeper Muhammad", galeCa
     "Would you like to buy something? I sell food and auras,\nin case you need to deal with extreme temperatures.",
     "You could probably get better prices at some other aura shop, though.",
     "`ugh, why did I say that! Not a good business strategy!"
-], "hi", function() {
+], "Shopkeeper - Gale Cave\nA talented businessman who hates working in the dark.\nHe knows he would sell a lot more if he wasn't in a cave,\nbut he doesn't know how to get out!", function() {
     ShopMenu.open(muhammadShop)
 }, "after")
 
@@ -1022,7 +1022,7 @@ var mildred = new NPC(ctr(6), 3 * 75, "Mildred", trailShop, "D", [
 	"We have three trail mixes.\nOur shop menu will provide you with all the information you need.",
 	"Whenever you need more trails, just come talk to me!",
 	"Do you need anything right now?\nLet me open the shop for you."
-], "hi", function() {	
+], "Shopkeeper - Glacia Village\nA pioneer who invented the technology knows as 'trail mixes'.\nShe is always fiddling around, trying to come up with the next\ngreat invention!", function() {	
     ShopMenu.open([
         {item: items.shovel, cost: 12, amount: 2}
     ])
@@ -1051,7 +1051,7 @@ var theWanderer = new NPC(60 * 75, 41 * 75, "The Wanderer", mainMap, "D",    [
 	"`Although first difficult to arrive at this sea,\nThe bottom right corner is the right place to be.",
 	"Find the location, then return here.\nGood luck!",
 	
-], "hi", function() {
+], "Resident - ???\nA very mysterious man who promises you the ability to teleport!\nHe prefers to speak in riddles rather than telling\nyou directly.", function() {
     if (theWanderer.firstInteraction) {
         addMission(theWanderersRiddles)
     }
@@ -1064,7 +1064,7 @@ var lostTraveler = new NPC(ctr(252), ctr(48), "Lost Traveler", mainMap, "D", [
     "yellow...",
     "purple...",
     "...yellow...purple...yellow...purple..."
-])
+], "Resident - Encompassed Forest\nThe lost spirit of someone who seems to have spent too much\ntime in the Encompassed Forest.")
 
 var captainBora = new NPC(69420 * 75, 42069 * 75, "Captain Bora", mainMap, "D", [
     "Oh wow, hello!",
@@ -1072,7 +1072,7 @@ var captainBora = new NPC(69420 * 75, 42069 * 75, "Captain Bora", mainMap, "D", 
     "I don't really know what happened, I was walking through the forest and got lost.",
     "Slowly, I felt like I was drifting off to sleep.\nNext thing I know, I'm awake and you're here!",
     "I don't even know how much time has passed.\nI suppose I should head back to Glacia.",
-], "hi", function() {
+], "Guard - Glacia Village\nA brave captain of the Glacia Village guard.\nWhen she ventured into the Encompassed Forest, she got lost\nand became a drifting spirit. Luckily, you rescued her!", function() {
     captainBora.curPath = [
         [251, 47],
         [251, 43],

@@ -20,7 +20,7 @@ function Player(x, y, npcs) {
     this.doorCooldown = 0.1
     
     this.mapOn = false
-    this.shiftScreenDisplay = "NPCS"; // MAP, MISSIONS, NPCS, Default MAP
+    this.shiftScreenDisplay = "MAP"; // MAP, MISSIONS, NPCS, Default MAP
     this.mapSwitchTimer = 0.3
     this.mapPan = {
         x: 0,

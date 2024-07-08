@@ -46,7 +46,7 @@ Chest.prototype.open = function(p) {
 }
 
 // Items
-var items = {
+const items = {
     spearOfNoctos: new Item("Spear of Noctos", 15, function(x, y) {
         ctx.drawImage(images.spearOfNoctos, x - 15, y - 15, 50, 15)
     }, function(p) {
@@ -408,6 +408,10 @@ var items = {
 
         if (p.on(79, 54)) {
             mainMap.changeBlock(80, 54, ',');
+        }
+
+        if (p.on(79, 81)) {
+            mainMap.changeBlock(80, 81, ',');
         }
     }, "A permit that allows you to enter the restricted areas of Minera Grove.\nTechnically, this makes you an official ranger!", "MISC")
 } // Puzzle Keys are not included as they vary depending on where they came from
