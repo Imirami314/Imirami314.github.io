@@ -1056,35 +1056,45 @@ mainMap.solve = function() {
             setTimeout(() => {
                 larisa.x = ctr(45)
                 larisa.y = ctr(23)
-                larisa.curPath = [
-                    [45, 23],
-                    [56, 23],
-                    function () {
-                        // Default ON
-                        // larisa.dir = "U"
-                        // larisa.remote = true
-                        // p.dir = "D"
-                        // cameraStart(b(56), b(23), 5, "NPC", {
-                        //     npcName: larisa,
-                        //     lineStop: -1
-                        // })
-                        // larisa.lines = [
-                        //     "HUH?!",
-                        //     "Who are you?",
-                        //     "...",
-                        //     "Oh, you can talk!",
-                        //     "Anyways, it looks like you are stuck buddy!",
-                        //     "Maybe I should get someone. One of the important ones anyway.\nWait right here!"
-                        // ]
-                        // larisa.action = function () {
-                        //     Screen.fadeOut(0.05, function() {
-                        //         larisa.x = 1
-                        //         larisa.y = 1
-                        //     })
-                        // }
-                        // larisa.actionLine = "after"
-                    }
-                ]
+             
+                    // Larisa walks and talks to player
+                    larisa.curPath = [
+                        [45, 23],
+                        [56, 23],
+                        function () {
+                            // Default ON
+                            // larisa.dir = "U"
+                            // larisa.remote = true
+                            // p.dir = "D"
+                            // cameraStart(b(56), b(23), 5, "NPC", {
+                            //     npcName: larisa,
+                            //     lineStop: -1
+                            // })
+                            // larisa.lines = [
+                            //     "HUH?!",
+                            //     "Who are you?",
+                            //     "...",
+                            //     "Oh, you can talk!",
+                            //     "Anyways, it looks like you are stuck buddy!",
+                            //     "Maybe I should get someone. One of the important ones anyway.\nWait right here!"
+                            // ]
+
+                            // larisa.action = function () {
+                            //     p.dir = "D"
+                            // }
+                            // larisa.actionLine = 0
+
+                            // larisa.action = function () {
+                            //     Screen.fadeOut(0.05, function() {
+                            //         larisa.x = 1
+                            //         larisa.y = 1
+                            //     })
+                            // }
+                            // larisa.actionLine = "after"
+
+                        }
+                    ]
+                
             }, 3000)
             
         })
