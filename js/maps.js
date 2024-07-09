@@ -632,16 +632,7 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
                         ctx.stroke()
 						break
 					case 'S': // Stone wall
-						// ctx.fillStyle = 'rgb(40, 40, 40)'
-                        // ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
-
                         ctx.drawImage(images.stoneWall, j * this.blockSize, i * this.blockSize, 75, 75)
-
-                        // if (mode != "Map View") {
-                        //     ellipse(j * this.blockSize + 20, i * this.blockSize + 25, 20, 20, "rgb(0, 0, 0)")
-                        //     ellipse(j * this.blockSize + 20, i * this.blockSize + 50, 15, 15, "rgb(0, 0, 0)")
-                        //     ellipse(j * this.blockSize + 50, i * this.blockSize + 30, 25, 25, "rgb(0, 0, 0)")
-                        // }
 						break
                     case '%': // Stone tiles
                         ctx.drawImage(images.stoneTiles, j * this.blockSize, i * this.blockSize, 75, 75)
@@ -2609,29 +2600,29 @@ var lithosRoom = new Landscape([
 
 const mineraBurrow = new Landscape([
     'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SOSSSSSSSSSSSSSSSSSSSSSOS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSSS',
-    'SSSSSSSSSSSSSSSSSSSSSSSOS',
+    'SO#SSSSS#,SSSSSSSS#,SS#OS',
+    'S###########SSSSSS##SS##S',
+    'SS##SSS##SS,#SSSS,##SS#SS',
+    'SSSSSSS###SS#SSSS####S##S',
+    'SSSSSS,######SSSS##S####S',
+    'SSSSS#####SSSSSSS#S####SS',
+    'SSSSSSS###SSSSS,##SSS#,SS',
+    'SSS,####SSS#SSS#S##,SSSSS',
+    'SS####SSS,##S#SSS####SSSS',
+    'SS##,SSS#############SSSS',
+    'SS##SS###S#S####S,###SSSS',
+    'SS#SSS###SSSSSSSSSSSSSSSS',
+    'SS###SSSSSS#####SSSSS##SS',
+    'SSS,#SSSSSS###S##SS,###SS',
+    'SSSSSSSSSSS##,S##SSS###SS',
+    'SSSSSSSSSSSSSSS###SSS##,S',
+    'SSSSSSSSSSSSSSSS###SSS##S',
+    'SSSSSSSSSSSSSSSS####SS##S',
+    'SSSSSSSSSSSSSSSS,#S#SSS#S',
+    'SSSSSSSSSSSSSSSSSSS##SS#S',
+    'SSSSSSSSSSSSSSSSSSSS##S#S',
+    'SSSSSSSSSSSSSSSSSSS,####S',
+    'SSSSSSSSSSSSSSSSSSSSSS#OS',
     'SSSSSSSSSSSSSSSSSSSSSSSSS',
 ], null, null, null, null, "Minera Burrow", function() {
     lighting = 1500;

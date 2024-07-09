@@ -242,7 +242,6 @@ class Noctos extends Boss {
     
             // Body
             if (this.beingHit) {
-                
                 ellipse(this.x, this.y, 150, 150, "rgb(50, 0, 0)")
             } else {
                 ellipse(this.x, this.y, 150, 150, "rgb(0, 0, 0)")
@@ -1759,6 +1758,23 @@ const monsters = [
     new Patroller("Stoneheart Sanctuary", ctr(6), ctr(5)),
     new Patroller("Stoneheart Sanctuary", ctr(10), ctr(2)),
     new Patroller("Stoneheart Sanctuary", ctr(27), ctr(2)),
+
+    // Northwest corner path
+    new Splint("Minera Burrow", ctr(11), ctr(2)),
+    new Splint("Minera Burrow", ctr(12), ctr(3)),
+    new Splint("Minera Burrow", ctr(5), ctr(6)),
+    new Splint("Minera Burrow", ctr(9), ctr(7)),
+    new Splint("Minera Burrow", ctr(2), ctr(9)),
+    new Splint("Minera Burrow", ctr(3), ctr(11)),
+    new Splint("Minera Burrow", ctr(2), ctr(13)),
+    new Splint("Minera Burrow", ctr(3), ctr(14)),
+    
+    // Northeast corner path
+    new Splint("Minera Burrow", ctr(22), ctr(7)),
+    new Splint("Minera Burrow", ctr(19), ctr(6)),
+    new Splint("Minera Burrow", ctr(19), ctr(1)),
+    new Splint("Minera Burrow", ctr(17), ctr(3)),
+    new Splint("Minera Burrow", ctr(15), ctr(8)),
 ]
 
 const noctos = new Noctos("Noctos Room", 712.5, 100);

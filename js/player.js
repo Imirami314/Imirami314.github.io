@@ -406,13 +406,13 @@ Player.prototype.HUD = function() {
         ctx.fillText("?", 1260, 565)
     }
 
-    for (var i = 0; i < monsters.length; i ++) {
-        if (curMap.name == monsters[i].map && !monsters[i].dead) {
-            if (monsters[i].playerDist < 750 && monsters[i].agro) {
-                ellipse(monsters[i].x, monsters[i].y, 50, 50, "rgb(0, 0, 0)")
-            }
-        }
-    }
+    // for (var i = 0; i < monsters.length; i ++) {
+    //     if (curMap.name == monsters[i].map && !monsters[i].dead) {
+    //         if (monsters[i].playerDist < 750 && monsters[i].agro) {
+    //             ellipse(monsters[i].x, monsters[i].y, 50, 50, "rgb(0, 0, 0)")
+    //         }
+    //     }
+    // }
     ctx.restore()
 
     if (this.newItemAlert) { // Displays new item alert when you receive an item (sometimes)
