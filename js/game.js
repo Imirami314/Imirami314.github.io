@@ -2702,6 +2702,7 @@ function saveGame() {
         npcs: [],
         npcActions: [],
         npcPathActions: [],
+        monsters: [],
         maps: [],
         interactives: [],
         lighting: lighting,
@@ -2791,6 +2792,11 @@ function saveGame() {
     
     lset("npcActions", JSON.stringify(SAVING.npcActions))
     lset("npcPathActions", JSON.stringify(SAVING.npcPathActions))
+
+    monsters.forEach((m) => {
+        SAVING.monsters.push(m);
+    })
+    lset("monsters", JSON.stringify(SAVING.monsters));
 
     lset("maps", JSON.stringify(SAVING.maps))
 

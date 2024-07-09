@@ -1323,13 +1323,13 @@ class Splint extends Enemy {
                 }
             }
     
-            if (this.isDead()) {
-                for (var i in monsters) {
-                    if (monsters[i] == this) {
-                        monsters.splice(i, 1)
-                    }
-                }
-            }
+            // if (this.isDead()) {
+            //     for (var i in monsters) {
+            //         if (monsters[i] == this) {
+            //             monsters.splice(i, 1)
+            //         }
+            //     }
+            // }
         }
         
         if (this.map == curMap.name) {
@@ -1487,13 +1487,13 @@ class Gale extends Enemy {
             }
         }
 
-        if (this.isDead()) {
-            for (var i in monsters) {
-                if (monsters[i] == this) {
-                    monsters.splice(i, 1)
-                }
-            }
-        }
+        // if (this.isDead()) {
+        //     for (var i in monsters) {
+        //         if (monsters[i] == this) {
+        //             monsters.splice(i, 1)
+        //         }
+        //     }
+        // }
     }
 
     onKill() {
@@ -1776,6 +1776,13 @@ const monsters = [
     new Splint("Minera Burrow", ctr(17), ctr(3)),
     new Splint("Minera Burrow", ctr(15), ctr(8)),
 ]
+
+// Load save states for monsters
+if (!!save) {
+    for (let i in monsters) {
+        Object.assign(monsters[i], save.monsters[i]); // Replaces properties of actual monster with the saved one
+    }
+}
 
 const noctos = new Noctos("Noctos Room", 712.5, 100);
 const stormed = new Stormed("Stormed Room", ctr(13), ctr(17));

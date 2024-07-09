@@ -406,6 +406,7 @@ Player.prototype.HUD = function() {
         ctx.fillText("?", 1260, 565)
     }
 
+    // changeme later to fix black dots on minimap for monsters
     // for (var i = 0; i < monsters.length; i ++) {
     //     if (curMap.name == monsters[i].map && !monsters[i].dead) {
     //         if (monsters[i].playerDist < 750 && monsters[i].agro) {
@@ -988,7 +989,7 @@ Player.prototype.hitEnemies = function() {
                     throw("Monster type is missing onKill method!")
                 }
 
-                monsters.splice(monsters.indexOf(m), 1)
+                // monsters.splice(monsters.indexOf(m), 1)
             }
         }
     }
