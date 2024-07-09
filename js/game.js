@@ -2847,12 +2847,13 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = false
-    curMap = mainMap;
     p.inventory = [items.hydrosScythe, items.stormedsSword, food.apple(), food.apple(), items.aquaLung, items.rangerPermit]
     p.updateSortedInventory()
     p.equipped = [items.aquaLung]
     lithosCutsceneDeath.onEnd();
-    p.goTo(ctr(81), ctr(76));
+    curMap = mineraBurrow;
+    // p.goTo(ctr(81), ctr(76));
+    p.goTo(ctr(1), ctr(1));
 
     addMission(journeyToLuminosIsle);
     p.giveItem(items.mineraGroveKey, false);

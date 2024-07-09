@@ -2607,6 +2607,55 @@ var lithosRoom = new Landscape([
     bossfight = (lithos.health > 0);
 })
 
+const mineraBurrow = new Landscape([
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SOSSSSSSSSSSSSSSSSSSSSSOS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+    'SSSSSSSSSSSSSSSSSSSSSSSOS',
+    'SSSSSSSSSSSSSSSSSSSSSSSSS',
+], null, null, null, null, "Minera Burrow", function() {
+    lighting = 1500;
+    
+    if (keys.space && !p.spaceActioned) {
+        if (p.on(1, 1) || p.on(23, 1) || p.on(23, 23)) {
+            Screen.fadeOut(0.05, function() {
+                if (p.on(1, 1)) {
+                    curMap = mainMap;
+                    p.goTo(ctr(57), ctr(56));
+                } else if (p.on(23, 1)) {
+                    curMap = mainMap;
+                    p.goTo(ctr(89), ctr(54));
+                } else if (p.on(23, 23)) {
+                    curMap = mainMap;
+                    p.goTo(ctr(85), ctr(90));
+                }
+
+                Screen.fadeIn(0.05);
+            })
+        }
+    }
+})
+
 var areas = Landscape.all
 
 function areaSearchByCords(x, y) {

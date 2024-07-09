@@ -481,6 +481,26 @@ const journeyToLuminosIsle = new Mission("Journey to Luminos Isle", "Main", "Now
 
 const mineraGrovePranksters = new Mission("Pranksters of Minera Grove", "Main", "To reach Dawn's Landing, you need to cross through Minera Grove. Unfortunately,\nSplints are hiding underneath the grove and have blocked Dawn's Landing with trees.\nYou need to help Ranger Gunther deal with the Splints and find a way past the trees.", "");
 
+mineraGrovePranksters.solve = function() {
+    if (keys.space && !p.spaceActioned) {
+        if (p.on(89, 54) || p.on(57, 56) || p.on(85, 90)) {
+            Screen.fadeOut(0.05, function() {
+                if (p.on(89, 54)) {
+                    curMap = mineraBurrow;
+                    p.goTo(ctr(23), ctr(1));
+                } else if(p.on(57, 56)) {
+                    curMap = mineraBurrow;
+                    p.goTo(ctr(1), ctr(1));
+                } else if (p.on(85, 90)) {
+                    curMap = mineraBurrow;
+                    p.goTo(ctr(23), ctr(23));
+                }
+
+                Screen.fadeIn(0.05);
+            })
+        }
+    }
+}
 
 var missions = Mission.all
 var curMissions = [];
