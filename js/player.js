@@ -927,10 +927,12 @@ Player.prototype.closestEnemy = function() {
     let closestMonster = null; // Initialize closestMonster as null
 
     monsters.forEach((m) => {
-        let dist = entityDistance(p, m); // Calculate distance to current monster
-        if (closestMonster == null || dist < closestDist) {
-            closestDist = dist;
-            closestMonster = m; // Update closestMonster with the current monster
+        if (m.map == curMap.name) {
+            let dist = entityDistance(p, m); // Calculate distance to current monster
+            if (closestMonster == null || dist < closestDist && !m.isDead()) {
+                closestDist = dist;
+                closestMonster = m; // Update closestMonster with the current monster
+            }
         }
     });
 
@@ -957,14 +959,14 @@ Player.prototype.hitEnemies = function() {
     // For monsters
     for (var i in monsters) {
         var m = monsters[i]
-        var mDist = entityDistance(this, m)
-        this.mAngle = Math.atan2((m.y - this.y), (m.x - this.x))
-        if (mDist <= this.rangeToCheck && mouseIsDown && !keys.e && this.hitCooldown <= 0 && !m.isDead() && p.canHitClosestMonster()) {
+        var mDist = entityDistance(this, this.closestEnemy())
+        this.mAngle = Math.atan2((this.closestEnemy().y - this.y), (this.closestEnemy().x - this.x))
+        if (mDist <= this.rangeToCheck && mouseIsDown && !keys.e && this.hitCooldown <= 0 && !m.isDead() && this.canHitClosestMonster()) {
             this.hitCooldown = 0.35
             if (!!this.weapon) {
-                m.health -= this.weapon.damage;
+                this.closestEnemy().health -= this.weapon.damage;
             } else {
-                m.health --;
+                this.closestEnemy().health --;
             }
 
             // if (m.health <= 0 && !m.haveTrillsBeenAwarded) {
@@ -977,7 +979,7 @@ Player.prototype.hitEnemies = function() {
                 
             //     m.haveTrillsBeenAwarded = true
             // }
-            m.move(Math.cos(this.mAngle) * 25, Math.sin(this.mAngle) * 25, true)
+            this.closestEnemy().move(Math.cos(this.mAngle) * 25, Math.sin(this.mAngle) * 25, true)
             
             // // Tells monster that it is hit (doesn't work for some monsters idk why)
             // m.isHit = true

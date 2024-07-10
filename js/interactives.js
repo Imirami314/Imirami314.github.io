@@ -56,7 +56,7 @@ Toggle.prototype.activate = function() {
         p.spaceActioned = true
         playSound("Toggle")
         if (!!this.cameraX && !!this.cameraY) {
-            cameraStart(this.cameraX, this.cameraY, 100, "AUTO", {
+            cameraStart(this.cameraX, this.cameraY, 50, "AUTO", {
                 time: 3250
             })
             

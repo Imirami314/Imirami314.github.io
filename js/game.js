@@ -2398,7 +2398,26 @@ var interactives = [
         //     [17, 8],
         //     [17, 9],
         // ], '%')
-    })
+    }),
+
+    // Minera Burrow
+    new Toggle(mineraBurrow, 2, 18, function() {
+        mineraBurrow.changeBlock(2, 23, ')');
+    }, function() {
+        mineraBurrow.changeBlock(2, 23, '(');
+    }, ctr(2), ctr(23)),
+    
+    new Toggle(mineraBurrow, 4, 19, function() {
+        mineraBurrow.changeBlock(3, 23, ')');
+    }, function() {
+        mineraBurrow.changeBlock(3, 23, '(');
+    }, ctr(3), ctr(23)),
+
+    new Toggle(mineraBurrow, 9, 23, function() {
+        mineraBurrow.changeBlock(4, 23, ')');
+    }, function() {
+        mineraBurrow.changeBlock(4, 23, '(');
+    }, ctr(4), ctr(23)),
 ]
 
 /*
@@ -2853,7 +2872,7 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = false
-    p.inventory = [items.hydrosScythe, items.stormedsSword, food.apple(), food.apple(), items.aquaLung, items.rangerPermit]
+    p.inventory = [items.hydrosScythe, items.stormedsSword, food.apple(), food.apple(), items.aquaLung, items.rangerPermit, items.steelSword]
     p.updateSortedInventory()
     p.equipped = [items.aquaLung]
     lithosCutsceneDeath.onEnd();
@@ -4009,7 +4028,7 @@ var gameInterval = setInterval(function() {
             // Draw player at actual location, not just center
             ctx.translate(p.x - width / 2, p.y - height / 2)
             p.draw()
-            ctx.translate(- (p.x - width / 2), - (p.y - height / 2))
+            ctx.translate(- (p.x - width / 2), Math.round(p.y - height / 2))
      
 			ctx.translate((-1 * curCX) + (width / 2), (-1 * curCY) + (height / 2))
 			ctx.restore()

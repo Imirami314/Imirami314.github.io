@@ -35,7 +35,7 @@ Enemy.prototype.getClosestMonster = function() {
     var closestDist = 2147483648
 
     monsters.forEach((m) => {
-        if (entityDistance(this, m) < closestDist && m != this) {
+        if (entityDistance(this, m) < closestDist && m != this && !m.isDead()) {
             closestDist = entityDistance(this, m)
             closest = m
         }

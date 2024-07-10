@@ -37,8 +37,9 @@ const canvas = document.querySelector('.myCanvas');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 const width = 1440;
-const height = 675;
+const height = 675; // Normally set to 675 but turns out that window.innerHeight = 655 so I'm seeing what happens, change it back if stuff breaks
 const ctx = canvas.getContext('2d');
+// ctx.scale(window.innerWidth / 1440, window.innerHeight / 675)
 ctx.scale(window.innerWidth / 1440, window.innerHeight / 675)
 
 var save;
