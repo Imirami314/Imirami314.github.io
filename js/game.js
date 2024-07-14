@@ -2506,12 +2506,13 @@ if (!!save) {
         for (var i in missions) {
             if (missions[i].name == mission.name) {
                 var savedMission = missions[i]
-                savedMission.curNode = mission.curNode
-                savedMission.newMission = mission.newMission
-                savedMission.complete = mission.complete
-                savedMission.desc = mission.desc;
-                savedMission.instructions = mission.instructions;
-                savedMission.completionPopup = mission.completionPopup
+                // savedMission.curNode = mission.curNode
+                // savedMission.newMission = mission.newMission
+                // savedMission.complete = mission.complete
+                // savedMission.desc = mission.desc;
+                // savedMission.instructions = mission.instructions;
+                // savedMission.completionPopup = mission.completionPopup
+                Object.assign(missions[i], mission);
 
                 addMission(missions[i])
             }
