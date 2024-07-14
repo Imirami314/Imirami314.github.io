@@ -500,6 +500,40 @@ mineraGrovePranksters.solve = function() {
             })
         }
     }
+
+    if (!mineraGrovePranksters.hasPlayerReachedOtherSide) {
+        if (p.on(46, 69)) {
+            rangerGunther.goTo(ctr(51), ctr(70));
+            rangerGunther.dir = 'L';
+            rangerGunther.lines = [
+                "Woah! How did you make it over there?",
+                "...",
+                "Really? You found where all those nasty creatures were hiding?",
+                "...",
+                "Wow, I really should have checked the restricted areas\nmore.",
+                "Guess I'll head down there to get rid of them, once and for all!",
+                "Thank you very much. Here's a little gift for you.",
+            ];
+
+            rangerGunther.actionLine = "after";
+
+            rangerGunther.action = function() {
+                p.giveItem(new TrillSum(50), true);
+
+                rangerGunther.lines = [
+                    "Thanks for helping me out! You're welcome to visit me anytime.",
+                ]
+
+                rangerGunther.clearAction();
+            }
+        }
+
+        if (p.on(46, 70)) {
+            rangerGunther.lineNum = 0;
+            rangerGunther.remote = true;
+            mineraGrovePranksters.hasPlayerReachedOtherSide = true;
+        }
+    }
 }
 
 var missions = Mission.all

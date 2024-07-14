@@ -1781,6 +1781,12 @@ const monsters = [
 if (!!save) {
     for (let i in monsters) {
         Object.assign(monsters[i], save.monsters[i]); // Replaces properties of actual monster with the saved one
+
+        // Reassign any internal classes that are used, like Cooldowns
+        if (!!monsters[i].shotCooldown) {
+            monsters[i].shotCooldown = new Cooldown()
+            Object.assign(monsters[i].shotCooldown, save.monsters[i].shotCooldown)
+        }
     }
 }
 

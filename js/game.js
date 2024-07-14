@@ -2403,20 +2403,26 @@ var interactives = [
     // Minera Burrow
     new Toggle(mineraBurrow, 2, 18, function() {
         mineraBurrow.changeBlock(2, 23, ')');
+        mineraBurrow.changeBlock(2, 19, 'S');
     }, function() {
         mineraBurrow.changeBlock(2, 23, '(');
+        mineraBurrow.changeBlock(2, 19, '_');
     }, ctr(2), ctr(23)),
     
     new Toggle(mineraBurrow, 4, 19, function() {
         mineraBurrow.changeBlock(3, 23, ')');
+        mineraBurrow.changeBlock(4, 20, 'S');
     }, function() {
         mineraBurrow.changeBlock(3, 23, '(');
+        mineraBurrow.changeBlock(4, 20, '_');
     }, ctr(3), ctr(23)),
 
     new Toggle(mineraBurrow, 9, 23, function() {
         mineraBurrow.changeBlock(4, 23, ')');
+        mineraBurrow.changeBlock(8, 22, 'S');
     }, function() {
         mineraBurrow.changeBlock(4, 23, '(');
+        mineraBurrow.changeBlock(8, 22, '_');
     }, ctr(4), ctr(23)),
 ]
 
@@ -2881,6 +2887,7 @@ function startPos() {
     p.goTo(ctr(1), ctr(1));
 
     addMission(journeyToLuminosIsle);
+    addMission(mineraGrovePranksters);
     p.giveItem(items.mineraGroveKey, false);
 
     wayne.lines = [
