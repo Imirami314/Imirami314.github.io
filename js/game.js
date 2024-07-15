@@ -1633,6 +1633,20 @@ const rangerGunther = new NPC(ctr(74), ctr(70), "Ranger Gunther", mainMap, 'R', 
     rangerGunther.actionLine = "after"
 }, 3)
 
+const astrid = new NPC(ctr(38), ctr(78), "Astrid", mainMap, 'U', [
+    "Hey there! Looks like you're a traveler.\nWe haven't gotten very many as of late.",
+    "I'm guessing you're looking to get to Luminos Isle.\nIs that right?",
+    "...",
+    "Great! You will need to buy a ticket, though.\nSending people up there takes work, so it's got to cost something.",
+    "The ticket office is just west of here, past the central landing.",
+    "Good luck!"
+], "Resident - Dawn's Landing\nAlthough she is just a resident, she enjoys helping\ntravelers get to Luminos Isle, since it can be confusing\nfor them to figure it out on their own.", function() {
+    cameraStart(ctr(8), ctr(75), 50, "NPC", {
+        npcName: astrid,
+        lineStop: 5
+    })
+}, 4);
+
 var npcs = []
 
 npcs.getNumTalkedTo = function() {
