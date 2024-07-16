@@ -955,52 +955,41 @@ Player.prototype.canHitClosestMonster = function () {
 }
 
 Player.prototype.hitEnemies = function() {
-    var monsterThatWasHitNum = null
-    // For monsters
-    for (var i in monsters) {
-        var m = monsters[i]
-        var mDist = entityDistance(this, this.closestEnemy())
-        this.mAngle = Math.atan2((this.closestEnemy().y - this.y), (this.closestEnemy().x - this.x))
-        if (mDist <= this.rangeToCheck && mouseIsDown && !keys.e && this.hitCooldown <= 0 && !m.isDead() && this.canHitClosestMonster()) {
+    if (this.closestEnemy() != null) { // If a map doesn't have any enemies in it, the code would break without this
+        var monsterThatWasHitNum = null;
+        let closestEnemy = this.closestEnemy();
+
+        // For monsters
+        var mDist = entityDistance(this, closestEnemy);
+        this.mAngle = Math.atan2((closestEnemy.y - this.y), (closestEnemy.x - this.x));
+        
+        if (mDist <= this.rangeToCheck && mouseIsDown && !keys.e && this.hitCooldown <= 0 && !closestEnemy.isDead() && this.canHitClosestMonster()) {
             this.hitCooldown = 0.35
             if (!!this.weapon) {
-                this.closestEnemy().health -= this.weapon.damage;
+                closestEnemy.health -= this.weapon.damage;
             } else {
-                this.closestEnemy().health --;
+                closestEnemy.health --;
             }
 
-            // if (m.health <= 0 && !m.haveTrillsBeenAwarded) {
-            //     if (!!m.trillAward) {
-            //         this.trills += m.trillAward
-            //     } else {
-            //        // alert("Monster has no 'trillAward' property assigned!")
-            //     }
-
-                
-            //     m.haveTrillsBeenAwarded = true
-            // }
-            this.closestEnemy().move(Math.cos(this.mAngle) * 25, Math.sin(this.mAngle) * 25, true)
+            closestEnemy.move(Math.cos(this.mAngle) * 25, Math.sin(this.mAngle) * 25, true)
             
             // // Tells monster that it is hit (doesn't work for some monsters idk why)
-            // m.isHit = true
-            // monsterThatWasHitNum = i
-            if (m.isDead()) {
+            if (closestEnemy.isDead()) {
                 try {
-                    m.onKill()
+                    closestEnemy.onKill()
                 } catch (e) {
                     throw("Monster type is missing onKill method!")
                 }
-
-                // monsters.splice(monsters.indexOf(m), 1)
             }
         }
-    }
+        // }
 
-    if (monsterThatWasHitNum != null) {
-        setTimeout(() => {
-            monsters[monsterThatWasHitNum].isHit = false
-            monsterThatWasHitNum = null
-        }, 500)
+        if (monsterThatWasHitNum != null) {
+            setTimeout(() => {
+                monsters[monsterThatWasHitNum].isHit = false
+                monsterThatWasHitNum = null
+            }, 500)
+        }
     }
 }
 

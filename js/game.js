@@ -1647,6 +1647,21 @@ const astrid = new NPC(ctr(38), ctr(78), "Astrid", mainMap, 'U', [
     })
 }, 4);
 
+const albaShop = [ // Dawn's Landing Ticket Office
+    {item: food.apple(), cost: 5, amount: 5}
+]
+
+const alba = new NPC(ctr(38), ctr(78), "Alba", mainMap, 'U', [
+    "i am a stupid npc so i am not functional yet and i am\nalso in the wrong place idiot idiot idiot idiot\ndon't worry vikram i will fix latery!",
+    "Oh, hi.",
+    "...",
+    "I'm supposed to be at the Ticket Office?\nNo, it's not my shift ye-",
+    "oop! You're right, I'm supposed to be back there.\nJust give me one more second to finish this up...",
+    "Actually, just head on back to the Ticket Office. I'll probably\nget there by the time you do."
+], "Shopkeeper - Dawn's Landing\nThe manager of the Dawn's Landing Ticket Office.\nShe's new to her job, and sometimes forgets about her\nresponsibilities!", function() {
+    
+}, 4);
+
 var npcs = []
 
 npcs.getNumTalkedTo = function() {
@@ -2897,9 +2912,9 @@ function startPos() {
     p.updateSortedInventory()
     p.equipped = [items.aquaLung]
     lithosCutsceneDeath.onEnd();
-    curMap = mineraBurrow;
+    curMap = mainMap;
     // p.goTo(ctr(81), ctr(76));
-    p.goTo(ctr(1), ctr(1));
+    p.goTo(ctr(8), ctr(78));
 
     addMission(journeyToLuminosIsle);
     addMission(mineraGrovePranksters);
