@@ -2,7 +2,7 @@ function Player(x, y, npcs) {
     Entity.call(this, curMap, x, y)
 
     this.spaceActioned = false // Has a space key press done something else already
-    this.spaceActionRequests = []
+    // this.spaceActionRequests = []
 
     this.buildMode = false
     this.buildable = false
@@ -695,7 +695,7 @@ Player.prototype.collide = function() {
     }
 
     if (this.doorCooldown <= 0) {
-        if ((this.blockOn.name == "door" || this.blockOn.name == "hole") && keys.space) {
+        if ((this.blockOn.name == "door") && keys.space) {
             this.canMove = false
             this.inRaft = false
             
@@ -714,6 +714,8 @@ Player.prototype.collide = function() {
                         p.cordSave = {}
                         curMap = mainMap
                     } else {
+                        curMap = mainMap;
+                        p.goTo(ctr(curMap.doorX), ctr(curMap.doorY));
                         console.log("No coordinates were saved upon area entry")
                     }
                 }
@@ -774,33 +776,27 @@ Player.prototype.collide = function() {
     }
 }
 
-Player.prototype.onSpace = function(action, priority) {
-    if (keys.space) {
-        // if (!this.spaceActioned) {
-        //     this.spaceActioned = true
-        //     action()
-        // }
-        this.spaceActionRequests.push({
-            action: action,
-            priority: priority || 1
-        })
+Player.prototype.onSpace = function(action) {
+    if (keys.space && !this.spaceActioned) {
+        this.spaceActioned = true;
+        action();
     }
-}
+} // Unused
 
-Player.prototype.runSpaceAction = function() {
-    if (!this.spaceActioned && this.spaceActionRequests.length > 0 && keys.space) {
-        let highest = null;
+// Player.prototype.runSpaceAction = function() {
+//     if (!this.spaceActioned && this.spaceActionRequests.length > 0 && keys.space) {
+//         let highest = null;
 
-        for (let spaceActionRequest of this.spaceActionRequests) {
-            if (highest == null || spaceActionRequest.priority > highest.priority) {
-                highest = spaceActionRequest
-            }
-        }
+//         for (let spaceActionRequest of this.spaceActionRequests) {
+//             if (highest == null || spaceActionRequest.priority > highest.priority) {
+//                 highest = spaceActionRequest
+//             }
+//         }
 
-        highest.action()
-        this.spaceActioned = true
-    }
-}
+//         highest.action()
+//         this.spaceActioned = true
+//     }
+// }
 
 /**
  * Sees if player has a certain item

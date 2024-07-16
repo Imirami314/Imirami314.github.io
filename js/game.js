@@ -60,7 +60,7 @@ var alerts = [
 
     // Dawn's Landing
     new GameAlert(18, 94, ["Claire's Clue #1", "Beneath this forest, dark and deep,\nWhere sunshine dies and critters creep,", "Lie hidden tunnels I somehow found,\nOf which will guide you below the ground.", "Its entrance, in the forest, is totally blocked,\nYet, the flick of a switch leaves this dark path unlocked.", "This hiding spot's tough, so proceed if you dare,\nI'll be sitting here waiting, so good luck to you, Claire!"], mainMap, "SIGN"),
-    new GameAlert(18, 94, ["Claire's Clue #2", "You've found the entrance, but alas, it is closed.\nThe switch which will open it lies rather exposed.", "Not in a crowded forest, so keep your eyes peeled,\nInstead, it rests in a glistening field."], mainMap, "SIGN"),
+    new GameAlert(10, 102, ["Claire's Clue #2", "You've found the entrance, but alas, it is closed.\nThe switch which will open it lies rather exposed.", "Not in a crowded forest, so keep your eyes peeled,\nInstead, it rests in a glistening field."], mainMap, "SIGN"),
 ]
 
 var teleports = [
@@ -400,8 +400,11 @@ GameAlert.prototype.drawMessage = function () {
 				
             }
             
-            if (keys.space && !p.spaceActioned && this.textCooldown <= 0) {
-                this.lineNum ++;		
+            if (keys.space && !p.spaceActioned) {
+                p.spaceActioned = true;
+                if (this.textCooldown <= 0) {
+                    this.lineNum ++;
+                }
             }
         }
     }
@@ -1642,7 +1645,7 @@ const astrid = new NPC(ctr(38), ctr(78), "Astrid", mainMap, 'U', [
     "I'm guessing you're looking to get to Luminos Isle.\nIs that right?",
     "...",
     "Great! You will need to buy a ticket, though.\nSending people up there takes work, so it's got to cost something.",
-    "The ticket office is just west of here, past the central landing.",
+    "The Skyway Store is just west of here, past the central landing.",
     "Good luck!"
 ], "Resident - Dawn's Landing\nAlthough she is just a resident, she enjoys helping\ntravelers get to Luminos Isle, since it can be confusing\nfor them to figure it out on their own.", function() {
     cameraStart(ctr(8), ctr(75), 50, "NPC", {
@@ -1662,7 +1665,7 @@ const claire = new NPC(ctr(31), ctr(86), "Claire", mainMap, 'L', [
     
 }, "after");
 
-const lance = new NPC(ctr(2), ctr(3), "Lance", dawnsLandingTicketOffice, 'U', [
+const lance = new NPC(ctr(2), ctr(3), "Lance", dawnsLandingSkywayStore, 'U', [
     "Hey there! My name's Lance.\nI live over here in Dawn's Landing, how about you?",
     "...",
     "You're a traveler? Interesting...",
@@ -1677,20 +1680,22 @@ const lance = new NPC(ctr(2), ctr(3), "Lance", dawnsLandingTicketOffice, 'U', [
     
 }, "after");
 
-const albaShop = [ // Dawn's Landing Ticket Office
+const albaShop = [ // Dawn's Landing Skyway Store
     {item: food.apple(), cost: 5, amount: 5}
 ]
 
-const alba = new NPC(ctr(3), ctr(94), "Alba", mainMap, 'R', [
+const alba = new NPC(ctr(1), ctr(95), "Alba", mainMap, 'R', [
     "i am a stupid npc so i am not functional yet and i am\nalso in the wrong place idiot idiot idiot idiot\ndon't worry vikram i will fix latery!",
     "Oh, hi.",
     "...",
-    "I'm supposed to be at the Ticket Office?\nNo, it's not my shift ye-",
+    "I'm supposed to be at the Skyway Store?\nNo, it's not my shift ye-",
     "oop! You're right, I'm supposed to be back there.\nJust give me one more second to finish this up...",
-    "Actually, just head on back to the Ticket Office. I'll probably\nget there by the time you do."
-], "Shopkeeper - Dawn's Landing\nThe manager of the Dawn's Landing Ticket Office.\nShe's new to her job, and sometimes forgets about her\nresponsibilities!", function() {
+    "Actually, just head on back to the Skyway Store. I'll probably\nget there by the time you do."
+], "Shopkeeper - Dawn's Landing\nThe manager of the Dawn's Landing Skyway Store.\nShe's new to her job, and sometimes forgets about her\nresponsibilities!", function() {
     
 }, 4);
+
+// const willow = new NPC()
 
 var npcs = []
 
@@ -3158,8 +3163,11 @@ var gameInterval = setInterval(function() {
     
             for (var i in bossDoors) {
                 var b = bossDoors[i]
-                if (keys.space && !p.spaceActioned && p.cords.x == b.x && p.cords.y == b.y && b.map == curMap) {
-                    b.enterFunction(p)
+                if (keys.space && !p.spaceActioned) {
+                    if (p.cords.x == b.x && p.cords.y == b.y && b.map == curMap) {
+                        b.enterFunction(p)
+                        p.spaceActioned = true;
+                    }
                 }
             }
         
@@ -3477,7 +3485,7 @@ var gameInterval = setInterval(function() {
                 p.spaceActioned = false
             }
 
-            p.runSpaceAction()
+            // p.runSpaceAction()
         } else if (scene == "DARKENED BOSS CUTSCENE") {
             playMusic("Boss Cutscene")
             cutsceneFrame ++
@@ -3988,7 +3996,7 @@ var gameInterval = setInterval(function() {
             //     }
             // }
         } else if (scene == "BEAM UNLOCKED") {
-			 ctx.fillStyle = "rgb(255, 255, 255)"
+			ctx.fillStyle = "rgb(255, 255, 255)"
             ctx.fillRect(0, 0, width, height)
 
 			cutsceneFrame ++
