@@ -59,7 +59,8 @@ var alerts = [
     new GameAlert(62, 62, ["Restricted Area!\nTo access, please see a park ranger for assistance."], mainMap, "SIGN"),
 
     // Dawn's Landing
-    new GameAlert(18, 94, ["Clue #1", "Beneath this forest, dark and deep,\nWhere sunshine dies and critters creep,", "Lie hidden tunnels I somehow found,\nOf which will guide you below the ground.", "Its entrance, in the forest, is totally blocked,\nYet, the flick of a switch leaves this dark path unlocked.", "This hiding spot's tough, so proceed if you dare,\nI'll be sitting here waiting, so good luck to you, Claire!"], mainMap, "SIGN"),
+    new GameAlert(18, 94, ["Claire's Clue #1", "Beneath this forest, dark and deep,\nWhere sunshine dies and critters creep,", "Lie hidden tunnels I somehow found,\nOf which will guide you below the ground.", "Its entrance, in the forest, is totally blocked,\nYet, the flick of a switch leaves this dark path unlocked.", "This hiding spot's tough, so proceed if you dare,\nI'll be sitting here waiting, so good luck to you, Claire!"], mainMap, "SIGN"),
+    new GameAlert(18, 94, ["Claire's Clue #2", "You've found the entrance, but alas, it is closed.\nThe switch which will open it lies rather exposed.", "Not in a crowded forest, so keep your eyes peeled,\nInstead, it rests in a glistening field."], mainMap, "SIGN"),
 ]
 
 var teleports = [
@@ -1680,7 +1681,7 @@ const albaShop = [ // Dawn's Landing Ticket Office
     {item: food.apple(), cost: 5, amount: 5}
 ]
 
-const alba = new NPC(ctr(38), ctr(82), "Alba", mainMap, 'U', [
+const alba = new NPC(ctr(3), ctr(94), "Alba", mainMap, 'R', [
     "i am a stupid npc so i am not functional yet and i am\nalso in the wrong place idiot idiot idiot idiot\ndon't worry vikram i will fix latery!",
     "Oh, hi.",
     "...",
@@ -1846,6 +1847,12 @@ var interactives = [
     new Breezeway(mainMap, 118, 95, 114, 99),
 
     new RaftDispenser(mainMap, b(91), b(75), ctr(91), ctr(76)),
+
+    new Toggle(mainMap, 28, 109, function() {
+        curMap.changeBlock(9, 104, 'S')
+    }, function() {
+        curMap.changeBlock(9, 104, ',')
+    }, ctr(9), ctr(104)),
 
     // Confounded Cave
 
