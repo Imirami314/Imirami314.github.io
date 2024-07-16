@@ -1628,7 +1628,7 @@ const rangerGunther = new NPC(ctr(74), ctr(70), "Ranger Gunther", mainMap, 'R', 
                         "Here, take this. It should allow you to go wherever you want in the grove."
                     ]
 
-                    p.giveItem(items.rangerPermit);
+                    p.giveItem(items.rangerPermit, true);
                 }
             });
 
@@ -1709,6 +1709,8 @@ const willow = new NPC(ctr(6), ctr(66), "Willow", mainMap, 'R', [
     willow.lines = [
         "Follow me!"
     ];
+
+    clearAction();
 }, "after");
 
 const albaShop = [ // Dawn's Landing Skyway Store
@@ -2985,8 +2987,8 @@ function startPos() {
     p.equipped = [items.aquaLung]
     lithosCutsceneDeath.onEnd();
     curMap = mainMap;
-    p.goTo(ctr(81), ctr(76));
-    // p.goTo(ctr(8), ctr(78));
+    // p.goTo(ctr(81), ctr(76));
+    p.goTo(ctr(8), ctr(78));
 
     addMission(journeyToLuminosIsle);
     // p.giveItem(items.mineraGroveKey, false);
@@ -3499,7 +3501,7 @@ var gameInterval = setInterval(function() {
                     } else {
                         p.mapOn = false
                     }
-                    p.mapSwitchTimer = 0.3
+                    p.mapSwitchTimer = 0.25;
                 }
             }
     

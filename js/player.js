@@ -21,7 +21,7 @@ function Player(x, y, npcs) {
     
     this.mapOn = false
     this.shiftScreenDisplay = "MAP"; // MAP, MISSIONS, NPCS, Default MAP
-    this.mapSwitchTimer = 0.3
+    this.mapSwitchTimer = 0.25;
     this.mapPan = {
         x: 0,
         y: 0
@@ -62,7 +62,7 @@ function Player(x, y, npcs) {
     this.regionsDiscovered = [chardTown]
     this.newRegionAlert = false
     this.newRegion = null
-    this.canViewAllRegions = true
+    this.canViewAllRegions = false
     
     this.weaponIndex = 0
     this.weapon = null
