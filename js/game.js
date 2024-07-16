@@ -57,6 +57,9 @@ var alerts = [
 
     // Minera Grove
     new GameAlert(62, 62, ["Restricted Area!\nTo access, please see a park ranger for assistance."], mainMap, "SIGN"),
+
+    // Dawn's Landing
+    new GameAlert(18, 94, ["Clue #1", "Beneath this forest, dark and deep,\nWhere sunshine dies and critters creep,", "Lie hidden tunnels I somehow found,\nOf which will guide you below the ground.", "Its entrance, in the forest, is totally blocked,\nYet, the flick of a switch leaves this dark path unlocked.", "This hiding spot's tough, so proceed if you dare,\nI'll be sitting here waiting, so good luck to you, Claire!"], mainMap, "SIGN"),
 ]
 
 var teleports = [
@@ -1647,11 +1650,37 @@ const astrid = new NPC(ctr(38), ctr(78), "Astrid", mainMap, 'U', [
     })
 }, 4);
 
+const claire = new NPC(ctr(31), ctr(86), "Claire", mainMap, 'L', [
+    "Oh, hi!",
+    "Sorry, I'm a bit busy. I'm looking for my friend.",
+    "...",
+    "Oh, I should clarify. She's not in danger or anything.\nWe're just playing a game where one person hides\nand the other person has to find them.",
+    "My friend said she put some clues down, so I'm looking for those.",
+    "Anyway, I should keep looking for clues.\nI don't want my friend to think I've given up!"
+], "Resident - Dawn's Landing\nHe's lived in Dawn's Landing for most of his life.\nEventually, he wants to travel the whole world!", function() {
+    
+}, "after");
+
+const lance = new NPC(ctr(2), ctr(3), "Lance", dawnsLandingTicketOffice, 'U', [
+    "Hey there! My name's Lance.\nI live over here in Dawn's Landing, how about you?",
+    "...",
+    "You're a traveler? Interesting...",
+    "Anyway, I'm trying to buy a ticket to Luminos Isle\nright now, but the shopkeeper isn't here!",
+    "Her name's Alba, and she only recently became the\nmanager of this place. Maybe she forgot to show up!",
+    "...",
+    "You'll look for her? Perfect!\nI'll tell you everything I know about her.",
+    "Let's see, she enjoys the outdoors, and doing stuff\nlike swimming and hiking.",
+    "She also spends a lot of time with her friends.\nI bet she's hanging out with them right now.",
+    "That's all I really know about her. Good luck!"
+], "Resident - Dawn's Landing\nHe's lived in Dawn's Landing for most of his life.\nEventually, he wants to travel the whole world!", function() {
+    
+}, "after");
+
 const albaShop = [ // Dawn's Landing Ticket Office
     {item: food.apple(), cost: 5, amount: 5}
 ]
 
-const alba = new NPC(ctr(38), ctr(78), "Alba", mainMap, 'U', [
+const alba = new NPC(ctr(38), ctr(82), "Alba", mainMap, 'U', [
     "i am a stupid npc so i am not functional yet and i am\nalso in the wrong place idiot idiot idiot idiot\ndon't worry vikram i will fix latery!",
     "Oh, hi.",
     "...",
