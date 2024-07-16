@@ -61,6 +61,9 @@ var alerts = [
     // Dawn's Landing
     new GameAlert(18, 94, ["Claire's Clue #1", "Beneath this forest, dark and deep,\nWhere sunshine dies and critters creep,", "Lie hidden tunnels I somehow found,\nOf which will guide you below the ground.", "Its entrance, in the forest, is totally blocked,\nYet, the flick of a switch leaves this dark path unlocked.", "This hiding spot's tough, so proceed if you dare,\nI'll be sitting here waiting, so good luck to you, Claire!"], mainMap, "SIGN"),
     new GameAlert(10, 102, ["Claire's Clue #2", "You've found the entrance, but alas, it is closed.\nThe switch which will open it lies rather exposed.", "Not in a crowded forest, so keep your eyes peeled,\nInstead, it rests in a glistening field."], mainMap, "SIGN"),
+
+    // Willow's House
+    new GameAlert(5, 3, ["To any visitors,\nIf I am not home, I've gone fishing! -Willow"], willowHouse, "SIGN"),
 ]
 
 var teleports = [
@@ -1661,7 +1664,7 @@ const claire = new NPC(ctr(31), ctr(86), "Claire", mainMap, 'L', [
     "Oh, I should clarify. She's not in danger or anything.\nWe're just playing a game where one person hides\nand the other person has to find them.",
     "My friend said she put some clues down, so I'm looking for those.",
     "Anyway, I should keep looking for clues.\nI don't want my friend to think I've given up!"
-], "Resident - Dawn's Landing\nHe's lived in Dawn's Landing for most of his life.\nEventually, he wants to travel the whole world!", function() {
+], "Resident - Dawn's Landing\nShe recently moved to Dawn's Landing, and enjoys\nthe outdoors as well as playing hide and seek!", function() {
     
 }, "after");
 
@@ -1678,6 +1681,34 @@ const lance = new NPC(ctr(2), ctr(3), "Lance", dawnsLandingSkywayStore, 'U', [
     "That's all I really know about her. Good luck!"
 ], "Resident - Dawn's Landing\nHe's lived in Dawn's Landing for most of his life.\nEventually, he wants to travel the whole world!", function() {
     
+}, "after");
+
+const willow = new NPC(ctr(6), ctr(66), "Willow", mainMap, 'R', [
+    "Well hello there! I take it you're a traveler.",
+    "I also enjoy traveling! My main home is in Chard Town,\nbut I've been spending a lot of time here and I'm considering moving!",
+    "By the way, if you ever need to get to the forest south of Dawn's Landing,\nmy backyard is the only entrance. I can open it if you'd like.",
+    "...",
+    "You would? Alright then. Follow me!"
+], "Resident - Dawn's Landing\nAlthough she has a house in Dawn's Landing,\nshe mainly lives in Chard Town. Her house is\nalso the only way to acces the southern forest,\nso she frequently gets visitors.", function() {
+    let pathToHouse = willow.pathTo(4, 83);
+    pathToHouse.push(function() {
+        willow.goTo(ctr(3), ctr(1));
+        willow.map = willowHouse;
+        willow.dir = "R";
+
+        willow.lines = [
+            "Alright, you're free to enter!",
+            "Just don't bring any monsters into my house."
+        ];
+        willow.clearAction();
+
+        willowHouse.changeBlock(2, 1, '.');
+    });
+
+    willow.curPath = pathToHouse;
+    willow.lines = [
+        "Follow me!"
+    ];
 }, "after");
 
 const albaShop = [ // Dawn's Landing Skyway Store
@@ -2949,17 +2980,16 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = false
-    p.inventory = [items.hydrosScythe, items.stormedsSword, food.apple(), food.apple(), items.aquaLung, items.rangerPermit, items.steelSword]
+    p.inventory = [items.hydrosScythe, items.stormedsSword, food.apple(), food.apple(), food.apple(), food.apple(), food.apple(), food.apple(), items.aquaLung, items.steelSword]
     p.updateSortedInventory()
     p.equipped = [items.aquaLung]
     lithosCutsceneDeath.onEnd();
     curMap = mainMap;
-    // p.goTo(ctr(81), ctr(76));
-    p.goTo(ctr(8), ctr(78));
+    p.goTo(ctr(81), ctr(76));
+    // p.goTo(ctr(8), ctr(78));
 
     addMission(journeyToLuminosIsle);
-    addMission(mineraGrovePranksters);
-    p.giveItem(items.mineraGroveKey, false);
+    // p.giveItem(items.mineraGroveKey, false);
 
     wayne.lines = [
         "One more elemental master to go. You're so close!",
