@@ -1016,6 +1016,10 @@ var shopkeeperMuhammad = new NPC(58 * 75, ctr(33), "Shopkeeper Muhammad", galeCa
     ShopMenu.open(muhammadShop)
 }, "after")
 
+const mildredShop = [
+    {item: items.shovel, cost: 12, amount: 2}
+];
+
 var mildred = new NPC(ctr(6), 3 * 75, "Mildred", trailShop, "D", [
 	"Oh, hello there.",
 	"In my 50 years of business, I haven't seen you once before!",
@@ -1033,10 +1037,8 @@ var mildred = new NPC(ctr(6), 3 * 75, "Mildred", trailShop, "D", [
 	"Whenever you need more trails, just come talk to me!",
 	"Do you need anything right now?\nLet me open the shop for you."
 ], "Shopkeeper - Glacia Village\nA pioneer who invented the technology knows as 'trail mixes'.\nShe is always fiddling around, trying to come up with the next\ngreat invention!", function() {	
-    ShopMenu.open([
-        {item: items.shovel, cost: 12, amount: 2}
-    ])
-    mildred.lines = ["Glad you're back! Let me open up the shop menu for you."]		
+    ShopMenu.open(mildredShop);
+    mildred.lines = ["Glad you're back! Let me open up the shop menu for you."];
 }, "after")
 
 var theWanderer = new NPC(60 * 75, 41 * 75, "The Wanderer", mainMap, "D",    [
@@ -1714,7 +1716,7 @@ const willow = new NPC(ctr(6), ctr(66), "Willow", mainMap, 'R', [
 }, "after");
 
 const albaShop = [ // Dawn's Landing Skyway Store
-    {item: food.apple(), cost: 5, amount: 5}
+    {item: items.skywayCell, cost: 15, amount: 5}
 ]
 
 const alba = new NPC(b(1), ctr(95), "Alba", mainMap, 'D', [
@@ -1781,7 +1783,7 @@ for (var npc of NPC.all) {
     }
 }
 
-var shopMenus = [muhammadShop, blakeShop, caspianShop]
+var shopMenus = [sarahShopMenu, frioShop, muhammadShop, mildredShop, coralShop, blakeShop, caspianShop, albaShop];
 
 npcs.searchByName = function(name) {
     for (var i in this) {
@@ -1923,6 +1925,10 @@ var interactives = [
     }, function() {
         curMap.changeBlock(9, 104, ',')
     }, ctr(9), ctr(104)),
+
+    new Skyway(mainMap, 22, 76, function() {
+
+    }),
 
     // Confounded Cave
 
@@ -3028,9 +3034,9 @@ function startPos() {
     p.updateSortedInventory()
     p.equipped = [items.aquaLung]
     lithosCutsceneDeath.onEnd();
-    curMap = dawnsLandingForestTunnels;
+    curMap = mainMap;
     // p.goTo(ctr(81), ctr(76));
-    p.goTo(ctr(8), ctr(13));
+    p.goTo(ctr(9), ctr(78));
 
     addMission(journeyToLuminosIsle);
     // p.giveItem(items.mineraGroveKey, false);
@@ -3042,8 +3048,31 @@ function startPos() {
     ];
     wayne.clearAction();
 
+    alba.goTo(ctr(4), b(1) + 74);
+    alba.dir = 'D';
+    alba.map = dawnsLandingSkywayStore;
 
-    litholia.hasSetLeaderPositions = true;
+    alba.lines = [
+        "Hi there. It's you again!",
+        "If you're looking to take a Skyway to Luminos Isle,\nI've got what you need!"
+    ];
+    alba.actionLine = "after";
+    alba.action = function() {
+        ShopMenu.open(albaShop);
+    }
+
+    lance.goTo(ctr(6), ctr(3));
+    lance.lines = [
+        "Oh thank goodness, she's back!",
+        "Now I can finally make my trip.\nOh, and thank you for looking for her!"
+    ];
+
+    claire.goTo(ctr(16), ctr(77));
+    claire.lines = [
+        "Hi there.",
+        "I was playing hide and seek with my friend,\nbut it turns out she was supposed to be working the shop.",
+        "I'm glad she told me, otherwise I would have been\nsearching for her for a long time!"
+    ];
 }
 
 startPos()

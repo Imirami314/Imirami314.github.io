@@ -814,3 +814,46 @@ class RockDispenser {
         }
     }
 }
+
+class Skyway {
+    constructor(map, x, y, tpAction) {
+        this.map = map;
+        this.x = x;
+        this.y = y;
+        this.tpAction = tpAction;
+
+        this.cooldown = 1
+        this.cords = {
+            x: this.x,
+            y: this.y
+        }
+    }
+
+    draw() {
+        this.cords.x = this.x
+        this.cords.y = this.y
+
+        ctx.drawImage(images.skyway, this.x * 75, this.y * 75, 75, 75);
+    }
+
+    update() {
+
+    }
+
+    activate() {
+        if (keys.space && !p.spaceActioned && p.on(this.x, this.y)) {
+            console.log('using');
+            // setTimeout(() => {
+            //     p.goTo(ctr(this.tpx), ctr(this.tpy))
+            // }, 1500)
+    
+            // cameraStart(ctr(this.tpx), ctr(this.tpy), 15, "AUTO", {
+            //     time: 3250
+            // })
+    
+            this.cooldown = 1
+
+            p.spaceActioned = true
+        }
+    }
+}

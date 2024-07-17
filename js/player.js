@@ -62,7 +62,7 @@ function Player(x, y, npcs) {
     this.regionsDiscovered = [chardTown]
     this.newRegionAlert = false
     this.newRegion = null
-    this.canViewAllRegions = false
+    this.canViewAllRegions = true
     
     this.weaponIndex = 0
     this.weapon = null
@@ -698,7 +698,7 @@ Player.prototype.collide = function() {
         if ((this.blockOn.name == "door") && keys.space) {
             this.canMove = false
             this.inRaft = false
-            
+            playSound("Door Open");
             Screen.fadeOut(0.05, function() {
                 // need to use 'p' instead of this due to scope
                 if (curMap == mainMap) {

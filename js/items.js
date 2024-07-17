@@ -413,7 +413,11 @@ const items = {
         if (p.on(79, 81)) {
             mainMap.changeBlock(80, 81, ',');
         }
-    }, "A permit that allows you to enter the restricted areas of Minera Grove.\nTechnically, this makes you an official ranger!", "MISC")
+    }, "A permit that allows you to enter the restricted areas of Minera Grove.\nTechnically, this makes you an official ranger!", "MISC"),
+    skywayCell: new Item("Skyway Cell", 0, function(x, y) {
+        ellipse(x, y, 10, 10, "rgb(0, 0, 0)"); // changeme to Skyway Cell image
+    }, function(p) {
+    }, "A special container that contains the required fuel to power a Skyway.\nThis cell is valid for one use.", "MISC"),
 } // Puzzle Keys are not included as they vary depending on where they came from
 
 function Food(name, img, health, secs) {
