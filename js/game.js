@@ -1717,16 +1717,48 @@ const albaShop = [ // Dawn's Landing Skyway Store
     {item: food.apple(), cost: 5, amount: 5}
 ]
 
-const alba = new NPC(ctr(1), ctr(95), "Alba", mainMap, 'R', [
-    "i am a stupid npc so i am not functional yet and i am\nalso in the wrong place idiot idiot idiot idiot\ndon't worry vikram i will fix latery!",
-    "Oh, hi.",
+const alba = new NPC(b(1), ctr(95), "Alba", mainMap, 'D', [
+    "Claire! How did you find--huh?",
+    "Who are YOU?",
     "...",
-    "I'm supposed to be at the Skyway Store?\nNo, it's not my shift ye-",
-    "oop! You're right, I'm supposed to be back there.\nJust give me one more second to finish this up...",
-    "Actually, just head on back to the Skyway Store. I'll probably\nget there by the time you do."
+    "Wait, I'm supposed to be back at the shop? No-",
+    "-oh my goodness you're right! I'm so sorry!\nI conpletely forgot!",
+    "I'll head back there right away.\nI'll also need to tell Claire to call off our game of hide and seek\nso she doesn't keep looking for me.",
+    "Thanks for reminding me! Bye!"
 ], "Shopkeeper - Dawn's Landing\nThe manager of the Dawn's Landing Skyway Store.\nShe's new to her job, and sometimes forgets about her\nresponsibilities!", function() {
-    
-}, 4);
+    let pathToHole = alba.pathTo(2, 94);
+    pathToHole.push(function() {
+        alba.goTo(ctr(4), b(1) + 74);
+        alba.dir = 'D';
+        alba.map = dawnsLandingSkywayStore;
+
+        alba.lines = [
+            "Hi there. It's you again!",
+            "If you're looking to take a Skyway to Luminos Isle,\nI've got what you need!"
+        ];
+        alba.actionLine = "after";
+        alba.action = function() {
+            ShopMenu.open(albaShop);
+        }
+
+        lance.goTo(ctr(6), ctr(3));
+        lance.lines = [
+            "Oh thank goodness, she's back!",
+            "Now I can finally make my trip.\nOh, and thank you for looking for her!"
+        ];
+
+        claire.goTo(ctr(16), ctr(77));
+        claire.lines = [
+            "Hi there.",
+            "I was playing hide and seek with my friend,\nbut it turns out she was supposed to be working the shop.",
+            "I'm glad she told me, otherwise I would have been\nsearching for her for a long time!"
+        ];
+    });
+    alba.curPath = pathToHole;
+    alba.lines = [
+        "I need to get back to the shop as soon as I can!"
+    ];
+}, "after");
 
 // const willow = new NPC()
 
@@ -2398,7 +2430,6 @@ var interactives = [
     }),
 
     new Breezeway(stoneheartSanctuary, 37, 19, 37, 11),
-    
     new Breezeway(stoneheartSanctuary, 37, 11, 37, 19),
 
     new Toggle(stoneheartSanctuary, 25, 21, function() {
@@ -2527,6 +2558,13 @@ var interactives = [
         mineraBurrow.changeBlock(4, 23, '(');
         mineraBurrow.changeBlock(8, 22, '_');
     }, ctr(4), ctr(23)),
+
+    // Dawn's Landing Forest Tunnels
+    new Breezeway(dawnsLandingForestTunnels, 8, 2, 1, 13),
+    new Breezeway(dawnsLandingForestTunnels, 1, 13, 8, 2),
+
+    new Breezeway(dawnsLandingForestTunnels, 3, 5, 6, 1),
+    new Breezeway(dawnsLandingForestTunnels, 6, 1, 3, 5),
 ]
 
 /*
@@ -2742,6 +2780,10 @@ const c4_41 = new Chest(droptonCity, 4, 41, [
 const c119_55 = new Chest(mainMap, 119, 55, [
     items.berylsBracelet
 ])
+
+const c1_5 = new Chest(dawnsLandingForestTunnels, 1, 5, [
+    new TrillSum(45)
+]);
 
 const chests = Chest.all
 
@@ -2986,9 +3028,9 @@ function startPos() {
     p.updateSortedInventory()
     p.equipped = [items.aquaLung]
     lithosCutsceneDeath.onEnd();
-    curMap = mainMap;
+    curMap = dawnsLandingForestTunnels;
     // p.goTo(ctr(81), ctr(76));
-    p.goTo(ctr(8), ctr(78));
+    p.goTo(ctr(8), ctr(13));
 
     addMission(journeyToLuminosIsle);
     // p.giveItem(items.mineraGroveKey, false);
@@ -3506,7 +3548,7 @@ var gameInterval = setInterval(function() {
             }
     
             if (CUR_SHOP_MENU != 0) {
-                ShopMenu(CUR_SHOP_MENU)
+                ShopMenu(CUR_SHOP_MENU);
             }
 
             // Screen fade cover
@@ -4133,7 +4175,7 @@ var gameInterval = setInterval(function() {
             }
 
 			for (var i in monsters) {
-                if (curMap.name == monsters[i].map && !monsters[i].dead) {
+                if (curMap.name == monsters[i].map && !monsters[i].isDead()) {
                     monsters[i].draw(p)
                 }
             }

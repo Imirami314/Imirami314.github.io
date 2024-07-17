@@ -508,7 +508,7 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
                     i * this.blockSize - p.y + height / 2 > -1 * this.blockSize &&
                     i * this.blockSize - p.y + height / 2 < height + this.blockSize)
             } else if (mode == "Map View") {
-                if (!p.canViewAllRegions) {
+                if (!p.canViewAllRegions && curMap == mainMap) {
                     this.loadCase = (j * this.blockSize + p.mapPan.x < width / mapScale && 
                         j * this.blockSize + p.mapPan.x > - width / mapScale && 
                         i * this.blockSize + p.mapPan.y < height / mapScale && 
@@ -527,7 +527,7 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
                 //     i * this.blockSize - cy < (height + this.blockSize) / cscale)
                 this.loadCase = true; // temp
             } else if (mode == "Snippet View") {
-                if (!p.canViewAllRegions) {
+                if (!p.canViewAllRegions && curMap == mainMap) {
                     this.loadCase = (Math.abs(j * 75 - p.x) <= 10 * 75 && Math.abs(i * 75 - p.y) <= 10 * 75) &&
                     p.regionsDiscovered.indexOf(Region.getRegionFromCords(j, i)) != -1
                 } else {
@@ -2690,6 +2690,8 @@ const willowHouse = new Landscape([
                 curMap = mainMap;
                 p.goTo(ctr(2), ctr(77));
                 Screen.fadeIn(0.05);
+
+                p.spaceActioned = true;
             })
         }
     }
@@ -2697,29 +2699,39 @@ const willowHouse = new Landscape([
 
 const dawnsLandingForestTunnels = new Landscape([
     'SSSSSSSSSS',
-    'SSSSSSSSSS',
-    'SSSSSSSSSS',
-    'SSSSSSSSSS',
-    'SSSSSSSSSS',
-    'SSSSSSSSSS',
-    'SSSSSSSSSS',
-    'SSSSSSSSSS',
-    'SSSSSSSSSS',
-    'SSSSSSSSSS',
-    'SSSSSSSSSS',
-    'SSSSSSSSSS',
-    'SSSSSSSSSS',
-    'SSSSSSSSSS',
+    'SO####SSSS',
+    'SSSSSSS##S',
+    'S#####S#SS',
+    'S#SSS#S#SS',
+    'S#S#S#S##S',
+    'SSS#S#SS#S',
+    'S###S#SS#S',
+    'S#SSS#SS#S',
+    'S#S###SS#S',
+    'S#S#SSS##S',
+    'S#S###S#SS',
+    'S#SSS####S',
+    'S#SSSSSSOS',
     'SSSSSSSSSS',
 ], ctr(3), ctr(6), 4, 83, "Dawn's Landing Forest Tunnels", function() {
-    setLighting(2500);
+    lighting = 800;
     if (keys.space && !p.spaceActioned) {
-        if (p.on(1, 1)) {
+        if (p.on(8, 13)) {
             Screen.fadeOut(0.05, function() {
                 curMap = mainMap;
-                p.goTo(ctr(2), ctr(77));
+                p.goTo(ctr(8), ctr(104));
                 Screen.fadeIn(0.05);
             })
+
+            p.spaceActioned = true;
+        } else if (p.on(1, 1)) {
+            Screen.fadeOut(0.05, function() {
+                curMap = mainMap;
+                p.goTo(ctr(2), ctr(94));
+                Screen.fadeIn(0.05);
+            })
+            
+            p.spaceActioned = true;
         }
     }
 });
@@ -3149,7 +3161,7 @@ var mineraGrove = new Region("Minera Grove", [
 
 const dawnsLanding = new Region("Dawn's Landing", [
     {
-        x1: 1,
+        x1: 0,
         y1: 61,
         x2: 44,
         y2: 112
@@ -3167,6 +3179,13 @@ const dawnsLanding = new Region("Dawn's Landing", [
                 p.spaceActioned = true;
             })
         } else if (p.on(8, 104)) { // To the Dawn's Landing Forest Tunnels
+            Screen.fadeOut(0.05, function() {
+                p.goTo(ctr(8), ctr(13));
+                curMap = dawnsLandingForestTunnels;
+                Screen.fadeIn(0.05);
+                p.spaceActioned = true;
+            })
+        } else if (p.on(2, 94)) { // To the Dawn's Landing Forest Tunnels
             Screen.fadeOut(0.05, function() {
                 p.goTo(ctr(1), ctr(1));
                 curMap = dawnsLandingForestTunnels;

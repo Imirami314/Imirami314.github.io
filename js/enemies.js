@@ -81,8 +81,8 @@ Enemy.prototype.removeFromQueue = function() {
 
 Enemy.prototype.movePathToPlayer = function(angleSpeed, isBoss) {
     if (!(isBoss ?? false)) {
-        let pRegion = Region.getRegionFromCords(p.cords.x, p.cords.y)
-        if (Region.getRegionFromCords(Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75)) == pRegion) {
+        // let pRegion = Region.getRegionFromCords(p.cords.x, p.cords.y)
+        if (this.map == curMap.name/* && Region.getRegionFromCords(Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75))) == pRegion*/ && !this.isDead()) {
             this.addToQueue()
             this.movePathTo(p.cords.x, p.cords.y, (angleSpeed ?? 0.2), (isBoss ?? false))
         }
@@ -121,7 +121,7 @@ Enemy.prototype.movePathTo = function(cordX, cordY, angleSpeed, isBoss) {
             if (p.closestEnemy() == this) {
                 this.move(dx * this.speed, dy * this.speed)
             } else if ((this.getClosestMonsterDist() >= 150) ||
-                    (this.getClosestMonsterDist() < 150 && Enemy.queue.indexOf(this) < Enemy.queue.indexOf(this.getClosestMonster()))) { 
+                (this.getClosestMonsterDist() < 150 && Enemy.queue.indexOf(this) < Enemy.queue.indexOf(this.getClosestMonster()))) { 
                 // Checks if no monsters nearby OR close but only moves if it is closer in queue
                 this.move(dx * (this.speed), dy * (this.speed))
             }
@@ -1300,9 +1300,7 @@ class Splint extends Enemy {
     draw() {
         if (scene == "GAME") {
             if (this.agro && this.playerDist >= 90 && !this.hitting) {
-                // this.move(Math.cos(this.playerAngle) * 2, Math.sin(this.playerAngle) * 2)
-                //this.updatePath()
-                this.movePathToPlayer()
+                this.movePathToPlayer(0.15, false);
             }
 
             if (this.playerDist < 100 && this.hitCooldown <= 0) {
@@ -1320,6 +1318,7 @@ class Splint extends Enemy {
                     this.weaponPos += perSec(Math.PI)
                 } else {
                     this.weaponPos = 0
+                    this.hitting = false;
                 }
             }
     
@@ -1775,6 +1774,17 @@ const monsters = [
     new Splint("Minera Burrow", ctr(19), ctr(1)),
     new Splint("Minera Burrow", ctr(17), ctr(3)),
     new Splint("Minera Burrow", ctr(15), ctr(8)),
+
+    new Splint("Dawn's Landing Forest Tunnels", ctr(5), ctr(9)),
+    new Splint("Dawn's Landing Forest Tunnels", ctr(5), ctr(8)),
+    new Splint("Dawn's Landing Forest Tunnels", ctr(5), ctr(7)),
+    new Splint("Dawn's Landing Forest Tunnels", ctr(5), ctr(6)),
+    new Splint("Dawn's Landing Forest Tunnels", ctr(5), ctr(5)),
+
+    new Splint("Dawn's Landing Forest Tunnels", ctr(7), ctr(5)),
+    new Splint("Dawn's Landing Forest Tunnels", ctr(7), ctr(4)),
+    new Splint("Dawn's Landing Forest Tunnels", ctr(7), ctr(3)),
+    new Splint("Dawn's Landing Forest Tunnels", ctr(7), ctr(2)),
 ]
 
 // Load save states for monsters
