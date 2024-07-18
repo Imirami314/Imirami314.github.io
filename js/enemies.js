@@ -97,7 +97,7 @@ Enemy.prototype.movePathToHome = function(angleSpeed) {
 }
 
 Enemy.prototype.movePathTo = function(cordX, cordY, angleSpeed, isBoss) {
-    if (!!this.pathTo(cordX, cordY)[1] && this.pathTo(cordX, cordY).length > 0) {
+    if (!!this.pathTo(cordX, cordY) && !!this.pathTo(cordX, cordY)[1] && this.pathTo(cordX, cordY).length > 0) {
         this.nextPoint = {
             x: this.pathTo(cordX, cordY)[1][0],
             y: this.pathTo(cordX, cordY)[1][1]
@@ -1300,7 +1300,11 @@ class Splint extends Enemy {
     draw() {
         if (scene == "GAME") {
             if (this.agro && this.playerDist >= 90 && !this.hitting) {
-                this.movePathToPlayer(0.15, false);
+                try {
+                    this.movePathToPlayer(0.15, false);
+                } catch (e) {
+                    console.log(this);
+                }
             }
 
             if (this.playerDist < 100 && this.hitCooldown <= 0) {
