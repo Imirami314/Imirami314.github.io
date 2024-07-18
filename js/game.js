@@ -3048,31 +3048,31 @@ function startPos() {
     ];
     wayne.clearAction();
 
-    alba.goTo(ctr(4), b(1) + 74);
-    alba.dir = 'D';
-    alba.map = dawnsLandingSkywayStore;
+    // alba.goTo(ctr(4), b(1) + 74);
+    // alba.dir = 'D';
+    // alba.map = dawnsLandingSkywayStore;
 
-    alba.lines = [
-        "Hi there. It's you again!",
-        "If you're looking to take a Skyway to Luminos Isle,\nI've got what you need!"
-    ];
-    alba.actionLine = "after";
-    alba.action = function() {
-        ShopMenu.open(albaShop);
-    }
+    // alba.lines = [
+    //     "Hi there. It's you again!",
+    //     "If you're looking to take a Skyway to Luminos Isle,\nI've got what you need!"
+    // ];
+    // alba.actionLine = "after";
+    // alba.action = function() {
+    //     ShopMenu.open(albaShop);
+    // }
 
-    lance.goTo(ctr(6), ctr(3));
-    lance.lines = [
-        "Oh thank goodness, she's back!",
-        "Now I can finally make my trip.\nOh, and thank you for looking for her!"
-    ];
+    // lance.goTo(ctr(6), ctr(3));
+    // lance.lines = [
+    //     "Oh thank goodness, she's back!",
+    //     "Now I can finally make my trip.\nOh, and thank you for looking for her!"
+    // ];
 
-    claire.goTo(ctr(16), ctr(77));
-    claire.lines = [
-        "Hi there.",
-        "I was playing hide and seek with my friend,\nbut it turns out she was supposed to be working the shop.",
-        "I'm glad she told me, otherwise I would have been\nsearching for her for a long time!"
-    ];
+    // claire.goTo(ctr(16), ctr(77));
+    // claire.lines = [
+    //     "Hi there.",
+    //     "I was playing hide and seek with my friend,\nbut it turns out she was supposed to be working the shop.",
+    //     "I'm glad she told me, otherwise I would have been\nsearching for her for a long time!"
+    // ];
 }
 
 startPos()
