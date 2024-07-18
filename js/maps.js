@@ -2701,7 +2701,7 @@ const willowHouse = new Landscape([
 
 const dawnsLandingForestTunnels = new Landscape([
     'SSSSSSSSSS',
-    'SO####SSSS',
+    'SO#####SSS',
     'SSSSSSS##S',
     'S#####S#SS',
     'S#SSS#S#SS',
