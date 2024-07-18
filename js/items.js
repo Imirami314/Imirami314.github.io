@@ -440,6 +440,7 @@ Food.prototype.draw = function(x, y) {
 
 Food.prototype.use = function(p) {
     p.eat(this)
+    playSound("Eat");
 }
 
 const food = {

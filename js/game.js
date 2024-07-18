@@ -3139,6 +3139,10 @@ var gameInterval = setInterval(function() {
             }
         }
 
+        if (!mouseIsDown) {
+            mouseClicked = false;
+        }
+
 		if (document.readyState == "complete" && !readyStateConfirmed) {
             readyStateConfirmed = true
 		}

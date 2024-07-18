@@ -695,7 +695,7 @@ Player.prototype.collide = function() {
     }
 
     if (this.doorCooldown <= 0) {
-        if ((this.blockOn.name == "door") && keys.space) {
+        if ((this.blockOn.name == "door") && keys.space && !this.spaceActioned) {
             this.canMove = false
             this.inRaft = false
             playSound("Door Open");
@@ -730,6 +730,7 @@ Player.prototype.collide = function() {
         }
         
         this.doorCooldown = 0.1
+        this.spaceActioned = true
     }
 
     // Secret Entrances

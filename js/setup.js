@@ -409,9 +409,9 @@ window.addEventListener('mousedown', function() {
         if(mouseIsDown) {
             holding = true
             mouseClicked = false
-            // mouse was held down for > 0.45 second
+            // mouse was held down for > 0.15 second
         }
-    }, 250);
+    }, 150);
 });
 
 window.addEventListener('mouseup', function() {
@@ -422,6 +422,13 @@ window.addEventListener('mouseup', function() {
 
 function mouseRect(x, y, w, h) {
     return (mouseX > x && mouseX < x + w && mouseY > y && mouseY < y + h)
+}
+
+function onClick(action) {
+    if (mouseClicked) {
+        action();
+        mouseClicked = false;
+    }
 }
 
 class Cooldown {
@@ -611,6 +618,10 @@ var sounds = [
     {
         name: "Door Open",
         audio: new Audio('audio/doorOpen.mp3')
+    },
+    {
+        name: "Eat",
+        audio: new Audio('audio/eat.mp3')
     },
 ]
 
