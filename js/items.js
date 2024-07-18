@@ -148,18 +148,6 @@ const items = {
         ctx.drawImage(images.steelFieldKey, x - 15, y - 10, 35, 12.5)
     }, function(p) {
         if (p.cords.x == 66 && p.cords.y == 10) { // Map Lock from main village to steel field or whatever
-            // var itemFound = false
-            // for (var i in p.inventory) {
-            //     var item = p.inventory[i]
-            //     if (item.name == this.name) {
-            //         p.inventory.splice(i, 1)
-            //         itemFound = true
-            //     }
-            // }
-            // if (itemFound) {
-            //     curMap.changeBlock(67, 10, "_")
-            // }
-
             p.removeItem(this);
             curMap.changeBlock(67, 10, "_")
         }
@@ -171,12 +159,7 @@ const items = {
             curMap = queensCastle
             p.x = 37.5
             p.y = 37.5
-            for (var i in p.inventory) {
-                var item = p.inventory[i]
-                if (item.name == this.name) {
-                    p.inventory.splice(i, 1)
-                }
-            }
+            p.removeItem(this);
         }
     }, "A key to the Queen's Castle.", "KEYS"),
     windyWastelandsKey: new Item("Windy Wastelands Key", 0, function(x, y) {
@@ -186,12 +169,7 @@ const items = {
         if (p.cords.x == 177 && p.cords.y == 31 && curMap == mainMap) {
             mainMap.changeBlock(177, 32, '_')
             
-            for (var i in p.inventory) {
-                var item = p.inventory[i]
-                if (item.name == this.name) {
-                    p.inventory.splice(i, 1)
-                }
-            }
+            p.removeItem(this);
         }
     }, "A shiny key that Lonzo entrusted to you.", "KEYS"), // changeme
     confoundedCaveKey: new Item("Confounded Cave Key", 0, function(x, y) {
@@ -201,12 +179,7 @@ const items = {
         if (p.cords.x == 6 && p.cords.y == 53 && curMap == mainMap) {
             mainMap.changeBlock(6, 52, 'O')
             
-            for (var i in p.inventory) {
-                var item = p.inventory[i]
-                if (item.name == this.name) {
-                    p.inventory.splice(i, 1)
-                }
-            }
+            p.removeItem(this);
         }
     }, "A dusty key with an inscription saying 'West'", "KEYS"),
     heatHandle: new Item("Heat Handle", 0, function(x, y) {
@@ -241,12 +214,7 @@ const items = {
             smith.lineNum = 0
             // smith.talk(p)
 
-            for (var i in p.inventory) {
-                var item = p.inventory[i]
-                if (item.name == "Heat Handle") {
-                    p.inventory.splice(i, 1)
-                }
-            }
+            p.removeItem(this);
         }
     }, "An odd fragment of a sword. Absorbs heat very easily.", "MISC"),
     steelSword: new Item("Steel Sword", 5, function(x, y) {
@@ -380,12 +348,7 @@ const items = {
             d.talk(p)
         }
 
-        for (var i in p.inventory) {
-            var item = p.inventory[i]
-            if (item.name == this.name) {
-                p.inventory.splice(i, 1)
-            }
-        }
+        p.removeItem(this);
     }, "A painting by Coral featuring the stunning lake of Dropton.", "MISC"),
     berylsBracelet: new Item("Beryl's Bracelet", 0, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")

@@ -71,6 +71,7 @@ var images = {
     teleport: initImage('sprites/blocks/teleport.png'),
     sunStoneWall: initImage('sprites/blocks/sunStoneWall.png'),
     sunStonePath: initImage('sprites/blocks/sunStonePath.png'),
+    luminosLamp: initImage('sprites/blocks/luminosLamp.png'),
      
     // Enemies
     splint: initImage('sprites/enemies/splint/splint.png'),
@@ -376,6 +377,13 @@ var blocks = [
         id: '`',
         name: "sun stone path",
         through: true,
+        dps: 0,
+        speed: 7
+    },
+    {
+        id: 'l',
+        name: "luminos lamp",
+        through: false,
         dps: 0,
         speed: 7
     },
@@ -752,6 +760,10 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
                     case '`':
                         ctx.drawImage(images.sunStonePath, j * this.blockSize, i * this.blockSize, 75, 75);
                         break
+                    case 'l': // Luminos Lamp
+                        ctx.drawImage(images.sunStonePath, j * this.blockSize, i * this.blockSize, 75, 75)
+                        // ctx.drawImage(images.luminosLamp, j * this.blockSize - 10, i * this.blockSize - 50, 95, 100)
+                        break
                 }
             }
         }
@@ -764,9 +776,11 @@ Landscape.prototype.drawNextLayer = function(p) {
             var c = this.arr[i].charAt(j)
             var treePulsation = Math.sin(elapsed / (randomSeed(i * j) * 2 + 15)) * 4
             if (c == "T") { // Tree
-                ctx.drawImage(images.tree, j * this.blockSize - 10, i * this.blockSize - 50 - treePulsation, 95, 100 + treePulsation)
+                ctx.drawImage(images.tree, j * this.blockSize - 10, i * this.blockSize - 50 - treePulsation, 95, 100 + treePulsation);
             } else if (c == "t") {
-                ctx.drawImage(images.tree2, j * this.blockSize + 7.5, i * this.blockSize - 70 - treePulsation, 60, 120 + treePulsation)
+                ctx.drawImage(images.tree2, j * this.blockSize + 7.5, i * this.blockSize - 70 - treePulsation, 60, 120 + treePulsation);
+            } else if (c == "l") {
+                ctx.drawImage(images.luminosLamp, j * this.blockSize + 20, i * this.blockSize - 35, 35, 85)
             }
         }
     }
@@ -2755,7 +2769,7 @@ const luminosIsle = new Landscape([
     '```````555````````````````````````````````````````',
     '``````55555```````````````````````````````````````',
     '``````55555```````````````````````````````````````',
-    '``````55|55```````````````````````````````````````',
+    '`````l55|55l``````````````````````````````````````',
     '``````````````````````````````````````````````````',
     '``````````````````````````````````````````````````',
     '``````````````````````````````````````````````````',
@@ -2794,12 +2808,12 @@ const luminosIsle = new Landscape([
     '``````````````````````````````````````````````````',
     '``````````````````````````````````````````````````',
     '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
+    '```````````````````````l``l```````````````````````',
+    '``````````````````````l````l``````````````````````',
+    '```````````````````````l``l```````````````````````',
+    '````````````````````5555``5555````````````````````',
+    '````````````````````5555``5555````````````````````',
+    '````````````````````5555~~5555````````````````````',
     '``````````````````````````````````````````````````',
 ], null, null, null, null, "Luminos Isle");
 
