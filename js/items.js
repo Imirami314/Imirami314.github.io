@@ -417,6 +417,13 @@ const items = {
     skywayCell: new Item("Skyway Cell", 0, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)"); // changeme to Skyway Cell image
     }, function(p) {
+        interactives.forEach((inter) => {
+            if (p.on(inter.x, inter.y)) {
+                inter.setCharged(true);
+
+                p.removeItem(this);
+            }
+        });
     }, "A special container that contains the required fuel to power a Skyway.\nThis cell is valid for one use.", "MISC"),
 } // Puzzle Keys are not included as they vary depending on where they came from
 

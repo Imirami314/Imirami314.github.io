@@ -1667,6 +1667,16 @@ Player.prototype.nearSign = function() {
     return false
 }
 
+Player.prototype.onInteractive = function() { // changeme to use a better conditional for the if statement lol
+    for (let inter of interactives) {
+        if (curMap == inter.map && (p.on(inter.x, inter.y)/* || p.on(Math.floor(inter.x / 75), Math.floor(inter.y / 75))*/)) {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
 Player.prototype.drawAlert = function() {
     if (!!this.blockOn.useDesc) {
         // ctx.roundRect(width / 2 - 100, height / 2 + 50, 200, 50, 10)
@@ -1685,9 +1695,14 @@ Player.prototype.drawAlert = function() {
         if (this.alertOpacity <= 1) {
             this.alertOpacity += 0.1
         }
+    } else if (this.onInteractive()) {
+        this.curAlert = "Press space to use"
+        if (this.alertOpacity <= 1) {
+            this.alertOpacity += 0.1
+        }
     } else {
         if (this.alertOpacity > 0) {
-            this.alertOpacity -= 0.1
+            this.alertOpacity -= 0.1;
         }
     }
 

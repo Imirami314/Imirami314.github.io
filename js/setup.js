@@ -557,6 +557,10 @@ var music = [
         audio: new Audio('audio/mineraGrove.mp3')
     },
     {
+        name: "Luminos Isle",
+        audio: new Audio('audio/luminosIsle.mp3')
+    },
+    {
 		name: "New Location",
         audio: new Audio('audio/new_location.mp3')
 	},

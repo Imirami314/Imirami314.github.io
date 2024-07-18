@@ -1927,7 +1927,12 @@ var interactives = [
     }, ctr(9), ctr(104)),
 
     new Skyway(mainMap, 22, 76, function() {
+        Screen.fadeOut(0.05, function() {
+            p.goTo(ctr(1), ctr(1));
+            curMap = luminosIsle;
 
+            Screen.fadeIn(0.05);
+        });
     }),
 
     // Confounded Cave
@@ -3030,7 +3035,7 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = false
-    p.inventory = [items.hydrosScythe, items.stormedsSword, food.apple(), food.apple(), food.apple(), food.apple(), food.apple(), food.apple(), items.aquaLung, items.steelSword]
+    p.inventory = [items.hydrosScythe, items.stormedsSword, food.apple(), food.apple(), food.apple(), food.apple(), food.apple(), food.apple(), items.aquaLung, items.steelSword, items.skywayCell]
     p.updateSortedInventory()
     p.equipped = [items.aquaLung]
     lithosCutsceneDeath.onEnd();
@@ -3216,6 +3221,8 @@ var gameInterval = setInterval(function() {
                     playMusic("Cryo Underground")
                 } else if (curMap == stoneheartSanctuary) {
                     playMusic("Stoneheart Sanctuary")
+                } else if (curMap == luminosIsle) {
+                    playMusic("Luminos Isle");
                 }
             }
             

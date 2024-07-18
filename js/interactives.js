@@ -821,39 +821,35 @@ class Skyway {
         this.x = x;
         this.y = y;
         this.tpAction = tpAction;
-
-        this.cooldown = 1
         this.cords = {
             x: this.x,
             y: this.y
         }
+
+        this.charged = false;
+        this.img = images.skyway;
     }
 
     draw() {
         this.cords.x = this.x
         this.cords.y = this.y
-
-        ctx.drawImage(images.skyway, this.x * 75, this.y * 75, 75, 75);
+        ctx.drawImage(this.img, this.x * 75, this.y * 75, 75, 75);
     }
 
     update() {
-
+        if (this.charged) this.img = images.skywayCharged;
+        else this.img = images.skyway;
     }
 
     activate() {
-        if (keys.space && !p.spaceActioned && p.on(this.x, this.y)) {
-            console.log('using');
-            // setTimeout(() => {
-            //     p.goTo(ctr(this.tpx), ctr(this.tpy))
-            // }, 1500)
-    
-            // cameraStart(ctr(this.tpx), ctr(this.tpy), 15, "AUTO", {
-            //     time: 3250
-            // })
-    
-            this.cooldown = 1
+        if (keys.space && !p.spaceActioned && p.on(this.x, this.y) && this.charged) {
+            this.tpAction(); // changeme to add cutscene functionality later (maybe it looks like you're flying or something idk)
 
             p.spaceActioned = true
         }
+    }
+
+    setCharged(setting) {
+        this.charged = setting;
     }
 }
