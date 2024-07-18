@@ -70,6 +70,7 @@ var images = {
     crackedIceWall: initImage('sprites/blocks/crackedIceWall.png'),
     teleport: initImage('sprites/blocks/teleport.png'),
     sunStoneWall: initImage('sprites/blocks/sunStoneWall.png'),
+    sunStonePath: initImage('sprites/blocks/sunStonePath.png'),
      
     // Enemies
     splint: initImage('sprites/enemies/splint/splint.png'),
@@ -370,6 +371,13 @@ var blocks = [
         through: false,
         dps: 0,
         speed: 4
+    },
+    {
+        id: '`', // alt x
+        name: "sun stone path",
+        through: true,
+        dps: 0,
+        speed: 7
     },
 ]
 
@@ -739,7 +747,10 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
                         ctx.drawImage(images.grass, j * this.blockSize, i * this.blockSize, 75, 75)
                         break
                     case '5':
-                        ctx.drawImage(images.sunStoneWall, j * this.blockSize, i * this.blockSize, 75, 75)
+                        ctx.drawImage(images.sunStoneWall, j * this.blockSize, i * this.blockSize, 75, 75);
+                        break
+                    case '`': // alt x
+                        ctx.drawImage(images.sunStonePath, j * this.blockSize, i * this.blockSize, 75, 75);
                         break
                 }
             }
@@ -2741,7 +2752,7 @@ const dawnsLandingForestTunnels = new Landscape([
 
 const luminosIsle = new Landscape([
     '55555555555555555555555555555555555555555555555555',
-    '55555555555555555555555555555555555555555555555555',
+    '5`````````555555555555555555```5555555555555555555',
     '55555555555555555555555555555555555555555555555555',
     '55555555555555555555555555555555555555555555555555',
     '55555555555555555555555555555555555555555555555555',

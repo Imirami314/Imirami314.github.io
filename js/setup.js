@@ -36,11 +36,12 @@ function lget(key) {
 const canvas = document.querySelector('.myCanvas');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-const width = 1440;
-const height = 675; // Normally set to 675 but turns out that window.innerHeight = 655 so idk
+const width = (window.innerWidth / 1440) * 1440;
+const height = (window.innerHeight / 675) * 675; // Normally set to 675 but turns out that window.innerHeight = 655 so idk
 const ctx = canvas.getContext('2d');
+
 // ctx.scale(window.innerWidth / 1440, window.innerHeight / 675)
-ctx.scale(window.innerWidth / 1440, window.innerHeight / 675)
+ctx.scale(Math.round(window.innerWidth / 1440), Math.round(window.innerWidth / 1440))
 
 var save;
 

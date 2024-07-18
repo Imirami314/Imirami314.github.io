@@ -3039,9 +3039,10 @@ function startPos() {
     p.updateSortedInventory()
     p.equipped = [items.aquaLung]
     lithosCutsceneDeath.onEnd();
-    curMap = mainMap;
+    curMap = luminosIsle;
     // p.goTo(ctr(81), ctr(76));
-    p.goTo(ctr(9), ctr(78));
+    // p.goTo(ctr(9), ctr(78));
+    p.goTo(ctr(1), ctr(1));
 
     addMission(journeyToLuminosIsle);
     // p.giveItem(items.mineraGroveKey, false);
@@ -3462,7 +3463,8 @@ var gameInterval = setInterval(function() {
             p.draw()
 
             ctx.save()
-            ctx.translate(Math.floor((-1 * p.x) + (width / 2) + Screen.shakeOffset.x), Math.floor((-1 * p.y) + (height / 2) + Screen.shakeOffset.y))
+            // ctx.translate(Math.floor((-1 * p.x) + (width / 2) + Screen.shakeOffset.x), Math.floor((-1 * p.y) + (height / 2) + Screen.shakeOffset.y))
+            ctx.translate((-1 * p.x) + (width / 2) + Screen.shakeOffset.x, (-1 * p.y) + (height / 2) + Screen.shakeOffset.y)
             curMap.drawNextLayer(p)
             ctx.restore()
     
@@ -4221,9 +4223,9 @@ var gameInterval = setInterval(function() {
             }
             
             // Draw player at actual location, not just center
-            ctx.translate(p.x - width / 2, p.y - height / 2)
+            ctx.translate(- Math.floor(p.x - width / 2), - Math.floor(p.y - height / 2))
             p.draw()
-            ctx.translate(- (p.x - width / 2), Math.round(p.y - height / 2))
+            ctx.translate(- Math.floor(p.x - width / 2), - Math.floor(p.y - height / 2))
      
 			ctx.translate((-1 * curCX) + (width / 2), (-1 * curCY) + (height / 2))
 			ctx.restore()
