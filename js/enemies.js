@@ -82,7 +82,7 @@ Enemy.prototype.removeFromQueue = function() {
 Enemy.prototype.movePathToPlayer = function(angleSpeed, isBoss) {
     if (!(isBoss ?? false)) {
         // let pRegion = Region.getRegionFromCords(p.cords.x, p.cords.y)
-        if (this.map == curMap.name/* && Region.getRegionFromCords(Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75))) == pRegion*/ && !this.isDead()) {
+        if (this.map == curMap.name/* && Region.getRegionFromCords(Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75)) == pRegion*/ && !this.isDead()) {
             this.addToQueue()
             this.movePathTo(p.cords.x, p.cords.y, (angleSpeed ?? 0.2), (isBoss ?? false))
         }
@@ -1284,7 +1284,7 @@ class Splint extends Enemy {
         this.speed = 2
         this.playerDist = 10000 // Gets updated by the draw method
         this.agroDist = 500
-        this.deAgroDist = 1000
+        this.deAgroDist = 750
         this.agro = false
         
         this.weaponPos = 0
@@ -1303,7 +1303,7 @@ class Splint extends Enemy {
                 try {
                     this.movePathToPlayer(0.15, false);
                 } catch (e) {
-                    console.log(this);
+                    console.log("Monsters #" + monsters.indexOf(this) + ": unable to run this.movePathToPlayer()");
                 }
             }
 
