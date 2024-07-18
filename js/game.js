@@ -1928,7 +1928,7 @@ var interactives = [
 
     new Skyway(mainMap, 22, 76, function() {
         Screen.fadeOut(0.05, function() {
-            p.goTo(ctr(1), ctr(1));
+            p.goTo(b(25), ctr(48));
             curMap = luminosIsle;
 
             Screen.fadeIn(0.05);
@@ -2717,12 +2717,7 @@ const c24_2 = new Chest(howlerHollow, 24, 2, [
         if (p.on(15, 20) && curMap == howlerHollow) {
             curMap.changeBlock(14, 20, '_')
             
-            for (var i in p.inventory) {
-                var item = p.inventory[i]
-                if (item.name == this.name) {
-                    p.inventory.splice(i, 1)
-                }
-            }
+            p.removeItem(this);
         }
     })
 ])
@@ -2735,12 +2730,7 @@ const c5_18 = new Chest(howlerHollow, 5, 18, [
         if (p.on(16, 15) && curMap == howlerHollow) {
             curMap.changeBlock(17, 15, '_')
             
-            for (var i in p.inventory) {
-                var item = p.inventory[i]
-                if (item.name == this.name) {
-                    p.inventory.splice(i, 1)
-                }
-            }
+            p.removeItem(this);
         }
     })
 ])
@@ -2753,12 +2743,7 @@ const c14_3 = new Chest(confoundedCave, 14, 3, [
         if (p.cords.x == 28 && p.cords.y == 11 && curMap == confoundedCave) {
             curMap.changeBlock(29, 11, '_')
             
-            for (var i in p.inventory) {
-                var item = p.inventory[i]
-                if (item.name == this.name) {
-                    p.inventory.splice(i, 1)
-                }
-            }
+            p.removeItem(this);
         }
     })
 ])
@@ -2770,12 +2755,7 @@ const c10_1 = new Chest(cryoUnderground, 10, 1, [
         if (p.cords.x == 1 && p.cords.y == 14 && curMap == cryoUnderground) {
             curMap.changeBlock(1, 15, 'z')
             
-            for (var i in p.inventory) {
-                var item = p.inventory[i]
-                if (item.name == this.name) {
-                    p.inventory.splice(i, 1)
-                }
-            }
+            p.removeItem(this);
         }
     })
 ])
@@ -3042,7 +3022,7 @@ function startPos() {
     curMap = luminosIsle;
     // p.goTo(ctr(81), ctr(76));
     // p.goTo(ctr(9), ctr(78));
-    p.goTo(ctr(1), ctr(1));
+    p.goTo(b(25), ctr(48));
 
     addMission(journeyToLuminosIsle);
     // p.giveItem(items.mineraGroveKey, false);
