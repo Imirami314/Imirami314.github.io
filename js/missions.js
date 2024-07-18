@@ -345,7 +345,7 @@ var theWanderersRiddlesGV = new Mission("The Wanderer's Riddles - Glacia Village
 theWanderersRiddlesGV.solve = function () {
     // console.log(getBlockInfoByCords(202 * 75, 24 * 75).id)
     if (curMap == mainMap && getBlockInfoByCords(202 * 75, 24 * 75).id == "-") { // Default WATER
-        
+        Screen.shake(3,3)
     }
 }
 

@@ -2076,7 +2076,7 @@ var interactives = [
 
     new Toggle(galeCave, 19, 24, function() {}, function() {}),
 
-    // Encompassed Forst
+    // Encompassed Forest
     lostTravelerToggle,
 
     // Howler Hollow
