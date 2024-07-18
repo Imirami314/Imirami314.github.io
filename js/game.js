@@ -1712,7 +1712,7 @@ const willow = new NPC(ctr(6), ctr(66), "Willow", mainMap, 'R', [
         "Follow me!"
     ];
 
-    clearAction();
+    willow.clearAction();
 }, "after");
 
 const albaShop = [ // Dawn's Landing Skyway Store
