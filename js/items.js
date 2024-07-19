@@ -150,6 +150,7 @@ const items = {
         if (p.cords.x == 66 && p.cords.y == 10) { // Map Lock from main village to steel field or whatever
             p.removeItem(this);
             curMap.changeBlock(67, 10, "_")
+            aStrangeWorld.setInstructions("You've made it to Steel Field. Keep an eye out for lava!\nWayne says you need to go find Smith the Blacksmith to get geared up.\nHe lives in one of the houses on the east side of Steel Field.");
         }
     }, "A key that allows you to enter Steel Field. Be careful!", "KEYS"),
     castleKey: new Item("Castle Key", 0, function(x, y) {
@@ -215,6 +216,7 @@ const items = {
             // smith.talk(p)
 
             p.removeItem(this);
+            aStrangeWorld.setInstructions("At last, you have a weapon. It's not very strong, but it's better\nthan nothing!");
         }
     }, "An odd fragment of a sword. Absorbs heat very easily.", "MISC"),
     steelSword: new Item("Steel Sword", 5, function(x, y) {

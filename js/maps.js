@@ -70,7 +70,8 @@ var images = {
     crackedIceWall: initImage('sprites/blocks/crackedIceWall.png'),
     teleport: initImage('sprites/blocks/teleport.png'),
     sunStoneWall: initImage('sprites/blocks/sunStoneWall.png'),
-    sunStonePath: initImage('sprites/blocks/sunStonePath.png'),
+    sunStone: initImage('sprites/blocks/sunStone.png'),
+    sunStoneBricks: initImage('sprites/blocks/sunStoneBricks.png'),
     luminosLamp: initImage('sprites/blocks/luminosLamp.png'),
      
     // Enemies
@@ -191,7 +192,7 @@ var blocks = [
         name: "trail",
         through: true,
         dps: 0,
-        speed: 6, // Default 6
+        speed: 7, // Default 7
         sound: "Trail Walking"
     },
     {
@@ -375,10 +376,17 @@ var blocks = [
     },
     {
         id: '`',
-        name: "sun stone path",
+        name: "sun stone",
         through: true,
         dps: 0,
-        speed: 7
+        speed: 6
+    },
+    {
+        id: '2',
+        name: "sun stone bricks",
+        through: false,
+        dps: 0,
+        speed: 4
     },
     {
         id: 'l',
@@ -437,7 +445,7 @@ var getGameAlertInfoByCords = function (x, y, map) {
 		}
 	}
 	return null
-} 
+}
 
 
 /**
@@ -668,7 +676,6 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
                         ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
                         break
                     case 'T': // Tree
-                        
                         ctx.drawImage(images.grass, j * this.blockSize, i * this.blockSize, 75, 75)
                         ctx.drawImage(images.tree, j * this.blockSize - 10, i * this.blockSize - 50, 95, 100)
                         break
@@ -758,11 +765,14 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
                         ctx.drawImage(images.sunStoneWall, j * this.blockSize, i * this.blockSize, 75, 75);
                         break
                     case '`':
-                        ctx.drawImage(images.sunStonePath, j * this.blockSize, i * this.blockSize, 75, 75);
+                        ctx.drawImage(images.sunStone, j * this.blockSize, i * this.blockSize, 75, 75);
+                        break
+                    case '2':
+                        ctx.drawImage(images.sunStoneBricks, j * this.blockSize, i * this.blockSize, 75, 75);
                         break
                     case 'l': // Luminos Lamp
-                        ctx.drawImage(images.sunStonePath, j * this.blockSize, i * this.blockSize, 75, 75)
-                        // ctx.drawImage(images.luminosLamp, j * this.blockSize - 10, i * this.blockSize - 50, 95, 100)
+                        ctx.drawImage(images.sunStone, j * this.blockSize, i * this.blockSize, 75, 75)
+                        ctx.drawImage(images.luminosLamp, j * this.blockSize + 20, i * this.blockSize - 35, 35, 85)
                         break
                 }
             }
@@ -2780,41 +2790,41 @@ const luminosIsle = new Landscape([
     '``````````````````````````````````````````````````',
     '``````````````````````````````````````````````````',
     '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '```````````````````````l``l```````````````````````',
-    '``````````````````````l````l``````````````````````',
-    '```````````````````````l``l```````````````````````',
-    '````````````````````5555``5555````````````````````',
-    '````````````````````5555``5555````````````````````',
-    '````````````````````5555~~5555````````````````````',
-    '``````````````````````````````````````````````````',
+    '```````````````````````22`````````````````````````',
+    '````````````````````````22````````````````````````',
+    '````````````````````````22````````````````````````',
+    '````````````````````````22````````````````````````',
+    '``````````````````````22~~22``````````````````````',
+    '`````````````````````2~~~~~~2`````````````````````',
+    '````````````````````2~~~~~~~~2````````````````````',
+    '```````````````````2~~~~~~~~~~2```````````````````',
+    '```````````````````2~~~~~~~~~~2```2```````````````',
+    '````````````````222~~~~~~~~~~~~2222```````````````',
+    '```````````````2222~~~~~~~~~~~~222````````````````',
+    '```````````````2```2~~~~~~~~~~2```````````````````',
+    '```````````````````2~~~~~~~~~~2```````````````````',
+    '```````````````2````2~~~~~~~~2````````````````````',
+    '``````````````222``--2~~~~~~2`````````````````````',
+    '`````````````22222``--22~~22``````````````````````',
+    '`````````````22222```---22````````````````````````',
+    '````````````l22|22l````-22````````````````````````',
+    '```````````````-```````-22````````````````````````',
+    '```````````````----------22```````````````````````',
+    '````````````````````````-``````-`````2````````````',
+    '```````````````````````l-l`````-````222```````````',
+    '````````````````````````------`-```22222``````````',
+    '`````````````````````22222222-`-```22222``````````',
+    '`````````````````````2``````2-`-``l22|22l`````````',
+    '`````````````````````22222222-`-`````-````````````',
+    '````````````````````````--------------````````````',
+    '````````````````````````----````l````l````````````',
+    '```````````````````````l--l```````````````````````',
+    '``````````````````--------------``````````````````',
+    '```````````````````````l--l```````````````````````',
+    '```````````````````````2--2```````````````````````',
+    '```````````````````````2--2```````````````````````',
+    '```````````````````````2~~2```````````````````````',
+    '````````````````````````22````````````````````````',
 ], null, null, null, null, "Luminos Isle");
 
 var areas = Landscape.all
@@ -2946,6 +2956,7 @@ var chardTown = new Region("Chard Town", [
         }
 
     }
+
 }, function() {
     playMusic("Chard")
 })
@@ -3100,6 +3111,7 @@ var encompassedForest = new Region("Encompassed Forest", [{
     } else {
         lostTravelerToggle.toggleState = 1
     }
+
 }, function() {
     if (!encompassedForest.brightened) {
         playMusic("Encompassed Forest Dark")
@@ -3119,7 +3131,7 @@ var droptonDrylands = new Region("Dropton Drylands", [
     // Insert active function here
     setLighting(5000)
 }, function() {
-    // Insert passive function here
+    
     playMusic("Dropton Drylands")
 })
 
@@ -3137,8 +3149,9 @@ var fortuneField = new Region("Fortune Field", [
         y2: 87
     }
 ], function() {
-    setLighting(5000)
+    setLighting(5000);
 }, function() {
+    
     // changeme Add music for Fortune Field
 })
 
@@ -3186,6 +3199,7 @@ var litholia = new Region("Litholia", [
         ]
         presidentWells.clearAction()
     }
+
 
 }, function() {
     playMusic("Litholia")
@@ -3236,6 +3250,7 @@ var mineraGrove = new Region("Minera Grove", [
         presidentWells.clearAction()
     }
 
+
 }, function() {
     playMusic("Minera Grove")
 });
@@ -3275,6 +3290,7 @@ const dawnsLanding = new Region("Dawn's Landing", [
             })
         }
     }
+
 }, function() {
     
 });

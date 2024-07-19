@@ -728,7 +728,9 @@ var smith = new NPC(4 * 75, 1 * 75, "Smith the Blacksmith", smithHouse, "D", [
     "I normally give a little somethin' to people who\ncome here, but I'm gonna need you to get me somethin' too.",
     "Could you fetch me a Heat Handle? I need it if you want me to help you.",
     "See ya!"
-], "Blacksmith - Steel Field\nEveryone's go to blacksmith. He's very handy\nif you want a weapon made quick for a low price.")
+], "Blacksmith - Steel Field\nEveryone's go to blacksmith. He's very handy\nif you want a weapon made quick for a low price.", function() {
+    aStrangeWorld.setInstructions("Smith the Blacksmith says he'll make you a weapon, but\nhe needs you to bring him a Heat Handle first.\nThey're often found in chests, so maybe you can find one nearby.");
+}, "after")
 
 var rick = new NPC(9 * 75, 2 * 75, "Rick Ashley", rickHouse, "L", [
     "I'm feeling lonely.",
@@ -1760,6 +1762,16 @@ const alba = new NPC(b(1), ctr(95), "Alba", mainMap, 'D', [
     alba.lines = [
         "I need to get back to the shop as soon as I can!"
     ];
+}, "after");
+
+const apollo = new NPC(b(25), b(39) + 74, "Apollo", luminosIsle, 'D', [
+    "Welcome to Luminos Isle! Are you here for vacation or business?",
+    "...",
+    "You're here to see the Empress Aurora?\nAlright then, good luck with that.",
+    "She's not exactly easy to get a hold of.",
+    "Well anyway, enjoy your stay here!"
+], "Greeter - Luminos Isle\nHe welcomes people to Luminos Isle and watches to make sure\nthat everybody is using the Skyway correctly.", function() {
+
 }, "after");
 
 // const willow = new NPC()
@@ -3061,7 +3073,7 @@ function startPos() {
     // ];
 }
 
-startPos()
+// startPos()
 
 var suspensiaInterval = setInterval(function() { // Makes suspensia spread into water
     if (scene == "GAME") {
@@ -3162,22 +3174,9 @@ var gameInterval = setInterval(function() {
                 playing = true
             }
             
-            // Music
+            // Music and ground types
             if (playing) {
                 if (curMap == mainMap) {
-                
-                    if (p.area == "Chard Town") {
-                        //playMusic("Chard")
-                    } else if (p.area == "Steel Field") {
-                        // playMusic("Steel Field")
-                    } else if (p.area == "Glacia Village") {
-                        // playMusic("Glacia Village")
-                    } else if (p.area == "Windy Wastelands") {
-                        // playSound("Speedy Snow Walking", true)
-                        // playMusic("Windy Wastelands")
-                    } else if (p.area == "NONE") {
-                        //playMusic("Adventure") // DEFAULT ON
-                    }
                 } else if (curMap == confoundedCave) {
                     playMusic("Puzzle")
                 } else if (curMap == lonzoHouse) {
@@ -3199,7 +3198,7 @@ var gameInterval = setInterval(function() {
                 } else if (curMap == droptonTown) {
                     playMusic("Dropton City") // changeme later when we make new music
                 } else if (curMap == cryoUnderground) {
-                    playMusic("Cryo Underground")
+                    playMusic("Cryo Underground");
                 } else if (curMap == stoneheartSanctuary) {
                     playMusic("Stoneheart Sanctuary")
                 } else if (curMap == luminosIsle) {
