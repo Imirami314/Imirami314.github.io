@@ -695,7 +695,7 @@ Player.prototype.collide = function() {
     }
 
     if (this.doorCooldown <= 0) {
-        if ((this.blockOn.name == "door") && keys.space && !this.spaceActioned) {
+        if ((this.blockOn.name == "door") && !curMap.manualDoors /* Basically if other maps need doors that don't go back outside */ && keys.space && !this.spaceActioned) {
             this.canMove = false
             this.inRaft = false
             playSound("Door Open");

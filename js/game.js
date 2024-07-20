@@ -1774,6 +1774,32 @@ const apollo = new NPC(b(25), b(39) + 74, "Apollo", luminosIsle, 'D', [
 
 }, "after");
 
+const beacon = new NPC(b(25), b(10), "Guard Beacon", luminosIsle, 'D', [
+    "Before you say anything...\nyes, my name is actually Beacon.",
+    "When people refer to me as Guard Beacon, they always think I'm a literal beacon.\nBut I'm a person!",
+    "*sigh",
+    "...",
+    "You need to talk to the Empress? Unfortunately, she's not here right now.\nAnd it'll stay that way until any important business happens.",
+    "I guess you COULD press the Important Business Button over there,\nbut if the Empress finds out you don't have any important business...",
+    "...let's just say, it won't be pretty.",
+    "Don't worry, I believe that you have important stuff to say.\nIf the guard over there doesn't let you press it, I'll back you up.",
+    "I'd at least give it a shot.",
+    "Good luck!"
+], "Guard - Luminos Isle\nThe guard of the Important Business Button.\nShe's always tired, so she's not very exciting to talk to.", function() {
+    cameraStart(ctr(44), ctr(7), 50, "NPC", {
+        npcName: beacon,
+        lineStop: 6
+    })
+}, 5);
+
+const lucy = new NPC(ctr(45), ctr(10), "Guard Lucy", luminosIsle, 'D', [
+    "Good morningternoon...",
+    "...sorry, I'm so tired. The Empress wants me to guard this button all day...",
+    "...but this place is so bright and I can't get any rest!",
+], "Guard - Luminos Isle\nThe guard of the Important Business Button.\nShe's always tired, so she's not very exciting to talk to.", function() {
+
+}, "after");
+
 // const willow = new NPC()
 
 var npcs = []
@@ -1942,6 +1968,8 @@ var interactives = [
         Screen.fadeOut(0.05, function() {
             p.goTo(b(25), ctr(48));
             curMap = luminosIsle;
+
+            journeyToLuminosIsle.finish();
 
             Screen.fadeIn(0.05);
         });
@@ -2588,6 +2616,11 @@ var interactives = [
 
     new Breezeway(dawnsLandingForestTunnels, 3, 5, 6, 1),
     new Breezeway(dawnsLandingForestTunnels, 6, 1, 3, 5),
+
+    // Luminos Isle
+    new LockToggle(luminosIsle, 44, 6, function() {
+        
+    }),
 ]
 
 /*
@@ -3034,7 +3067,7 @@ function startPos() {
     curMap = luminosIsle;
     // p.goTo(ctr(81), ctr(76));
     // p.goTo(ctr(9), ctr(78));
-    p.goTo(b(25), ctr(48));
+    p.goTo(b(44), ctr(11));
 
     addMission(journeyToLuminosIsle);
     // p.giveItem(items.mineraGroveKey, false);
@@ -3073,7 +3106,7 @@ function startPos() {
     // ];
 }
 
-// startPos()
+startPos()
 
 var suspensiaInterval = setInterval(function() { // Makes suspensia spread into water
     if (scene == "GAME") {

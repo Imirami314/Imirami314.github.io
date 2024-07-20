@@ -251,7 +251,7 @@ class NPC extends Entity {
                 ctx.fillRect(this.x - 20, this.y - 35, 40, 10)
                 break
         }
-    }
+    } // Currently unused
 
     talk(p, npcs) {
         var playerDist = Math.hypot((this.x - p.x), (this.y - p.y))
@@ -264,6 +264,7 @@ class NPC extends Entity {
     
         if (this.lineNum >= 0 && playerDist <= 100) {
             // Change player/npc dir depending on which way you're facing
+            // This sometimes causes weird issues if the npc's y coordinate is on the edge of a block
             if (p.cords.y == this.cords.y) {
                 if (p.x > this.x) {
                     p.dir = "L"

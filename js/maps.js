@@ -2775,16 +2775,16 @@ const dawnsLandingForestTunnels = new Landscape([
 });
 
 const luminosIsle = new Landscape([
-    '````````5`````````````````````````````````````````',
-    '```````555````````````````````````````````````````',
-    '``````55555```````````````````````````````````````',
-    '``````55555```````````````````````````````````````',
-    '`````l55|55l``````````````````````````````````````',
     '``````````````````````````````````````````````````',
     '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
-    '``````````````````````````````````````````````````',
+    '```````````````````222222222222```````````````````',
+    '```````````22`````2````````````2`````22```````````',
+    '``````````2552```2``````````````2```2552``22222```',
+    '```````````22```2``````2222``````2```22``2~~l~~2``',
+    '```````````22``25555522255222555552``22``2~l-l~2``',
+    '```````````22``255555252``252555552``22``2~l-l~2``',
+    '```````````22``222222222``222222222``22``2~l-l~2``',
+    '`````````````````````lll``lll`````````````22-22```',
     '``````````````````````````````````````````````````',
     '``````````````````````````````````````````````````',
     '``````````````````````````````````````````````````',
@@ -2825,7 +2825,82 @@ const luminosIsle = new Landscape([
     '```````````````````````2--2```````````````````````',
     '```````````````````````2~~2```````````````````````',
     '````````````````````````22````````````````````````',
-], null, null, null, null, "Luminos Isle");
+], null, null, null, null, "Luminos Isle", function() {
+    luminosIsle.manualDoors = true;
+
+    if (p.in(42, 5, 46, 8)) {
+        if (!luminosIsle.lucyGivingLecture) {
+            if (!beacon.talkedTo) { // Player must talk to Guard Beacon first
+                lucy.lines = [
+                    "Woah!",
+                    "You can't just barge in there and press that button!",
+                    "That's for important business only!"
+                ];
+
+                p.canMove = false;
+
+                lucy.lineNum = 0; // Start dialogue
+                lucy.remoteSpeak = true;
+                lucy.actionLine = "after";
+                lucy.action = function() {
+                    Screen.fadeOut(0.05, function() {
+                        p.goTo(ctr(44), ctr(10));
+
+                        Screen.fadeIn(0.05, function() {
+                            p.canMove = true;
+
+                            lucy.lines = [
+                                "Good morningternoon...",
+                                "...sorry, I'm so tired. The Empress wants me to guard this button all day...",
+                                "...but this place is so bright and I can't get any rest!",
+                            ]; // Her original lines
+                            lucy.clearAction();
+                        });
+                    })
+                }
+            } else {
+                lucy.lines = [
+                    "Woah!",
+                    "You can't just barge in there and press that button!",
+                    "That's for important business only!",
+                    "If the Empress knew you were doing this...",
+                    "...you'd be in some serious trouble!",
+                    "...",
+                    "`huh?",
+                    "Guard Beacon, is that you?",
+                    "...",
+                    "You're telling me that this guy ACTUALLY has\nimportant business with the Empress?",
+                    "Hmmph. Well I guess you can go on ahead\nand press that button.",
+                    "Just don't say I didn't warn you."
+                ];
+
+                lucy.lineNum = 0; // Start dialogue
+                lucy.remoteSpeak = true;
+                lucy.actionLine = "after";
+                lucy.action = function() {
+                    lucy.lines = [
+                        "Apparently you DO have important business.",
+                        "Just, if you get in trouble, leave me out of it!"
+                    ];
+                    lucy.clearAction();
+                }
+
+                beacon.curPath = [
+                    [43, 10],
+                ];
+
+                beacon.lines = [
+                    "Go ahead and press that button.",
+                    "I hope you have something to say that\nthe Empress wants to hear."
+                ];
+
+                p.canMove = false;
+            }
+
+            luminosIsle.lucyGivingLecture = true;
+        }
+    }
+});
 
 var areas = Landscape.all
 
