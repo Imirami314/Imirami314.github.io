@@ -2022,6 +2022,10 @@ var interactives = [
 
             journeyToLuminosIsle.finish();
 
+            setTimeout(() => {
+                addMission(meetingEmpressAurora);
+            }, 5000);
+
             Screen.fadeIn(0.05);
         });
     }),
@@ -2685,7 +2689,7 @@ var interactives = [
             ];
 
             beacon.lines = [
-                "Well, you've pressed it now.",
+                "Well, you've pressed the button now.",
                 "You'd better go tell the Empress about your important business."
             ];
 
@@ -3139,6 +3143,7 @@ function startPos() {
     p.equipped = [items.aquaLung]
     lithosCutsceneDeath.onEnd();
     curMap = luminosIsle;
+    addMission(meetingEmpressAurora);
     // p.goTo(ctr(81), ctr(76));
     // p.goTo(ctr(9), ctr(78));
     p.goTo(b(44), ctr(11));

@@ -536,6 +536,137 @@ mineraGrovePranksters.solve = function() {
     }
 }
 
+const meetingEmpressAurora = new Mission("Meeting Empress Aurora", "Main", "At last, you have reached Luminos Isle. Now, you must let the leader, Empress Aurora,\nknow exactly why you're here.", "Empress Aurora can be hard to find, so it might be helpful to ask the people\nof Luminos Isle for help.");
+
+meetingEmpressAurora.solve = function() {
+    if (curMap == luminosIsle) {
+        if (p.in(24, 7, 25, 8) && !meetingEmpressAurora.beaconGivingLecture) { // Empress's Palace entrance
+            meetingEmpressAurora.beaconGivingLecture = true;
+            p.canMove = false;
+
+            beacon.lines = [
+                "Sorry, but you need the Empress's permission to go in there.",
+            ];
+
+            beacon.remoteSpeak = true;
+            beacon.lineNum = 0;
+            beacon.actionLine = "after";
+            beacon.action = function() {
+                Screen.fadeOut(0.05, function() {
+                    p.goTo(b(24), ctr(11));
+
+                    Screen.fadeIn(0.05, function() {
+                        p.canMove = true;
+                        meetingEmpressAurora.beaconGivingLecture = false;
+
+                        if (!empressAurora.talkedTo) { // Before Empress Aurora shows up
+                            // Reset Beacon's lines and action
+                            beacon.lines = [
+                                "Before you say anything...\nyes, my name is actually Beacon.",
+                                "When people refer to me as Guard Beacon, they always think I'm a literal beacon.\nBut I'm a person!",
+                                "*sigh",
+                                "...",
+                                "You need to talk to the Empress? Unfortunately, she's not here right now.\nAnd it'll stay that way until any important business happens.",
+                                "I guess you COULD press the Important Business Button over there,\nbut if the Empress finds out you don't have any important business...",
+                                "...let's just say, it won't be pretty.",
+                                "Don't worry, I believe that you have important stuff to say.\nIf the guard over there doesn't let you press it, I'll back you up.",
+                                "I'd at least give it a shot.",
+                                "Good luck!"
+                            ];
+                            beacon.action = function() {
+                                cameraStart(ctr(44), ctr(7), 50, "NPC", {
+                                    npcName: beacon,
+                                    lineStop: 6
+                                })
+                            };
+                            beacon.actionLine = 5;
+                        } else {
+                            beacon.lines = [
+                                "Well, you've pressed the button now.",
+                                "You'd better go tell the Empress about your important business."
+                            ];
+                            beacon.clearAction();
+                        }
+                    });
+                });
+            }
+        }
+
+        if (p.in(42, 5, 46, 8)) { // Important Business Button
+            if (!meetingEmpressAurora.lucyGivingLecture) {
+                if (!beacon.talkedTo) { // Player must talk to Guard Beacon first
+                    lucy.lines = [
+                        "Woah!",
+                        "You can't just barge in there and press that button!",
+                        "That's for important business only!"
+                    ];
+
+                    p.canMove = false;
+
+                    lucy.lineNum = 0; // Start dialogue
+                    lucy.remoteSpeak = true;
+                    lucy.actionLine = "after";
+                    lucy.action = function() {
+                        Screen.fadeOut(0.05, function() {
+                            p.goTo(ctr(44), ctr(10));
+
+                            Screen.fadeIn(0.05, function() {
+                                p.canMove = true;
+
+                                lucy.lines = [
+                                    "Good morningternoon...",
+                                    "...sorry, I'm so tired. The Empress wants me to guard this button all day...",
+                                    "...but this place is so bright and I can't get any rest!",
+                                ]; // Her original lines
+                                lucy.clearAction();
+                            });
+                        })
+                    }
+                } else {
+                    lucy.lines = [
+                        "Woah!",
+                        "You can't just barge in there and press that button!",
+                        "That's for important business only!",
+                        "If the Empress knew you were doing this...",
+                        "...you'd be in some serious trouble!",
+                        "...",
+                        "`huh?",
+                        "Guard Beacon, is that you?",
+                        "...",
+                        "You're telling me that this guy ACTUALLY has\nimportant business with the Empress?",
+                        "Hmmph. Well I guess you can go on ahead\nand press that button.",
+                        "Just don't say I didn't warn you."
+                    ];
+
+                    lucy.lineNum = 0; // Start dialogue
+                    lucy.remoteSpeak = true;
+                    lucy.actionLine = "after";
+                    lucy.action = function() {
+                        lucy.lines = [
+                            "Apparently you DO have important business.",
+                            "Just, if you get in trouble, leave me out of it!"
+                        ];
+                        lucy.clearAction();
+                    }
+
+                    beacon.curPath = [
+                        [43, 10],
+                    ];
+
+                    beacon.lines = [
+                        "Go ahead and press that button.",
+                        "I hope you have something to say that\nthe Empress wants to hear."
+                    ];
+
+                    p.canMove = false;
+                }
+
+                meetingEmpressAurora.lucyGivingLecture = true;
+            }
+        }
+    }
+}
+
 var missions = Mission.all
 var curMissions = [];
 
