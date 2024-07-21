@@ -789,6 +789,16 @@ var isa = new NPC(2 * 75 + 75, 7 * 75, "Isa", glaciaCenter, "R", [
     "Everybody thinks he's crazy, but uh, I would ask him.\nSee you later."
 ], "Manager - Glacia Center\nThe manager of Glacia Center in Glacia Village.\nUnfortunately, her job isn't very exciting, so she's\nalways glad when somebody stops by.")
 
+var guardIvy = new NPC(ctr(252), ctr(29), "Ivy", mainMap, "U", [
+    "Oh, hi there.",
+    "I've been given direct orders from Queen Alaska to guard this forest...",
+    "And I'm not breaking that promise!",
+    "Apparently, there has been some mysterious events happening on the other side.",
+    "You see, this forest has always been a bridge between our land, Glacia Village,\nand Dropton Town, on the other side.",
+    "However, strange things have been going on recently.\nThe forest seems to be haunted or something...",
+    "I'll let you know when it's clear!"
+])
+
 var blanche = new NPC(ctr(180), ctr(19), "Blanche", mainMap, "D", [
     "Oh, hello...",
     "Sorry, I'm just really worried.",
