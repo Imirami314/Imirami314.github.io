@@ -540,7 +540,7 @@ const meetingEmpressAurora = new Mission("Meeting Empress Aurora", "Main", "At l
 
 meetingEmpressAurora.solve = function() {
     if (curMap == luminosIsle) {
-        if (p.in(24, 7, 25, 8) && !meetingEmpressAurora.beaconGivingLecture) { // Empress's Palace entrance
+        if (p.in(24, 7, 25, 8) && !meetingEmpressAurora.beaconGivingLecture && !meetingEmpressAurora.canEnterPalace) { // Empress's Palace entrance
             meetingEmpressAurora.beaconGivingLecture = true;
             p.canMove = false;
 
@@ -578,6 +578,8 @@ meetingEmpressAurora.solve = function() {
                                     npcName: beacon,
                                     lineStop: 6
                                 })
+
+                                meetingEmpressAurora.beaconGaveBackup = true;
                             };
                             beacon.actionLine = 5;
                         } else {
@@ -593,8 +595,8 @@ meetingEmpressAurora.solve = function() {
         }
 
         if (p.in(42, 5, 46, 8)) { // Important Business Button
-            if (!meetingEmpressAurora.lucyGivingLecture) {
-                if (!beacon.talkedTo) { // Player must talk to Guard Beacon first
+            if (!meetingEmpressAurora.lucyGivingLecture && !meetingEmpressAurora.lucyGavePermission) {
+                if (!meetingEmpressAurora.beaconGaveBackup) { // Player must talk to Guard Beacon first
                     lucy.lines = [
                         "Woah!",
                         "You can't just barge in there and press that button!",
@@ -609,6 +611,8 @@ meetingEmpressAurora.solve = function() {
                     lucy.action = function() {
                         Screen.fadeOut(0.05, function() {
                             p.goTo(ctr(44), ctr(10));
+
+                            meetingEmpressAurora.lucyGivingLecture = false;
 
                             Screen.fadeIn(0.05, function() {
                                 p.canMove = true;
@@ -642,6 +646,9 @@ meetingEmpressAurora.solve = function() {
                     lucy.remoteSpeak = true;
                     lucy.actionLine = "after";
                     lucy.action = function() {
+                        meetingEmpressAurora.lucyGivingLecture = false;
+                        meetingEmpressAurora.lucyGavePermission = true;
+
                         lucy.lines = [
                             "Apparently you DO have important business.",
                             "Just, if you get in trouble, leave me out of it!"

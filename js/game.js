@@ -1815,7 +1815,7 @@ const empressAurora = new NPC(ctr(10000), ctr(10000), "Empress Aurora", luminosI
     "It is I, Empress Aurora!",
     "It seems somebody has pushed the Important Business Button!",
     "They better have something REALLY IMPORTANT to say to me!"
-], "Empress - Luminos Isle\nThe supreme leader of Luminos Isle.\nShe's not the kindest person in the world, but\nshe's does her job well.", function() {
+], "Empress - Luminos Isle\nThe supreme leader of Luminos Isle.\nShe's not the kindest person in the world, but\nshe does her job well.", function() {
     luminosIsle.changeBlock(5, 9, ')');
     
     empressAurora.curPath = [
@@ -1841,6 +1841,8 @@ const empressAurora = new NPC(ctr(10000), ctr(10000), "Empress Aurora", luminosI
             "Go into my palace!\nWhatever business you have to discuss, it must be done so in private.",
         ];
 
+        meetingEmpressAurora.canEnterPalace = true;
+
         empressAurora.clearAction();
     }
     
@@ -1850,6 +1852,32 @@ const empressAurora = new NPC(ctr(10000), ctr(10000), "Empress Aurora", luminosI
         "`she's even more amazing in person..."
     ]
 }, "after");
+
+const blaze = new NPC(b(6), b(1) + 74, "Palace Guard Blaze", empressAurorasPalace, 'D', [ // Not on the map at the start
+    "Hi there sir! Are you the man with the important business?",
+    "...",
+    "Wow! By the way, I was recently promoted from a normal guard\nto a Palace Guard!",
+    "You're my first visitor!",
+    "...",
+    "Right, sorry. Let me open the entrance to the Empress's throne for you.",
+    "...",
+    "Alright, it should be open.\nIf you haven't already, you'll need to check in with the other Palace Guard too."
+], "Guard - Empress Aurora's Palace\nOne of the two Palace Guards, he is a fun guy who\nrecently got promoted to his current job.", function() {
+    empressAurorasPalace.changeBlocks([[17, 9], [18, 9]], '(');
+}, 6);
+
+const helia = new NPC(b(30), b(1) + 74, "Palace Guard Helia", empressAurorasPalace, 'D', [ // Not on the map at the start
+    "Welcome to Empress Aurora's palace!",
+    "Let me guess, you have important business.",
+    "...",
+    "I knew it! Empress Aurora told me about you.",
+    "Here, let me open the door into the Empress's throne for you.\nJust give me a sec...",
+    "...",
+    "Done! By the way, make sure you've also checked in with the other Palace Guard.",
+    "See you later!"
+], "Guard - Empress Aurora's Palace\nOne of the two Palace Guards. She's obsessed with psychics and things like palm reading.", function() {
+    empressAurorasPalace.changeBlocks([[17, 8], [18, 8]], '(');
+}, 5);
 
 // const willow = new NPC()
 
@@ -3142,11 +3170,11 @@ function startPos() {
     p.updateSortedInventory()
     p.equipped = [items.aquaLung]
     lithosCutsceneDeath.onEnd();
-    curMap = luminosIsle;
+    curMap = empressAurorasPalace;
     addMission(meetingEmpressAurora);
     // p.goTo(ctr(81), ctr(76));
     // p.goTo(ctr(9), ctr(78));
-    p.goTo(b(44), ctr(11));
+    p.goTo(b(18), ctr(19));
     // p.giveItem(items.mineraGroveKey, false);
 
     wayne.lines = [

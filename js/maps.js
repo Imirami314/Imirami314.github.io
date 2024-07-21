@@ -398,6 +398,13 @@ var blocks = [
         dps: 0,
         speed: 7
     },
+    { // Impassable void block to avoid out of bounds error on map
+        id: "",
+        name: "void",
+        through: false,
+        dps: 0,
+        speed: 5, // Default 4
+    },
 ]
 
 var flowers = [] // WIP
@@ -807,7 +814,13 @@ Landscape.prototype.drawNextLayer = function(p) {
  * @returns Block character (e.g. '~')
  */
 Landscape.prototype.getBlock = function(x, y) {
-    return this.arr[y].charAt(x)
+    try {
+        return this.arr[y].charAt(x);
+    } catch (e) {
+        console.log('Cannot get block at coordinates: ' + x + ', ' + y);
+
+        return "";
+    }
 }
 
 /**
@@ -2830,6 +2843,63 @@ const luminosIsle = new Landscape([
     '55555555555555555555555555555555555555555555555555',
 ], null, null, null, null, "Luminos Isle", function() {
     luminosIsle.manualDoors = true;
+
+    if (keys.space && !p.spaceActioned) {
+        if (p.on(24, 6) || p.on(25, 6)) {
+            Screen.fadeOut(0.05, function() {
+                p.goTo(b(18), ctr(19));
+                curMap = empressAurorasPalace;
+
+                Screen.fadeIn(0.05);
+                p.spaceActioned = true;
+            });
+        }
+    }
+});
+
+const empressAurorasPalace = new Landscape([
+    '222222222222222222222222222222222222',
+    '2`2``````2`2`l2~5ll5~2l`2`2``````2`2',
+    '2`l222222l`2``2~5``5~2``2`l222222l`2',
+    '2``````````2``2~5``5~2``2``````````2',
+    '25`````````2``2~~cc~~2``2`````````52',
+    '2~5````````2`l222``222l`2````````5~2',
+    '2~~5```````2````l``l````2```````5~~2',
+    '2~~~5``````2222``````2222``````5~~~2',
+    '2222222222````222))222````2222222222',
+    '2````````22```222))222```22````````2',
+    '2`````````2``````````````2`````````2',
+    '2``55555``2222222``2222222``55555``2',
+    '2``5~~~5``2``````````````2``5~~~5``2',
+    '2``5~5~5``2```22222222```2``5~5~5``2',
+    '2``5~5~5``````2~~~~~~2``````5~5~5``2',
+    '2``5~~~5``2```22222222```2``5~~~5``2',
+    '2``55555``2``````````````2``55555``2',
+    '2`````````2222222222222222`````````2',
+    '2``````````````````````````````````2',
+    '22222222222222222OO22222222222222222',
+], null, null, null, null, "Empress Aurora's Palace", function() {
+    empressAurorasPalace.manualDoors = true;
+
+    if (keys.space && !p.spaceActioned) {
+        if (p.on(17, 19) || p.on(18, 19)) {
+            Screen.fadeOut(0.05, function() {
+                p.goTo(b(25), ctr(6));
+                curMap = luminosIsle;
+
+                p.spaceActioned = true;
+
+                Screen.fadeIn(0.05);
+            });
+        }
+    }
+
+    if (empressAurora.lines[0] == 'Go into my palace!\nWhatever business you have to discuss, it must be done so in private.') {
+        empressAurora.goTo(b(18), b(3));
+        empressAurora.lines = [
+
+        ];
+    }
 });
 
 var areas = Landscape.all
