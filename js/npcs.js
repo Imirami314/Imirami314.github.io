@@ -112,8 +112,6 @@ class NPC extends Entity {
         
         ctx.save()
     
-        this.drawFeatures();
-    
         let npcPulsation = Math.sin(elapsed / 15) * 2
         ellipse(this.x, this.y, 50 + npcPulsation, 50 + npcPulsation, this.properties.skinColor)
     
@@ -129,6 +127,8 @@ class NPC extends Entity {
                 ellipse(this.x - 10, this.y - 10, 10, 10, this.properties.eyeColor)
                 break
         }
+
+        this.drawFeatures();
     
         if (this.name == "Old Man") { // accesories (walking stick, hat, glasses)
             
@@ -250,8 +250,11 @@ class NPC extends Entity {
                 ctx.fillRect(this.x - 35, this.y - 25, 70, 5)
                 ctx.fillRect(this.x - 20, this.y - 35, 40, 10)
                 break
+            case "Empress Aurora":
+                ctx.drawImage(images.empressAurorasCrown, this.x - 25, this.y - 42, 50, 25); // changeme to look better lol
+                break
         }
-    } // Currently unused
+    }
 
     talk(p, npcs) {
         var playerDist = Math.hypot((this.x - p.x), (this.y - p.y))

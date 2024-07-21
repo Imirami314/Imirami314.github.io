@@ -1774,6 +1774,17 @@ const apollo = new NPC(b(25), b(39) + 74, "Apollo", luminosIsle, 'D', [
 
 }, "after");
 
+const nora = new NPC(ctr(4), ctr(10), "Guard Nora", luminosIsle, 'D', [
+    "Hey.",
+    "How's your day been?",
+    "...",
+    "Wow. You're going to talk to Empress Aurora? That's amazing!",
+    "I work for the Empress, but I've never actually met her.\nI just get to guard the Royal Entrance!",
+    "It's not the most exciting job, but I know the Empress needs\nsomebody to do it."
+], "Guard - Luminos Isle\nThe guard of the Royal Entrance.\nShe's new to her job, and although it's a tiring one, she's\nproud to be serving the Empress!", function() {
+
+}, "after");
+
 const beacon = new NPC(b(25), b(10), "Guard Beacon", luminosIsle, 'D', [
     "Before you say anything...\nyes, my name is actually Beacon.",
     "When people refer to me as Guard Beacon, they always think I'm a literal beacon.\nBut I'm a person!",
@@ -1785,7 +1796,7 @@ const beacon = new NPC(b(25), b(10), "Guard Beacon", luminosIsle, 'D', [
     "Don't worry, I believe that you have important stuff to say.\nIf the guard over there doesn't let you press it, I'll back you up.",
     "I'd at least give it a shot.",
     "Good luck!"
-], "Guard - Luminos Isle\nThe guard of the Important Business Button.\nShe's always tired, so she's not very exciting to talk to.", function() {
+], "Guard - Luminos Isle\nThe guard of the Empress's Palace.\nHe's very friendly, but unfortunately also very busy.", function() {
     cameraStart(ctr(44), ctr(7), 50, "NPC", {
         npcName: beacon,
         lineStop: 6
@@ -1798,6 +1809,46 @@ const lucy = new NPC(ctr(45), ctr(10), "Guard Lucy", luminosIsle, 'D', [
     "...but this place is so bright and I can't get any rest!",
 ], "Guard - Luminos Isle\nThe guard of the Important Business Button.\nShe's always tired, so she's not very exciting to talk to.", function() {
 
+}, "after");
+
+const empressAurora = new NPC(ctr(10000), ctr(10000), "Empress Aurora", luminosIsle, 'D', [ // Not on the map at the start
+    "It is I, Empress Aurora!",
+    "It seems somebody has pushed the Important Business Button!",
+    "They better have something REALLY IMPORTANT to say to me!"
+], "Empress - Luminos Isle\nThe supreme leader of Luminos Isle.\nShe's not the kindest person in the world, but\nshe's does her job well.", function() {
+    luminosIsle.changeBlock(5, 9, ')');
+    
+    empressAurora.curPath = [
+        [5, 10],
+        [6, 10],
+        function() {
+            empressAurora.goTo(ctr(6), ctr(10));
+            empressAurora.dir = 'D';
+        }
+    ];
+
+    empressAurora.lines = [
+        "Well, who are you?",
+        "Are you the man who dared to press the important business button?!",
+        "...",
+        "Very well. That is quite brave of you.",
+        "Now, you better have something important to say to me!",
+        "Meet me in my palace so we can discuss it privately.\nI'll have my guards let you in.",
+    ];
+
+    empressAurora.action = function() {
+        empressAurora.lines = [
+            "Go into my palace!\nWhatever business you have to discuss, it must be done so in private.",
+        ];
+
+        empressAurora.clearAction();
+    }
+    
+    nora.dir = 'R';
+    nora.lines = [
+        "`Oh my goodness...",
+        "`she's even more amazing in person..."
+    ]
 }, "after");
 
 // const willow = new NPC()
@@ -2619,7 +2670,30 @@ var interactives = [
 
     // Luminos Isle
     new LockToggle(luminosIsle, 44, 6, function() {
-        
+        Screen.shake(5, 3);
+
+        luminosIsle.changeBlock(5, 9, '(');
+
+        setTimeout(() => {
+            empressAurora.remoteSpeak = true;
+            empressAurora.lineNum = 0;
+            empressAurora.goTo(ctr(5), ctr(7));
+
+            lucy.lines = [
+                "The Empress is at the Royal Entrance, to the west of here.",
+                "Go, hurry!"
+            ];
+
+            beacon.lines = [
+                "Well, you've pressed it now.",
+                "You'd better go tell the Empress about your important business."
+            ];
+
+            cameraStart(ctr(5), ctr(7), 50, "NPC", {
+                npcName: empressAurora,
+                lineStop: -1
+            });
+        }, 3000);
     }),
 ]
 
@@ -3068,8 +3142,6 @@ function startPos() {
     // p.goTo(ctr(81), ctr(76));
     // p.goTo(ctr(9), ctr(78));
     p.goTo(b(44), ctr(11));
-
-    addMission(journeyToLuminosIsle);
     // p.giveItem(items.mineraGroveKey, false);
 
     wayne.lines = [
