@@ -3194,6 +3194,10 @@ function startPos() {
     ];
     wayne.clearAction();
 
+    empressAurora.lines = [
+        "Go into my palace!\nWhatever business you have to discuss, it must be done so in private.",
+    ];
+
     // alba.goTo(ctr(4), b(1) + 74);
     // alba.dir = 'D';
     // alba.map = dawnsLandingSkywayStore;

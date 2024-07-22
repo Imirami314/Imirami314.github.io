@@ -2868,7 +2868,7 @@ const empressAurorasPalace = new Landscape([
     '2~~~5``````2222``````2222``````5~~~2',
     '2222222222````222))222````2222222222',
     '2````````22```222))222```22````````2',
-    '2`````````2``````````````2`````````2',
+    '2```5:5```2``````````````2```5:5```2',
     '2``55555``2222222``2222222``55555``2',
     '2``5~~~5``2``````````````2``5~~~5``2',
     '2``5~5~5``2```22222222```2``5~5~5``2',
@@ -2879,6 +2879,7 @@ const empressAurorasPalace = new Landscape([
     '2``````````````````````````````````2',
     '22222222222222222OO22222222222222222',
 ], null, null, null, null, "Empress Aurora's Palace", function() {
+    lighting = 5000;
     empressAurorasPalace.manualDoors = true;
 
     if (keys.space && !p.spaceActioned) {
@@ -2891,14 +2892,105 @@ const empressAurorasPalace = new Landscape([
 
                 Screen.fadeIn(0.05);
             });
+        } else if (p.on(30, 13)) {
+            Screen.fadeOut(0.05, function() {
+                p.goTo(ctr(22), ctr(14));
+                curMap = theCatacombs;
+
+                p.spaceActioned = true;
+
+                Screen.fadeIn(0.05);
+            });
         }
     }
 
     if (empressAurora.lines[0] == 'Go into my palace!\nWhatever business you have to discuss, it must be done so in private.') {
         empressAurora.goTo(b(18), b(3));
+        empressAurora.map = empressAurorasPalace;
         empressAurora.lines = [
-
+            "Alright, now let's hear what you have to say.",
+            "...",
+            "So you're the man all the other leaders have been telling me about?",
+            "Then this is big news! You can help us!",
+            "...",
+            "Oh yes, of course. I need to tell you what's wrong.",
+            "Essentially, Luminos Isle has been shaking quite a bit recently.\nAnd every time it happens, it gets slightly worse.",
+            "And for a city in the sky, shaking is not so great.\nWe've lost a little bit of land and a few houses already.",
+            "The other leaders told me that there were elemental masters\nhidden in their various villages, causing trouble and chaos.",
+            "...And they also told me you managed to slay all 4 of them.\nSo, how hard could a 5th one be?",
+            "Anyway, does all that sound good to you?",
+            "...",
+            "Perfecto!",
+            "As for where to start, I can only imagine whatever creature is\ncausing this shaking is somewhere inside Luminos Isle, beneath us.",
+            "After all, there's not much above us!",
+            "This palace has a very secret passage to a place I call\nThe Catacombs! Perhaps you might be able to find a clue there.",
+            "Let me take you to the entrance. However,\nyou must not tell anyone else about this place!",
+            "Follow me...",
         ];
+
+        empressAurora.actionLine = "after";
+        empressAurora.action = function() {
+            empressAurora.lines = [
+                "Come, follow me to The Catacombs.\nYou might find a clue to where this elemental master is hiding!"
+            ];
+            empressAurora.curPath = [
+                [18, 3],
+                [18, 12],
+                [24, 12],
+                [24, 14],
+                [27, 14],
+                [27, 9],
+                [30, 9],
+                [30, 10],
+                function() {
+                    empressAurorasPalace.changeBlock(30, 11, '`');
+
+                    empressAurorasPalace.changeBlock(30, 13, 'O');
+
+                    empressAurora.lines = [
+                        "Here it is, the secret entrance.\nRemember, you cannot tell anyone else about this place!",
+                        "Hopefully there's something that will help lead\nyou to a possible elemental master.",
+                        "Have fun in there!"
+                    ];
+
+                    empressAurora.clearAction();
+                }
+            ];
+        }
+    }
+});
+
+const theCatacombs = new Landscape([
+    '`````````````````````````````````````````````',
+    '`````````````````````````````````````````````',
+    '`````````````````````````````````````````````',
+    '`````````````````````````````````````````````',
+    '`````````````````````````````````````````````',
+    '`````````````````````````````````````````````',
+    '`````````````````````````````````````````````',
+    '`````````````````````````````````````````````',
+    '`````````````````````````````````````````````',
+    '`````````````````````````````````````````````',
+    '`````````````````````````````````````````````',
+    '`````````````````````````````````````````````',
+    '`````````````````````````````````````````````',
+    '`````````````````````2`2`````````````````````',
+    '````````````````````52O25````````````````````',
+], null, null, null, null, "The Catacombs", function() {
+    lighting = 1000;
+    theCatacombs.manualDoors = true;
+
+    if (keys.space && !p.spaceActioned) {
+        if (p.on(22, 14)) {
+            Screen.fadeOut(0.05, function() {
+                curMap = empressAurorasPalace;
+                p.goTo(ctr(30), ctr(13));
+
+                p.spaceActioned = true;
+
+                Screen.fadeIn(0.05);
+            });
+        }
     }
 });
 
