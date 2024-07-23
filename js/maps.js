@@ -818,9 +818,6 @@ Landscape.prototype.displayLighting = function() { // New lighting system
                 let lightAlpha = Math.hypot(p.x - ctrX, p.y - ctrY) / lighting + 0.1;
                 fill(0, 0, 0, lightAlpha);
                 ctx.fillRect(Math.round(b(j)), b(i), 75, 75);
-
-                // console.log(`Loaded lighting for block ${j}, ${i}. Light alpha: ${lightAlpha}`);
-                console.log(b(i))
             }
         }
     }
