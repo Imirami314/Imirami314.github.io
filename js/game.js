@@ -3180,11 +3180,11 @@ function startPos() {
     p.updateSortedInventory()
     p.equipped = [items.aquaLung]
     lithosCutsceneDeath.onEnd();
-    curMap = empressAurorasPalace;
+    curMap = theCatacombs;
     addMission(meetingEmpressAurora);
     // p.goTo(ctr(81), ctr(76));
     // p.goTo(ctr(9), ctr(78));
-    p.goTo(b(18), ctr(19));
+    p.goTo(ctr(22), ctr(14));
     // p.giveItem(items.mineraGroveKey, false);
 
     wayne.lines = [
