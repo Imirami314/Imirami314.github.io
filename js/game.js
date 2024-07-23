@@ -3595,20 +3595,21 @@ var gameInterval = setInterval(function() {
 
             ctx.save()
             // ctx.translate(Math.floor((-1 * p.x) + (width / 2) + Screen.shakeOffset.x), Math.floor((-1 * p.y) + (height / 2) + Screen.shakeOffset.y))
-            ctx.translate((-1 * p.x) + (width / 2) + Screen.shakeOffset.x, (-1 * p.y) + (height / 2) + Screen.shakeOffset.y)
+            ctx.translate(Math.floor((-1 * p.x) + (width / 2) + Screen.shakeOffset.x), Math.floor((-1 * p.y) + (height / 2) + Screen.shakeOffset.y));
             curMap.drawNextLayer(p)
+            curMap.displayLighting();
             ctx.restore()
     
-            // Display lighting pixels
-            if (lighting < 5000) {
-                for (var i = 0; i < (width / lightingSize) + 1; i ++) {
-                    for (var j = 0; j < (height / lightingSize) + 1; j ++) {
-                        var lightingCalc = Math.hypot((i * lightingSize - lightingSize / 2) - width / 2, (j * lightingSize - lightingSize / 2) - height / 2) / lighting
-                        ctx.fillStyle = "rgba(0, 0, 0, " + lightingCalc + ")"
-                        ctx.fillRect((i - 1) * lightingSize, (j - 1) * lightingSize, lightingSize * 2, lightingSize * 2)
-                    }
-                }
-            }
+            // Old lighting system
+            // if (lighting < 5000) {
+            //     for (var i = 0; i < (width / lightingSize) + 1; i ++) {
+            //         for (var j = 0; j < (height / lightingSize) + 1; j ++) {
+            //             var lightingCalc = Math.hypot((i * lightingSize - lightingSize / 2) - width / 2, (j * lightingSize - lightingSize / 2) - height / 2) / lighting
+            //             ctx.fillStyle = "rgba(0, 0, 0, " + lightingCalc + ")"
+            //             ctx.fillRect((i - 1) * lightingSize, (j - 1) * lightingSize, lightingSize * 2, lightingSize * 2)
+            //         }
+            //     }
+            // }
             
             if (!p.isDead()) {
                 p.move()

@@ -806,6 +806,26 @@ Landscape.prototype.drawNextLayer = function(p) {
     }
 }
 
+Landscape.prototype.displayLighting = function() { // New lighting system
+    for (var i = 0; i < this.arr.length; i ++) {
+        for (var j = 0; j < this.arr[i].length; j ++) {
+            if ((j * this.blockSize - p.x + width / 2 > -1 * this.blockSize &&
+                j * this.blockSize - p.x + width / 2 < width &&
+                i * this.blockSize - p.y + height / 2 > -1 * this.blockSize &&
+                i * this.blockSize - p.y + height / 2 < height + this.blockSize)) {
+                let ctrX = ctr(j);
+                let ctrY = ctr(i);
+                let lightAlpha = Math.hypot(p.x - ctrX, p.y - ctrY) / lighting + 0.1;
+                fill(0, 0, 0, lightAlpha);
+                ctx.fillRect(Math.round(b(j)), b(i), 75, 75);
+
+                // console.log(`Loaded lighting for block ${j}, ${i}. Light alpha: ${lightAlpha}`);
+                console.log(b(i))
+            }
+        }
+    }
+}
+
 
 /**
  * Gets block char from coordinates
