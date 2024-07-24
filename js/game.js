@@ -2737,6 +2737,24 @@ var interactives = [
             });
         }, 3000);
     }),
+
+    // The Catacombs
+    new BlockMirror(theCatacombs, 19, 7, {
+        x: 15,
+        y: 6
+    },
+    {
+        x: 17,
+        y: 8
+    },
+    {
+        x: 21,
+        y: 6
+    },
+    {
+        x: 23,
+        y: 8
+    }),
 ]
 
 /*

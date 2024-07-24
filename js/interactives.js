@@ -853,3 +853,96 @@ class Skyway {
         this.charged = setting;
     }
 }
+
+class BlockMirror {
+    constructor(map, x, y, copyPos1, copyPos2, pastePos1, pastePos2) {
+        this.map = map;
+        this.x = x;
+        this.y = y;
+        
+        this.copyPos1 = copyPos1;
+        this.copyPos2 = copyPos2;
+
+        this.pastePos1 = pastePos1;
+        this.pastePos2 = pastePos2;
+
+        this.cords = {
+            x: this.x,
+            y: this.y
+        };
+
+        this.active = false;
+
+        this.img = images.breezewayBase; // changeme to actual Blockmirror image
+
+        this.savedBlocks = [];
+    }
+
+    draw() {
+        this.cords.x = this.x
+        this.cords.y = this.y
+        ctx.drawImage(this.img, this.x * 75, this.y * 75, 75, 75);
+    }
+
+    update() {
+        // Draw green copy square
+        let copySquareWidth = 75 * (this.copyPos2.x - this.copyPos1.x + 1);
+        let copySquareHeight = 75 * (this.copyPos2.y - this.copyPos1.y + 1);
+        
+        ctx.fillStyle = "rgb(0, 255, 0, 0.2)";
+        ctx.fillRect(this.copyPos1.x * 75, this.copyPos1.y * 75, copySquareWidth, copySquareHeight);
+
+        // Draw red paste square
+        let pasteSquareWidth = 75 * (this.pastePos2.x - this.pastePos1.x + 1);
+        let pasteSquareHeight = 75 * (this.pastePos2.y - this.pastePos1.y + 1);
+        
+        ctx.fillStyle = "rgb(255, 0, 0, 0.1)";
+        ctx.fillRect(this.pastePos1.x * 75, this.pastePos1.y * 75, pasteSquareWidth, pasteSquareHeight);
+
+        if (this.active) {
+            
+        }
+    }
+
+    activate() {
+        if (keys.space && !p.spaceActioned && p.on(this.x, this.y)) {
+            if (!this.active) {
+                this.active = true;
+                this.pasteBlocks();
+            } else {
+                this.active = false;
+                this.restoreBlocks();
+            }
+
+            p.spaceActioned = true;
+        }
+    }
+
+    pasteBlocks() {
+        for (let i = 0; i < this.copyPos2.y - this.copyPos1.y + 1; i ++) {
+            for (let j = 0; j < this.copyPos2.x - this.copyPos1.x + 1; j ++) {
+                let pastingX = this.pastePos1.x + j;
+                let pastingY = this.pastePos1.y + i;
+                let pasteBlock = this.map.getBlock(this.copyPos1.x + j, this.copyPos1.y + i);
+
+                this.savedBlocks.push({
+                    x: pastingX,
+                    y: pastingY,
+                    block: this.map.getBlock(pastingX, pastingY)
+                }); // Saves the original blocks
+
+                this.map.changeBlock(pastingX, pastingY, pasteBlock);
+            }
+        }
+    }
+
+    restoreBlocks() {
+        for (let b of this.savedBlocks) {
+            this.map.changeBlock(b.x, b.y, b.block);
+        }
+    }
+
+    setCharged(setting) {
+        this.charged = setting;
+    }
+}
