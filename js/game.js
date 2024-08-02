@@ -35,6 +35,7 @@
     
         // Dropton Drylands
         new GameAlert(252, 67, ["Welcome to the Dropton Drylands!", "Not that it's dry here, it's just dry compared to being underwater..."], mainMap, "SIGN"),
+        new GameAlert(252, 81, ["--To Dropton City and Dropton Town--", "The entrance is at the southern branch of the lake's northeast channel. It is a small\narea of water that is blocked off. Make sure you have an Aqua Lung first!"], mainMap, "SIGN"),
         new GameAlert(224, 83, ["Dropton Water Wear:\nDropton's official partner for all water-related gear!"], mainMap, "SIGN"),
     
         // Dropton City/Town
