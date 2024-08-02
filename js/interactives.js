@@ -873,7 +873,7 @@ class BlockMirror {
 
         this.active = false;
 
-        this.img = images.breezewayBase; // changeme to actual Blockmirror image
+        this.img = images.blockMirror;
 
         this.savedBlocks = [];
     }
@@ -889,19 +889,18 @@ class BlockMirror {
         let copySquareWidth = 75 * (this.copyPos2.x - this.copyPos1.x + 1);
         let copySquareHeight = 75 * (this.copyPos2.y - this.copyPos1.y + 1);
         
-        ctx.fillStyle = "rgb(0, 255, 0, 0.2)";
+        ctx.fillStyle = "rgb(0, 255, 0, 0.3)";
         ctx.fillRect(this.copyPos1.x * 75, this.copyPos1.y * 75, copySquareWidth, copySquareHeight);
 
         // Draw red paste square
         let pasteSquareWidth = 75 * (this.pastePos2.x - this.pastePos1.x + 1);
         let pasteSquareHeight = 75 * (this.pastePos2.y - this.pastePos1.y + 1);
         
-        ctx.fillStyle = "rgb(255, 0, 0, 0.1)";
+        ctx.fillStyle = "rgb(255, 0, 0, 0.3)";
         ctx.fillRect(this.pastePos1.x * 75, this.pastePos1.y * 75, pasteSquareWidth, pasteSquareHeight);
 
-        if (this.active) {
-            
-        }
+        if (this.active) this.img = images.blockMirrorActive;
+        else this.img = images.blockMirror;
     }
 
     activate() {

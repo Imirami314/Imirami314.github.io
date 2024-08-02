@@ -48,7 +48,7 @@ var curCY = 0
 var cameraMoving = false
 var camera = 0;
 
-var images = {
+const images = {
     // Blocks
     grass: initImage('sprites/blocks/grass.png'),
     water: initImage('sprites/blocks/water.png'),
@@ -122,6 +122,8 @@ var images = {
     rockSwitchOn: initImage('sprites/interactives/rock/rockSwitchOn.png'),
     skyway: initImage('sprites/interactives/skyway/skyway.png'),
     skywayCharged: initImage('sprites/interactives/skyway/skywayCharged.png'),
+    blockMirror: initImage('sprites/interactives/blockMirror/blockMirror.png'),
+    blockMirrorActive: initImage('sprites/interactives/blockMirror/blockMirrorActive.png'),
 
     // Npc Features
     empressAurorasCrown: initImage('sprites/npcFeatures/empressAurorasCrown.png'),
@@ -806,7 +808,7 @@ Landscape.prototype.drawNextLayer = function(p) {
     }
 }
 
-Landscape.prototype.displayLighting = function() { // New lighting system
+Landscape.prototype.displayLighting = function() { // New lighting system (not currently in use) (changeme to add new lighting system back (once we have figured out how to make it work in camera view)
     for (var i = 0; i < this.arr.length; i ++) {
         for (var j = 0; j < this.arr[i].length; j ++) {
             if ((j * this.blockSize - p.x + width / 2 > -1 * this.blockSize &&
@@ -2978,11 +2980,11 @@ const empressAurorasPalace = new Landscape([
 });
 
 const theCatacombs = new Landscape([
-    '````````````````_____________````````````````',
-    '`````````````````__``___``__`````````````````',
-    '555555````````````````_````````````````555555',
-    '~~~~~~5```````````````````````````````5~~~~~~',
-    '555555`````````````````````````````````555555',
+    '````````````````555555O555555````````````````',
+    '`````````````````55555_55555```````!!!!``````',
+    '555555``````````````55)55``````````!`!!555555',
+    '~~~~~~5``````````````5)5```````````!`!~~~~~~~',
+    '555555`````````````````````````````!!!!555555',
     '`````````````_````````_````````_`````````````',
     '555555``````___``````___``````___``````555555',
     '~~~~~~5`````___``````___``````___`````5~~~~~~',
@@ -2994,7 +2996,7 @@ const theCatacombs = new Landscape([
     '`````````````~```````2`2```````~`````````````',
     '````````````````````52O25````````````````````',
 ], null, null, null, null, "The Catacombs", function() {
-    lighting = 1000;
+    lighting = 1200;
     theCatacombs.manualDoors = true;
 
     if (keys.space && !p.spaceActioned) {
@@ -3389,7 +3391,7 @@ var litholia = new Region("Litholia", [
     playMusic("Litholia")
 })
 
-var mineraGrove = new Region("Minera Grove", [
+const mineraGrove = new Region("Minera Grove", [
     {
         x1: 57,
         y1: 50,
