@@ -19,7 +19,7 @@ var alerts = [
     // Confounded Cave
     new GameAlert(6, 53, ["Huh? It's locked.\nYou need the 'Confounded Cave Key'."], mainMap, "KEY", "Confounded Cave Key"),
     new GameAlert(6, 21, ["The buttons above will alter the walls,\nPress them correctly to open both halls..."], confoundedCave, "SIGN"),
-    new GameAlert(28, 11, ["Huh? It's locked.\nYou need the 'Puzzle Key'."], confoundedCave, "KEY", "Puzzle Key"),
+    new GameAlert(28, 11, ["Huh? It's locked.\nYou need a 'Puzzle Key'."], confoundedCave, "KEY", "Puzzle Key"),
 
     // Glacia Region
     new GameAlert(182, 3, ["Glacia Village ---------->\n<---------- Steel Field\nIf text on the signs confuse and confound, it all becomes clearer if you flip it around."], mainMap, "SIGN"),
@@ -308,7 +308,7 @@ GameAlert.prototype.drawMessage = function () {
                 
             }
 
-            ctx.textBaseline = 'alphabetic'; // reset text baselin
+            ctx.textBaseline = 'alphabetic'; // reset text baseline
     
             if (this.textCooldown <= 0 && keys.space) {
                 this.lineNum ++
@@ -320,7 +320,7 @@ GameAlert.prototype.drawMessage = function () {
             if (this.type != "MESSAGE" && this.type.substring(0,3) != "NPC" && this.lineNum == this.lines.length && keys.space) {
                 this.showLines = false
                 this.lineNum = 0
-                this.playerRead    = true
+                this.playerRead = true
                 p.canMove = true
                 
             }
@@ -338,8 +338,8 @@ GameAlert.prototype.drawMessage = function () {
         }
     }
     
-    if (p.cords.x == this.x && p.cords.y == this.y) {
-        if (!this.showLines && curMap == this.map) {
+    if (p.on(this.x, this.y) && curMap == this.map) {
+        if (!this.showLines) {
             // if (this.type == "SIGN" || this.type == "WANDERER SIGN") {
             //     ctx.fillStyle = "rgb(255, 255, 255)"
             //     ctx.roundRect(width / 2 - 75, height / 2 + 50, 150, 50, 10)
@@ -350,47 +350,49 @@ GameAlert.prototype.drawMessage = function () {
             //     ctx.fillText("Press space to read", width / 2, height / 2 + 75)		
             // } else 
             if (this.type == "KEY") {
-                for (var i in p.inventory) {
-                    var item = p.inventory[i]
-                    if (item.name == this.item) {
-                        this.hasItem = true
-                    }
-                }
+                // for (var i in p.inventory) {
+                //     var item = p.inventory[i]
+                //     if (item.name == this.item) {
+                //         this.hasItem = true
+                //     }
+                // }
 
                 if (this.showKeyAlert) {
-                    if (!this.hasItem) {
-                        ctx.fillStyle = "rgb(255, 255, 255)"
-                        ctx.roundRect(width / 2 - 80, height / 2 + 50, 160, 50, 10)
-                        ctx.fill()
-                        ctx.fillStyle = "rgb(0, 0, 0)"
-                        ctx.font = "15px serif"
-                        ctx.textAlign = "center"
-                        ctx.fillText("Press space to examine", width / 2, height / 2 + 75)	
+                    if (p.weapon.name != this.item) {
+                        getBlockById(p.blockOn.id).useDesc = "Press space to examine";
+                        // ctx.fillStyle = "rgb(255, 255, 255)"
+                        // ctx.roundRect(width / 2 - 80, height / 2 + 50, 160, 50, 10)
+                        // ctx.fill()
+                        // ctx.fillStyle = "rgb(0, 0, 0)"
+                        // ctx.font = "15px serif"
+                        // ctx.textAlign = "center"
+                        // ctx.fillText("Press space to examine", width / 2, height / 2 + 75)
                     } else {
-                        ctx.fillStyle = "rgb(255, 255, 255)"
-                        ctx.roundRect(width / 2 - 80, height / 2 + 50, 160, 50, 10)
-                        ctx.fill()
-                        ctx.fillStyle = "rgb(0, 0, 0)"
-                        ctx.font = "15px serif"
-                        ctx.textAlign = "center"
-                        ctx.fillText("Click to unlock", width / 2, height / 2 + 75)	
+                        getBlockById(p.blockOn.id).useDesc = "Click to unlock";
+                        // ctx.fillStyle = "rgb(255, 255, 255)"
+                        // ctx.roundRect(width / 2 - 80, height / 2 + 50, 160, 50, 10)
+                        // ctx.fill()
+                        // ctx.fillStyle = "rgb(0, 0, 0)"
+                        // ctx.font = "15px serif"
+                        // ctx.textAlign = "center"
+                        // ctx.fillText("Click to unlock", width / 2, height / 2 + 75)	
+                        if (mouseIsDown) {
+                            this.lines = ["The lock has been opened!"];
+                        }
                         
                     }
-                }
-
-                if (mouseIsDown && this.hasItem) {
-                    this.showKeyAlert = false
                 }
             } else if (this.type == "EXAMINE" || this.type == "DECIPHER") {
                 
                     
-                ctx.fillStyle = "rgb(255, 255, 255)"
-                ctx.roundRect(width / 2 - 80, height / 2 + 50, 160, 50, 10)
-                ctx.fill()
-                ctx.fillStyle = "rgb(0, 0, 0)"
-                ctx.font = "15px serif"
-                ctx.textAlign = "center"
-                ctx.fillText("Press space to examine", width / 2, height / 2 + 75)	
+                // ctx.fillStyle = "rgb(255, 255, 255)"
+                // ctx.roundRect(width / 2 - 80, height / 2 + 50, 160, 50, 10)
+                // ctx.fill()
+                // ctx.fillStyle = "rgb(0, 0, 0)"
+                // ctx.font = "15px serif"
+                // ctx.textAlign = "center"
+                // ctx.fillText("Press space to examine", width / 2, height / 2 + 75)
+                getBlockById(p.blockOn.id).useDesc = "Press space to examine";
                 
             }
         }
@@ -681,15 +683,6 @@ var wyatt = new NPC(ctr(2), ctr(3), "Wyatt", wyattHouse, "D", [
     "Bye."
 ], "Resident - Chard Town\nA slightly suspicious resident who (supposedly) has\nnothing to hide. I'd keep an eye on him...")
 
-var hector = new NPC(ctr(17), ctr(57), "Hector", mainMap, "U", [
-    "Yo, what's up?",
-    "I'm working on building a door here for this so-called shop...",
-    "...but we just ran out of materials!",
-    "I'm thinking about asking somebody in charge for some more.",
-    "Say, would you be down to donate some materials?",
-    "I see you don't got any wood...\nWell, come back holding some if you're interested.",
-], "Builder - Chard Town\nThe lead construction worker for Chard Town.\nHe's working on a special project right now,\nbut he needs more funds to make it happen.")
-
 var wayne = new NPC(48 * 75, 55 * 75, "Wayne", mainMap, "D", [
     "Aye matey! What brings you to this foreign land?",
     "I'm Wayne, fearless sailor of the seven seas!",
@@ -714,24 +707,33 @@ var wayne = new NPC(48 * 75, 55 * 75, "Wayne", mainMap, "D", [
     }
 }, "after")
 
+var hector = new NPC(ctr(17), ctr(57), "Hector", mainMap, "U", [
+    "Yo, what's up?",
+    "I'm working on building a door here for this so-called shop...",
+    "...but we just ran out of materials!",
+    "I'm thinking about asking somebody in charge for some more.",
+    "Say, would you be down to donate some materials?",
+    "I see you don't got any wood...\nWell, come back holding some if you're interested.",
+], "Builder - Chard Town\nThe lead construction worker for Chard Town.\nHe's working on a special project right now,\nbut he needs more funds to make it happen.")
+
+const smith = new NPC(ctr(3), ctr(1), "Smith the Blacksmith", smithHouse, "D", [
+    "Hey!",
+    "Who are you??",
+    "...",
+    "K. I'm guessin' you're here to get some cool stuff.",
+    "I normally give a little somethin' to people who\ncome here, but I'm gonna need you to get me somethin' too.",
+    "Could you fetch me a Heat Handle? I need it if you want me to help you.",
+    "See ya!"
+], "Blacksmith - Steel Field\nEveryone's go to blacksmith. He's very handy\nif you want a weapon made quick for a low price.", function() {
+    secretsOfSteelField.setInstructions("Smith the Blacksmith says he'll make you a weapon, but\nhe needs you to bring him a Heat Handle first.\nThey're often found in chests, so maybe you can find one nearby.");
+}, "after");
+
 const ash = new NPC(b(3), ctr(1), "Ash", ashHouse, "L", [
     "Hello. You're a new face.\nI don't meet very many new people in Steel Field.",
     "You might be wonderin' what I'm doing.\nI've been tryin' to grow plants in my own house...",
     "...but the environment in Steel Field ain't exactly\nhealthy for plants. So, it's been a struggle.",
     "Anyway, I gotta get back to watering these plants."
 ], "Resident - Steel Field\nAlthough he lives in Steel Field, he enjoys gardening.");
-
-var smith = new NPC(4 * 75, 1 * 75, "Smith the Blacksmith", smithHouse, "D", [
-    "Hey!",
-    "Who are you??",
-    "...",
-    "Kay. I'm guessin' you here to get some cool stuff.",
-    "I normally give a little somethin' to people who\ncome here, but I'm gonna need you to get me somethin' too.",
-    "Could you fetch me a Heat Handle? I need it if you want me to help you.",
-    "See ya!"
-], "Blacksmith - Steel Field\nEveryone's go to blacksmith. He's very handy\nif you want a weapon made quick for a low price.", function() {
-    aStrangeWorld.setInstructions("Smith the Blacksmith says he'll make you a weapon, but\nhe needs you to bring him a Heat Handle first.\nThey're often found in chests, so maybe you can find one nearby.");
-}, "after")
 
 var rick = new NPC(9 * 75, 2 * 75, "Rick Ashley", rickHouse, "L", [
     "I'm feeling lonely.",
@@ -2926,6 +2928,10 @@ const c184_78 = new Chest(mainMap, 184, 78, [
     food.cake()
 ])
 
+const c7_1 = new Chest(smithHouse, 7, 1, [
+    items.confoundedCaveKey,
+]);
+
 const c24_2 = new Chest(howlerHollow, 24, 2, [
     new Item("Puzzle Key", 0, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
@@ -3231,24 +3237,30 @@ if (!!save) {
 
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
-    dev = false
-    p.inventory = [items.hydrosScythe, items.stormedsSword, food.apple(), food.apple(), food.apple(), food.apple(), food.apple(), food.apple(), items.aquaLung, items.steelSword, items.skywayCell]
-    p.updateSortedInventory()
-    p.equipped = [items.aquaLung]
-    lithosCutsceneDeath.onEnd();
-    curMap = theCatacombs;
-    // addMission(meetingEmpressAurora);
-    // p.goTo(ctr(81), ctr(76));
-    p.goTo(ctr(9), ctr(7));
-    // p.goTo(ctr(17), ctr(76));
-    // p.giveItem(items.mineraGroveKey, false);
+    dev = false;
+    // p.inventory = [items.hydrosScythe, items.stormedsSword, food.apple(), food.apple(), food.apple(), food.apple(), food.apple(), food.apple(), items.aquaLung, items.steelSword, items.skywayCell]
+    p.inventory = [items.heatHandle];
+    p.goTo(ctr(3), ctr(2));
+    p.updateSortedInventory();
+    curMap = smithHouse;
 
-    wayne.lines = [
-        "One more elemental master to go. You're so close!",
-        "Remember, to get to Luminos Isle, you first need\nto get to Dawn's Landing which is west of here.",
-        "Good luck!"
-    ];
-    wayne.clearAction();
+    addMission(secretsOfSteelField);
+
+    // p.equipped = [items.aquaLung]
+    // lithosCutsceneDeath.onEnd();
+    // curMap = theCatacombs;
+    // // addMission(meetingEmpressAurora);
+    // // p.goTo(ctr(81), ctr(76));
+    // p.goTo(ctr(9), ctr(7));
+    // // p.goTo(ctr(17), ctr(76));
+    // // p.giveItem(items.mineraGroveKey, false);
+
+    // wayne.lines = [
+    //     "One more elemental master to go. You're so close!",
+    //     "Remember, to get to Luminos Isle, you first need\nto get to Dawn's Landing which is west of here.",
+    //     "Good luck!"
+    // ];
+    // wayne.clearAction();
 
     // empressAurora.lines = [
     //     "Go into my palace!\nWhatever business you have to discuss, it must be done so in private.",
@@ -3281,7 +3293,7 @@ function startPos() {
     // ];
 }
 
-// startPos()
+startPos()
 
 var suspensiaInterval = setInterval(function() { // Makes suspensia spread into water
     if (scene == "GAME") {

@@ -695,7 +695,7 @@ Player.prototype.collide = function() {
     }
 
     if (this.doorCooldown <= 0) {
-        if ((this.blockOn.name == "door") && !curMap.manualDoors /* Basically if other maps need doors that don't go back outside */ && keys.space && !this.spaceActioned) {
+        if ((this.blockOn.name == "door") && !curMap.manualDoors /* Basically if other maps need doors that don't go back outside */ && keys.space && !this.spaceActioned && Screen.fade <= 0) {
             this.canMove = false
             this.inRaft = false
             playSound("Door Open");
@@ -1646,11 +1646,17 @@ Player.prototype.isTalking = function() {
     let isPlayerTalking = false
     npcs.forEach((npc) => {
         if (npc.lineNum != -1) {
-            isPlayerTalking = true
+            isPlayerTalking = true;
         }
     })
 
-    return isPlayerTalking
+    alerts.forEach((a) => {
+        if (a.showLines) {
+            isPlayerTalking = true;
+        }
+    });
+
+    return isPlayerTalking;
 }
 
 Player.prototype.nearSign = function() {
@@ -1706,13 +1712,15 @@ Player.prototype.drawAlert = function() {
         }
     }
 
-    ctx.fillStyle = "rgba(0, 0, 0, " + this.alertOpacity / 2 + ")"
-    ctx.roundRect(width / 2 - width / 9, height - 80 - height / 20, width / 4.5, height / 10, 5)
-    ctx.fill()
-    ctx.fillStyle = "rgba(255, 255, 255, " + this.alertOpacity + ")"
-    ctx.font = "30px serif"
-    ctx.textAlign = "center"
-    ctx.fillText(this.curAlert, width / 2, height - 75)
+    if (!this.isTalking()) {
+        ctx.fillStyle = "rgba(0, 0, 0, " + this.alertOpacity / 2 + ")"
+        ctx.roundRect(width / 2 - width / 9, height - 80 - height / 20, width / 4.5, height / 10, 5)
+        ctx.fill()
+        ctx.fillStyle = "rgba(255, 255, 255, " + this.alertOpacity + ")"
+        ctx.font = "30px serif"
+        ctx.textAlign = "center"
+        ctx.fillText(this.curAlert, width / 2, height - 75)
+    }
 
 }
 

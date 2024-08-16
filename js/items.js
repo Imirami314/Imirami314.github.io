@@ -181,11 +181,10 @@ const items = {
     }, function(p) {
             
         if (p.cords.x == 6 && p.cords.y == 53 && curMap == mainMap) {
-            mainMap.changeBlock(6, 52, 'O')
-            
+            mainMap.changeBlock(6, 52, 'O');
             p.removeItem(this);
         }
-    }, "A dusty key with an inscription saying 'West'", "KEYS"),
+    }, "A heavy, dusty key with an inscription saying 'Go west to CT'", "KEYS"),
     heatHandle: new Item("Heat Handle", 0, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
     }, function(p) {
@@ -197,18 +196,31 @@ const items = {
                 "Thank you. Appreciate it.",
                 "...",
                 "Alright, here's your weapon. Made it from that\n handle. Hope it works okay.",
+                "You know, you seem like a nice, trustworthy guy.\nLemme tell you something, if that's okay.",
+                "Just a little while ago, I found a key left on the ground.\nI've looked everywhere throughout Steel Field, but I can't find its use!",
+                "It even has a little inscription on it, but I can't figure out what it means.",
+                "I suspect that this key is from a region outside of Steel Field.\nBecause you come from a different region, I thought I'd give it to you.",
+                "But keep it safe. If I hear you've lost it, I'll have some very\nstrong beef with you.",
+                "And you do not want beef with a guy who makes weapons.",
+                "So, do we have a deal?",
                 "...",
-                "By the way, there's s'posed to be a key in this area somewhere. Everyone's talking\n'bout it, but nobody can be bothered to find it. Dunno what it does though...",
-                "Anyway...",
-                "See ya later."
+                "Great. Let me open that chest for you."
             ]
 
             smith.action = function() {
                 p.giveItem(items.steelSword, true)
 
+                smith.curPath = [
+                    [5, 1],
+                    function() {
+                        smithHouse.changeBlock(6, 1, '_');
+                    }
+                ];
+
                 smith.lines = [
-                    "Hope you enjoy that sword!",
-                    "It's not great, but it should do."
+                    "Hope you enjoy that sword.",
+                    "It's not great, but it should do.",
+                    "And don't lose that key!"
                 ]
                 smith.clearAction()
             }
@@ -219,7 +231,7 @@ const items = {
             // smith.talk(p)
 
             p.removeItem(this);
-            aStrangeWorld.setInstructions("At last, you have a weapon. It's not very strong, but it's better\nthan nothing!");
+            secretsOfSteelField.setInstructions("At last, you have a weapon. It's not very strong, but it's better\nthan nothing! Smith also gifted you a special key he found.\nHowever, he doesn't know where to use it, and he doesn't understand the\ncryptic inscription on it either.");
         }
     }, "An odd fragment of a sword. Absorbs heat very easily.", "MISC"),
     steelSword: new Item("Steel Sword", 5, function(x, y) {

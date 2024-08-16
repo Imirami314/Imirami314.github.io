@@ -1438,9 +1438,9 @@ const ashHouse = new Landscape([
 ], ctr(3), ctr(6), 113, 41, "Ash's House");
 
 var smithHouse = new Landscape([
-    '!S_______',
-    '!S_______',
-    'SS_______',
+    '!S___SSSS',
+    '!S___:S_S',
+    'SS___SSSS',
     '_________',
     '_______SS',
     '_______S!',
@@ -3008,7 +3008,7 @@ const theCatacombs = new Landscape([
 
     if (theCatacombs.getBlock(22, 2) == '(' && theCatacombs.getBlock(22, 3) == '(' && !theCatacombs.empressAuroraCheckIn) {
         theCatacombs.empressAuroraCheckIn = true;
-        
+
         empressAurora.map = theCatacombs;
         empressAurora.goTo(ctr(21), ctr(4));
         empressAurora.dir = 'R';
