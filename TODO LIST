@@ -18,6 +18,7 @@ One Time
 - Fix remote NPC logic
 - Gale Cave is broken because not all interactives have cords.x and cords.y
 - Add CommandsRun to save data
+- Add a house for Ronan (do we even use this anymore)
 
 Continuous
 - Add sound effects for all blocks
