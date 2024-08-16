@@ -70,6 +70,11 @@ Mission.prototype.alert = function(t) {
 		ctx.fillText("Completed!", width / 2, height / 8 + 50)
 		setTimeout(() => { 
 			this.completionPopup = false
+            for (let m of curMissions) {
+                if (m.name == this.name) {
+                    curMissions.splice(curMissions.indexOf(m));
+                }
+            }
 		}, 3000)
 	}
 }
@@ -87,6 +92,8 @@ var aStrangeWorld = new Mission("A Strange World", "Main", "You've awoken in a n
 aStrangeWorld.solve = function () {
 	
 }
+
+const secretsOfSteelField = new Mission("Secrets of Steel Field", "Main", "This is where the adventure really begins.", "You've made it to Steel Field. Keep an eye out for lava!\nWayne says you need to go find Smith the Blacksmith to get geared up.\nHe lives in one of the houses on the east side of Steel Field.")
 
 var meetingTheQueen = new Mission("Meeting The Queen", "Main", "[insert description]", "[insert instructions]")
 
@@ -284,199 +291,6 @@ meetingTheQueen.solve = function () {
     
 }
 
-// ABILITY MISSIONS
-var theWanderersRiddles = new Mission("The Wanderer's Riddles", "Ability", "[insert description]", "[insert instructions]")
-
-theWanderersRiddles.solve = function () {
-	if (getGameAlertInfoByCords(10, 7, mainMap).playerRead) {	// makes sure message is correct			
-		secrets[0][0] = true
-	}
-	
-	if (secrets[0][3] == true) {
-		theWanderer.x = ctr(28)
-		theWanderer.y = ctr(55)
-		theWanderer.lines = [
-			"`...", "You probably didn't expect me to be here already.",
-			"Congratulations on finding such a rare and mysterious item.\nI've only seen these items in ancient scrolls.",
-			"You are now on the final step of teleportation.", "Sit in the center of the magical ring,\nPlace the beam and the water will spring."
-		]
-	} else if (secrets[0][2] == true) {
-		theWanderer.lines = ["I sense that you've almost completed Chard Town's secret..."]
-	} else if (secrets[0][1] == true) {
-		theWanderer.action = function() {} //resets action to nothing
-		theWanderer.lines = ["Go back to the first location.\nThe second riddle awaits you!"]	
-
-		if (p.cords.x == 63 && p.cords.y == 20 && keys.x) {
-			if (mainMap.getBlock(63, 20) != "@") {
-				mainMap.changeBlock(63, 20, "@")
-				if (getGameAlertInfoByCords(63, 20, mainMap) == null) {
-					alerts.push(new GameAlert(63, 20, ["Chard Town's Secret\nPART 3", "From this exact point, travel north and west.\nInside do the opposite, to reach the final chest."], mainMap, "EXAMINE"))
-				}
-				
-				secrets[0][2] = true
-				saveGame()
-			}
-		}
-	} else if (secrets[0][0] == true) {
-		
-		theWanderer.lines = [
-			"...",
-			"What? You found it already?",
-			"Impressive.", "Now, you might be wondering why all of the words\nwere jumbled up.", 
-			"Ancient texts like these require a very special item.\nA decipherer...",
-			"When the decipherer is held in your hand, you can read indecipherable texts!",
-			"I've given you 3 decipherers,\nwhich from my research should be enough to complete Chard Town's riddle.",
-			"Now quick, go back to the first location.\nThe second riddle will be waiting for you."
-	
-		]
-		theWanderer.action = function(p) {
-			
-			p.giveItem(items.decipherer, true)
-			secrets[0][1] = true
-		}
-		theWanderer.actionLine = "after"
-		
-	}
-}
-
-// Wanderer riddle with specific locations will be specified as initials
-var theWanderersRiddlesGV = new Mission("The Wanderer's Riddles - Glacia Village", "Ability", "[insert description]", "[insert instructions]")
-
-theWanderersRiddlesGV.solve = function () {
-    // console.log(getBlockInfoByCords(202 * 75, 24 * 75).id)
-    if (curMap == mainMap && getBlockInfoByCords(202 * 75, 24 * 75).id == "-") { // Default WATER
-        Screen.shake(3,3)
-    }
-}
-
-
-// REWARD MISSIONS 
-var leysGreatFear = new Mission("Ley's Great Fear", "Reward", "Ley lives in Chard Town, and he is terrified of monsters.\nSomehow, you managed to find him hiding from a group of monsters near his house.\nNow, he's begging you to kill them for him!", "The monsters in question are directly northeast of his house.\nAlthough it might be dangerous, Ley promises to reward you if you are successful!")
-
-leysGreatFear.solve = function () {
-	ley.lines = ["Are they gone yet?!"]
-}
-
-var davidsDreamPond = new Mission("David's Dream Pond", "Reward", "David Swimmer loves to swim! He wishes one day to find\na great big pond that he could swim in forever!", "Unfortunately, he's explored all the bodies of water in Chard Town and\nnone are big enough. Maybe somewhere you'll find the pond of David's dreams!")
-
-var blancheAndBianca = new Mission("Blanche and Bianca", "Reward", "[insert description]", "[insert instructions]", function() {
-
-})
-
-var theBlockedEntrance = new Mission("The Blocked Entrance", "Reward", "[insert description]", "[insert instructions]")
-
-theBlockedEntrance.solve = function () {
-    if (droptonCity.checkBlocks([
-        [35, 26], [34, 27], [35, 27], [36, 27], [33, 28], [34, 28], [36, 28], [37, 28],
-        [34, 29], [35, 29], [36, 29], [35, 30]
-    ], "^")) {
-
-        droptonCity.changeBlocks([[35, 25], [34, 26], [36, 26], [33, 27], [37, 27],
-        [32, 28], [38, 28], [33, 29], [37, 29], [34, 30], [36, 30], [35, 31]], '~')
-        for (var i = 0; i < 9; i ++) {
-            droptonCity.changeBlock(31 + i, 28, '+')
-            droptonCity.changeBlock(35, 24 + i, '+')
-        }
-        for (var i = 0; i < 3; i ++) {
-            droptonCity.changeBlocks([[36 + i, 25 + i], [34 - i, 25 + i], [32 + i, 29 + i], [38 - i, 29 + i]], '+')
-            
-        }
-        droptonCity.changeBlocks([[34, 27], [35, 27], [36, 27], [34, 29], [35, 29], [36, 29]], '+')
-        mainMap.changeBlock(252, 81, '+')
-
-        if (!theBlockedEntrance.complete) {
-            
-            loch.lines = [
-                "...", "What?! All the ice and purple stuff is gone!",
-                "And look at that, the entrance opened again?\nDid you do this?",
-                "...", "Wow. Thank you so much!",
-                "I must reward you. Here, take these trills!",
-                "If you ever need me, I'll be in my house to the west.\nSee ya!"
-            ]
-
-            
-        }
-        loch.action = function (p) {
-            if (!theBlockedEntrance.complete) {
-                p.trills += 50
-                
-                loch.speed = 5
-                loch.curPath = [
-                    [40, 21],
-                    function () {
-                    loch.x = 75
-                    loch.y = 75
-                    loch.map = lochNessHouse
-                    loch.dir = "R"
-                    loch.lines = ["Wow, I've sure missed that entrance.\nThanks again for fixing it!",
-                        "If you want to go up and down, just enter from the middle!"]
-                    }
-                ]
-                theBlockedEntrance.finish()
-            }
-                
-        }
-        loch.actionLine = "after"
-    }
-    
-   
-}
-
-var deltasLostTreasure = new Mission("Delta's Lost Treasure", "Reward", "[insert description]", "[insert instructions]", function() {
-	if (entityDistance(p, delta) <= 100 && p.weapon.name == 'Light Container' && mouseIsDown) {
-		delta.lines = [
-			"Did you find the treasure?",
-			"...",
-			"Wow! Thank you so much!",
-			"...can I have it?",
-			"...",
-			"I appreciate you doing this for me.\nTake these 75 trills as a gift!"
-		]
-
-		delta.action = function() {
-			p.trills += 75
-			p.removeItem(items.lightContainer)
-			deltasLostTreasure.finish()
-		}
-
-		delta.actionLine = "after"
-
-		delta.lineNum = 0
-	}
-})
-
-var berylsSpecialBracelet = new Mission("Beryl's Special Bracelet", "Reward", "Beryl seems to know where King Jasper is. Or at least, he\ndid until he lost his special bracelet. Without it, he's too worried to think about\nanything else. If you bring it back to him, he might remember\nKing Jasper's whereabouts.", "He says that he put it temporarily in a safe chest near the northern Litholian border\nbut then lava began to seep out of the ground and now he can't get to it!\nMaybe there's a way to get around the lava...");
-
-berylsSpecialBracelet.solve = function() {
-	if (entityDistance(p, beryl) <= 100 && p.weapon.name == "Beryl's Bracelet" && mouseIsDown) {
-		beryl.lines = [
-			"Wh-what? Am I dreaming?",
-			"You found my bracelet!",
-			"...",
-			"Oh yes, of course. You wanted to know where King Jasper was.\nLucky for you, I can remember it now!",
-			"He went to do some business in the northern region of Fortune Field.",
-			"Again, thank you so much. Here's some money as a little gift.",
-		]
-
-		beryl.action = function() {
-			p.giveItem(TrillSum(50));
-			p.removeItem(items.berylsBracelet)
-
-			beryl.lines = [
-				"Thanks for finding my bracelet.\nKing Jasper should be in the northern region of Fortune Field."
-			]
-
-			beryl.clearAction()
-
-			berylsSpecialBracelet.finish()
-		}
-
-		beryl.actionLine = "after"
-
-		beryl.lineNum = 0
-	}
-}
-
 const journeyToLuminosIsle = new Mission("Journey to Luminos Isle", "Main", "Now that you've defeated Lithos, it's time to make your way to the final\ncity, Luminos Isle! Once you're there, you need to look for the leader, Empress Aurora.", "According to Wayne, the only way to get to Luminos Isle is to head to Dawn's Landing.\nFrom there, you can make your way up to the sky where Luminos Isle is.");
 
 const mineraGrovePranksters = new Mission("Pranksters of Minera Grove", "Main", "To reach Dawn's Landing, you need to cross through Minera Grove. Unfortunately,\nSplints are hiding underneath the grove and have blocked Dawn's Landing with trees.\nYou need to help Ranger Gunther deal with the Splints and find a way past the trees.", "");
@@ -672,6 +486,199 @@ meetingEmpressAurora.solve = function() {
             }
         }
     }
+}
+
+// ABILITY MISSIONS
+var theWanderersRiddles = new Mission("The Wanderer's Riddles", "Ability", "[insert description]", "[insert instructions]")
+
+theWanderersRiddles.solve = function () {
+	if (getGameAlertInfoByCords(10, 7, mainMap).playerRead) {	// makes sure message is correct			
+		secrets[0][0] = true
+	}
+	
+	if (secrets[0][3] == true) {
+		theWanderer.x = ctr(28)
+		theWanderer.y = ctr(55)
+		theWanderer.lines = [
+			"`...", "You probably didn't expect me to be here already.",
+			"Congratulations on finding such a rare and mysterious item.\nI've only seen these items in ancient scrolls.",
+			"You are now on the final step of teleportation.", "Sit in the center of the magical ring,\nPlace the beam and the water will spring."
+		]
+	} else if (secrets[0][2] == true) {
+		theWanderer.lines = ["I sense that you've almost completed Chard Town's secret..."]
+	} else if (secrets[0][1] == true) {
+		theWanderer.action = function() {} //resets action to nothing
+		theWanderer.lines = ["Go back to the first location.\nThe second riddle awaits you!"]	
+
+		if (p.cords.x == 63 && p.cords.y == 20 && keys.x) {
+			if (mainMap.getBlock(63, 20) != "@") {
+				mainMap.changeBlock(63, 20, "@")
+				if (getGameAlertInfoByCords(63, 20, mainMap) == null) {
+					alerts.push(new GameAlert(63, 20, ["Chard Town's Secret\nPART 3", "From this exact point, travel north and west.\nInside do the opposite, to reach the final chest."], mainMap, "EXAMINE"))
+				}
+				
+				secrets[0][2] = true
+				saveGame()
+			}
+		}
+	} else if (secrets[0][0] == true) {
+		
+		theWanderer.lines = [
+			"...",
+			"What? You found it already?",
+			"Impressive.", "Now, you might be wondering why all of the words\nwere jumbled up.", 
+			"Ancient texts like these require a very special item.\nA decipherer...",
+			"When the decipherer is held in your hand, you can read indecipherable texts!",
+			"I've given you 3 decipherers,\nwhich from my research should be enough to complete Chard Town's riddle.",
+			"Now quick, go back to the first location.\nThe second riddle will be waiting for you."
+	
+		]
+		theWanderer.action = function(p) {
+			
+			p.giveItem(items.decipherer, true)
+			secrets[0][1] = true
+		}
+		theWanderer.actionLine = "after"
+		
+	}
+}
+
+// Wanderer riddle with specific locations will be specified as initials
+var theWanderersRiddlesGV = new Mission("The Wanderer's Riddles - Glacia Village", "Ability", "[insert description]", "[insert instructions]")
+
+theWanderersRiddlesGV.solve = function () {
+    // console.log(getBlockInfoByCords(202 * 75, 24 * 75).id)
+    if (curMap == mainMap && getBlockInfoByCords(202 * 75, 24 * 75).id == "-") { // Default WATER
+        Screen.shake(3,3)
+    }
+}
+
+
+// REWARD MISSIONS 
+var leysGreatFear = new Mission("Ley's Great Fear", "Reward", "Ley lives in Chard Town, and he is terrified of monsters.\nSomehow, you managed to find him hiding from a group of monsters near his house.\nNow, he's begging you to kill them for him!", "The monsters in question are directly northeast of his house.\nAlthough it might be dangerous, Ley promises to reward you if you are successful!")
+
+leysGreatFear.solve = function () {
+	ley.lines = ["Are they gone yet?!"]
+}
+
+var davidsDreamPond = new Mission("David's Dream Pond", "Reward", "David Swimmer loves to swim! He wishes one day to find\na great big pond that he could swim in forever!", "Unfortunately, he's explored all the bodies of water in Chard Town and\nnone are big enough. Maybe somewhere you'll find the pond of David's dreams!")
+
+var blancheAndBianca = new Mission("Blanche and Bianca", "Reward", "[insert description]", "[insert instructions]", function() {
+
+})
+
+var theBlockedEntrance = new Mission("The Blocked Entrance", "Reward", "[insert description]", "[insert instructions]")
+
+theBlockedEntrance.solve = function () {
+    if (droptonCity.checkBlocks([
+        [35, 26], [34, 27], [35, 27], [36, 27], [33, 28], [34, 28], [36, 28], [37, 28],
+        [34, 29], [35, 29], [36, 29], [35, 30]
+    ], "^")) {
+
+        droptonCity.changeBlocks([[35, 25], [34, 26], [36, 26], [33, 27], [37, 27],
+        [32, 28], [38, 28], [33, 29], [37, 29], [34, 30], [36, 30], [35, 31]], '~')
+        for (var i = 0; i < 9; i ++) {
+            droptonCity.changeBlock(31 + i, 28, '+')
+            droptonCity.changeBlock(35, 24 + i, '+')
+        }
+        for (var i = 0; i < 3; i ++) {
+            droptonCity.changeBlocks([[36 + i, 25 + i], [34 - i, 25 + i], [32 + i, 29 + i], [38 - i, 29 + i]], '+')
+            
+        }
+        droptonCity.changeBlocks([[34, 27], [35, 27], [36, 27], [34, 29], [35, 29], [36, 29]], '+')
+        mainMap.changeBlock(252, 81, '+')
+
+        if (!theBlockedEntrance.complete) {
+            
+            loch.lines = [
+                "...", "What?! All the ice and purple stuff is gone!",
+                "And look at that, the entrance opened again?\nDid you do this?",
+                "...", "Wow. Thank you so much!",
+                "I must reward you. Here, take these trills!",
+                "If you ever need me, I'll be in my house to the west.\nSee ya!"
+            ]
+
+            
+        }
+        loch.action = function (p) {
+            if (!theBlockedEntrance.complete) {
+                p.trills += 50
+                
+                loch.speed = 5
+                loch.curPath = [
+                    [40, 21],
+                    function () {
+                    loch.x = 75
+                    loch.y = 75
+                    loch.map = lochNessHouse
+                    loch.dir = "R"
+                    loch.lines = ["Wow, I've sure missed that entrance.\nThanks again for fixing it!",
+                        "If you want to go up and down, just enter from the middle!"]
+                    }
+                ]
+                theBlockedEntrance.finish()
+            }
+                
+        }
+        loch.actionLine = "after"
+    }
+    
+   
+}
+
+var deltasLostTreasure = new Mission("Delta's Lost Treasure", "Reward", "[insert description]", "[insert instructions]", function() {
+	if (entityDistance(p, delta) <= 100 && p.weapon.name == 'Light Container' && mouseIsDown) {
+		delta.lines = [
+			"Did you find the treasure?",
+			"...",
+			"Wow! Thank you so much!",
+			"...can I have it?",
+			"...",
+			"I appreciate you doing this for me.\nTake these 75 trills as a gift!"
+		]
+
+		delta.action = function() {
+			p.trills += 75
+			p.removeItem(items.lightContainer)
+			deltasLostTreasure.finish()
+		}
+
+		delta.actionLine = "after"
+
+		delta.lineNum = 0
+	}
+})
+
+var berylsSpecialBracelet = new Mission("Beryl's Special Bracelet", "Reward", "Beryl seems to know where King Jasper is. Or at least, he\ndid until he lost his special bracelet. Without it, he's too worried to think about\nanything else. If you bring it back to him, he might remember\nKing Jasper's whereabouts.", "He says that he put it temporarily in a safe chest near the northern Litholian border\nbut then lava began to seep out of the ground and now he can't get to it!\nMaybe there's a way to get around the lava...");
+
+berylsSpecialBracelet.solve = function() {
+	if (entityDistance(p, beryl) <= 100 && p.weapon.name == "Beryl's Bracelet" && mouseIsDown) {
+		beryl.lines = [
+			"Wh-what? Am I dreaming?",
+			"You found my bracelet!",
+			"...",
+			"Oh yes, of course. You wanted to know where King Jasper was.\nLucky for you, I can remember it now!",
+			"He went to do some business in the northern region of Fortune Field.",
+			"Again, thank you so much. Here's some money as a little gift.",
+		]
+
+		beryl.action = function() {
+			p.giveItem(TrillSum(50));
+			p.removeItem(items.berylsBracelet)
+
+			beryl.lines = [
+				"Thanks for finding my bracelet.\nKing Jasper should be in the northern region of Fortune Field."
+			]
+
+			beryl.clearAction()
+
+			berylsSpecialBracelet.finish()
+		}
+
+		beryl.actionLine = "after"
+
+		beryl.lineNum = 0
+	}
 }
 
 var missions = Mission.all

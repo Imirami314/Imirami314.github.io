@@ -638,7 +638,7 @@ function playMusic(name) {
         var msc = music[i]
         if (msc.name == name) {
             msc.audio.play()
-            msc.audio.volume = 0.2
+            msc.audio.volume = 1
             msc.audio.isPlaying = true
             curMusic = msc[i]
         } else {

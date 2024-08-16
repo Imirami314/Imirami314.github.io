@@ -265,39 +265,11 @@ class NPC extends Entity {
         }
         this.playerDist = playerDist // temporary
     
-        if (this.lineNum >= 0 && playerDist <= 100) {
-            // Change player/npc dir depending on which way you're facing
-            // This sometimes causes weird issues if the npc's y coordinate is on the edge of a block
-            if (p.cords.y == this.cords.y) {
-                if (p.x > this.x) {
-                    p.dir = "L"
-                    if (this.lookAtPlayer) {
-                        this.dir = "R"
-                    }
-                } else if (p.x < this.x) {
-                    p.dir = "R"
-                    if (this.lookAtPlayer) {
-                        this.dir = "L"
-                    }
-                }
-            } else if (p.cords.y > this.cords.y) {
-                p.dir = "U"
-                if (this.lookAtPlayer) {
-                    this.dir = "D"
-                }
-            } else if (p.cords.y < this.cords.y) {
-                p.dir = "D"
-                if (this.lookAtPlayer) {
-                    this.dir = "U"
-                }
-            }
-            
-        }
-    
         if (this.lineNum >= 0) {
             
             if (playerDist <= 100 || this.remoteSpeak) {
-                
+                this.faceTalkingDirection();
+
                 if (this.actionLine == this.lineNum && !this.actionFinished) {
                     this.action(p)
                     this.actionFinished = true
@@ -403,19 +375,47 @@ class NPC extends Entity {
             } else if (!!this.curPath && this.curPath != 0) {
                 this.lineNum = -1
                 this.actionFinished = false
+                p.canMove = true;
             }
         }
     
         if (this.curPath != 0 && this.lineNum == -1) {
             this.runPath(this.curPath)
-        }
-    
-        if (playerDist <= 100 || this.remoteSpeak) {
+
+            p.canMove = true;
+        } else if (playerDist <= 100 || this.remoteSpeak) {
             if (this.lineNum == -1) {
                 p.canMove = true
-                
             } else {
                 p.canMove = false
+            }
+        }
+    }
+
+    faceTalkingDirection() {
+        // Change player/npc dir depending on which way you're facing
+        // This sometimes causes weird issues if the npc's y coordinate is on the edge of a block
+        if (p.cords.y == this.cords.y) {
+            if (p.x > this.x) {
+                p.dir = "L"
+                if (this.lookAtPlayer) {
+                    this.dir = "R"
+                }
+            } else if (p.x < this.x) {
+                p.dir = "R"
+                if (this.lookAtPlayer) {
+                    this.dir = "L"
+                }
+            }
+        } else if (p.cords.y > this.cords.y) {
+            p.dir = "U"
+            if (this.lookAtPlayer) {
+                this.dir = "D"
+            }
+        } else if (p.cords.y < this.cords.y) {
+            p.dir = "D"
+            if (this.lookAtPlayer) {
+                this.dir = "U"
             }
         }
     }

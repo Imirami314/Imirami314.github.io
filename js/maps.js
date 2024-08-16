@@ -786,6 +786,12 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
                         ctx.drawImage(images.sunStone, j * this.blockSize, i * this.blockSize, 75, 75)
                         ctx.drawImage(images.luminosLamp, j * this.blockSize + 20, i * this.blockSize - 35, 35, 85)
                         break
+                    case '[': // Light Gate Open
+                        ctx.fillStyle = "rgb(0, 150, 0)"; // changeme to Light Gate image
+                        break
+                    case ']': // Light Gate Closed
+                        ctx.fillStyle = "rgb(150, 0, 0)"; // changeme to Light Gate image
+                        break
                 }
             }
         }
@@ -2949,6 +2955,7 @@ const empressAurorasPalace = new Landscape([
 
         empressAurora.actionLine = "after";
         empressAurora.action = function() {
+            meetingEmpressAurora.finish();
             empressAurora.lines = [
                 "Come, follow me to The Catacombs.\nYou might find a clue to where this elemental master is hiding!"
             ];
@@ -2998,6 +3005,44 @@ const theCatacombs = new Landscape([
 ], null, null, null, null, "The Catacombs", function() {
     lighting = 1200;
     theCatacombs.manualDoors = true;
+
+    if (theCatacombs.getBlock(22, 2) == '(' && theCatacombs.getBlock(22, 3) == '(' && !theCatacombs.empressAuroraCheckIn) {
+        theCatacombs.empressAuroraCheckIn = true;
+        
+        empressAurora.map = theCatacombs;
+        empressAurora.goTo(ctr(21), ctr(4));
+        empressAurora.dir = 'R';
+        empressAurora.lines = [
+            "Well, I see you have made progress.",
+            "I originally came over to check on you,\nbut I happened to discover some new information.",
+            "I'm afraid I must tell you rather quickly so that\nnobody wonders where I've gone.",
+            "The other regional leaders have informed me that\nevery one of their elemental masters were in some sort of dungeon.",
+            "If there is a dungeon underneath Luminos Isle, there is a\nvery good chance that it was built by Luminos's citizens long ago.",
+            "And if this is the case, they most likely would have used a Light Gate.",
+            "Light Gates require a beam of light to be opened, ensuring\nthat only a Luminos Isle citizen would be able to enter.",
+            "*That is, unless you had Light Containers.",
+            "Light Containers can do many wondrous things,\nand opening Light Gates is merely one use.",
+            "I will give you my supply of Light Containers, however if this\ndungeon is to be truly secure, I suspect that many more are needed.",
+            "You should head back up to Luminos Isle and get\nyour hands on some more Light Containers.",
+            "*I suggest visiting shops and asking around for Light Containers.\nThey might not be free though.",
+            "Anyway, I must get back up to my palace! The fate of Luminos Isle is in your hands!"
+        ];
+
+        empressAurora.action = function() {
+            empressAurora.curPath = [
+                [20, 4],
+                [20, 12],
+                [22, 12],
+                [22, 14],
+                function() {
+                    empressAurora.map = empressAurorasPalace;
+                    empressAurora.goTo(b(18), b(3));
+                }
+            ];
+
+            empressAurora.clearAction();
+        }
+    }
 
     if (keys.space && !p.spaceActioned) {
         if (p.on(22, 14)) {
@@ -3087,20 +3132,6 @@ class Region {
         return regionResult
     }
 }
-
-// Region.getRegionFromCords = function(blockX, blockY) {
-//     regions.forEach((region) => {
-//         console.log(region.name)
-//         for (var i in region.bounds) {
-//             var b = region.bounds[i]
-//             if (blockX >= b.x1 && blockY >= b.y1 && blockX <= b.x2 && blockY <= b.y2 && curMap == mainMap) {
-//                 return region
-//             }
-//         }
-//     })
-
-//     return null
-// }
 
 var chardTown = new Region("Chard Town", [
     {
