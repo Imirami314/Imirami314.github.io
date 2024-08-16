@@ -65,7 +65,7 @@ Mission.prototype.alert = function(t) {
 		ctx.fillStyle = "rgb(0, 0, 0)"
 		ctx.font = "75px serif"
 		ctx.textAlign = 'center'
-		ctx.fillText(this.name, width / 2, height / 8 - 25)
+		ctx.fillText(this.name, width / 2, height / 8)
 		ctx.font = "30px serif"
 		ctx.fillText("Completed!", width / 2, height / 8 + 50)
 		setTimeout(() => { 
@@ -411,6 +411,15 @@ theBlockedEntrance.solve = function () {
                     loch.lines = ["Wow, I've sure missed that entrance.\nThanks again for fixing it!",
                         "If you want to go up and down, just enter from the middle!"]
                     }
+                ]
+
+                ronan.lines = [
+                    "I can't believe it! The entrance is fixed!",
+                    "How did this happen??",
+                    "...",
+                    "Wow, so it was you! Thank you so much!",
+                    "Now I don't need to sit here all day...",
+                    "If you ever need me, I'll be in my house."
                 ]
                 theBlockedEntrance.finish()
             }

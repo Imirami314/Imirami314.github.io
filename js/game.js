@@ -35,7 +35,7 @@
     
         // Dropton Drylands
         new GameAlert(252, 67, ["Welcome to the Dropton Drylands!", "Not that it's dry here, it's just dry compared to being underwater..."], mainMap, "SIGN"),
-        new GameAlert(252, 81, ["--To Dropton City and Dropton Town--", "The entrance is at the southern branch of the lake's northeast channel. It is a small\narea of water that is blocked off. Make sure you have an Aqua Lung first!"], mainMap, "SIGN"),
+        //new GameAlert(252, 81, ["--To Dropton City and Dropton Town--", "The entrance is at the southern branch of the lake's northeast channel. It is a small\narea of water that is blocked off. Make sure you have an Aqua Lung first!"], mainMap, "SIGN"),
         new GameAlert(224, 83, ["Dropton Water Wear:\nDropton's official partner for all water-related gear!"], mainMap, "SIGN"),
     
         // Dropton City/Town
@@ -1133,19 +1133,26 @@
         }
     }, "after")
     
-    var caruk = new NPC(227 * 75, ctr(90), "Caruk the Fisherman", mainMap, 'L', [
+    var caruk = new NPC(b(227), ctr(90), "Caruk the Fisherman", mainMap, 'L', [
         "I am fisherger!",
     ], "[insert description]", function() {
     
     }, "after")
     
-    var creek = new NPC(ctr(226), 87 * 75, "Creek", mainMap, 'U', [
+    var creek = new NPC(ctr(226), b(87), "Creek", mainMap, 'U', [
         "Hello there kind sir!",
         "I'm setting up a shop, but it's not quite ready.",
         "Come back later when it's complete."
     ], "[insert description]", function() {
     
     }, "after")
+
+    var ronan = new NPC(ctr(254), ctr(81), "Ronan", mainMap, 'L', [
+        "Hey there!",
+        "Right now the direct entrance to Dropton City is unfortunately under maitenence\ndue to blockages.",
+        "Temporarily, you can use the southern branch of the lake's northeast channel.",
+        "Just make sure you have an Aqua Lung!"
+    ])
     
     var coral = new NPC(ctr(5), 2 * 75, "Coral", coralsWatercolors, 'D', [
         "Hello, I'm Coral, and welcome to my watercolor shop.",
