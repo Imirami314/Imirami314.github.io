@@ -263,7 +263,8 @@ var blocks = [
         name: "lock",
         through: true,
         dps: 0,
-        speed: 3
+        speed: 3,
+        useDesc: "Press space to examine"
     },
     {
         id: "(",
@@ -1484,7 +1485,19 @@ var confoundedCave = new Landscape([
     '__________$$$$$$$$$$$$$$$$$$$_____________$_________',
     '____________________________$$$$$$$$$$$$$$$_________',
     '____________________________________________________',
-], 75, 75, 6, 52, "Confounded Cave")
+], 75, 75, 6, 52, "Confounded Cave", function() {
+    if (keys.space && !p.spaceActioned) {
+        if (p.on(7, 1)) {
+            Screen.fadeOut(0.05, function() {
+                curMap = mainMap;
+                p.goTo(ctr(6), ctr(52));
+                Screen.fadeIn(0.05);
+            })
+
+            p.spaceActioned = true;
+        }
+    }
+})
 
 var noctosRoom = new Landscape([
     '____________S_______',

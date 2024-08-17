@@ -15,9 +15,9 @@ var alerts = [
     new GameAlert(79, 43, ["Rowan's Dojo:\nNow accepting students!"], mainMap, "SIGN"),
     new GameAlert(10, 7, ["BOW??20! hSHDs1@???:\n?fdkj2!","SDHG9 dahf!!01 fdhk!@8 d,\nhjfdj sh>9 /rhd9:f hfu???jfnvjejdj..??."], mainMap, "DECIPHER", null, ["Chard Town's Secret:\nPART 2","Chard Town possesses an unfinished letter,\nPress the right key to make everything better..."]),
     new GameAlert(66, 10, ["Huh? It's locked.\nYou need the 'Steel Field Key'."], mainMap, "KEY", "Map Key"),
+    new GameAlert(6, 53, ["Huh? It's locked.\nYou need the 'Confounded Cave Key'."], mainMap, "KEY", "Confounded Cave Key"),
 
     // Confounded Cave
-    new GameAlert(6, 53, ["Huh? It's locked.\nYou need the 'Confounded Cave Key'."], mainMap, "KEY", "Confounded Cave Key"),
     new GameAlert(6, 21, ["The buttons above will alter the walls,\nPress them correctly to open both halls..."], confoundedCave, "SIGN"),
     new GameAlert(28, 11, ["Huh? It's locked.\nYou need a 'Puzzle Key'."], confoundedCave, "KEY", "Puzzle Key"),
 
@@ -35,7 +35,7 @@ var alerts = [
 
     // Dropton Drylands
     new GameAlert(252, 67, ["Welcome to the Dropton Drylands!", "Not that it's dry here, it's just dry compared to being underwater..."], mainMap, "SIGN"),
-    new GameAlert(252, 81, ["--To Dropton City and Dropton Town--", "The entrance is at the southern branch of the lake's northeast channel. It is a small\narea of water that is blocked off. Make sure you have an Aqua Lung first!"], mainMap, "SIGN"),
+    // new GameAlert(252, 81, ["--To Dropton City and Dropton Town--", "The entrance is at the southern branch of the lake's northeast channel. It is a small\narea of water that is blocked off. Make sure you have an Aqua Lung first!"], mainMap, "SIGN"),
     new GameAlert(224, 83, ["Dropton Water Wear:\nDropton's official partner for all water-related gear!"], mainMap, "SIGN"),
 
     // Dropton City/Town
@@ -358,16 +358,7 @@ GameAlert.prototype.drawMessage = function () {
                 // }
 
                 if (this.showKeyAlert) {
-                    if (p.weapon.name != this.item) {
-                        getBlockById(p.blockOn.id).useDesc = "Press space to examine";
-                        // ctx.fillStyle = "rgb(255, 255, 255)"
-                        // ctx.roundRect(width / 2 - 80, height / 2 + 50, 160, 50, 10)
-                        // ctx.fill()
-                        // ctx.fillStyle = "rgb(0, 0, 0)"
-                        // ctx.font = "15px serif"
-                        // ctx.textAlign = "center"
-                        // ctx.fillText("Press space to examine", width / 2, height / 2 + 75)
-                    } else {
+                    if (p.weapon.name == this.item) {
                         getBlockById(p.blockOn.id).useDesc = "Click to unlock";
                         // ctx.fillStyle = "rgb(255, 255, 255)"
                         // ctx.roundRect(width / 2 - 80, height / 2 + 50, 160, 50, 10)
@@ -380,6 +371,10 @@ GameAlert.prototype.drawMessage = function () {
                             this.lines = ["The lock has been opened!"];
                         }
                         
+                    } else {
+                        if (p.blockOn.id == ':') {
+                            getBlockById(p.blockOn.id).useDesc = "Press space to examine";
+                        }
                     }
                 }
             } else if (this.type == "EXAMINE" || this.type == "DECIPHER") {
@@ -1148,6 +1143,13 @@ var creek = new NPC(ctr(226), 87 * 75, "Creek", mainMap, 'U', [
 ], "[insert description]", function() {
 
 }, "after")
+
+var ronan = new NPC(ctr(254), ctr(81), "Ronan", mainMap, 'L', [
+    "Hey there!",
+    "Right now the direct entrance to Dropton City is unfortunately under maitenence\ndue to blockages.",
+    "Temporarily, you can use the southern branch of the lake's northeast channel.",
+    "Just make sure you have an Aqua Lung!"
+])
 
 var coral = new NPC(ctr(5), 2 * 75, "Coral", coralsWatercolors, 'D', [
     "Hello, I'm Coral, and welcome to my watercolor shop.",
