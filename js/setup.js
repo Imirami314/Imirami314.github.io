@@ -62,7 +62,7 @@ if (!!lget("player")) {
 }
 
 var finder = new PF.AStarFinder({
-    allowDiagonal: true,
+    allowDiagonal: false,
     dontCrossCorners: true
 })
 
@@ -462,6 +462,9 @@ class Cooldown {
 var playing = false
 
 var curMusic;
+var globalMusicVolume = 1;
+
+
 var curSound;
 
 var music = [
@@ -633,14 +636,16 @@ var sounds = [
 
 var musicFading = false
 
-function playMusic(name) {
+function playMusic(name, volume) {
     for (var i in music) {
         var msc = music[i]
         if (msc.name == name) {
             msc.audio.play()
-            msc.audio.volume = 1
+            msc.audio.volume = (volume ?? 1) * globalMusicVolume;
             msc.audio.isPlaying = true
             curMusic = msc[i]
+
+            curMusic = msc;
         } else {
             msc.audio.pause()
             msc.audio.currentTime = 0
@@ -679,7 +684,7 @@ function playSound(name, loop) {
         var sound = sounds[i]
         if (sound.name == name) {
             sound.audio.play()
-            sound.audio.volume = 0.2
+            sound.audio.volume = 0.6
             sound.audio.loop = loop
             curSound = sound
         }

@@ -1071,7 +1071,7 @@ var mainMap = new Landscape([
     'T,,,,,,,,,,,,,WWWWWWW,~~~~~~~~~,-TTT-T-T,,,,,/~~~~~~/,,,TOTT,,,,,TTT,S~~~~S,,,TTT,,,TT,,,,TSSS~___S~~______S_!__!!!!S_SSS!SSSSSSS___SSS_SSS,,,,,,,,T,,,,,,T,,,,,,,,,@,,TT,,,,,,t,@,,,,,,,,@,,,,,,,t,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,,,,,,,,,,,,,,,T---T,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,',
     'T,,,,,,,,,,,,,,,,,,,,,~~~~~~~~~,-T---T-T,,,,,/~~~~~~/,,,T,,TTTT,,,TT,,SSSS,,,TT,,T,,,,,,,TTSSSSSS!SSSSSS_S_!_!!$_!!!SSS_!!!_______S_S!S_SS!,,,,,@,,,TTTTTT,,,@,T,,,,,,T,,,,,,,,,@,,,,,,t,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,,,,,,,,,,,,,,,T---T,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,',
     'T,,,,,,,,,,,,,,,,,,,,,,~~~~~~~---T-T---T,,,,,,//////,,,,T,,TT,,,,T,,,,,,,,,,,W,,TTT@TT,,,,TSS__________!_S_S_!$$$!__S!S!!!$!__SSS_S_!!S_SSS,,,,,,,,,,@,,,,,T,,,,TTTTTT,,@,t,,,,@,,,,,,@,,,,,,@,t,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,,,,,,,,,,,,,,,T---T,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,',
-    'T,,,,,,,,,,,,,,,,,,,,,,,~~~~~--TTT-TTT-T,,,,*,,,,,,,,,,,TT,,TTTTT,,T,,,TTT,,,TT,@T,,,,,,T,,SS_!SS!SS_S_S_S___$$$$$__SSS!!$$$__S!S_!!!!_~!!S,,,@~~~~,,TTTTTT,,,@,,,,,,,,,,,,,,,,,,,t,,@,,,t,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,,,,,,,,,,,,,,,TT-TT,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,',
+    'T,,,,,,,,,,,,,,,,,,,,,,,~~~~~--TTT-TTT-T,,,,,,,,,,,,,,,,TT,,TTTTT,,T,,,TTT,,,TT,@T,,,,,,T,,SS_!SS!SS_S_S_S___$$$$$__SSS!!$$$__S!S_!!!!_~!!S,,,@~~~~,,TTTTTT,,,@,,,,,,,,,,,,,,,,,,,t,,@,,,t,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,,,,,,,,,,,,,,,TT-TT,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,',
     'TTTTTTTTTTTTTTTTTTTTT,,,,,,,--TT-----T-TTTTTTTTTTTTTTTTTTT,,,WTT,,,TT,,,TTTT,,T,,,,T,,,TTTTSS~___S_!_S_S_S__$$$$$$$_____$$$$$_SSS_SSS!S!!!S,~~~~,T,,,@,,,,,,,,,,,,@,,,,,t,,,,@,,,,,,@,,,,,,,t,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,,,,,,,,,,,,,,,TT-TT,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,',
     'TTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT,,,,,TTT,TTT@,,,TTT,T:,,,,TTTT,,,,,T,,TTT,TTT,,T,T,SS!SS_S_S_S_S_S~_$$$$$$$_!!__$$$$$____~SSSSSSS!S~~T,,,,,,,t,,,,,@,,,t,,,,,@,,,@,,,,,,,,@,,,,,t,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,,,,,,,,,,,,,,,T--TT,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,',
     'TTTTTT,,,,,,,/,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,T,,T,TT,TTT,TTWTT,TT,T,,,,TTT,,TT,,W,@,T,,,,,,SS~_S_!___S___S__$$$|$$$!!!__$$|$$___SSSS,,,,,~~~,,,,,@,,,,,,,,t,,,,,,,,,,,,,,,,,,,t,,,,,,,,,,,,,@,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,,,,,,,,,,,,,,,TT--T,,,,,,,,,,,,,,,,,,,,,,,,T,,,,,,,,,,',
@@ -3175,12 +3175,20 @@ var chardTown = new Region("Chard Town", [
                 p.goTo(ctr(7), ctr(1))
                 Screen.fadeIn(0.05)
             })
-        } else if (p.on(6, 52)) {
+        } else if (p.on(6, 52)) { // Confounded cave
             if (curMap.getBlock(6, 52) == 'O') { // Verify that the pathway is open
                 Screen.fadeOut(0.05, function() {
                     curMap = confoundedCave
                     p.goTo(ctr(1), ctr(1))
-                    Screen.fadeIn(0.05)
+                    Screen.fadeIn(0.05, function() {
+                        if (curMissions.indexOf(secretsOfSteelField) != -1 && curMissions.indexOf(underneathChardTown) == -1) {
+                            secretsOfSteelField.finish();
+
+                            setTimeout(() => {
+                                addMission(underneathChardTown);
+                            }, 3500);
+                        }
+                    })
                 })
             }
         }
@@ -3188,7 +3196,7 @@ var chardTown = new Region("Chard Town", [
     }
 
 }, function() {
-    playMusic("Chard")
+    playMusic("Chard", 0.45);
 })
 
 var steelField = new Region("Steel Field", [

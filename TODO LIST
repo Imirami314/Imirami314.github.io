@@ -7,18 +7,15 @@ One Time
 - Change old man's path to the sacred star location to fit the new changes made to the map
 - Make the old man not in a tree sometimes
 - Make wayne not in a tree sometimes
-- Add player sword attack animation
 - Make the storyline at the beginning better (it sucks)
-- Fix rafting while talking to NPCS to prevent softlocks
 - Fix queens crown speedy snow sound
 - Fix raft alert
-- Think of theme for the 4th main quest city/town and add it to the Old Man's lines
 - Fix wanderer's lines
 - Fix breakable blocks
 - Fix remote NPC logic
 - Gale Cave is broken because not all interactives have cords.x and cords.y
-- Add CommandsRun to save data
-- Add a house for Ronan (do we even use this anymore)
+- Add a house for Ronan (do we even use this anymore) (I will start using it again)
+- Fix Sacred Star Cutscene or replace it entirely (the frames slow down near the end of the cutscene for some reason)
 
 Continuous
 - Add sound effects for all blocks
@@ -31,8 +28,6 @@ Textures and images we need:
 - Bricks
 - Heat Handle (I forgot this existed)
 - Aura of Warmth
-- Sand (we have one right now but it sucks)
-- Maybe more tree textures for variety?
 - Windy Wastelands Key (it's just the confounded cave key right now lol)
 - Shovel
 - Decipherer
@@ -51,10 +46,7 @@ Game bugs/issues to fix
 - Fix issue where clicking doesn't give the glasses to the old man or the heat handle to Smith (it fixes itself when you reload the save)
 - Fix basically everything with all the boss cutscenes
 - Fix bug where signs with backwards text (that appear next to changed things after beating a boss) don't actually appear
-- Fix double action issues (e.g. pressing space and it talks to an NPC and reads a sign at the same time)
-- Fix issue where wayne says "ayo" instead of the correct lines (occurs after the sacred star cutscene)
 - Fix issue where NPCS give you multiple items if you talk to them multiple times
-- Make monsters not condense into each other
 - Fix bug where after Hydros gets stunned in lava he doesn't get stunned again until he leaves the lava and goes back in
 - Add cutscene scene for Hydros lol
 

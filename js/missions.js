@@ -95,6 +95,10 @@ aStrangeWorld.solve = function () {
 
 const secretsOfSteelField = new Mission("Secrets of Steel Field", "Main", "This is where the adventure really begins.", "You've made it to Steel Field. Keep an eye out for lava!\nWayne says you need to go find Smith the Blacksmith to get geared up.\nHe lives in one of the houses on the east side of Steel Field.")
 
+const underneathChardTown = new Mission("Underneath Chard Town", "Main", "After finding the key, you entered Confounded Cave...now what?", "If you don't know where to go, you might as well just explore the place.");
+
+const elementsOfElria = new Mission("Elements of Elria", "Main", "At last, you now know your true mission: Venture to all 5 major regions, defeat the corrupted Elemental masters,\nand lastly, defeat Omnos to save Elria!", "Go find Wayne, and he'll give you the next steps.");
+
 var meetingTheQueen = new Mission("Meeting The Queen", "Main", "[insert description]", "[insert instructions]")
 
 meetingTheQueen.initalize = function () {

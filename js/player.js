@@ -1629,7 +1629,7 @@ Player.prototype.displayMissionList = function() {
         }
     } else {
         fill(0, 0, 0);
-        displayText("No missions yet!", width / 2, height / 2, 75);
+        displayText("You have no missions right now.", width / 2, height / 2, 75);
     }
 }
 

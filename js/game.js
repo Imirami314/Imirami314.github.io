@@ -18,8 +18,10 @@ var alerts = [
     new GameAlert(6, 53, ["Huh? It's locked.\nYou need the 'Confounded Cave Key'."], mainMap, "KEY", "Confounded Cave Key"),
 
     // Confounded Cave
+    new GameAlert(8, 4, ["The spiral awaits you..."], confoundedCave, "SIGN"),
     new GameAlert(6, 21, ["The buttons above will alter the walls,\nPress them correctly to open both halls..."], confoundedCave, "SIGN"),
     new GameAlert(28, 11, ["Huh? It's locked.\nYou need a 'Puzzle Key'."], confoundedCave, "KEY", "Puzzle Key"),
+    new GameAlert(35, 11, ["Press space at the center, prepare for a fight,\nFor you're about to meet the Master of Night."], confoundedCave, "SIGN"),
 
     // Glacia Region
     new GameAlert(182, 3, ["Glacia Village ---------->\n<---------- Steel Field\nIf text on the signs confuse and confound, it all becomes clearer if you flip it around."], mainMap, "SIGN"),
@@ -29,7 +31,6 @@ var alerts = [
     new GameAlert(176, 30, ["DO NOT ENTER\nWIND IS INCREDIBLY STRONG"], mainMap, "SIGN"),
     new GameAlert(183, 39, ["Shot from a bow, on the map you'll see,\nthe land forms a symbol to point where you should be."], mainMap, "SIGN"),
     new GameAlert(28, 23, ["Find the four brothers, have no fears,\nAs the light shines through, the answer appears.", "When a button is found, a brother is near.\nOnce you're finished, come back here."], galeCave, "SIGN"),
-    new GameAlert(35, 11, ["Press space at the center, prepare for a fight,\nFor you're about to meet the Master of Night."], confoundedCave, "SIGN"),
     new GameAlert(44, 33, ["Warning: very cold past this point!", "Auras are recommended."], galeCave, "SIGN"),
     new GameAlert(1, 7, ["Caution: Strong wind!"], howlerHollow, "SIGN"),
 
@@ -2966,7 +2967,9 @@ const c14_3 = new Chest(confoundedCave, 14, 3, [
     }, function(p) {
             
         if (p.cords.x == 28 && p.cords.y == 11 && curMap == confoundedCave) {
-            curMap.changeBlock(29, 11, '_')
+            curMap.changeBlock(29, 11, '_');
+
+            underneathChardTown.setInstructions("It looks like you've opened the lock to the central spiral. Now all that's left is to enter the hole in the middle!\nJust be ready for anything...");
             
             p.removeItem(this);
         }
@@ -3241,12 +3244,61 @@ if (!!save) {
 function startPos() {
     dev = false;
     // p.inventory = [items.hydrosScythe, items.stormedsSword, food.apple(), food.apple(), food.apple(), food.apple(), food.apple(), food.apple(), items.aquaLung, items.steelSword, items.skywayCell]
-    p.inventory = [items.heatHandle];
+    p.inventory = [items.spearOfNoctos];
     p.goTo(ctr(3), ctr(2));
     p.updateSortedInventory();
-    curMap = smithHouse;
+    curMap = mainMap
 
-    addMission(secretsOfSteelField);
+    p.x = ctr(41)
+    p.y = ctr(59)
+    p.questPoint = {
+        x: 37,
+        y: 50
+    }
+
+    addMission(elementsOfElria);
+
+    curMap.changeBlock(67, 10, "_") // Re-opens the path to Steel Field (in case it doesn't work for the save)
+    curMap.changeBlock(138, 4, "_")
+
+    oldMan.map = mainMap
+    
+    oldMan.lines = [
+        "Now go talk to Wayne. He'll tell you what\nto do next.",
+        "He should be around here somewhere."
+    ]
+
+    oldMan.clearAction();
+    
+    wayne.x = ctr(45)
+    wayne.y = ctr(42)
+    wayne.dir = 'D';
+    wayne.lines = [
+        "Hello!",
+        "The old man should have told you about this island's history,\nso now I'll help you save it!",
+        "Long ago, Noctos and the other masters were corrupted and\nwreaked havoc upon this island!",
+        "Although the islanders could not defeat them, they were able\ntemporarily imprison them.",
+        "Before they could do this, however, the masters built borders between\ndifferent regions of this island. This made it tougher for\nus islanders to work together.",
+        "These borders were designed to open for their masters. But, since you conquered\none of the them, we suspect these borders may open for you.",
+        "So, I've marked a spot on your map for where we believe\n the border was placed a long time ago. If you are\nable to pass, it should take you straight into Glacia Village.",
+        "You'll have more work to do there.",
+        "Be quick though, as the masters won't be imprisoned forever. For all we know\nthey could escape right now!",
+        "I wish you the best of luck!\nAnd don't worry, I'll be there to check in on you every so often."
+    ];
+
+    // 137, 4
+    alerts.push(new GameAlert(137, 4, ["SEGREME THGIN FO RETSAM WEN A SA SNEPO REDROB EHT"], mainMap, "SIGN"))
+    
+    wayne.action = function(p) {
+        // Location of Glacia Village entry
+        p.questPoint = {
+            x: 135 * 75,
+            y: 4 * 75
+        }
+
+        elementsOfElria.setInstructions("Since you've defeated Noctos and claimed his spear,\nWayne believes that Omnos's border between Steel Field and Glacia Village\nwill open for you. So, now you must venture to the northeastern side of Steel Field, where\nyou'll (hopefully) be able to enter Glacia Village.");
+    }
+    wayne.actionLine = "after"
 
     // p.equipped = [items.aquaLung]
     // lithosCutsceneDeath.onEnd();
@@ -3524,8 +3576,8 @@ var gameInterval = setInterval(function() {
                 bossfight = false
                 if (curMap == noctosRoom) {
                     Screen.fadeOut(0.005, function() {
-                        noctosScale = 1
-                        scene = "DARKENED BOSS CUTSCENE DEFEATED"
+                        noctosScale = 1;
+                        scene = "DARKENED BOSS CUTSCENE DEFEATED";
                     })
                 } else if (curMap == stormedRoom) {
                     Screen.fadeOut(0.005, function() {
@@ -3969,12 +4021,13 @@ var gameInterval = setInterval(function() {
             }
         
             if (cutsceneFrame > 800) {
-                scene = "GAME"
+                scene = "GAME";
+
                 fade = 0
                 curMap = mainMap
                 p.x = 6 * 75
                 p.y = 54 * 75
-                p.giveItem(items.spearOfNoctos, false)
+                p.giveItem(items.spearOfNoctos, true);
                 wayne.x = ctr(6)
                 wayne.y = ctr(46)
                 lighting = 5000
@@ -4005,17 +4058,15 @@ var gameInterval = setInterval(function() {
                     "The old man wanted to talk to you about something.\nHe should be outside his house."
                 ]
                 
-                oldMan.x = 19 * 75 + mainMap.blockSize / 2
-                oldMan.y = 8 * 75 + mainMap.blockSize / 2
+                oldMan.goTo(ctr(19), ctr(9));
                 oldMan.map = mainMap
                 oldMan.lines = [
-                    "You're back! Wait...",
-                    "What's this you're holding?",
+                    "You're back! Where were you?",
                     "...",
-                    "The Spear of Noctos??? How did you get that?",
-                    "Did you really defeat the Noctos?",
-                    "...",
+                    "You ventured into Confounded Cave?",
+                    "AND you defeated Noctos?",
                     "Wow!! I was planning on telling you more first, but\nyou've already gone and done it!",
+                    "You've even got Noctos's spear!",
                     "I still have a lot to tell you though.\nFollow me and I'll tell you more...",
                     "Here's a special tracker in case you get lost.\nYou should be able to see me on your map with it!"
                 ]
@@ -4024,28 +4075,46 @@ var gameInterval = setInterval(function() {
                     oldMan.lines = [
                         "Follow me..."
                     ]
-                    this.curPath = [
-                        [20, 9],
-                        [44, 9],
-                        [44, 59],
-                        [40, 59],
-                        function() {
-                            oldMan.lines = [
-                                "Now I will tell you about " + badGuy + "'s history."
-                            ]
-                            oldMan.action = function(p) {
-                                cutsceneFrame = 0
-                                scene = "SACRED STAR CUTSCENE"
-                            }
-                            oldMan.actionLine = "after"
+
+                    let path = oldMan.pathTo(52, 50);
+                    path.push(function() {
+                        oldMan.lines = [
+                            "Now I will tell you about " + badGuy + "'s history."
+                        ]
+                        oldMan.action = function(p) {
+                            cutsceneFrame = 0
+                            scene = "SACRED STAR CUTSCENE"
                         }
-                    ]
+                        oldMan.actionLine = "after"
+                    });
+
+                    oldMan.curPath = path;
+
+                    // oldMan.curPath = [
+                    //     [20, 9],
+                    //     [44, 9],
+                    //     [44, 59],
+                    //     [40, 59],
+                    //     function() {
+                    //         oldMan.lines = [
+                    //             "Now I will tell you about " + badGuy + "'s history."
+                    //         ]
+                    //         oldMan.action = function(p) {
+                    //             cutsceneFrame = 0
+                    //             scene = "SACRED STAR CUTSCENE"
+                    //         }
+                    //         oldMan.actionLine = "after"
+                    //     }
+                    // ]
                 }
                 oldMan.actionLine = "after"
                 
                 wayne.talkedTo = false
                 cutsceneFrame = 0
-                Screen.effects = []
+
+                Screen.effects = [];
+
+                underneathChardTown.finish();
             }
         
             if (cutsceneFrame > 750) {
@@ -4121,32 +4190,32 @@ var gameInterval = setInterval(function() {
             // }
             // noctosRoom.draw(p, "Player View")
         } else if (scene == "SACRED STAR CUTSCENE") {
-            cutsceneFrame ++
+            cutsceneFrame ++;
             playMusic("Sacred Star Cutscene")
-            if (cutsceneFrame >= 0 && cutsceneFrame < 700) {
+            if (cutsceneFrame >= 0 && cutsceneFrame < 500) {
                 ctx.fillStyle = "rgb(255, 255, 255)"
                 ctx.fillRect(0, 0, width, height)
                 ctx.drawImage(images.sacredStar, width / 2 - width/6 - cutsceneFrame / 30, height / 2 - height * 3/8 - cutsceneFrame / 10, width/3 + cutsceneFrame / 15, width/3 + cutsceneFrame / 15)
     
-                if (cutsceneFrame < 350) {
+                if (cutsceneFrame < 250) {
                     cutsceneText = "This island is made up of five core elements. The elements make up what we call the Sacred Star."
                 } else {
                     cutsceneText = "These elements are Wind, Land, Sea, Day, and Night. Each one of these has its own master."
                 }
-            } else if (cutsceneFrame >= 700 && cutsceneFrame < 2050) {
+            } else if (cutsceneFrame >= 500 && cutsceneFrame < 1250) {
                 ctx.save()
                 ctx.scale(0.5, 0.5)
                 ctx.translate(0 * 75 - (cutsceneFrame - 700) * 2, -10 * 75)
                 confoundedCave.draw(p, "Cutscene View", 0 * 75 + (cutsceneFrame - 700) * 2, 10 * 75, 0.5)
                 ctx.restore()
-                if (cutsceneFrame < 1150) {
+                if (cutsceneFrame < 750) {
                     cutsceneText = "Noctos is the Master of Night. However, the Noctos you battled is not the real one!"
-                } else if (cutsceneFrame >= 1150 && cutsceneFrame < 1600) {
+                } else if (cutsceneFrame >= 750 && cutsceneFrame < 1000) {
                     cutsceneText = badGuy + " provided the original masters with weapons to make them more powerful."
-                } else if (cutsceneFrame >= 1600 && cutsceneFrame < 2050) {
+                } else if (cutsceneFrame >= 1000 && cutsceneFrame < 1250) {
                     cutsceneText = "Over time, however, these weapons corrupted the Masters and turned them against the island."
                 }
-            } else if (cutsceneFrame >= 2050 && cutsceneFrame < 3850) {
+            } else if (cutsceneFrame >= 1250 && cutsceneFrame < 2250) {
                 // music[curMusicNum].audio.volume -= 0.002
                 // console.log(music[curMusicNum].audio.volume)
                 ctx.save()
@@ -4154,14 +4223,16 @@ var gameInterval = setInterval(function() {
                 ctx.translate(0 * 75 - (cutsceneFrame - 2050) * 2, -10 * 75)
                 mainMap.draw(p, "Cutscene View", 0 * 75 + (cutsceneFrame - 2050) * 2, 10 * 75, 0.3)
                 ctx.restore()
-                if (cutsceneFrame >= 2050 && cutsceneFrame < 2500) {
+                if (cutsceneFrame >= 1250 && cutsceneFrame < 1500) {
                     cutsceneText = "When the time is right, " + badGuy + " will use the power of the Masters for anything he wants!"
-                } else if (cutsceneFrame >= 2500 && cutsceneFrame < 2950) {
+                } else if (cutsceneFrame >= 1500 && cutsceneFrame < 1750) {
                     cutsceneText = "If this happens, the elements will no longer remain here, and the island will be destroyed!"
-                } else if (cutsceneFrame >= 2950 && cutsceneFrame < 3400) {
+                } else if (cutsceneFrame >= 1750 && cutsceneFrame < 2000) {
                     cutsceneText = "When you battled " + badGuy + " you proved that you could handle the power of the weapons without being corrupted."
-                } else if (cutsceneFrame >= 3400 && cutsceneFrame < 3850) {
+                } else if (cutsceneFrame >= 2000 && cutsceneFrame < 2250) {
+                    // music[curMusicNum].audio.volume -= 0.002;
                     // musicFading = true
+                    globalMusicVolume -= 0.004;
                     // if (musicFading) {
                     //     music[curMusicNum].audio.volume -= 0.002
                     //     console.log(music[curMusicNum].audio.volume)
@@ -4171,6 +4242,8 @@ var gameInterval = setInterval(function() {
                 }
                 
             } else {
+                globalMusicVolume = 1;
+
                 scene = "GAME"
                 p.x = ctr(41)
                 p.y = ctr(59)
@@ -4178,25 +4251,27 @@ var gameInterval = setInterval(function() {
                     x: 37,
                     y: 50
                 }
+
+                addMission(elementsOfElria);
     
                 curMap.changeBlock(67, 10, "_") // Re-opens the path to Steel Field (in case it doesn't work for the save)
                 curMap.changeBlock(138, 4, "_")
-    
-                // This code piece is a backup to move the old man into the correct spot, even though he should be there anyway
-                oldMan.x = ctr(40)
-                oldMan.y = ctr(59)
+
                 oldMan.map = mainMap
                 
                 oldMan.lines = [
                     "Now go talk to Wayne. He'll tell you what\nto do next.",
                     "He should be around here somewhere."
                 ]
+
+                oldMan.clearAction();
                 
-                wayne.x = ctr(37)
-                wayne.y = ctr(50)
+                wayne.x = ctr(45)
+                wayne.y = ctr(42)
+                wayne.dir = 'D';
                 wayne.lines = [
                     "Hello!",
-                    "I think the old man told you about this island's history,\nso I'll help you save it!",
+                    "The old man should have told you about this island's history,\nso now I'll help you save it!",
                     "Long ago, Noctos and the other masters were corrupted and\nwreaked havoc upon this island!",
                     "Although the islanders could not defeat them, they were able\ntemporarily imprison them.",
                     "Before they could do this, however, the masters built borders between\ndifferent regions of this island. This made it tougher for\nus islanders to work together.",
@@ -4204,8 +4279,8 @@ var gameInterval = setInterval(function() {
                     "So, I've marked a spot on your map for where we believe\n the border was placed a long time ago. If you are\nable to pass, it should take you straight into Glacia Village.",
                     "You'll have more work to do there.",
                     "Be quick though, as the masters won't be imprisoned forever. For all we know\nthey could escape right now!",
-                    "I wish you the best of luck!"
-                ]
+                    "I wish you the best of luck!\nAnd don't worry, I'll be there to check in on you every so often."
+                ];
     
                 // 137, 4
                 alerts.push(new GameAlert(137, 4, ["SEGREME THGIN FO RETSAM WEN A SA SNEPO REDROB EHT"], mainMap, "SIGN"))
@@ -4216,6 +4291,8 @@ var gameInterval = setInterval(function() {
                         x: 135 * 75,
                         y: 4 * 75
                     }
+
+                    elementsOfElria.setInstructions("Since you've defeated Noctos and claimed his spear,\nWayne believes that Omnos's border between Steel Field and Glacia Village\nwill open for you. So, now you must venture to the northeastern side of Steel Field, where\nyou'll (hopefully) be able to enter Glacia Village.");
                 }
                 wayne.actionLine = "after"
         
