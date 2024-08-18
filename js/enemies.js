@@ -60,7 +60,6 @@ Enemy.prototype.getClosestMonsterDist = function() {
 
 Enemy.prototype.pathToPlayer = function() {
     return this.pathTo(p.cords.x, p.cords.y)
-    
 }
 
 Enemy.prototype.pathToHome = function() {
@@ -79,23 +78,42 @@ Enemy.prototype.removeFromQueue = function() {
     }
 }
 
-Enemy.prototype.movePathToPlayer = function(angleSpeed, isBoss) {
-    if (!(isBoss ?? false)) {
-        // let pRegion = Region.getRegionFromCords(p.cords.x, p.cords.y)
-        if (this.map == curMap.name/* && Region.getRegionFromCords(Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75)) == pRegion*/ && !this.isDead()) {
-            this.addToQueue()
-            this.movePathTo(p.cords.x, p.cords.y, (angleSpeed ?? 0.2), (isBoss ?? false))
+Enemy.prototype.normalizeAngle = function(angle) {
+    while (angle > Math.PI) angle -= 2 * Math.PI;
+    while (angle < -Math.PI) angle += 2 * Math.PI;
+    return angle;
+}
+
+// New method to calculate separation force
+Enemy.prototype.calculateSeparationForce = function() { // chatgpt made a lot of this, so i will check if everything works
+    const desiredSeparation = 75; // desired separation distance
+    let separationForce = {x: 0, y: 0};
+    let count = 0;
+
+    for (let i = 0; i < Enemy.queue.length; i++) {
+        const other = Enemy.queue[i];
+        if (other !== this) {
+            let distance = Math.hypot(this.x - other.x, this.y - other.y);
+            if (distance < desiredSeparation) {
+                let diff = {x: this.x - other.x, y: this.y - other.y};
+                diff.x /= distance;
+                diff.y /= distance;
+                separationForce.x += diff.x;
+                separationForce.y += diff.y;
+                count++;
+            }
         }
-    } else {
-        this.movePathTo(p.cords.x, p.cords.y, (angleSpeed ?? 0.2), (isBoss ?? false))
     }
+
+    if (count > 0) {
+        separationForce.x /= count;
+        separationForce.y /= count;
+    }
+
+    return separationForce;
 }
 
-Enemy.prototype.movePathToHome = function(angleSpeed) {
-    this.removeFromQueue()
-    this.movePathTo(Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75), (angleSpeed ?? 0.2))
-}
-
+// Adjusted movePathTo method to include separation
 Enemy.prototype.movePathTo = function(cordX, cordY, angleSpeed, isBoss) {
     if (!!this.pathTo(cordX, cordY) && !!this.pathTo(cordX, cordY)[1] && this.pathTo(cordX, cordY).length > 0) {
         this.nextPoint = {
@@ -103,36 +121,56 @@ Enemy.prototype.movePathTo = function(cordX, cordY, angleSpeed, isBoss) {
             y: this.pathTo(cordX, cordY)[1][1]
         }
 
-        var dx = this.nextPoint.x - this.cords.x
-        var dy = this.nextPoint.y - this.cords.y
+        let dx = this.nextPoint.x - this.cords.x;
+        let dy = this.nextPoint.y - this.cords.y;
         
         this.moveAngle = Math.atan2(dy, dx)
-        if (Math.abs(this.moveAngle - this.curAngle) > 0.1) {
-            if (this.curAngle < this.moveAngle) {
-                this.curAngle += angleSpeed
+        let angleDiff = this.normalizeAngle(this.moveAngle - this.curAngle)
+        if (Math.abs(angleDiff) > 0.1) {
+            if (angleDiff > 0) {
+                this.curAngle += Math.min(angleDiff, angleSpeed)
             } else {
-                this.curAngle -= angleSpeed
+                this.curAngle += Math.max(angleDiff, -angleSpeed)
             }
+            this.curAngle = this.normalizeAngle(this.curAngle); // Normalize to ensure it's within bounds
         }
         
-        
-        // Enemy movement
+        // Calculate separation force
+        let separation = this.calculateSeparationForce();
+
+        // Combine movement and separation forces
+        let moveX = dx * this.speed + separation.x;
+        let moveY = dy * this.speed + separation.y;
+
         if (!isBoss) {
             if (p.closestEnemy() == this) {
-                this.move(dx * this.speed, dy * this.speed)
+                this.move(moveX, moveY);
             } else if ((this.getClosestMonsterDist() >= 150) ||
                 (this.getClosestMonsterDist() < 150 && Enemy.queue.indexOf(this) < Enemy.queue.indexOf(this.getClosestMonster()))) { 
-                // Checks if no monsters nearby OR close but only moves if it is closer in queue
-                this.move(dx * (this.speed), dy * (this.speed))
+                this.move(moveX, moveY);
             }
         } else {
             this.move(dx * this.speed, dy * this.speed);
         }
-       
     }
-
-    
 }
+
+Enemy.prototype.movePathToPlayer = function(angleSpeed, isBoss) {
+    if (!(isBoss ?? false)) {
+        if (this.map == curMap.name && !this.isDead()) {
+            this.addToQueue();
+            this.movePathTo(p.cords.x, p.cords.y, (angleSpeed ?? 0.2), (isBoss ?? false));
+        }
+    } else {
+        this.movePathTo(p.cords.x, p.cords.y, (angleSpeed ?? 0.2), (isBoss ?? false));
+    }
+}
+
+Enemy.prototype.movePathToHome = function(angleSpeed) {
+    this.removeFromQueue();
+    this.movePathTo(Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75), (angleSpeed ?? 0.2));
+}
+
 
 class Boss extends Enemy {
     constructor(map, spawnX, spawnY) {
@@ -1361,6 +1399,7 @@ class Splint extends Enemy {
             if (!this.isHit) {
                 ctx.drawImage(images.splint, this.x - 37.5, this.y - 37.5, 75, 75)
             } else {
+             
                 ctx.drawImage(images.splintHurt, this.x - 37.5, this.y - 37.5, 75, 75)
             }
             ctx.translate(this.x, this.y)
