@@ -85,33 +85,33 @@ Enemy.prototype.normalizeAngle = function(angle) {
 }
 
 // New method to calculate separation force
-Enemy.prototype.calculateSeparationForce = function() { // chatgpt made a lot of this, so i will check if everything works
-    const desiredSeparation = 75; // desired separation distance
-    let separationForce = {x: 0, y: 0};
-    let count = 0;
+// Enemy.prototype.calculateSeparationForce = function() { // chatgpt made a lot of this, so i will check if everything works
+//     const desiredSeparation = 75; // desired separation distance
+//     let separationForce = {x: 0, y: 0};
+//     let count = 0;
 
-    for (let i = 0; i < Enemy.queue.length; i++) {
-        const other = Enemy.queue[i];
-        if (other !== this) {
-            let distance = Math.hypot(this.x - other.x, this.y - other.y);
-            if (distance < desiredSeparation) {
-                let diff = {x: this.x - other.x, y: this.y - other.y};
-                diff.x /= distance;
-                diff.y /= distance;
-                separationForce.x += diff.x;
-                separationForce.y += diff.y;
-                count++;
-            }
-        }
-    }
+//     for (let i = 0; i < Enemy.queue.length; i++) {
+//         const other = Enemy.queue[i];
+//         if (other !== this) {
+//             let distance = Math.hypot(this.x - other.x, this.y - other.y);
+//             if (distance < desiredSeparation) {
+//                 let diff = {x: this.x - other.x, y: this.y - other.y};
+//                 diff.x /= distance;
+//                 diff.y /= distance;
+//                 separationForce.x += diff.x;
+//                 separationForce.y += diff.y;
+//                 count++;
+//             }
+//         }
+//     }
 
-    if (count > 0) {
-        separationForce.x /= count;
-        separationForce.y /= count;
-    }
+//     if (count > 0) {
+//         separationForce.x /= count;
+//         separationForce.y /= count;
+//     }
 
-    return separationForce;
-}
+//     return separationForce;
+// }
 
 // Adjusted movePathTo method to include separation
 Enemy.prototype.movePathTo = function(cordX, cordY, angleSpeed, isBoss) {
@@ -136,18 +136,18 @@ Enemy.prototype.movePathTo = function(cordX, cordY, angleSpeed, isBoss) {
         }
         
         // Calculate separation force
-        let separation = this.calculateSeparationForce();
+        // let separation = this.calculateSeparationForce();
 
-        // Combine movement and separation forces
-        let moveX = dx * this.speed + separation.x;
-        let moveY = dy * this.speed + separation.y;
+        // // Combine movement and separation forces
+        // let moveX = dx * this.speed + separation.x;
+        // let moveY = dy * this.speed + separation.y;
 
         if (!isBoss) {
             if (p.closestEnemy() == this) {
-                this.move(moveX, moveY);
+                this.move(dx * this.speed, dy * this.speed);
             } else if ((this.getClosestMonsterDist() >= 150) ||
                 (this.getClosestMonsterDist() < 150 && Enemy.queue.indexOf(this) < Enemy.queue.indexOf(this.getClosestMonster()))) { 
-                this.move(moveX, moveY);
+                this.move(dx * this.speed, dy * this.speed);
             }
         } else {
             this.move(dx * this.speed, dy * this.speed);
@@ -157,8 +157,9 @@ Enemy.prototype.movePathTo = function(cordX, cordY, angleSpeed, isBoss) {
 
 Enemy.prototype.movePathToPlayer = function(angleSpeed, isBoss) {
     if (!(isBoss ?? false)) {
-        if (this.map == curMap.name && !this.isDead()) {
+        if (this.map == curMap.name && Region.getRegionFromCords(Math.floor(this.x / 75), Math.floor(this.y / 75)) == p.region && !this.isDead()) {
             this.addToQueue();
+           // alert(this)
             this.movePathTo(p.cords.x, p.cords.y, (angleSpeed ?? 0.2), (isBoss ?? false));
         }
     } else {
