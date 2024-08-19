@@ -160,9 +160,11 @@ const items = {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
     }, function (p) {
         if (p.cords.x == 160 && p.cords.y == 4) {
-            curMap = queensCastle
-            p.x = 37.5
-            p.y = 37.5
+            // curMap = queensCastle
+            // p.x = 37.5
+            // p.y = 37.5
+            mainMap.changeBlock(160, 4, 'O');
+            meetingTheQueen.setInstructions("Finally, you have located the secret entrance to the Queen's Castle. All that's left is to\nenter the castle and make your way to wherever Queen Alaska is.");
             p.removeItem(this);
         }
     }, "A key to the Queen's Castle.", "KEYS"),

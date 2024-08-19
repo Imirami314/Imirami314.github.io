@@ -1580,7 +1580,7 @@ var lonzoHouse = new Landscape([
 ], ctr(3), ctr(3), 228, 16, "Lonzo's House")
 
 var queensCastle = new Landscape([
-    '___W___W_____________________________$$$$$$$',             
+    '|__W___W_____________________________$$$$$$$',             
     '___!___W__________________________~~~$**~~~$',        
     '___W___W__________________________!$$$**~zz$',         
     'W!WWW!WW__________________________c$****~cz$',
@@ -3226,7 +3226,7 @@ var glaciaVillage = new Region("Glacia Village", [
         y2: 31
     },
     {
-        x1: 182,
+        x1: 138,
         y1: 1,
         x2: 270,
         y2: 11
@@ -3239,6 +3239,22 @@ var glaciaVillage = new Region("Glacia Village", [
     }
 ], function() {
     setLighting(5000)
+
+    if (p.regionsDiscovered.indexOf(glaciaVillage) == -1) {
+        elementsOfElria.setInstructions("Now that you have arrived in Glacia Village, you need to somehow defeat their Elemental Master.\nIf you're ever unsure what to do, just exploring and talking to different people\ncan be very useful!");
+    }
+
+    if (p.on(160, 4) && mainMap.getBlock(160, 4) == 'O') {
+        if (keys.space && !p.spaceActioned) {
+            Screen.fadeOut(0.05, function() {
+                curMap = queensCastle;
+                p.goTo(ctr(0), ctr(0));
+                Screen.fadeIn(0.05);
+            });
+
+            // p.spaceActioned = true;
+        }
+    }
 }, function() {
     playMusic("Glacia Village")
 })

@@ -62,7 +62,7 @@ function Player(x, y, npcs) {
     this.regionsDiscovered = [chardTown]
     this.newRegionAlert = false
     this.newRegion = null
-    this.canViewAllRegions = true
+    this.canViewAllRegions = false
     
     this.weaponIndex = 0
     this.weapon = null
@@ -1611,6 +1611,10 @@ Player.prototype.displayMissionList = function() {
             fill(0, 0, 0);
             displayText(m.name, 230, 105 + i * 75, 25);
 
+            if (m.unread) {
+                ellipse(400, 100 + i * 75, 20, 20, "rgb(255, 0, 0)");
+            }
+
             ctx.textAlign = "center"; // Reset text align
         }
 
@@ -1622,7 +1626,9 @@ Player.prototype.displayMissionList = function() {
         ctx.stroke();
 
         // Specific mission information
+        fill(0, 0, 0);
         if (this.missionBeingDisplayed != null) {
+            this.missionBeingDisplayed.unread = false;
             displayText(this.missionBeingDisplayed.name, width * 2 / 3, 120, 50);
             displayText(`${this.missionBeingDisplayed.type} Mission`, width * 2 / 3, 150, 15);
             displayText(this.missionBeingDisplayed.desc + "\n\n" + this.missionBeingDisplayed.instructions, width * 2 / 3, 200, 20);

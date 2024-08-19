@@ -18,6 +18,8 @@ function Mission(name, type, desc, instructions, solve) {
 	this.complete = false
 	this.completionPopup = false
 
+    this.unread = false;
+
 	Mission.all.push(this)
 }
 
@@ -33,14 +35,17 @@ Mission.prototype.drawDesc = function () {
 
 Mission.prototype.setDesc = function(newDesc) {
     this.desc = newDesc;
+    this.unread = true;
 }
 
 Mission.prototype.setInstructions = function(newInstructions) {
     this.instructions = newInstructions;
+    this.unread = true;
 }
 
 Mission.prototype.addInstructions = function(newInstructions) {
     this.instructions += newInstructions;
+    this.unread = true;
 }
 
 Mission.prototype.alert = function(t) {
@@ -99,7 +104,7 @@ const underneathChardTown = new Mission("Underneath Chard Town", "Main", "After 
 
 const elementsOfElria = new Mission("Elements of Elria", "Main", "At last, you now know your true mission: Venture to all 5 major regions, defeat the corrupted Elemental masters,\nand lastly, defeat Omnos to save Elria!", "Go find Wayne, and he'll give you the next steps.");
 
-var meetingTheQueen = new Mission("Meeting The Queen", "Main", "[insert description]", "[insert instructions]")
+var meetingTheQueen = new Mission("Meeting The Queen", "Main", "In order to defeat the elemental master of Glacia Village, you'll\nneed to speak to Glacia Village's leader, Queen Alaska.", "Lonzo told you that he had the key to Queen Alaska's castle, but he lost it!\nWhen using this key, Lonzo said to 'go between red and blue'.\nFirst things first, however, you need to find that key.\nPerhaps the other citizens of Glacia have picked it up...")
 
 meetingTheQueen.initalize = function () {
     this.enableBuy = false
@@ -212,12 +217,11 @@ meetingTheQueen.solve = function () {
                         saveGame()  
 
                         nevada.action = function () {
+                            meetingTheQueen.setInstructions("It looks like Lonzo's key to the Queen's Castle might be floating in the small\npond. However, the breezeway that can take you there is broken.\nSo, Nevada needs you to collect 10 gale wings for her to repair the breezeway with.\nAlso, she normally charges 100 trills, but she'll only charge you 50 because\nit's your first time!");
                             meetingTheQueen.enableBuy = true  
                             nevada.clearAction()
                         }
                         nevada.actionLine = "after"
-                        
-            
             
                     })
                     
@@ -259,8 +263,9 @@ meetingTheQueen.solve = function () {
 
     if (curMap == mainMap && keys.space && p.on(164, 23) && !p.has(items.castleKey)) {
 
+        meetingTheQueen.setInstructions("You successfully retrieved the Castle Key from the pond! Now, where do you use it?\nLonzo remembers the Queen saying to stand 'between red and blue.'");
         p.giveItem(items.castleKey, true)    
-        nevada.lines = ["Look at that!\nIt was the key!", "This is great! We must let Lonzo know!", "Go ahead and do the honors.\nI couldn't have done this without you!"]
+        nevada.lines = ["Look at that!\nIt was the key!", "This is great! We must let Lonzo know!", "Go ahead and do the honors.\nI couldn't have done this without you!"];
         lonzo.lines = [
             "Hey there!",
             "Any luck on finding the key?",
