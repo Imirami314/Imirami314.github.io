@@ -86,7 +86,7 @@ Enemy.prototype.normalizeAngle = function(angle) {
 
 // New method to calculate separation force
 // Enemy.prototype.calculateSeparationForce = function() { // chatgpt made a lot of this, so i will check if everything works
-//     const desiredSeparation = 75; // desired separation distance
+//     const desiredSeparation = 50; // desired separation distance
 //     let separationForce = {x: 0, y: 0};
 //     let count = 0;
 
@@ -128,26 +128,26 @@ Enemy.prototype.movePathTo = function(cordX, cordY, angleSpeed, isBoss) {
         let angleDiff = this.normalizeAngle(this.moveAngle - this.curAngle)
         if (Math.abs(angleDiff) > 0.1) {
             if (angleDiff > 0) {
-                this.curAngle += Math.min(angleDiff, angleSpeed)
+                this.curAngle += Math.min(angleDiff, angleSpeed) * (this.rotateSpeed ?? 1) // rotate speed is 0 to 1
             } else {
-                this.curAngle += Math.max(angleDiff, -angleSpeed)
+                this.curAngle += Math.max(angleDiff, -angleSpeed) * (this.rotateSpeed ?? 1)
             }
             this.curAngle = this.normalizeAngle(this.curAngle); // Normalize to ensure it's within bounds
         }
         
         // Calculate separation force
-        // let separation = this.calculateSeparationForce();
-
-        // // Combine movement and separation forces
-        // let moveX = dx * this.speed + separation.x;
-        // let moveY = dy * this.speed + separation.y;
+       
+       // Combine movement and separation forces
+       
 
         if (!isBoss) {
-            if (p.closestEnemy() == this) {
+            if (Enemy.queue.indexOf(this) == 0) {
+                this.move(dx * this.speed, dy * this.speed); 
+            } else if ((this.getClosestMonsterDist() >= 200) ||
+                (this.getClosestMonsterDist() < 200 && Enemy.queue.indexOf(this) < Enemy.queue.indexOf(this.getClosestMonster()))) { 
                 this.move(dx * this.speed, dy * this.speed);
-            } else if ((this.getClosestMonsterDist() >= 150) ||
-                (this.getClosestMonsterDist() < 150 && Enemy.queue.indexOf(this) < Enemy.queue.indexOf(this.getClosestMonster()))) { 
-                this.move(dx * this.speed, dy * this.speed);
+            } else {
+                this.move(dx * this.speed * 0.1, dy * this.speed * 0.1)
             }
         } else {
             this.move(dx * this.speed, dy * this.speed);
@@ -1321,10 +1321,13 @@ class Splint extends Enemy {
         this.maxHealth = 20
         this.health = 20
         this.speed = 2
+        this.rotateSpeed =  Math.random() * 0.6 + 0.4; // (0.4 to 1)
         this.playerDist = 10000 // Gets updated by the draw method
         this.agroDist = 500
         this.deAgroDist = 750
         this.agro = false
+        
+
         
         this.weaponPos = 0
         this.hitting = false
@@ -1398,9 +1401,14 @@ class Splint extends Enemy {
             }
             ctx.translate(- (this.x), - (this.y))
             if (!this.isHit) {
+                this.queueNum = (Enemy.queue.indexOf(this) ?? -1)
+                ctx.fillStyle = "rgb(0, 0, 0)"
+                ctx.font = "25px serif"
+                ctx.textAlign = 'center'
+                ctx.fillText(this.queueNum + " " + Math.floor(this.getClosestMonsterDist()) + " " + !(this.getClosestMonsterDist() < 200 && Enemy.queue.indexOf(this) < Enemy.queue.indexOf(this.getClosestMonster())), this.x, this.y - 55);
                 ctx.drawImage(images.splint, this.x - 37.5, this.y - 37.5, 75, 75)
             } else {
-             
+                
                 ctx.drawImage(images.splintHurt, this.x - 37.5, this.y - 37.5, 75, 75)
             }
             ctx.translate(this.x, this.y)
