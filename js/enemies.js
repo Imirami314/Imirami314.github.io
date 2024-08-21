@@ -89,17 +89,21 @@ Enemy.prototype.normalizeAngle = function(angle) {
 }
 
 Enemy.prototype.getRelativeDirection = function (x, y) {
-    let direction = ""
-    if (this.cords.x == p.cords.x && (this.y < p.y)) {
-        direction = "U"
-    } else if (this.cords.x == p.cords.x && (this.y > p.y)) {
-        direction = "D"
-    } else if (this.cords.y == p.cords.y && (this.x < p.x)) {
-        direction = "L"
-    } else if (this.cords.y == p.cords.y && (this.x > p.x)) {
-        direction = "R"
+    let direction = "";
+
+    if (this.x < x) {
+        direction += "L"; 
+    } else if (this.x > x) {
+        direction += "R";
     }
-    return direction
+
+    if (this.y < y) {
+        direction += "U"; 
+    } else if (this.y > y) {
+        direction += "D"; 
+    }
+
+    return direction;
 }
 
 
@@ -110,12 +114,12 @@ Enemy.prototype.sortQueue = function () {
 
     // Calculate the current direction relative to the player
     this.currentDirection = firstMonster.getRelativeDirection(p.x, p.y);
-
+    
     // If the direction has changed, re-sort the queue
     if (this.currentDirection !== this.lastDirection) {
         // Resort the queue based on the new distances to the player
-        Enemy.queue.sort((a, b) => a.getPathLength(p.cords.x, p.cords.y) - b.getPathLength(p.cords.x, p.cords.y));
-
+        
+        Enemy.queue.sort((a, b) => a.getPathLength(p.cords.x, p.cords.y) - b.getPathLength(p.cords.x, p.cords.y))
         // Update the last known direction
         this.lastDirection = this.currentDirection;
     }
@@ -194,7 +198,7 @@ Enemy.prototype.movePathTo = function(cordX, cordY, angleSpeed, isBoss) {
                     this.move(dx * this.speed, dy * this.speed);
                 } else {
                     // Move slower to avoid overlapping with other monsters
-                    this.move(dx * this.speed * 0.1, dy * this.speed * 0.1);
+                    this.move(dx * this.speed * 0.25, dy * this.speed * 0.25);
                 }
             }
         } else {
