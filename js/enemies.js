@@ -6,8 +6,6 @@ function Enemy(map, spawnX, spawnY) {
     this.moveAngle = 0
     this.curAngle = 0
     
-    // The queue that determines which order enemies should attack first
-    this.queue = []
 }
 
 Enemy.queue = [];
@@ -21,7 +19,11 @@ Enemy.prototype.updatePlayerInfo = function() {
     this.dirCoefY = (this.pdy / Math.abs(this.pdy)) // Gives 1 or -1 depending on whether the player is above or below
     this.playerDist = Math.hypot((p.x - this.x), (p.y - this.y))
     this.playerAngle = Math.atan2((p.y - this.y), (p.x - this.x)) // Gives angle direction of player
+
+    
 }
+
+
 
 Enemy.prototype.isStuck = function(dx, dy) {
     if (!getBlockById(curMap.getBlock(Math.floor((this.x) / 75), Math.floor((this.y + dy) / 75))).through ||
@@ -66,6 +68,8 @@ Enemy.prototype.pathToHome = function() {
     return this.pathTo(Math.floor(this.spawnX / 75), Math.floor(this.spawnY / 75))
 }
 
+
+
 Enemy.prototype.addToQueue = function () {
     if (!Enemy.queue.includes(this)) {
         Enemy.queue.push(this)
@@ -82,6 +86,39 @@ Enemy.prototype.normalizeAngle = function(angle) {
     while (angle > Math.PI) angle -= 2 * Math.PI;
     while (angle < -Math.PI) angle += 2 * Math.PI;
     return angle;
+}
+
+Enemy.prototype.getRelativeDirection = function (x, y) {
+    let direction = ""
+    if (this.cords.x == p.cords.x && (this.y < p.y)) {
+        direction = "U"
+    } else if (this.cords.x == p.cords.x && (this.y > p.y)) {
+        direction = "D"
+    } else if (this.cords.y == p.cords.y && (this.x < p.x)) {
+        direction = "L"
+    } else if (this.cords.y == p.cords.y && (this.x > p.x)) {
+        direction = "R"
+    }
+    return direction
+}
+
+
+
+Enemy.prototype.sortQueue = function () {
+    let firstMonster = Enemy.queue[0];
+    
+
+    // Calculate the current direction relative to the player
+    this.currentDirection = firstMonster.getRelativeDirection(p.x, p.y);
+
+    // If the direction has changed, re-sort the queue
+    if (this.currentDirection !== this.lastDirection) {
+        // Resort the queue based on the new distances to the player
+        Enemy.queue.sort((a, b) => a.getPathLength(p.cords.x, p.cords.y) - b.getPathLength(p.cords.x, p.cords.y));
+
+        // Update the last known direction
+        this.lastDirection = this.currentDirection;
+    }
 }
 
 // New method to calculate separation force
@@ -141,13 +178,24 @@ Enemy.prototype.movePathTo = function(cordX, cordY, angleSpeed, isBoss) {
        
 
         if (!isBoss) {
-            if (Enemy.queue.indexOf(this) == 0) {
+            this.sortQueue()
+            console.log(Enemy.queue[0].getRelativeDirection(p.x, p.y))
+            var queuePosition = Enemy.queue.indexOf(this);
+
+            // If the monster is closest to the player
+            if (queuePosition == 0) {
                 this.move(dx * this.speed, dy * this.speed); 
-            } else if ((this.getClosestMonsterDist() >= 200) ||
-                (this.getClosestMonsterDist() < 200 && Enemy.queue.indexOf(this) < Enemy.queue.indexOf(this.getClosestMonster()))) { 
-                this.move(dx * this.speed, dy * this.speed);
             } else {
-                this.move(dx * this.speed * 0.1, dy * this.speed * 0.1)
+                var closestMonsterDist = this.getClosestMonsterDist();
+                var closestMonsterQueuePosition = Enemy.queue.indexOf(this.getClosestMonster());
+
+                // If the distance to the closest monster is large enough, or if this monster should move ahead of the closest monster in the queue
+                if (closestMonsterDist >= 200 || (closestMonsterDist < 200 && queuePosition < closestMonsterQueuePosition)) {
+                    this.move(dx * this.speed, dy * this.speed);
+                } else {
+                    // Move slower to avoid overlapping with other monsters
+                    this.move(dx * this.speed * 0.1, dy * this.speed * 0.1);
+                }
             }
         } else {
             this.move(dx * this.speed, dy * this.speed);
@@ -1405,7 +1453,7 @@ class Splint extends Enemy {
                 ctx.fillStyle = "rgb(0, 0, 0)"
                 ctx.font = "25px serif"
                 ctx.textAlign = 'center'
-                ctx.fillText(this.queueNum + " " + Math.floor(this.getClosestMonsterDist()) + " " + !(this.getClosestMonsterDist() < 200 && Enemy.queue.indexOf(this) < Enemy.queue.indexOf(this.getClosestMonster())), this.x, this.y - 55);
+                ctx.fillText(this.queueNum + " " + " " + !(this.getClosestMonsterDist() < 200 && Enemy.queue.indexOf(this) < Enemy.queue.indexOf(this.getClosestMonster())), this.x, this.y - 55);
                 ctx.drawImage(images.splint, this.x - 37.5, this.y - 37.5, 75, 75)
             } else {
                 
