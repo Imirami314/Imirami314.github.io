@@ -1133,52 +1133,120 @@ var c = new Camera(200 * 75, 15 * 75, 15)
 mainMap.solve = function() {
     //
     if (curMap == mainMap) {
-        runOnce(() => {
-            setTimeout(() => {
-                larisa.x = ctr(45)
-                larisa.y = ctr(23)
+
+        // Beginning of game
+        // runOnce(() => {
+        //     setTimeout(() => {
+        //         larisa.x = ctr(45)
+        //         larisa.y = ctr(23)
              
-                    // Larisa walks and talks to player
-                    larisa.curPath = [
-                        [45, 23],
-                        [56, 23],
-                        function () {
-                            // Default ON
-                            // larisa.dir = "U"
-                            // larisa.remote = true
-                            // p.dir = "D"
-                            // cameraStart(b(56), b(23), 5, "NPC", {
-                            //     npcName: larisa,
-                            //     lineStop: -1
-                            // })
-                            // larisa.lines = [
-                            //     "HUH?!",
-                            //     "Who are you?",
-                            //     "...",
-                            //     "Oh, you can talk!",
-                            //     "Anyways, it looks like you are stuck buddy!",
-                            //     "Maybe I should get someone. One of the important ones anyway.\nWait right here!"
-                            // ]
+        //             // Larisa walks and talks to player
+        //             larisa.curPath = [
+        //                 [45, 23],
+        //                 [56, 23],
+        //                 function () {
+        //                     // Default ON
+        //                     larisa.dir = "U"
+        //                     larisa.remote = true
+        //                     p.dir = "D"
+        //                     cameraStart(b(56), b(23), 5, "NPC", {
+        //                         npcName: larisa,
+        //                         lineStop: -1
+        //                     })
+        //                     larisa.lines = [
+        //                         "HUH?!",
+        //                         "Who are you?",
+        //                         "...",
+        //                         "Oh, you can talk!",
+        //                         "Anyways, it looks like you are stuck buddy!",
+        //                         "Maybe I should get someone.\nWait right here!"
+        //                     ]
 
-                            // larisa.action = function () {
-                            //     p.dir = "D"
-                            // }
-                            // larisa.actionLine = 0
+        //                     larisa.action = function () {
+        //                         p.dir = "D"
+        //                     }
+        //                     larisa.actionLine = 0
 
-                            // larisa.action = function () {
-                            //     Screen.fadeOut(0.05, function() {
-                            //         larisa.x = 1
-                            //         larisa.y = 1
-                            //     })
-                            // }
-                            // larisa.actionLine = "after"
+        //                     larisa.action = function () {
+        //                         Screen.fadeOut(0.01, function() {
+        //                             oldMan.map = mainMap
+        //                             oldMan.x = ctr(53)
+        //                             oldMan.y = ctr(20)
+        //                             larisa.x = ctr(59)
+        //                             larisa.y = ctr(20)
+        //                             larisa.dir = "L"
+        //                             oldMan.dir = "R"
+                                   
+        //                             oldMan.lines = [
+        //                                 "Oh my goodness...",
+        //                                 "I can't believe it. How is this possible?",
+        //                                 "I don't know how long it's been...",
+        //                                 "Sorry, I need to get you out of this.\nI have too much to explain."
+        //                             ]
+                                    
+        //                             oldMan.remote = true
+        //                             oldMan.action = function () {
+        //                                 oldMan.curPath = [
+        //                                     [53, 23],
+        //                                     [56, 23],
+        //                                     function () {
+        //                                         mainMap.changeBlock(56, 22, ",")
+        //                                         oldMan.remote = true
+        //                                         oldMan.lines = ["Follow me..."]
+        //                                         // Still camera
+        //                                         cameraStart(p.x, p.y, 5, "NPC", {
+        //                                             npcName: oldMan,
+        //                                             lineStop: -1
+        //                                         })
 
-                        }
-                    ]
+                                                
+        //                                         oldMan.action = function () {
+        //                                             Screen.fadeOut(0.01, function() {
+        //                                                 curMap = johnHouse
+        //                                                 p.x = ctr(5)
+        //                                                 p.y = ctr(2)
+        //                                                 oldMan.x = ctr(1)
+        //                                                 oldMan.y = ctr(2)
+        //                                                 oldMan.map = johnHouse
+
+        //                                                 oldMan.lines = [""]
+        //                                                 larisa.lines = [
+        //                                                     "Hi again buddy!",
+        //                                                     "It's Larisa, the guy that found you!",
+        //                                                     "I still don't really get how you got stuck there...",
+        //                                                     "Either way, it's nice to meet ya!"
+        //                                                 ]
+
+        //                                             })
+    
+        //                                         }
+        //                                         oldMan.actionLine = "after"
+
+                                                
+                                               
+                                                
+                                                
+        //                                     }
+        //                                 ]
+                                        
+        //                             }
+        //                             cameraStart(oldMan.x, oldMan.y, 5, "NPC", {
+        //                                 npcName: oldMan,
+        //                                 lineStop: -1
+        //                             })
+
+        //                         })
+        //                         larisa.lines = ["ello"]
+        //                         larisa.clearAction()
+        //                     }
+        //                     larisa.actionLine = "after"
+
+        //                 }
+        //             ]
                 
-            }, 3000)
+        //     }, 3000)
             
-        })
+        // })
     }
 
 
@@ -1276,8 +1344,8 @@ imperilledPrison.solve = function () {
 
     if (p.on(1, 1) && keys.space) {
         curMap = mainMap
-        // p.goTo(ctr(56), ctr(21))
-        p.goTo(ctr(1), ctr(2))
+        p.goTo(ctr(56), ctr(21))
+       // p.goTo(ctr(1), ctr(2))
     }
     
 }
