@@ -494,6 +494,8 @@ function Landscape(arr, enterX, enterY, doorX, doorY, name, solve) {
     this.changes = []
 
     this.temperature = 0
+
+    this.visited = false;
 	
     if (!!save) {
         for (var i in save.maps) {
@@ -871,9 +873,9 @@ Landscape.prototype.checkBlocks = function(blocks, c) {
  * @param {*} block The block char of the new block
  */
 Landscape.prototype.changeBlock = function(x, y, block) {
-    if (this.arr[y].charAt(x) != block) {
+    if (this.arr[y].charAt(x) != block && !!this.grid) {
         this.arr[y] = this.arr[y].replaceAt(x, block)
-        this.grid.setWalkableAt(x, y, getBlockById(block).through)
+        this.grid.setWalkableAt(x, y, getBlockById(block).through);
         this.changes.push({
             x: x,
             y: y,
@@ -1765,10 +1767,12 @@ galeCave.solve = function() {
         }
         
         if (getInteractive(27, 24, galeCave).toggleState == 2 && getInteractive(27, 26, galeCave).toggleState == 2 && getInteractive(27, 23, galeCave).toggleState == 1 && getInteractive(27, 25, galeCave).toggleState == 1) {
-             galeCave.changeBlock(28, 27, 'S')
-             galeCave.changeBlock(29, 27, 'z')
-             galeCave.changeBlock(30, 27, 'z')
-             galeCave.changeBlock(31, 27, 'S')
+            galeCave.changeBlock(28, 27, 'S')
+            galeCave.changeBlock(29, 27, 'z')
+            galeCave.changeBlock(30, 27, 'z')
+            galeCave.changeBlock(31, 27, 'S')
+
+            underneathGlaciaVillage.setInstructions("It looks like you opened a gate in Gale Cave.\nThis place doesn't really look like it seals an elemental master though.\nThere might be an entrance to the dungeon deeper into this cave.");
         }
     } else {
         lighting = 450 // Default 450
@@ -1780,6 +1784,10 @@ galeCave.solve = function() {
             curMap = howlerHollow
             p.x = 75 + 37.5
             p.y = 75 + 37.5
+
+            if (!howlerHollow.visited) {
+
+            }
         }
     
         if (p.cords.x == 0 && p.cords.y == 35) {
@@ -1824,6 +1832,7 @@ var howlerHollow = new Landscape([
 howlerHollow.solve = function() {
     lighting = 2000
     this.temperature = -1
+
     if (!!!howlerHollow.intervalSet) {
         setInterval(function() {
             if (howlerHollow.getBlock(18, 15) == '!') {
@@ -3037,6 +3046,11 @@ const empressAurorasPalace = new Landscape([
         empressAurora.actionLine = "after";
         empressAurora.action = function() {
             meetingEmpressAurora.finish();
+
+            setTimeout(() => {
+                addMission(underneathLuminosIsle);
+            }, 3500);
+
             empressAurora.lines = [
                 "Come, follow me to The Catacombs.\nYou might find a clue to where this elemental master is hiding!"
             ];
@@ -3110,6 +3124,8 @@ const theCatacombs = new Landscape([
         ];
 
         empressAurora.action = function() {
+            underneathLuminosIsle.setInstructions("You managed to open some sort of door to a deeper area! However,\nEmpress Aurora had some information to share with you.\nShe believes that if a super old dungeon does exist, its creators\nmost likely used Light Gates to keep unwanted visitors out.\nSo, you'll need to ask around Luminos Isle to find Light Containers, which will open the Light Gates!");
+
             empressAurora.curPath = [
                 [20, 4],
                 [20, 12],
@@ -3119,6 +3135,12 @@ const theCatacombs = new Landscape([
                     empressAurora.map = empressAurorasPalace;
                     empressAurora.goTo(b(18), b(3));
                 }
+            ];
+
+            empressAurora.lines = [
+                "Well, get to work!",
+                "You're going to need those Light Containers, and\nasking around Luminos Isle is the quickest way!",
+                "No time to waste!"
             ];
 
             empressAurora.clearAction();
@@ -3136,7 +3158,74 @@ const theCatacombs = new Landscape([
                 Screen.fadeIn(0.05);
             });
         }
+
+        if (p.on(22, 0)) {
+            Screen.fadeOut(0.05, function() {
+                curMap = luxosChamber;
+                p.goTo(b(26), b(26));
+
+                p.spaceActioned = true;
+
+                Screen.fadeIn(0.05);
+            });
+        }
     }
+});
+
+const luxosChamber = new Landscape([
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+    '``````````````````````````````````````````````````',
+], null, null, null, null, "Luxos Chamber", function() {
+    lighting = 4999;
+    
 });
 
 var areas = Landscape.all
@@ -3334,6 +3423,19 @@ var windyWastelands = new Region("Windy Wastelands", [{
     y2: 50
 }], function() {
     setLighting(5000)
+
+    if (!p.has(items.stormedsSword)) { // Once player has defeated Stormed, wind will stop
+        weather.wind.time += (perSec(1))
+        weather.wind.x = weather.wind.equation(weather.wind.time % 10)
+        weather.wind.y = weather.wind.equation(weather.wind.time % 7)
+
+        if (getBlockById(curMap.getBlock(Math.floor((p.x + weather.wind.x) / 75), Math.floor((p.y) / 75))).through) {
+            p.x += weather.wind.x
+        }
+        if (getBlockById(curMap.getBlock(Math.floor((p.x) / 75), Math.floor((p.y + weather.wind.y) / 75))).through) {
+            p.y += weather.wind.y
+        }
+    }
 }, function() {
     playMusic("Windy Wastelands")
 })

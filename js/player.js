@@ -60,6 +60,7 @@ function Player(x, y, npcs) {
     this.area = ""
     this.region = null
     this.regionsDiscovered = [chardTown]
+    this.mapsVisited = [];
     this.newRegionAlert = false
     this.newRegion = null
     this.canViewAllRegions = false
@@ -520,37 +521,24 @@ Player.prototype.move = function() {
         this.swordAttack()
     }
     
-    if ((this.cords.x > 66 && this.cords.x < 138 && this.cords.y >= 1 && this.cords.y <= 12) || 
-            (this.cords.x >= 92 && this.cords.x < 138 && this.cords.y >= 1 && this.cords.y <= 60)) {
-        "Steel Field"
-    } else if ((this.cords.x <= 66 && this.cords.x >= 0 && this.cords.y >= 0 && this.cords.y < 15) || 
-                        (this.cords.x >= 0 && this.cords.x < 91 && this.cords.y >= 15 && this.cords.y <= 60)) {
-        this.area = "Chard Town"
-    } else if ((this.cords.x >= 138 && this.cords.x < 270 && this.cords.y >= 11 && this.cords.y < 31) ||
-                        (this.cords.x >= 182 && this.cords.x < 270 && this.cords.y >= 1 && this.cords.y < 11)) {
-        this.area = "Glacia Village"
-    } else if (this.cords.x >= 138 && this.cords.y >= 32 && this.cords.x <= 224 && this.cords.y <= 50) {
-        this.area = "Windy Wastelands"
-		
-        if (!p.has(items.stormedsSword)) { // Once player has defeated Stormed, wind will stop
-            weather.wind.time += (perSec(1))
-            weather.wind.x = weather.wind.equation(weather.wind.time % 10)
-            weather.wind.y = weather.wind.equation(weather.wind.time % 7)
-
-            if (getBlockById(curMap.getBlock(Math.floor((this.x + weather.wind.x) / 75), Math.floor((this.y) / 75))).through) {
-                this.x += weather.wind.x
-            }
-            if (getBlockById(curMap.getBlock(Math.floor((this.x) / 75), Math.floor((this.y + weather.wind.y) / 75))).through) {
-                this.y += weather.wind.y
-            }
-        }
+    // if ((this.cords.x > 66 && this.cords.x < 138 && this.cords.y >= 1 && this.cords.y <= 12) || 
+    //         (this.cords.x >= 92 && this.cords.x < 138 && this.cords.y >= 1 && this.cords.y <= 60)) {
+    //     "Steel Field"
+    // } else if ((this.cords.x <= 66 && this.cords.x >= 0 && this.cords.y >= 0 && this.cords.y < 15) || 
+    //                     (this.cords.x >= 0 && this.cords.x < 91 && this.cords.y >= 15 && this.cords.y <= 60)) {
+    //     this.area = "Chard Town"
+    // } else if ((this.cords.x >= 138 && this.cords.x < 270 && this.cords.y >= 11 && this.cords.y < 31) ||
+    //                     (this.cords.x >= 182 && this.cords.x < 270 && this.cords.y >= 1 && this.cords.y < 11)) {
+    //     this.area = "Glacia Village"
+    // } else if (this.cords.x >= 138 && this.cords.y >= 32 && this.cords.x <= 224 && this.cords.y <= 50) {
+    //     this.area = "Windy Wastelands"
         
-    } else if (this.cords.x >= 225 && this.cords.y >= 31 && this.cords.x <= 279 && this.cords.y <= 65) {
-        this.area = "Encompassed Forest"
-    } else {
-        this.area = "NONE"
+    // } else if (this.cords.x >= 225 && this.cords.y >= 31 && this.cords.x <= 279 && this.cords.y <= 65) {
+    //     this.area = "Encompassed Forest"
+    // } else {
+    //     this.area = "NONE"
 
-    }
+    // }
     
     if (!this.mapOn && this.canMove && !mouseIsDown && !this.inRaft && !this.hitting) {
         if (keys.w && this.stoppedDir != "U" && getBlockById(curMap.getBlock(Math.floor((this.x) / 75), Math.floor((this.y - this.speed) / 75))).through) {
@@ -672,6 +660,10 @@ Player.prototype.move = function() {
 
 Player.prototype.collide = function() {
     var b = curMap.getBlock(this.cords.x, this.cords.y)
+    if (this.mapsVisited.indexOf(curMap) == -1) {
+        this.mapsVisited.push(curMap);
+    }
+
     if (b != "") {
         this.blockOn = getBlockById(b)
     }
@@ -1173,6 +1165,10 @@ Player.prototype.displayMap = function() {
     }
 }
 
+Player.prototype.hasVisitedMap = function(map) {
+    return (this.mapsVisited.indexOf(map) != -1);
+}
+
 Player.prototype.addRegion = function(region, popup) {
     this.regionsDiscovered.push(region)
     if (popup) {
@@ -1634,8 +1630,10 @@ Player.prototype.displayMissionList = function() {
             displayText(this.missionBeingDisplayed.desc + "\n\n" + this.missionBeingDisplayed.instructions, width * 2 / 3, 200, 20);
         }
     } else {
+        ctx.beginPath(); // fixed annoying black strokes issue idk why
         fill(0, 0, 0);
         displayText("You have no missions right now.", width / 2, height / 2, 75);
+        ctx.closePath();
     }
 }
 

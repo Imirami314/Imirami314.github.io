@@ -300,6 +300,207 @@ meetingTheQueen.solve = function () {
     
 }
 
+const underneathGlaciaVillage = new Mission("Underneath Glacia Village", "Main", "It appears that Glacia Village has some sort of underground dungeon near it.", "Queen Alaska suspects that the dungeon's entrance could be hidden in the Windy Wastelands,\nthe region south of Glacia. Very little exploration has been done there as of late, mostly because of the very\ndangerous winds in that area. Be careful!\n\nLonzo is waiting for you at the front of the castle as he can get you into the Windy Wastelands.");
+
+const journeyToLuminosIsle = new Mission("Journey to Luminos Isle", "Main", "Now that you've defeated Lithos, it's time to make your way to the final\ncity, Luminos Isle! Once you're there, you need to look for the leader, Empress Aurora.", "According to Wayne, the only way to get to Luminos Isle is to head to Dawn's Landing.\nFrom there, you can make your way up to the sky where Luminos Isle is.");
+
+const mineraGrovePranksters = new Mission("Pranksters of Minera Grove", "Main", "To reach Dawn's Landing, you need to cross through Minera Grove. Unfortunately,\nSplints are hiding underneath the grove and have blocked Dawn's Landing with trees.\nYou need to help Ranger Gunther deal with the Splints and find a way past the trees.", "");
+
+mineraGrovePranksters.solve = function() {
+    if (keys.space && !p.spaceActioned) {
+        if (p.on(89, 54) || p.on(57, 56) || p.on(85, 90)) {
+            Screen.fadeOut(0.05, function() {
+                if (p.on(89, 54)) {
+                    curMap = mineraBurrow;
+                    p.goTo(ctr(23), ctr(1));
+                } else if(p.on(57, 56)) {
+                    curMap = mineraBurrow;
+                    p.goTo(ctr(1), ctr(1));
+                } else if (p.on(85, 90)) {
+                    curMap = mineraBurrow;
+                    p.goTo(ctr(23), ctr(23));
+                }
+
+                Screen.fadeIn(0.05);
+            })
+        }
+    }
+
+    if (!mineraGrovePranksters.hasPlayerReachedOtherSide) {
+        if (p.on(46, 69)) {
+            rangerGunther.goTo(ctr(51), ctr(70));
+            rangerGunther.dir = 'L';
+            rangerGunther.lines = [
+                "Woah! How did you make it over there?",
+                "...",
+                "Really? You found where all those nasty creatures were hiding?",
+                "...",
+                "Wow, I really should have checked the restricted areas\nmore.",
+                "Guess I'll head down there to get rid of them, once and for all!",
+                "Thank you very much. Here's a little gift for you.",
+            ];
+
+            rangerGunther.actionLine = "after";
+
+            rangerGunther.action = function() {
+                p.giveItem(new TrillSum(50), true);
+
+                rangerGunther.lines = [
+                    "Thanks for helping me out! You're welcome to visit me anytime.",
+                ]
+
+                rangerGunther.clearAction();
+            }
+        }
+
+        if (p.on(46, 70)) {
+            rangerGunther.lineNum = 0;
+            rangerGunther.remote = true;
+            mineraGrovePranksters.hasPlayerReachedOtherSide = true;
+        }
+    }
+}
+
+const meetingEmpressAurora = new Mission("Meeting Empress Aurora", "Main", "At last, you have reached Luminos Isle. Now, you must let the leader, Empress Aurora,\nknow exactly why you're here.", "Empress Aurora can be hard to find, so it might be helpful to ask the people\nof Luminos Isle for help.");
+
+meetingEmpressAurora.solve = function() {
+    if (curMap == luminosIsle) {
+        if (p.in(24, 7, 25, 8) && !meetingEmpressAurora.beaconGivingLecture && !meetingEmpressAurora.canEnterPalace) { // Empress's Palace entrance
+            meetingEmpressAurora.beaconGivingLecture = true;
+            p.canMove = false;
+
+            beacon.lines = [
+                "Sorry, but you need the Empress's permission to go in there.",
+            ];
+
+            beacon.remoteSpeak = true;
+            beacon.lineNum = 0;
+            beacon.actionLine = "after";
+            beacon.action = function() {
+                Screen.fadeOut(0.05, function() {
+                    p.goTo(b(24), ctr(11));
+
+                    Screen.fadeIn(0.05, function() {
+                        p.canMove = true;
+                        meetingEmpressAurora.beaconGivingLecture = false;
+
+                        if (!empressAurora.talkedTo) { // Before Empress Aurora shows up
+                            // Reset Beacon's lines and action
+                            beacon.lines = [
+                                "Before you say anything...\nyes, my name is actually Beacon.",
+                                "When people refer to me as Guard Beacon, they always think I'm a literal beacon.\nBut I'm a person!",
+                                "*sigh",
+                                "...",
+                                "You need to talk to the Empress? Unfortunately, she's not here right now.\nAnd it'll stay that way until any important business happens.",
+                                "I guess you COULD press the Important Business Button over there,\nbut if the Empress finds out you don't have any important business...",
+                                "...let's just say, it won't be pretty.",
+                                "Don't worry, I believe that you have important stuff to say.\nIf the guard over there doesn't let you press it, I'll back you up.",
+                                "I'd at least give it a shot.",
+                                "Good luck!"
+                            ];
+                            beacon.action = function() {
+                                cameraStart(ctr(44), ctr(7), 50, "NPC", {
+                                    npcName: beacon,
+                                    lineStop: 6
+                                })
+
+                                meetingEmpressAurora.beaconGaveBackup = true;
+                            };
+                            beacon.actionLine = 5;
+                        } else {
+                            beacon.lines = [
+                                "Well, you've pressed the button now.",
+                                "You'd better go tell the Empress about your important business."
+                            ];
+                            beacon.clearAction();
+                        }
+                    });
+                });
+            }
+        }
+
+        if (p.in(42, 5, 46, 8)) { // Important Business Button
+            if (!meetingEmpressAurora.lucyGivingLecture && !meetingEmpressAurora.lucyGavePermission) {
+                if (!meetingEmpressAurora.beaconGaveBackup) { // Player must talk to Guard Beacon first
+                    lucy.lines = [
+                        "Woah!",
+                        "You can't just barge in there and press that button!",
+                        "That's for important business only!"
+                    ];
+
+                    p.canMove = false;
+
+                    lucy.lineNum = 0; // Start dialogue
+                    lucy.remoteSpeak = true;
+                    lucy.actionLine = "after";
+                    lucy.action = function() {
+                        Screen.fadeOut(0.05, function() {
+                            p.goTo(ctr(44), ctr(10));
+
+                            meetingEmpressAurora.lucyGivingLecture = false;
+
+                            Screen.fadeIn(0.05, function() {
+                                p.canMove = true;
+
+                                lucy.lines = [
+                                    "Good morningternoon...",
+                                    "...sorry, I'm so tired. The Empress wants me to guard this button all day...",
+                                    "...but this place is so bright and I can't get any rest!",
+                                ]; // Her original lines
+                                lucy.clearAction();
+                            });
+                        })
+                    }
+                } else {
+                    lucy.lines = [
+                        "Woah!",
+                        "You can't just barge in there and press that button!",
+                        "That's for important business only!",
+                        "If the Empress knew you were doing this...",
+                        "...you'd be in some serious trouble!",
+                        "...",
+                        "`huh?",
+                        "Guard Beacon, is that you?",
+                        "...",
+                        "You're telling me that this guy ACTUALLY has\nimportant business with the Empress?",
+                        "Hmmph. Well I guess you can go on ahead\nand press that button.",
+                        "Just don't say I didn't warn you."
+                    ];
+
+                    lucy.lineNum = 0; // Start dialogue
+                    lucy.remoteSpeak = true;
+                    lucy.actionLine = "after";
+                    lucy.action = function() {
+                        meetingEmpressAurora.lucyGivingLecture = false;
+                        meetingEmpressAurora.lucyGavePermission = true;
+
+                        lucy.lines = [
+                            "Apparently you DO have important business.",
+                            "Just, if you get in trouble, leave me out of it!"
+                        ];
+                        lucy.clearAction();
+                    }
+
+                    beacon.curPath = [
+                        [43, 10],
+                    ];
+
+                    beacon.lines = [
+                        "Go ahead and press that button.",
+                        "I hope you have something to say that\nthe Empress wants to hear."
+                    ];
+
+                    p.canMove = false;
+                }
+
+                meetingEmpressAurora.lucyGivingLecture = true;
+            }
+        }
+    }
+}
+
+const underneathLuminosIsle = new Mission("Underneath Luminos Isle", "Main", "You have managed to meet the leader of Luminos Isle, Empress Aurora.\nShe hopes you can find out what's causing Luminos Isle to shake so much.", "It seems Empress Aurora has directed you to some sort of secret, underground catacombs.\nHopefully there is something of interest in there...");
+
 // ABILITY MISSIONS
 var theWanderersRiddles = new Mission("The Wanderer's Riddles", "Ability", "[insert description]", "[insert instructions]")
 
@@ -500,203 +701,6 @@ berylsSpecialBracelet.solve = function() {
 
 		beryl.lineNum = 0
 	}
-}
-
-const journeyToLuminosIsle = new Mission("Journey to Luminos Isle", "Main", "Now that you've defeated Lithos, it's time to make your way to the final\ncity, Luminos Isle! Once you're there, you need to look for the leader, Empress Aurora.", "According to Wayne, the only way to get to Luminos Isle is to head to Dawn's Landing.\nFrom there, you can make your way up to the sky where Luminos Isle is.");
-
-const mineraGrovePranksters = new Mission("Pranksters of Minera Grove", "Main", "To reach Dawn's Landing, you need to cross through Minera Grove. Unfortunately,\nSplints are hiding underneath the grove and have blocked Dawn's Landing with trees.\nYou need to help Ranger Gunther deal with the Splints and find a way past the trees.", "");
-
-mineraGrovePranksters.solve = function() {
-    if (keys.space && !p.spaceActioned) {
-        if (p.on(89, 54) || p.on(57, 56) || p.on(85, 90)) {
-            Screen.fadeOut(0.05, function() {
-                if (p.on(89, 54)) {
-                    curMap = mineraBurrow;
-                    p.goTo(ctr(23), ctr(1));
-                } else if(p.on(57, 56)) {
-                    curMap = mineraBurrow;
-                    p.goTo(ctr(1), ctr(1));
-                } else if (p.on(85, 90)) {
-                    curMap = mineraBurrow;
-                    p.goTo(ctr(23), ctr(23));
-                }
-
-                Screen.fadeIn(0.05);
-            })
-        }
-    }
-
-    if (!mineraGrovePranksters.hasPlayerReachedOtherSide) {
-        if (p.on(46, 69)) {
-            rangerGunther.goTo(ctr(51), ctr(70));
-            rangerGunther.dir = 'L';
-            rangerGunther.lines = [
-                "Woah! How did you make it over there?",
-                "...",
-                "Really? You found where all those nasty creatures were hiding?",
-                "...",
-                "Wow, I really should have checked the restricted areas\nmore.",
-                "Guess I'll head down there to get rid of them, once and for all!",
-                "Thank you very much. Here's a little gift for you.",
-            ];
-
-            rangerGunther.actionLine = "after";
-
-            rangerGunther.action = function() {
-                p.giveItem(new TrillSum(50), true);
-
-                rangerGunther.lines = [
-                    "Thanks for helping me out! You're welcome to visit me anytime.",
-                ]
-
-                rangerGunther.clearAction();
-            }
-        }
-
-        if (p.on(46, 70)) {
-            rangerGunther.lineNum = 0;
-            rangerGunther.remote = true;
-            mineraGrovePranksters.hasPlayerReachedOtherSide = true;
-        }
-    }
-}
-
-const meetingEmpressAurora = new Mission("Meeting Empress Aurora", "Main", "At last, you have reached Luminos Isle. Now, you must let the leader, Empress Aurora,\nknow exactly why you're here.", "Empress Aurora can be hard to find, so it might be helpful to ask the people\nof Luminos Isle for help.");
-
-meetingEmpressAurora.solve = function() {
-    if (curMap == luminosIsle) {
-        if (p.in(24, 7, 25, 8) && !meetingEmpressAurora.beaconGivingLecture && !meetingEmpressAurora.canEnterPalace) { // Empress's Palace entrance
-            meetingEmpressAurora.beaconGivingLecture = true;
-            p.canMove = false;
-
-            beacon.lines = [
-                "Sorry, but you need the Empress's permission to go in there.",
-            ];
-
-            beacon.remoteSpeak = true;
-            beacon.lineNum = 0;
-            beacon.actionLine = "after";
-            beacon.action = function() {
-                Screen.fadeOut(0.05, function() {
-                    p.goTo(b(24), ctr(11));
-
-                    Screen.fadeIn(0.05, function() {
-                        p.canMove = true;
-                        meetingEmpressAurora.beaconGivingLecture = false;
-
-                        if (!empressAurora.talkedTo) { // Before Empress Aurora shows up
-                            // Reset Beacon's lines and action
-                            beacon.lines = [
-                                "Before you say anything...\nyes, my name is actually Beacon.",
-                                "When people refer to me as Guard Beacon, they always think I'm a literal beacon.\nBut I'm a person!",
-                                "*sigh",
-                                "...",
-                                "You need to talk to the Empress? Unfortunately, she's not here right now.\nAnd it'll stay that way until any important business happens.",
-                                "I guess you COULD press the Important Business Button over there,\nbut if the Empress finds out you don't have any important business...",
-                                "...let's just say, it won't be pretty.",
-                                "Don't worry, I believe that you have important stuff to say.\nIf the guard over there doesn't let you press it, I'll back you up.",
-                                "I'd at least give it a shot.",
-                                "Good luck!"
-                            ];
-                            beacon.action = function() {
-                                cameraStart(ctr(44), ctr(7), 50, "NPC", {
-                                    npcName: beacon,
-                                    lineStop: 6
-                                })
-
-                                meetingEmpressAurora.beaconGaveBackup = true;
-                            };
-                            beacon.actionLine = 5;
-                        } else {
-                            beacon.lines = [
-                                "Well, you've pressed the button now.",
-                                "You'd better go tell the Empress about your important business."
-                            ];
-                            beacon.clearAction();
-                        }
-                    });
-                });
-            }
-        }
-
-        if (p.in(42, 5, 46, 8)) { // Important Business Button
-            if (!meetingEmpressAurora.lucyGivingLecture && !meetingEmpressAurora.lucyGavePermission) {
-                if (!meetingEmpressAurora.beaconGaveBackup) { // Player must talk to Guard Beacon first
-                    lucy.lines = [
-                        "Woah!",
-                        "You can't just barge in there and press that button!",
-                        "That's for important business only!"
-                    ];
-
-                    p.canMove = false;
-
-                    lucy.lineNum = 0; // Start dialogue
-                    lucy.remoteSpeak = true;
-                    lucy.actionLine = "after";
-                    lucy.action = function() {
-                        Screen.fadeOut(0.05, function() {
-                            p.goTo(ctr(44), ctr(10));
-
-                            meetingEmpressAurora.lucyGivingLecture = false;
-
-                            Screen.fadeIn(0.05, function() {
-                                p.canMove = true;
-
-                                lucy.lines = [
-                                    "Good morningternoon...",
-                                    "...sorry, I'm so tired. The Empress wants me to guard this button all day...",
-                                    "...but this place is so bright and I can't get any rest!",
-                                ]; // Her original lines
-                                lucy.clearAction();
-                            });
-                        })
-                    }
-                } else {
-                    lucy.lines = [
-                        "Woah!",
-                        "You can't just barge in there and press that button!",
-                        "That's for important business only!",
-                        "If the Empress knew you were doing this...",
-                        "...you'd be in some serious trouble!",
-                        "...",
-                        "`huh?",
-                        "Guard Beacon, is that you?",
-                        "...",
-                        "You're telling me that this guy ACTUALLY has\nimportant business with the Empress?",
-                        "Hmmph. Well I guess you can go on ahead\nand press that button.",
-                        "Just don't say I didn't warn you."
-                    ];
-
-                    lucy.lineNum = 0; // Start dialogue
-                    lucy.remoteSpeak = true;
-                    lucy.actionLine = "after";
-                    lucy.action = function() {
-                        meetingEmpressAurora.lucyGivingLecture = false;
-                        meetingEmpressAurora.lucyGavePermission = true;
-
-                        lucy.lines = [
-                            "Apparently you DO have important business.",
-                            "Just, if you get in trouble, leave me out of it!"
-                        ];
-                        lucy.clearAction();
-                    }
-
-                    beacon.curPath = [
-                        [43, 10],
-                    ];
-
-                    beacon.lines = [
-                        "Go ahead and press that button.",
-                        "I hope you have something to say that\nthe Empress wants to hear."
-                    ];
-
-                    p.canMove = false;
-                }
-
-                meetingEmpressAurora.lucyGivingLecture = true;
-            }
-        }
-    }
 }
 
 // ABILITY MISSIONS

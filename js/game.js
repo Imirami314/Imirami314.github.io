@@ -954,7 +954,12 @@ var queenAlaska = new NPC(ctr(42), ctr(3), "Queen Alaska", queensCastle, "L", [
     "I'll call Lonzo to help you out. He'll be waiting for you at\nthe front of this castle.",
     "Good luck my friend! You're definitely going to need it."
 ], "Queen - Glacia Village\nA strong, fearless leader who's always up for a challenge.\nShe works closely with the other regional leaders,\nso she's always up to date on what's going on.", function(p) {
-    meetingTheQueen.finish()
+    meetingTheQueen.finish();
+
+    setTimeout(() => {
+        addMission(underneathGlaciaVillage);
+    }, 3500);
+
     lonzo.x = ctr(252)
     lonzo.y = ctr(21)
     lonzo.map = mainMap
@@ -971,9 +976,13 @@ var queenAlaska = new NPC(ctr(42), ctr(3), "Queen Alaska", queensCastle, "L", [
         "Anyway, here you goat.",
         "Go*."
     ]
-    lonzo.action = function(p) {
-        p.giveItem(items.windyWastelandsKey, true)
 
+    lonzo.action = function(p) {
+        p.giveItem(items.windyWastelandsKey, true);
+
+        console.log(underneathGlaciaVillage.instructions)
+        underneathGlaciaVillage.setInstructions("Now that you have the key to the Windy Wastelands, it's time to venture into it\nin search of an underground dungeon. Try to look for clues that might guide you to an entrance.\nBe very careful, as the winds are strong and dangerous.");
+        console.log(underneathGlaciaVillage.instructions)
         lonzo.lines = [
             "Go to the Windy Wastelands using the key!",
             "Good...",
@@ -3243,108 +3252,82 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = false;
-    // p.inventory = [items.hydrosScythe, items.stormedsSword, food.apple(), food.apple(), food.apple(), food.apple(), food.apple(), food.apple(), items.aquaLung, items.steelSword, items.skywayCell]
     p.inventory = [items.spearOfNoctos];
-    p.goTo(ctr(3), ctr(2));
-    p.updateSortedInventory();
-    curMap = mainMap
+    p.equipped = [items.aquaLung]
+    lithosCutsceneDeath.onEnd();
+    curMap = theCatacombs;
+    p.goTo(ctr(9), ctr(7));
+    addMission(underneathLuminosIsle);
 
-    p.x = ctr(41)
-    p.y = ctr(59)
-    p.questPoint = {
-        x: 37,
-        y: 50
-    }
 
-    addMission(elementsOfElria);
+    // addMission(meetingEmpressAurora);
+    // p.goTo(ctr(81), ctr(76));
+    // p.goTo(ctr(17), ctr(76));
+    // p.giveItem(items.mineraGroveKey, false);
+    // p.goTo(ctr(30), ctr(24));
+    // p.updateSortedInventory();
+    // curMap = galeCave
 
-    curMap.changeBlock(67, 10, "_") // Re-opens the path to Steel Field (in case it doesn't work for the save)
-    curMap.changeBlock(138, 4, "_")
+    // addMission(underneathGlaciaVillage);
 
-    oldMan.map = mainMap
+    // mainMap.changeBlock(67, 10, "_") // Re-opens the path to Steel Field (in case it doesn't work for the save)
+    // mainMap.changeBlock(138, 4, "_")
+
+    // lonzo.firstInteraction = false;
+    // queenAlaska.action(); // sets lonzo to right spot and stuff
+
+    // p.giveItem(items.windyWastelandsKey, true);
+
+    // underneathGlaciaVillage.setInstructions("Now that you have the key to the Windy Wastelands, it's time to venture into it\nin search of an underground dungeon. Try to look for clues that might guide you to an entrance.\nBe very careful, as the winds are strong and dangerous.");
     
-    oldMan.lines = [
-        "Now go talk to Wayne. He'll tell you what\nto do next.",
-        "He should be around here somewhere."
-    ]
+    // lonzo.lines = [
+    //     "Go to the Windy Wastelands using the key!",
+    //     "Good...",
+    //     "O(GV#YIWRE(*RCYOVWBYOZ*@Y&!!",
+    //     "...luck!"
+    // ]
 
-    oldMan.clearAction();
+    // lonzo.clearAction()
     
-    wayne.x = ctr(45)
-    wayne.y = ctr(42)
-    wayne.dir = 'D';
+
+    
+
     wayne.lines = [
-        "Hello!",
-        "The old man should have told you about this island's history,\nso now I'll help you save it!",
-        "Long ago, Noctos and the other masters were corrupted and\nwreaked havoc upon this island!",
-        "Although the islanders could not defeat them, they were able\ntemporarily imprison them.",
-        "Before they could do this, however, the masters built borders between\ndifferent regions of this island. This made it tougher for\nus islanders to work together.",
-        "These borders were designed to open for their masters. But, since you conquered\none of the them, we suspect these borders may open for you.",
-        "So, I've marked a spot on your map for where we believe\n the border was placed a long time ago. If you are\nable to pass, it should take you straight into Glacia Village.",
-        "You'll have more work to do there.",
-        "Be quick though, as the masters won't be imprisoned forever. For all we know\nthey could escape right now!",
-        "I wish you the best of luck!\nAnd don't worry, I'll be there to check in on you every so often."
+        "One more elemental master to go. You're so close!",
+        "Remember, to get to Luminos Isle, you first need\nto get to Dawn's Landing which is west of here.",
+        "Good luck!"
+    ];
+    wayne.clearAction();
+
+    empressAurora.lines = [
+        "Go into my palace!\nWhatever business you have to discuss, it must be done so in private.",
     ];
 
-    // 137, 4
-    alerts.push(new GameAlert(137, 4, ["SEGREME THGIN FO RETSAM WEN A SA SNEPO REDROB EHT"], mainMap, "SIGN"))
-    
-    wayne.action = function(p) {
-        // Location of Glacia Village entry
-        p.questPoint = {
-            x: 135 * 75,
-            y: 4 * 75
-        }
+    alba.goTo(ctr(4), b(1) + 74);
+    alba.dir = 'D';
+    alba.map = dawnsLandingSkywayStore;
 
-        elementsOfElria.setInstructions("Since you've defeated Noctos and claimed his spear,\nWayne believes that Omnos's border between Steel Field and Glacia Village\nwill open for you. So, now you must venture to the northeastern side of Steel Field, where\nyou'll (hopefully) be able to enter Glacia Village.");
+    alba.lines = [
+        "Hi there. It's you again!",
+        "If you're looking to take a Skyway to Luminos Isle,\nI've got what you need!"
+    ];
+    alba.actionLine = "after";
+    alba.action = function() {
+        ShopMenu.open(albaShop);
     }
-    wayne.actionLine = "after"
 
-    // p.equipped = [items.aquaLung]
-    // lithosCutsceneDeath.onEnd();
-    // curMap = theCatacombs;
-    // // addMission(meetingEmpressAurora);
-    // // p.goTo(ctr(81), ctr(76));
-    // p.goTo(ctr(9), ctr(7));
-    // // p.goTo(ctr(17), ctr(76));
-    // // p.giveItem(items.mineraGroveKey, false);
+    lance.goTo(ctr(6), ctr(3));
+    lance.lines = [
+        "Oh thank goodness, she's back!",
+        "Now I can finally make my trip.\nOh, and thank you for looking for her!"
+    ];
 
-    // wayne.lines = [
-    //     "One more elemental master to go. You're so close!",
-    //     "Remember, to get to Luminos Isle, you first need\nto get to Dawn's Landing which is west of here.",
-    //     "Good luck!"
-    // ];
-    // wayne.clearAction();
-
-    // empressAurora.lines = [
-    //     "Go into my palace!\nWhatever business you have to discuss, it must be done so in private.",
-    // ];
-
-    // alba.goTo(ctr(4), b(1) + 74);
-    // alba.dir = 'D';
-    // alba.map = dawnsLandingSkywayStore;
-
-    // alba.lines = [
-    //     "Hi there. It's you again!",
-    //     "If you're looking to take a Skyway to Luminos Isle,\nI've got what you need!"
-    // ];
-    // alba.actionLine = "after";
-    // alba.action = function() {
-    //     ShopMenu.open(albaShop);
-    // }
-
-    // lance.goTo(ctr(6), ctr(3));
-    // lance.lines = [
-    //     "Oh thank goodness, she's back!",
-    //     "Now I can finally make my trip.\nOh, and thank you for looking for her!"
-    // ];
-
-    // claire.goTo(ctr(16), ctr(77));
-    // claire.lines = [
-    //     "Hi there.",
-    //     "I was playing hide and seek with my friend,\nbut it turns out she was supposed to be working the shop.",
-    //     "I'm glad she told me, otherwise I would have been\nsearching for her for a long time!"
-    // ];
+    claire.goTo(ctr(16), ctr(77));
+    claire.lines = [
+        "Hi there.",
+        "I was playing hide and seek with my friend,\nbut it turns out she was supposed to be working the shop.",
+        "I'm glad she told me, otherwise I would have been\nsearching for her for a long time!"
+    ];
 }
 
 startPos()
@@ -3434,6 +3417,7 @@ var gameInterval = setInterval(function() {
             ctx.translate(Math.floor(Screen.shakeOffset.x), Math.floor(Screen.shakeOffset.y))
 
             curMap.draw(p, "Player View")
+            
             if (!!curMap.solve) {
                 curMap.solve()
             }
@@ -3585,6 +3569,8 @@ var gameInterval = setInterval(function() {
                         p.x = ctr(44)
                         p.y = ctr(34)
                         p.giveItem(items.stormedsSword, true)
+
+                        underneathGlaciaVillage.setInstructions("You located a secret entrance in the Windy Wastelands! However, it leads to a very dark cave.\nIt might be helpful to explore it and look for any information.");
 
                         lonzo.map = mainMap
                         lonzo.x = ctr(158)

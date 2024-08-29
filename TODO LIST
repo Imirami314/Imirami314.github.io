@@ -16,6 +16,8 @@ One Time
 - Gale Cave is broken because not all interactives have cords.x and cords.y
 - Add a house for Ronan (do we even use this anymore) (I will start using it again)
 - Fix Sacred Star Cutscene or replace it entirely (the frames slow down near the end of the cutscene for some reason)
+- Fix small issue where a completed mission will still show its description in the right panel until clicking another mission
+- Add saving for maps that player has visited
 
 Continuous
 - Add sound effects for all blocks
