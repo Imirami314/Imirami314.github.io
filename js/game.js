@@ -1878,7 +1878,7 @@ const empressAurora = new NPC(ctr(10000), ctr(10000), "Empress Aurora", luminosI
     ]
 }, "after");
 
-const blaze = new NPC(b(6), b(1) + 74, "Palace Guard Blaze", empressAurorasPalace, 'D', [ // Not on the map at the start
+const blaze = new NPC(b(6), b(1) + 74, "Palace Guard Blaze", empressAurorasPalace, 'D', [
     "Hi there sir! Are you the man with the important business?",
     "...",
     "Wow! By the way, I was recently promoted from a normal guard\nto a Palace Guard!",
@@ -1891,7 +1891,7 @@ const blaze = new NPC(b(6), b(1) + 74, "Palace Guard Blaze", empressAurorasPalac
     empressAurorasPalace.changeBlocks([[17, 9], [18, 9]], '(');
 }, 6);
 
-const helia = new NPC(b(30), b(1) + 74, "Palace Guard Helia", empressAurorasPalace, 'D', [ // Not on the map at the start
+const helia = new NPC(b(30), b(1) + 74, "Palace Guard Helia", empressAurorasPalace, 'D', [
     "Welcome to Empress Aurora's palace!",
     "Let me guess, you have important business.",
     "...",
@@ -1904,7 +1904,20 @@ const helia = new NPC(b(30), b(1) + 74, "Palace Guard Helia", empressAurorasPala
     empressAurorasPalace.changeBlocks([[17, 8], [18, 8]], '(');
 }, 5);
 
-// const willow = new NPC()
+const bobayShop = [ // Bobay's Bits and Bobs
+    {item: items.lightContainer, cost: 100, amount: 1}
+]
+
+const bobay = new NPC(ctr(4), ctr(1), "Bobay", bobaysBitsAndBobs, 'D', [
+    "*yawn",
+    "Ello. Welcome to Bobay's Bots and Bibs.",
+    "`...oops, I messed it up. Sorry, I didn't get very much sleep.",
+    "*ahem",
+    "Welcome to Bobay's Bits and Bobs.",
+    "My name is Bobay. Take a look at what I have to sell.",
+], "Shopkeeper - Luminos Isle\nA sleepy dude who runs a shop at the corner of Luminos Isle.\nIronically, he's not very bright.", function() {
+    ShopMenu.open(bobayShop);
+}, "after");
 
 var npcs = []
 
