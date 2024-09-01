@@ -2807,6 +2807,15 @@ var interactives = [
     }, function() {
         theCatacombs.changeBlock(22, 2, '(');
     }, ctr(22), ctr(2)),
+
+    // Luxos Chamber
+    new LightGate(luxosChamber, 21, 25, 20, 25, '`'),
+
+    new LightGate(luxosChamber, 24, 21, 24, 20, '`'),
+
+    new LightGate(luxosChamber, 28, 24, 29, 24, '`'),
+
+    new LightGate(luxosChamber, 25, 28, 25, 29, '`'),
 ]
 
 /*
@@ -2889,12 +2898,6 @@ if (!!save) {
         for (var i in missions) {
             if (missions[i].name == mission.name) {
                 var savedMission = missions[i]
-                // savedMission.curNode = mission.curNode
-                // savedMission.newMission = mission.newMission
-                // savedMission.complete = mission.complete
-                // savedMission.desc = mission.desc;
-                // savedMission.instructions = mission.instructions;
-                // savedMission.completionPopup = mission.completionPopup
                 Object.assign(missions[i], mission);
 
                 addMission(missions[i])
@@ -3252,13 +3255,12 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = false;
-    p.inventory = [items.spearOfNoctos];
-    p.equipped = [items.aquaLung]
+    p.inventory = [items.lightContainer, items.spearOfNoctos];
+    p.equipped = [items.aquaLung];
     lithosCutsceneDeath.onEnd();
-    curMap = theCatacombs;
-    p.goTo(ctr(9), ctr(7));
+    curMap = luminosIsle;
+    p.goTo(b(25), ctr(45));
     addMission(underneathLuminosIsle);
-
 
     // addMission(meetingEmpressAurora);
     // p.goTo(ctr(81), ctr(76));
@@ -3288,46 +3290,6 @@ function startPos() {
     // ]
 
     // lonzo.clearAction()
-    
-
-    
-
-    wayne.lines = [
-        "One more elemental master to go. You're so close!",
-        "Remember, to get to Luminos Isle, you first need\nto get to Dawn's Landing which is west of here.",
-        "Good luck!"
-    ];
-    wayne.clearAction();
-
-    empressAurora.lines = [
-        "Go into my palace!\nWhatever business you have to discuss, it must be done so in private.",
-    ];
-
-    alba.goTo(ctr(4), b(1) + 74);
-    alba.dir = 'D';
-    alba.map = dawnsLandingSkywayStore;
-
-    alba.lines = [
-        "Hi there. It's you again!",
-        "If you're looking to take a Skyway to Luminos Isle,\nI've got what you need!"
-    ];
-    alba.actionLine = "after";
-    alba.action = function() {
-        ShopMenu.open(albaShop);
-    }
-
-    lance.goTo(ctr(6), ctr(3));
-    lance.lines = [
-        "Oh thank goodness, she's back!",
-        "Now I can finally make my trip.\nOh, and thank you for looking for her!"
-    ];
-
-    claire.goTo(ctr(16), ctr(77));
-    claire.lines = [
-        "Hi there.",
-        "I was playing hide and seek with my friend,\nbut it turns out she was supposed to be working the shop.",
-        "I'm glad she told me, otherwise I would have been\nsearching for her for a long time!"
-    ];
 }
 
 startPos()

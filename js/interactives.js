@@ -945,3 +945,48 @@ class BlockMirror {
         this.charged = setting;
     }
 }
+
+class LightGate {
+    constructor(map, x, y, openX, openY, openBlock) {
+        this.map = map;
+        this.x = x;
+        this.y = y;
+        this.openX = openX;
+        this.openY = openY;
+        this.openBlock = openBlock;
+
+        this.cords = {
+            x: this.x,
+            y: this.y
+        };
+
+        this.isOpen = false;
+        // this.blockSave = ''; // Save the original block that will get changed so it can be changed back
+    }
+
+    draw() {
+        this.cords.x = this.x
+        this.cords.y = this.y
+        // ctx.drawImage(this.img, this.x * 75, this.y * 75, 75, 75); changeme to Light Gate image
+
+        if (this.isOpen) fill(150, 255, 0)
+        else fill(255, 150, 0)
+
+        ctx.fillRect(this.x * 75, this.y * 75, 75, 75);
+    }
+
+    update() {
+        
+    }
+
+    activate() {
+        
+    }
+
+    activateGate() {
+        if (!this.isOpen) {
+            this.isOpen = true;
+            this.map.changeBlock(this.openX, this.openY, this.openBlock);
+        }
+    }
+}

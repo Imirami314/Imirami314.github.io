@@ -345,7 +345,16 @@ const items = {
     lightContainer: new Item("Light Container", 0, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
     }, function() {
-        // changeme to add functionality
+        interactives.forEach((inter) => {
+            if (inter.constructor.name == "LightGate") {
+                if (p.on(inter.x, inter.y)) {
+                    inter.activateGate();
+
+                    p.removeItem(this);
+                }
+            }
+        });
+        // changeme to add more functionality
     }, "A small vial made of glass, yet much shinier. What could it be used for?", "MISC"),
     droptonLakePainting: new Item("Dropton Lake Painting", 0, function(x, y) {
         ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
