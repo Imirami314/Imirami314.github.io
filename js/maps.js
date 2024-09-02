@@ -2933,11 +2933,11 @@ const luminosIsle = new Landscape([
     '5````````````22222``--22~~22`````````````````````5',
     '5````````````22222```---22```````````````````````5',
     '5```````````l22|22l````-22```````````````````````5',
-    '5``````````````-```````-22```````````````````````5',
-    '5``````````````----------22``````````````````````5',
-    '5```````````````````````-``````-`````2```````````5',
-    '5``````````````````````l-l`````-````222``````````5',
-    '5```````````````````````------`-```22222`````````5',
+    '5`22222```2````-```````-22```````````````````````5',
+    '5`2~~~2``222```----------22``````````````````````5',
+    '5`2~~~2`22222```````````-``````-`````2```````````5',
+    '5`2~~O2222222``````````l-l`````-````222``````````5',
+    '5`22222`22|22```````````------`-```22222`````````5',
     '5````````````````````22222222-`-```22222`````````5',
     '5````````````````````2``````2-`-``l22|22l````````5',
     '5````````````````````22222222-`-`````-```````````5',
@@ -2952,6 +2952,25 @@ const luminosIsle = new Landscape([
     '55555555555555555555555555555555555555555555555555',
 ], null, null, null, null, "Luminos Isle", function() {
     lighting = 1000;
+
+    if (underneathLuminosIsle.talkedToElenaAboutLightContainer && underneathLuminosIsle.elenaHasLightContainer) {
+        if (keys.space && !p.spaceActioned) {
+            if (p.on(4, 34)) {
+                p.giveItem(items.lightContainer, true);
+                underneathLuminosIsle.elenaHasLightContainer = false;
+
+                elena.lines = [
+                    "Hey there!\nDid you get that Light Container you needed?",
+                    "...",
+                    "Great! May I ask what you needed it for?",
+                    "...",
+                    "It's a secret? Wow, okay.",
+                    "Well, you're welcome."
+                ];
+                elena.clearAction();
+            }
+        }
+    }
 
     luminosIsle.manualDoors = true;
 
@@ -2970,6 +2989,56 @@ const luminosIsle = new Landscape([
             Screen.fadeOut(0.05, function() {
                 p.goTo(ctr(4), ctr(3));
                 curMap = bobaysBitsAndBobs;
+
+                Screen.fadeIn(0.05);
+                p.spaceActioned = true;
+            });
+        }
+
+        if (p.on(5, 36)) { // Elena's House back pool entrance
+            Screen.fadeOut(0.05, function() {
+                p.goTo(ctr(1), ctr(3));
+                curMap = elenaHouse;
+
+                Screen.fadeIn(0.05);
+                p.spaceActioned = true;
+            });
+        }
+
+        if (p.on(10, 37)) {
+            Screen.fadeOut(0.05, function() {
+                p.goTo(ctr(3), ctr(4));
+                curMap = elenaHouse;
+
+                Screen.fadeIn(0.05);
+                p.spaceActioned = true;
+            });
+        }
+    }
+});
+
+const elenaHouse = new Landscape([
+    '2222222',
+    '2`````2',
+    '2`5`5`2',
+    '2O5`5~2',
+    '222|222',
+], null, null, null, null, "Elena's House", function() {
+    if (keys.space && !p.spaceActioned) {
+        if (p.on(3, 4)) {
+            Screen.fadeOut(0.05, function() {
+                p.goTo(ctr(10), ctr(37));
+                curMap = luminosIsle;
+
+                Screen.fadeIn(0.05);
+                p.spaceActioned = true;
+            });
+        }
+
+        if (p.on(1, 3)) {
+            Screen.fadeOut(0.05, function() {
+                p.goTo(ctr(5), ctr(36));
+                curMap = luminosIsle;
 
                 Screen.fadeIn(0.05);
                 p.spaceActioned = true;
@@ -3171,6 +3240,20 @@ const theCatacombs = new Landscape([
             ];
 
             empressAurora.clearAction();
+
+            elena.lines = [
+                "Well hello there! How's it going?",
+                "...",
+                "You're looking for a Light Container?",
+                "Well, nowadays they're pretty hard to come by.\nI happen to have a spare one, so I suppose you could use it.",
+                "If I remember correctly, I left in in the small pond next to my house.\nJust don't snoop around in there for too long!",
+                "Oh right, I almost forgot to tell you.\nMy house is southwest of the central lake."
+            ];
+            elena.action = function() {
+                underneathLuminosIsle.talkedToElenaAboutLightContainer = true;
+                underneathLuminosIsle.elenaHasLightContainer = true;
+            };
+            elena.actionLine = "after";
         }
     }
 

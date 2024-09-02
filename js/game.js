@@ -1904,6 +1904,15 @@ const helia = new NPC(b(30), b(1) + 74, "Palace Guard Helia", empressAurorasPala
     empressAurorasPalace.changeBlocks([[17, 8], [18, 8]], '(');
 }, 5);
 
+const elena = new NPC(ctr(29), ctr(20), "Elena", luminosIsle, 'L', [
+    "Hey there, how's it going, traveler?",
+    "...",
+    "Cool. I'm just relaxing, viewing the lake.",
+    "I just love how symmetrical it is.\nI feel like I could stare at it forever!"
+], "Resident - Luminos Isle\nA happy citizen of Luminos Isle who enjoys gazing at the lake.", function() {
+    
+}, "after");
+
 const bobayShop = [ // Bobay's Bits and Bobs
     {item: items.lightContainer, cost: 100, amount: 1}
 ]
@@ -3274,6 +3283,41 @@ function startPos() {
     curMap = luminosIsle;
     p.goTo(b(25), ctr(45));
     addMission(underneathLuminosIsle);
+
+    underneathLuminosIsle.setInstructions("You managed to open some sort of door to a deeper area! However,\nEmpress Aurora had some information to share with you.\nShe believes that if a super old dungeon does exist, its creators\nmost likely used Light Gates to keep unwanted visitors out.\nSo, you'll need to ask around Luminos Isle to find Light Containers, which will open the Light Gates!");
+
+    empressAurora.curPath = [
+        [20, 4],
+        [20, 12],
+        [22, 12],
+        [22, 14],
+        function() {
+            empressAurora.map = empressAurorasPalace;
+            empressAurora.goTo(b(18), b(3));
+        }
+    ];
+
+    empressAurora.lines = [
+        "Well, get to work!",
+        "You're going to need those Light Containers, and\nasking around Luminos Isle is the quickest way!",
+        "No time to waste!"
+    ];
+
+    empressAurora.clearAction();
+
+    elena.lines = [
+        "Well hello there! How's it going?",
+        "...",
+        "You're looking for a Light Container?",
+        "Well, nowadays they're pretty hard to come by.\nI happen to have a spare one, so I suppose you could use it.",
+        "If I remember correctly, I left in in the small pond next to my house.\nJust don't snoop around in there for too long!",
+        "Oh right, I almost forgot to tell you.\nMy house is southwest of the central lake."
+    ];
+    elena.action = function() {
+        underneathLuminosIsle.talkedToElenaAboutLightContainer = true;
+        underneathLuminosIsle.elenaHasLightContainer = true;
+    };
+    elena.actionLine = "after";
 
     // addMission(meetingEmpressAurora);
     // p.goTo(ctr(81), ctr(76));
