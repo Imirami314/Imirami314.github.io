@@ -1205,13 +1205,24 @@ mainMap.solve = function() {
         //                                                 oldMan.y = ctr(2)
         //                                                 oldMan.map = johnHouse
 
-        //                                                 oldMan.lines = [""]
+        //                                                 oldMan.lines = ["Wow, I still can't fathom how you're alive...\nEspecially after the accident.",
+        //                                                     "...",
+        //                                                     "What? What do you mean no accident- oh no...",
+        //                                                     "Surely you aren't brainwashed too!",
+        //                                                     "...",
+        //                                                     "Yes, I know this is all very confusing.",
+        //                                                     "First off, is there anything at all that you remember?",
+        //                                                     "Anything about yourself, me, or the others?",
+        //                                                     "...",
+        //                                                     "Yes, yes that's it! You were a soldier!\nThe bravest and most powerful soldier in all of Elria!"
+        //                                                 ]
         //                                                 larisa.lines = [
         //                                                     "Hi again buddy!",
         //                                                     "It's Larisa, the guy that found you!",
         //                                                     "I still don't really get how you got stuck there...",
         //                                                     "Either way, it's nice to meet ya!"
         //                                                 ]
+        //                                                 p.cordSave = {x: 15, y: 8}
 
         //                                             })
     
@@ -1230,7 +1241,7 @@ mainMap.solve = function() {
         //                                 npcName: oldMan,
         //                                 lineStop: -1
         //                             })
-
+                                    
         //                         })
         //                         larisa.lines = ["ello"]
         //                         larisa.clearAction()
