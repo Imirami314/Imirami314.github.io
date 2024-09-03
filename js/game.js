@@ -66,6 +66,9 @@ var alerts = [
 
     // Willow's House
     new GameAlert(5, 3, ["To any visitors,\nIf I am not home, I've gone fishing! -Willow"], willowHouse, "SIGN"),
+
+    // Luminos Isle
+    new GameAlert(25, 46, ["Use the water to drop back down to Dawn's Landing!"], luminosIsle, "SIGN"),
 ]
 
 var teleports = [
@@ -1913,6 +1916,49 @@ const elena = new NPC(ctr(29), ctr(20), "Elena", luminosIsle, 'L', [
     
 }, "after");
 
+const alina = new NPC(ctr(48), ctr(42), "Alina", luminosIsle, 'R', [
+    "`oh no...",
+    "Oh, hi there traveler!",
+    "...",
+    "You need a Light Container? Well, um, I have good and bad news.",
+    "I had a Light Container, but...",
+    "`...I just tripped and it flew over the wall...",
+    "`...and fell all the way down to Dawn's Landing.",
+    "I should have been more careful. But unfortunately,\nyou'll have to go down there to find it.",
+], "Resident - Luminos Isle\nShe's very clumsy and often falls over.\nAside from that, she's a very respectful citizen\nof Luminos Isle.", function() {
+    astrid.goTo(ctr(37), ctr(73)); // NPC down at Dawn's Landing who finds the key
+    astrid.lines = [
+        "Hi! Can I help you?",
+        "...",
+        "You need a Light Container? Well, you're in luck\nbecause I just found one on the ground!",
+        "It's either a crazy coincidence, or this Light Container belongs to you.",
+        "So, did it like, drop down from Luminos Isle?",
+        "...",
+        "Wow. That's crazy. I've actually never been up there before.\nI should go sometime!",
+        "Alright, here's your Light Container."
+    ];
+    astrid.dir = 'D';
+    astrid.action = function() {
+        p.giveItem(items.lightContainer, true);
+        astrid.lines = [
+            "Hope that Light Container was useful to you!",
+        ];
+        astrid.clearAction();
+
+        alina.lines = [
+            "Did you find the Light Container?",
+            "...",
+            "Nice! I'm guessing you need it for something?",
+            "...",
+            "Empress Aurora needs it?! Wow!\nI should probably let you have it then.",
+            "Just knowing where it went gives me peace of mind.",
+            "Well, then, I'll see you later!"
+        ];
+        alina.clearAction();
+    }
+    astrid.actionLine = "after";
+}, "after");
+
 const bobayShop = [ // Bobay's Bits and Bobs
     {item: items.lightContainer, cost: 100, amount: 1}
 ]
@@ -1927,6 +1973,8 @@ const bobay = new NPC(ctr(4), ctr(1), "Bobay", bobaysBitsAndBobs, 'D', [
 ], "Shopkeeper - Luminos Isle\nA sleepy dude who runs a shop at the corner of Luminos Isle.\nIronically, he's not very bright.", function() {
     ShopMenu.open(bobayShop);
 }, "after");
+
+
 
 var npcs = []
 
@@ -2831,13 +2879,11 @@ var interactives = [
     }, ctr(22), ctr(2)),
 
     // Luxos Chamber
-    new LightGate(luxosChamber, 21, 25, 20, 25, '`'),
+    new LightGate(luxosChamber, 18, 22, 17, 22, '`'),
 
-    new LightGate(luxosChamber, 24, 21, 24, 20, '`'),
+    new LightGate(luxosChamber, 22, 18, 22, 17, '`'),
 
-    new LightGate(luxosChamber, 28, 24, 29, 24, '`'),
-
-    new LightGate(luxosChamber, 25, 28, 25, 29, '`'),
+    new LightGate(luxosChamber, 26, 22, 27, 22, '`'),
 ]
 
 /*
@@ -3036,6 +3082,10 @@ const c119_55 = new Chest(mainMap, 119, 55, [
 
 const c1_5 = new Chest(dawnsLandingForestTunnels, 1, 5, [
     new TrillSum(45)
+]);
+
+const c44_31 = new Chest(luminosIsle, 44, 31, [
+    new TrillSum(50)
 ]);
 
 const chests = Chest.all
@@ -3280,8 +3330,8 @@ function startPos() {
     p.inventory = [items.lightContainer, items.spearOfNoctos];
     p.equipped = [items.aquaLung];
     lithosCutsceneDeath.onEnd();
-    curMap = luminosIsle;
-    p.goTo(b(25), ctr(45));
+    curMap = luxosChamber;
+    p.goTo(ctr(22), ctr(22));
     addMission(underneathLuminosIsle);
 
     underneathLuminosIsle.setInstructions("You managed to open some sort of door to a deeper area! However,\nEmpress Aurora had some information to share with you.\nShe believes that if a super old dungeon does exist, its creators\nmost likely used Light Gates to keep unwanted visitors out.\nSo, you'll need to ask around Luminos Isle to find Light Containers, which will open the Light Gates!");
