@@ -2878,10 +2878,43 @@ var interactives = [
 
     // Luxos Chamber
     new LightGate(luxosChamber, 18, 22, 17, 22, '`'),
-
     new LightGate(luxosChamber, 22, 18, 22, 17, '`'),
-
     new LightGate(luxosChamber, 26, 22, 27, 22, '`'),
+
+    new Toggle(luxosChamber, 16, 22, function() {
+        luxosChamber.switch(16, 25, '`', '5');
+    }, function() {
+        luxosChamber.switch(16, 25, '`', '5');
+    }),
+    new Toggle(luxosChamber, 16, 23, function() {
+        luxosChamber.switch(16, 26, '`', '5');
+    }, function() {
+        luxosChamber.switch(16, 26, '`', '5');
+    }),
+    new Toggle(luxosChamber, 16, 24, function() {
+        luxosChamber.switch(16, 27, '`', '5');
+    }, function() {
+        luxosChamber.switch(16, 27, '`', '5');
+    }),
+
+    new BlockMirror(luxosChamber, 14, 24,
+        {
+            x: 16,
+            y: 25
+        },
+        {
+            x: 16,
+            y: 27
+        },
+        {
+            x: 12,
+            y: 24
+        },
+        {
+            x: 12,
+            y: 26
+        },
+    ),
 ]
 
 /*
