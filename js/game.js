@@ -501,28 +501,26 @@ var mike = new NPC(28 * 75, 44 * 75, "Mike", mainMap, "L", [
     "Hi.",
     "Who are you?",
     "...",
-    "Oh, you're that dude who escaped from that prison thing!",
+    "Oh, cool!",
     "...",
-    "You're looking for a pair of glasses?",
-    "I found one on the ground. But first, I need to you\nto do me a big favor.",
-    "My mom is a journalist, so she knows about your escape,\nor whatever it is.",
-    "She's been trying to get a hold of you for an interview for\nages! I'm sure she'd love it if you paid her a visit.",
-    "So, yeah. If you want these glasses, that's what you\ngotta do for me in return.",
+    "You're looking for someone named Wayne?\nHuh. Wish I could help ya!",
+    "...",
+    "Sorry, my mom says I shouldn't talk to strangers.\nI'll see you around!"
 ], "Resident - Chard Town\nA curious child whose favorite spot is the Big Lake.")
-mike.action = function(p) {
-    cameraStart(ctr(51), ctr(6), 25, "NPC", {
-        npcName: mike,
-        lineStop: 9
-    })
-    // Location of Mike's Mom's house
-    p.questPoint = {
-        x: 51,
-        y: 8
-    }
+// mike.action = function(p) {
+//     cameraStart(ctr(51), ctr(6), 25, "NPC", {
+//         npcName: mike,
+//         lineStop: 9
+//     })
+//     // Location of Mike's Mom's house
+//     p.questPoint = {
+//         x: 51,
+//         y: 8
+//     }
 
-    aStrangeWorld.setInstructions("You asked Mike for the Old Man's glasses, but he says you need to do something in return.\nHis mom is a journalist, and she's been looking for you ever since you escape that ancient prison.\nMike says that if you go meet her, he'll give you the glasses.");
-}
-mike.actionLine = 7
+//     aStrangeWorld.setInstructions("You asked Mike for the Old Man's glasses, but he says you need to do something in return.\nHis mom is a journalist, and she's been looking for you ever since you escape that ancient prison.\nMike says that if you go meet her, he'll give you the glasses.");
+// }
+// mike.actionLine = 7
 
 var larisa = new NPC(20 * 75, 40 * 75, "Larisa", mainMap, "D", [], "Resident - Chard Town\n[insert description]")
 

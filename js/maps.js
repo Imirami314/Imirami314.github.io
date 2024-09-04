@@ -1214,8 +1214,23 @@ mainMap.solve = function() {
         //                                                     "First off, is there anything at all that you remember?",
         //                                                     "Anything about yourself, me, or the others?",
         //                                                     "...",
-        //                                                     "Yes, yes that's it! You were a soldier!\nThe bravest and most powerful soldier in all of Elria!"
+        //                                                     "Yes, yes that's it! You were a soldier!\nThe bravest and most powerful soldier in all of Elria!",
+        //                                                     "Anything else?\nAnything about, you know... Omnos?",
+        //                                                     "...",
+        //                                                     "Huh, I guess not.",
+        //                                                     "Well, either way, it's a miracle that you're even alive.",
+        //                                                     "Ok. We should start informing others that\nyou're, well, here!",
+        //                                                     "Why don't you take a step outside and look for Wayne,\none of our fellow savants!",
+        //                                                     "...",
+        //                                                     "Wh- What's a savant?",
+        //                                                     "Huh, I have a LOT of explaining to do.",
+        //                                                     "Either way, you'll know when you see him.\nI trust you!",
+        //                                                     "`He's also always swimming..."
+
         //                                                 ]
+
+                                                        
+
         //                                                 larisa.lines = [
         //                                                     "Hi again buddy!",
         //                                                     "It's Larisa, the guy that found you!",
@@ -1223,6 +1238,25 @@ mainMap.solve = function() {
         //                                                     "Either way, it's nice to meet ya!"
         //                                                 ]
         //                                                 p.cordSave = {x: 15, y: 8}
+        //                                                 Screen.fadeIn(0.05, function () {
+        //                                                     oldMan.remote = true
+        //                                                     cameraStart(p.x, p.y, 5, "NPC", {
+        //                                                         npcName: oldMan,
+        //                                                         lineStop: -1
+        //                                                     })
+        //                                                     oldMan.action = function () {
+        //                                                         oldMan.lines = 
+        //                                                         [
+        //                                                             "Go try finding Wayne.",
+        //                                                             "I know this is still all very confusing,\nbut I trust you!",
+        //                                                             "As you walk around, see if you can remember anything else...",
+        //                                                             "`He's also always swimming..."
+        //                                                         ]
+        //                                                     }
+                                                           
+
+        //                                                 })
+                                                        
 
         //                                             })
     
@@ -1237,19 +1271,23 @@ mainMap.solve = function() {
         //                                 ]
                                         
         //                             }
-        //                             cameraStart(oldMan.x, oldMan.y, 5, "NPC", {
-        //                                 npcName: oldMan,
-        //                                 lineStop: -1
-        //                             })
                                     
+        //                             Screen.fadeIn(0.05, function() {
+        //                                 oldMan.remote = true
+        //                                 cameraStart(oldMan.x, oldMan.y, 5, "NPC", {
+        //                                     npcName: oldMan,
+        //                                     lineStop: -1
+        //                                 })
+        //                             })
         //                         })
-        //                         larisa.lines = ["ello"]
+                               
         //                         larisa.clearAction()
         //                     }
         //                     larisa.actionLine = "after"
 
         //                 }
         //             ]
+                   
                 
         //     }, 3000)
             
