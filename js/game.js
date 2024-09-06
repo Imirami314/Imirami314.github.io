@@ -528,7 +528,10 @@ var david = new NPC(ctr(16), ctr(16), "David Swimmer", mainMap, "D", [
     "In case you're wondering, yes, my last name is actually Swimmer.",
     "I don't know what my parents were thinking.",
     "But I do love to swim!",
-    "This pond is kind of depressing though. I would love to find\na great big pond that I could swim in forever!"
+    "This pond is kind of depressing though. I would love to find\na great big pond that I could swim in forever!",
+    "...",
+    "What? Wayne? Who's that?",
+    "Wish I could help ya, but I don't know who that is. Sorry!"
 ], "Resident - Chard Town\nA socially awkward dude who loves to swim.\nUnfortunately, he's not great at it.", function() {
     addMission(davidsDreamPond)
 }, "after")

@@ -1133,7 +1133,7 @@ mainMap.solve = function() {
         // Beginning of game
         // runOnce(() => {
         //     setTimeout(() => {
-        //         larisa.x = ctr(45)
+        //         larisa.x = ctr(44)
         //         larisa.y = ctr(23)
              
         //             // Larisa walks and talks to player
@@ -1252,6 +1252,8 @@ mainMap.solve = function() {
         //                                                             "As you walk around, see if you can remember anything else...",
         //                                                             "`He's also always swimming..."
         //                                                         ]
+        //                                                         addMission(aStrangeWorld)
+        //                                                         oldMan.clearAction()
         //                                                     }
                                                            
 
