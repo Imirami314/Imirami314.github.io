@@ -108,23 +108,30 @@ Enemy.prototype.getRelativeDirection = function (x, y) {
 
 
 
-Enemy.prototype.sortQueue = function () {
-    let firstMonster = Enemy.queue[0];
+Enemy.prototype.sortQueue = function () {   
+    var agroMonsters = monsters.filter(monster => monster.agro);
     
+    if (this.sortCooldown > 0) {
+        this.sortCooldown -= perSec(1);  // Cooldown decrement
+        return;  // Skip sorting during cooldown
+    }
 
-    // Calculate the current direction relative to the player
-    this.currentDirection = firstMonster.getRelativeDirection(p.x, p.y);
-    
-    // If the direction has changed, re-sort the queue
-    if (this.currentDirection !== this.lastDirection) {
-        // Resort the queue based on the new distances to the player
+    for (var i = 0; i < agroMonsters.length; i++) {
+        this.currentDirection = agroMonsters[i].getRelativeDirection(p.x, p.y);
         
-        Enemy.queue.sort((a, b) => a.getPathLength(p.cords.x, p.cords.y) - b.getPathLength(p.cords.x, p.cords.y))
-        // Update the last known direction
-        this.lastDirection = this.currentDirection;
+        // If the direction has changed, re-sort the queue
+        if (this.currentDirection !== this.lastDirection) {
+            // Sort only when the direction changes significantly
+            Enemy.queue.sort((a, b) => a.getPathLength(p.cords.x, p.cords.y) - b.getPathLength(p.cords.x, p.cords.y));
+
+            // Update the last known direction
+            this.lastDirection = this.currentDirection;
+
+            // Reset the sort cooldown to prevent immediate re-sorting
+            this.sortCooldown = 0.5;  // Adjust cooldown as needed
+        }
     }
 }
-
 // New method to calculate separation force
 // Enemy.prototype.calculateSeparationForce = function() { // chatgpt made a lot of this, so i will check if everything works
 //     const desiredSeparation = 50; // desired separation distance
