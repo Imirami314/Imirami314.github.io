@@ -1687,6 +1687,16 @@ Player.prototype.onInteractive = function() { // changeme to use a better condit
     return false;
 }
 
+Player.prototype.curInteractive = function() {
+    for (let inter of interactives) {
+        if (curMap == inter.map && (p.on(inter.x, inter.y)/* || p.on(Math.floor(inter.x / 75), Math.floor(inter.y / 75))*/)) {
+            return inter;
+        }
+    }
+    
+    return false;
+}
+
 Player.prototype.drawAlert = function() {
     if (!!this.blockOn.useDesc) {
         // ctx.roundRect(width / 2 - 100, height / 2 + 50, 200, 50, 10)
@@ -1706,7 +1716,14 @@ Player.prototype.drawAlert = function() {
             this.alertOpacity += 0.1
         }
     } else if (this.onInteractive()) {
-        this.curAlert = "Press space to use"
+        if (this.curInteractive().constructor.name != "LightGate") {
+            this.curAlert = "Press space to use"
+        } else {
+            if (this.weapon == items.lightContainer) {
+                this.curAlert = "Click to open";
+            }
+        }
+
         if (this.alertOpacity <= 1) {
             this.alertOpacity += 0.1
         }
