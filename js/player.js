@@ -1091,13 +1091,13 @@ Player.prototype.updateViewableRegions = function() {
 
 Player.prototype.displayMap = function() {
     ctx.save()
+    ctx.translate(Math.floor(this.mapPan.x * mapScale), Math.floor(this.mapPan.y * mapScale))
     ctx.translate(width / 2, height / 2)
     ctx.scale(mapScale, mapScale) 
     ctx.translate(width / -2, height / -2)
-    ctx.translate(this.mapPan.x, this.mapPan.y)
     
-    curMap.draw(p, "Map View")
-    ellipse(this.x, this.y, 50, 50, "rgb(255, 0, 0)")
+    curMap.draw(p, "Map View");
+    ellipse(this.x, this.y, 50, 50, "rgb(255, 0, 0)");
     
     for (var i in this.tracking) {
         var t = this.tracking[i]
@@ -1154,11 +1154,11 @@ Player.prototype.displayMap = function() {
 
     if (mouseIsDown) {
         if (mouseY > height - 100 && mouseY < height - 50) {
-            if (mouseX > width / 2 - 60 && mouseX < width / 2 - 10 && mapScale < 0.45) { // Zoom in button
+            if (mouseX > width / 2 - 60 && mouseX < width / 2 - 10 && mapScale < 1) { // Zoom in button
                 mapScale *= 1.03
             }
             
-            if (mouseX > width / 2 + 10 && mouseX < width / 2 + 60 && mapScale > 0.13) { // Zoom out button
+            if (mouseX > width / 2 + 10 && mouseX < width / 2 + 60 && mapScale > 0.1) { // Zoom out button
                 mapScale /= 1.03
             }
         }

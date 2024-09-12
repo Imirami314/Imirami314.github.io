@@ -3365,7 +3365,7 @@ function startPos() {
     p.equipped = [items.aquaLung];
     lithosCutsceneDeath.onEnd();
     curMap = luxosChamber;
-    p.goTo(ctr(22), ctr(22));
+    p.goTo(ctr(12), ctr(23));
     addMission(underneathLuminosIsle);
 
     underneathLuminosIsle.setInstructions("You managed to open some sort of door to a deeper area! However,\nEmpress Aurora had some information to share with you.\nShe believes that if a super old dungeon does exist, its creators\nmost likely used Light Gates to keep unwanted visitors out.\nSo, you'll need to ask around Luminos Isle to find Light Containers, which will open the Light Gates!");
