@@ -876,6 +876,9 @@ class BlockMirror {
         this.img = images.blockMirror;
 
         this.savedBlocks = [];
+
+        this.blockOpacity = 0
+        this.blockColor = "rgb(255, 0, 0, " + this.blockOpacity + ")"
     }
 
     draw() {
@@ -885,24 +888,42 @@ class BlockMirror {
     }
 
     update() {
-        if (p.on(this.x, this.y)) {
-            // Draw green copy square
-            let copySquareWidth = 75 * (this.copyPos2.x - this.copyPos1.x + 1);
-            let copySquareHeight = 75 * (this.copyPos2.y - this.copyPos1.y + 1);
-            
-            ctx.fillStyle = "rgb(0, 255, 0, 0.3)";
-            ctx.fillRect(this.copyPos1.x * 75, this.copyPos1.y * 75, copySquareWidth, copySquareHeight);
+        // Draw green copy square
+        let copySquareWidth = 75 * (this.copyPos2.x - this.copyPos1.x + 1);
+        let copySquareHeight = 75 * (this.copyPos2.y - this.copyPos1.y + 1);
+        
+        
+        
 
-            // Draw red paste square
-            let pasteSquareWidth = 75 * (this.pastePos2.x - this.pastePos1.x + 1);
-            let pasteSquareHeight = 75 * (this.pastePos2.y - this.pastePos1.y + 1);
+        ctx.fillStyle = "rgb(0, 50, 255, " + this.blockOpacity + ")";
+        ctx.fillRect(this.copyPos1.x * 75, this.copyPos1.y * 75, copySquareWidth, copySquareHeight);
+
+        // Draw red paste square
+        let pasteSquareWidth = 75 * (this.pastePos2.x - this.pastePos1.x + 1);
+        let pasteSquareHeight = 75 * (this.pastePos2.y - this.pastePos1.y + 1);
+        
+        ctx.fillStyle = this.blockColor;
+        ctx.fillRect(this.pastePos1.x * 75, this.pastePos1.y * 75, pasteSquareWidth, pasteSquareHeight);
+        
+        if (p.on(this.x, this.y)) {
+            if (this.blockOpacity <= 0.3) {
+                this.blockOpacity += 0.01
+            }
+        } else {
+            if (this.blockOpacity > 0) {
+                this.blockOpacity -= 0.01
+            }
             
-            ctx.fillStyle = "rgb(255, 0, 0, 0.3)";
-            ctx.fillRect(this.pastePos1.x * 75, this.pastePos1.y * 75, pasteSquareWidth, pasteSquareHeight);
         }
 
-        if (this.active) this.img = images.blockMirrorActive;
-        else this.img = images.blockMirror;
+        if (this.active) {
+            this.img = images.blockMirrorActive;
+            this.blockColor = "rgb(105, 185, 255, " + this.blockOpacity + ")"
+        } else {
+            this.img = images.blockMirror;
+            this.blockColor = "rgb(255, 0, 0, " + this.blockOpacity + ")"
+        }
+        
     }
 
     activate() {
