@@ -3920,8 +3920,8 @@ var gameInterval = setInterval(function() {
             
             if (keys.shift) {
                 // Screen.fadeOut(255, 255, 255, 0.01)
-                p.mapPan.x = (- p.x + width / 2)
-                p.mapPan.y = (- p.y + height / 2)
+                p.mapPan.x = (- p.x)
+                p.mapPan.y = (- p.y)
                 if (p.mapSwitchTimer <= 0) {
                     if (!p.mapOn) {
                         p.mapOn = true

@@ -168,14 +168,15 @@ var blocks = [
         name: "lava",
         through: true,
         dps: 100, // Default 100
-        speed: 1
+        speed: 1,
+        img: images.lava
     },
     {
         id: "@",
         name: "bush",
         through: true,
         dps: 0,
-        speed: 3
+        speed: 3,
     },
     {
         id: "/",
@@ -183,7 +184,8 @@ var blocks = [
         through: true,
         dps: 0,
         speed: 3,
-		sound: "Sand Walking"
+		sound: "Sand Walking",
+        img: images.sand
     },
     {
         id: ".",
@@ -198,7 +200,8 @@ var blocks = [
         through: true,
         dps: 0,
         speed: 7, // Default 7
-        sound: "Trail Walking"
+        sound: "Trail Walking",
+        img: images.trail
     },
     {
         id: "=",
@@ -220,21 +223,23 @@ var blocks = [
         name: "brick wall",
         through: false,
         dps: 0,
-        speed: 3
+        speed: 3,
     },
 	{
         id: "S",
         name: "stone wall",
         through: false,
         dps: 0,
-        speed: 3
+        speed: 3,
+        img: images.stoneWall
     },
     {
         id: "%",
         name: "stone tiles",
         through: true,
         dps: 0,
-        speed: 4
+        speed: 4,
+        img: images.stoneTiles
     },
     {
         id: "O",
@@ -249,14 +254,14 @@ var blocks = [
         name: "tree",
         through: false,
         dps: 0,
-        speed: 3
+        speed: 3,
     },
     {
         id: "t",
         name: "tree",
         through: false,
         dps: 0,
-        speed: 3
+        speed: 3,
     },
     {
         id: ":",
@@ -285,7 +290,8 @@ var blocks = [
         name: "wooden wall",
         through: false,
         dps: 0,
-        speed: 5
+        speed: 5,
+        img: images.woodenWall
     },
 	{
         id: "d",
@@ -299,7 +305,7 @@ var blocks = [
         name: "stone brick",
         through: false,
         dps: 0,
-        speed: 4
+        speed: 4,
     },
 	{
 		id: "c",
@@ -313,7 +319,8 @@ var blocks = [
         name: "snow",
         through: true,
         dps: 0,
-        speed: 4 // Default 4
+        speed: 4, // Default 4
+        img: images.snow
     },
     {
         id: "z",
@@ -321,14 +328,16 @@ var blocks = [
         through: true,
         dps: 0,
         speed: 10, // Default 10
-		sound: "Speedy Snow Walking" 
+		sound: "Speedy Snow Walking",
+        img: images.speedySnow
     },
     {
         id: "^",
         name: "suspensia",
         through: true,
         dps: 200, // Default (change) 200
-        speed: 0.5 // Default (change) 0.5
+        speed: 0.5, // Default (change) 0.5
+        img: images.suspensia
     },
 	{
 		id: "+",
@@ -343,7 +352,7 @@ var blocks = [
         name: "stun",
         through: true,
         dps: 0,
-        speed: 0.25
+        speed: 0.25,
     },
     {
         id: 'I',
@@ -351,6 +360,7 @@ var blocks = [
         through: false,
         dps: 0,
         speed: 0,
+        img: images.iceWall
     },
     {
         id: 'i',
@@ -358,6 +368,7 @@ var blocks = [
         through: false,
         dps: 0,
         speed: 0,
+        img: images.crackedIceWall
     },
     {
         id: 'X',
@@ -378,28 +389,31 @@ var blocks = [
         name: "sun stone wall",
         through: false,
         dps: 0,
-        speed: 4
+        speed: 4,
+        img: images.sunStoneWall
     },
     {
         id: '`',
         name: "sun stone",
         through: true,
         dps: 0,
-        speed: 6
+        speed: 6,
+        img: images.sunStone
     },
     {
         id: '2',
         name: "sun stone bricks",
         through: false,
         dps: 0,
-        speed: 4
+        speed: 4,
+        img: images.sunStoneBricks
     },
     {
         id: 'l',
         name: "luminos lamp",
         through: false,
         dps: 0,
-        speed: 7
+        speed: 7,
     },
     { // Impassable void block to avoid out of bounds error on map
         id: "",
@@ -544,11 +558,13 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
         for (var j = 0; j < this.arr[i].length; j ++) {
             var c = this.arr[i].charAt(j)
             if (mode == "Player View") {
+                this.blockSize = 75;
                 this.loadCase = (j * this.blockSize - p.x + width / 2 > -1 * this.blockSize &&
                     j * this.blockSize - p.x + width / 2 < width &&
                     i * this.blockSize - p.y + height / 2 > -1 * this.blockSize &&
                     i * this.blockSize - p.y + height / 2 < height + this.blockSize)
             } else if (mode == "Map View") {
+                this.blockSize = 75;
                 if (!p.canViewAllRegions && curMap == mainMap) {
                     this.loadCase = (j * this.blockSize + p.mapPan.x < width / mapScale && 
                         j * this.blockSize + p.mapPan.x > - width / mapScale && 
@@ -584,58 +600,68 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
 			}
             if (this.loadCase) {
                 if (!!getBlockById(c).img) {
-                    ctx.drawImage(getBlockById(c).img, j * this.blockSize, i * this.blockSize, 75, 75)
+                    if (mode != "Map View") {
+                        ctx.drawImage(getBlockById(c).img, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize);
+                    } else {
+                        ctx.drawImage(getBlockById(c).img, Math.floor(j * this.blockSize * mapScale), Math.floor(i * this.blockSize * mapScale), Math.ceil(this.blockSize * mapScale), Math.ceil(this.blockSize * mapScale));
+                    }
                 }
+
+                ctx.save();
+                if (mode == "Map View") {
+                    ctx.scale(mapScale, mapScale);
+                }
+
                 switch (c) {
-                    case ',': // Grass
-                        ctx.drawImage(images.grass, j * this.blockSize, i * this.blockSize, 75, 75)
-                        // if (i == 0 && j == 0 && flowers.length > 1) {
-                        //     flowersFinished = true
-                        // } 
-                        // var hasFlower = (Math.random() <= 0.1)
-                        // if (hasFlower && !flowersFinished) {
-                        //     flowers.push({
-                        //         cordX: j,
-                        //         cordY: i,
-                        //         x: Math.random() * 75,
-                        //         y: Math.random() * 75
-                        //     })
-                        // }
-                        break
-                    case '~': // Water
-                        // ctx.fillStyle = 'rgb(0, 0, 255)'
-                        // ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
-                        ctx.drawImage(images.water, j * this.blockSize, i * this.blockSize, 75, 75)
-                        break
-                    case '_': // Stone
-                        ctx.drawImage(images.stone, j * this.blockSize, i * this.blockSize, 75, 75)
-                        break
+                    // case ',': // Grass
+                    //     ctx.drawImage(images.grass, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+                    //     // if (i == 0 && j == 0 && flowers.length > 1) {
+                    //     //     flowersFinished = true
+                    //     // } 
+                    //     // var hasFlower = (Math.random() <= 0.1)
+                    //     // if (hasFlower && !flowersFinished) {
+                    //     //     flowers.push({
+                    //     //         cordX: j,
+                    //     //         cordY: i,
+                    //     //         x: Math.random() * 75,
+                    //     //         y: Math.random() * 75
+                    //     //     })
+                    //     // }
+                    //     break
+                    // case '~': // Water
+                    //     // ctx.fillStyle = 'rgb(0, 0, 255)'
+                    //     // ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+                    //     ctx.drawImage(images.water, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+                    //     break
+                    // case '_': // Stone
+                    //     ctx.drawImage(images.stone, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+                    //     break
                     case '#': // Dirt
                         ctx.fillStyle = 'rgb(100, 75, 15)'
                         ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
                         break
-                    case '!': // Lava
-						ctx.drawImage(images.lava, j * this.blockSize, i * this.blockSize, 75, 75)
-                        // ctx.fillStyle = 'rgb(250, 40, 0)'
-                        // ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+                    // case '!': // Lava
+					// 	ctx.drawImage(images.lava, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+                    //     // ctx.fillStyle = 'rgb(250, 40, 0)'
+                    //     // ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
 
-                        if (mode != "Map View") {
-                            // var ptcles = new ParticleSystem(j * this.blockSize + this.blockSize / 2, i * this.blockSize + this.blockSize / 2, 5, 100, 255, 0, 0)
-                            // ptcles.create()
-                            // ptcles.draw()
-                        }
+                    //     if (mode != "Map View") {
+                    //         // var ptcles = new ParticleSystem(j * this.blockSize + this.blockSize / 2, i * this.blockSize + this.blockSize / 2, 5, 100, 255, 0, 0)
+                    //         // ptcles.create()
+                    //         // ptcles.draw()
+                    //     }
 						
-                        break
+                    //     break
                     case '@': // Bush
                     var pulsation = Math.sin(elapsed / (randomSeed(i * j) * 2 + 15)) * 1.5
-                        ctx.drawImage(images.grass, j * this.blockSize, i * this.blockSize, 75, 75)
+                        ctx.drawImage(images.grass, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
                         ctx.drawImage(images.bush, j * this.blockSize - pulsation / 2, i * this.blockSize + pulsation, 75 + pulsation, 75) + pulsation
                         break
-    				case '/': // Sand
-    					// ctx.fillStyle = 'rgb(242, 209, 107)'
-                        // ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
-						ctx.drawImage(images.sand, j * this.blockSize, i * this.blockSize, 75, 75)
-    					break
+    				// case '/': // Sand
+    				// 	// ctx.fillStyle = 'rgb(242, 209, 107)'
+                    //     // ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+					// 	ctx.drawImage(images.sand, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+    				// 	break
     				case '.': // Wood
                         ctx.beginPath()
                         ctx.lineWidth = 1.5
@@ -647,11 +673,11 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
                         ctx.fill()
                         ctx.stroke()
     					break
-    				case '-': // Trail
-    					// ctx.fillStyle = 'rgb(183, 133, 81)'
-             			// ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
-						ctx.drawImage(images.trail, j * this.blockSize, i * this.blockSize, 75, 75)
-    					break
+    				// case '-': // Trail
+    				// 	// ctx.fillStyle = 'rgb(183, 133, 81)'
+             		// 	// ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+					// 	ctx.drawImage(images.trail, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+    				// 	break
 					case '=': // Brick
                         ctx.beginPath()
 						ctx.lineWidth = 1
@@ -680,22 +706,22 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
                         ctx.fill()
                         ctx.stroke()
 						break
-					case 'S': // Stone wall
-                        ctx.drawImage(images.stoneWall, j * this.blockSize, i * this.blockSize, 75, 75)
-						break
-                    case '%': // Stone tiles
-                        ctx.drawImage(images.stoneTiles, j * this.blockSize, i * this.blockSize, 75, 75)
-                        break
+					// case 'S': // Stone wall
+                    //     ctx.drawImage(images.stoneWall, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+					// 	break
+                    // case '%': // Stone tiles
+                    //     ctx.drawImage(images.stoneTiles, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+                    //     break
                     case 'O': // Hole
                         ctx.fillStyle = 'rgb(0, 0, 0)'
                         ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
                         break
                     case 'T': // Tree
-                        ctx.drawImage(images.grass, j * this.blockSize, i * this.blockSize, 75, 75)
+                        ctx.drawImage(images.grass, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
                         ctx.drawImage(images.tree, j * this.blockSize - 10, i * this.blockSize - 50, 95, 100)
                         break
                     case 't': // Other tree (pine tree I think)
-                        ctx.drawImage(images.grass, j * this.blockSize, i * this.blockSize, 75, 75)
+                        ctx.drawImage(images.grass, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
                         ctx.drawImage(images.tree2, j * this.blockSize + 7.5, i * this.blockSize - 70, 60, 120)
                         break
                     case ':': // Lock
@@ -714,9 +740,9 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
                         ctx.fillStyle = 'rgb(255, 100, 100)'
                         ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
                         break
-                    case "W": // Wooden Wall
-                        ctx.drawImage(images.woodenWall, j * this.blockSize, i * this.blockSize, 75, 75)
-    					break
+                    // case "W": // Wooden Wall
+                    //     ctx.drawImage(images.woodenWall, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+    				// 	break
 					case "d": // Dungeon door
                         ctx.fillStyle = 'rgb(60, 60, 60)'
                         ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
@@ -743,53 +769,51 @@ Landscape.prototype.draw = function(p, mode, cx, cy, cscale) {
 						ctx.fill()
 						ctx.stroke()
 						break
-                    case "*": // Snow
-                        ctx.drawImage(images.snow, j * this.blockSize, i * this.blockSize, 75, 75)
-                        break
-                    case "z": // Speedy snow
-                        ctx.drawImage(images.speedySnow, j * this.blockSize, i * this.blockSize, 75, 75)
-                        break
-                    case "^": // Suspensia
-                        ctx.drawImage(images.suspensia, j * this.blockSize, i * this.blockSize, 75, 75)
-                        break
+                    // case "*": // Snow
+                    //     ctx.drawImage(images.snow, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+                    //     break
+                    // case "z": // Speedy snow
+                    //     ctx.drawImage(images.speedySnow, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+                    //     break
+                    // case "^": // Suspensia
+                    //     ctx.drawImage(images.suspensia, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+                    //     break
 					case "+": // Teleport
-						ctx.drawImage(images.teleport, j * this.blockSize, i * this.blockSize, 75, 75)
+						ctx.drawImage(images.teleport, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
 						break
                     case ";": // Stun
                         ctx.fillStyle = 'rgb(79, 13, 13)'
                         ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
                         break
-                    case 'I': // Ice Wall
-                        // ctx.fillStyle = 'rgb(0, 255, 255)'
-                        // ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
-                        ctx.drawImage(images.iceWall, j * this.blockSize, i * this.blockSize, 75, 75)
-                        break
-                    case 'i': // Cracked Ice Wall
-                        // ctx.fillStyle = 'rgb(0, 200, 200)'
-                        // ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
-                        ctx.drawImage(images.crackedIceWall, j * this.blockSize, i * this.blockSize, 75, 75)
-                        break
+                    // case 'I': // Ice Wall
+                    //     // ctx.fillStyle = 'rgb(0, 255, 255)'
+                    //     // ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+                    //     ctx.drawImage(images.iceWall, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+                    //     break
+                    // case 'i': // Cracked Ice Wall
+                    //     // ctx.fillStyle = 'rgb(0, 200, 200)'
+                    //     // ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+                    //     ctx.drawImage(images.crackedIceWall, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
+                    //     break
                     case 'X':
                         ctx.fillStyle = 'rgb(10, 10, 10)'
                         ctx.fillRect(j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
                         break
                     case 's':
-                        ctx.drawImage(images.grass, j * this.blockSize, i * this.blockSize, 75, 75)
+                        ctx.drawImage(images.grass, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
                         break
-                    case '5':
-                        ctx.drawImage(images.sunStoneWall, j * this.blockSize, i * this.blockSize, 75, 75);
-                        break
-                    case '`':
-                        ctx.drawImage(images.sunStone, j * this.blockSize, i * this.blockSize, 75, 75);
-                        break
-                    case '2':
-                        ctx.drawImage(images.sunStoneBricks, j * this.blockSize, i * this.blockSize, 75, 75);
-                        break
+                    // case '5':
+                    //     ctx.drawImage(images.sunStoneWall, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize);
+                    //     break
+                    // case '2':
+                    //     ctx.drawImage(images.sunStoneBricks, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize);
+                    //     break
                     case 'l': // Luminos Lamp
-                        ctx.drawImage(images.sunStone, j * this.blockSize, i * this.blockSize, 75, 75)
+                        ctx.drawImage(images.sunStone, j * this.blockSize, i * this.blockSize, this.blockSize, this.blockSize)
                         ctx.drawImage(images.luminosLamp, j * this.blockSize + 20, i * this.blockSize - 35, 35, 85)
                         break
                 }
+                ctx.restore();
             }
         }
     }

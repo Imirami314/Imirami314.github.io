@@ -1093,11 +1093,11 @@ Player.prototype.displayMap = function() {
     ctx.save()
     ctx.translate(Math.floor(this.mapPan.x * mapScale), Math.floor(this.mapPan.y * mapScale))
     ctx.translate(width / 2, height / 2)
-    ctx.scale(mapScale, mapScale) 
-    ctx.translate(width / -2, height / -2)
+    // ctx.scale(mapScale, mapScale) 
+    // ctx.translate(width / -2, height / -2)
     
     curMap.draw(p, "Map View");
-    ellipse(this.x, this.y, 50, 50, "rgb(255, 0, 0)");
+    ellipse(this.x * mapScale, this.y * mapScale, 50 * mapScale, 50 * mapScale, "rgb(255, 0, 0)");
     
     for (var i in this.tracking) {
         var t = this.tracking[i]
@@ -1118,7 +1118,8 @@ Player.prototype.displayMap = function() {
         
     }
     
-    ctx.restore()
+    ctx.restore();
+
     ctx.fillStyle = "rgb(0, 0, 0)"
     ctx.roundRect(width / 2 - 60, height - 100, 50, 50, 5)
     ctx.fill()
@@ -1136,19 +1137,19 @@ Player.prototype.displayMap = function() {
         }
     }
     
-    if (keys.w) {
+    if (keys.w && this.mapPan.y < 0) {
         this.mapPan.y += 25 / mapScale
     }
 
-    if (keys.a) {
+    if (keys.a && this.mapPan.x < 0) {
         this.mapPan.x += 25 / mapScale
     }
 
-    if (keys.s) {
+    if (keys.s && this.mapPan.y > - ((curMap.getDimensions().x * 75))) {
         this.mapPan.y -= 25 / mapScale
     }
 
-    if (keys.d) {
+    if (keys.d && this.mapPan.x > - ((curMap.getDimensions().x * 75))) {
         this.mapPan.x -= 25 / mapScale
     }
 
