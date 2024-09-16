@@ -47,6 +47,36 @@ Chest.prototype.open = function(p) {
 
 // Items
 const items = {
+    puzzleKey: new Item("Puzzle Key", 0, function(x, y) {
+        ctx.drawImage(images.puzzleKey, x - 20, y - 25, 45, 45);
+    }, function(p) {
+        if (curMap == confoundedCave) {
+            if (p.on(28, 11)) {
+                curMap.changeBlock(29, 11, '_');
+    
+                underneathChardTown.setInstructions("It looks like you've opened the lock to the central spiral. Now all that's left is to enter the hole in the middle!\nJust be ready for anything...");
+                
+                p.removeItem(this);
+            }
+        } else if (curMap == howlerHollow) {
+            if (p.on(15, 20)) {
+                curMap.changeBlock(14, 20, '_')
+                p.removeItem(this);
+            }
+
+            if (p.on(16, 15)) {
+                curMap.changeBlock(17, 15, '_')
+                
+                p.removeItem(this);
+            }
+        } else if (curMap == cryoUnderground) {
+            if (p.on(1, 14)) {
+                curMap.changeBlock(1, 15, 'z')
+                
+                p.removeItem(this);
+            }
+        }
+    }),
     spearOfNoctos: new Item("Spear of Noctos", 15, function(x, y) {
         ctx.drawImage(images.spearOfNoctos, x - 15, y - 15, 50, 15)
     }, function(p) {
@@ -416,7 +446,7 @@ const items = {
             }
         });
     }, "A special container that contains the required fuel to power a Skyway.\nThis cell is valid for one use.", "MISC"),
-} // Puzzle Keys are not included as they vary depending on where they came from
+}
 
 function Food(name, img, health, secs) {
     this.name = name

@@ -94,6 +94,7 @@ const images = {
     apple: initImage('sprites/food/apple.png'),
 
     // Items
+    puzzleKey: initImage('sprites/items/puzzleKey.png'),
     steelFieldKey: initImage('sprites/items/steelFieldKey.png'),
     steelSword: initImage('sprites/items/steelSword.png'),
     confoundedCaveKey: initImage('sprites/items/confoundedCaveKey.png'),

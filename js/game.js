@@ -2919,7 +2919,7 @@ var interactives = [
         },
     ),
 
-    
+
 ]
 
 /*
@@ -3052,56 +3052,60 @@ const c7_1 = new Chest(smithHouse, 7, 1, [
 ]);
 
 const c24_2 = new Chest(howlerHollow, 24, 2, [
-    new Item("Puzzle Key", 0, function(x, y) {
-        ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
-    }, function(p) {
+    // new Item("Puzzle Key", 0, function(x, y) {
+    //     drawPuzzleKey(x, y);
+    // }, function(p) {
             
-        if (p.on(15, 20) && curMap == howlerHollow) {
-            curMap.changeBlock(14, 20, '_')
+    //     if (p.on(15, 20) && curMap == howlerHollow) {
+    //         curMap.changeBlock(14, 20, '_')
             
-            p.removeItem(this);
-        }
-    })
+    //         p.removeItem(this);
+    //     }
+    // })
+    items.puzzleKey
 ])
 
 const c5_18 = new Chest(howlerHollow, 5, 18, [
-    new Item("Puzzle Key", 0, function(x, y) {
-        ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
-    }, function(p) {
+    // new Item("Puzzle Key", 0, function(x, y) {
+    //     drawPuzzleKey(x, y);
+    // }, function(p) {
             
-        if (p.on(16, 15) && curMap == howlerHollow) {
-            curMap.changeBlock(17, 15, '_')
+    //     if (p.on(16, 15) && curMap == howlerHollow) {
+    //         curMap.changeBlock(17, 15, '_')
             
-            p.removeItem(this);
-        }
-    })
+    //         p.removeItem(this);
+    //     }
+    // })
+    items.puzzleKey
 ])
 
 const c14_3 = new Chest(confoundedCave, 14, 3, [
-    new Item("Puzzle Key", 0, function(x, y) {
-        ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
-    }, function(p) {
+    // new Item("Puzzle Key", 0, function(x, y) {
+    //     drawPuzzleKey(x, y);
+    // }, function(p) {
             
-        if (p.cords.x == 28 && p.cords.y == 11 && curMap == confoundedCave) {
-            curMap.changeBlock(29, 11, '_');
+    //     if (p.cords.x == 28 && p.cords.y == 11 && curMap == confoundedCave) {
+    //         curMap.changeBlock(29, 11, '_');
 
-            underneathChardTown.setInstructions("It looks like you've opened the lock to the central spiral. Now all that's left is to enter the hole in the middle!\nJust be ready for anything...");
+    //         underneathChardTown.setInstructions("It looks like you've opened the lock to the central spiral. Now all that's left is to enter the hole in the middle!\nJust be ready for anything...");
             
-            p.removeItem(this);
-        }
-    })
+    //         p.removeItem(this);
+    //     }
+    // })
+    items.puzzleKey
 ])
 
 const c10_1 = new Chest(cryoUnderground, 10, 1, [
-    new Item("Puzzle Key", 0, function(x, y) {
-        ellipse(x, y, 10, 10, "rgb(0, 0, 0)")
-    }, function(p) {
-        if (p.cords.x == 1 && p.cords.y == 14 && curMap == cryoUnderground) {
-            curMap.changeBlock(1, 15, 'z')
+    // new Item("Puzzle Key", 0, function(x, y) {
+    //     drawPuzzleKey(x, y);
+    // }, function(p) {
+    //     if (p.cords.x == 1 && p.cords.y == 14 && curMap == cryoUnderground) {
+    //         curMap.changeBlock(1, 15, 'z')
             
-            p.removeItem(this);
-        }
-    })
+    //         p.removeItem(this);
+    //     }
+    // })
+    items.puzzleKey
 ])
 
 const c34_15 = new Chest(cryoUnderground, 34, 15, [
@@ -3363,7 +3367,8 @@ if (!!save) {
 // Start position code (use to set variables and start game from a certain point) Remove all this code later
 function startPos() {
     dev = false;
-    p.inventory = [items.lightContainer, items.spearOfNoctos];
+    p.giveItem(items.lightContainer);
+    p.giveItem(items.spearOfNoctos);
     p.equipped = [items.aquaLung];
     lithosCutsceneDeath.onEnd();
     curMap = luxosChamber;
