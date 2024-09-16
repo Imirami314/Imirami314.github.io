@@ -684,28 +684,30 @@ var wyatt = new NPC(ctr(2), ctr(3), "Wyatt", wyattHouse, "D", [
 ], "Resident - Chard Town\nA slightly suspicious resident who (supposedly) has\nnothing to hide. I'd keep an eye on him...")
 
 var wayne = new NPC(48 * 75, 55 * 75, "Wayne", mainMap, "D", [
-    "Aye matey! What brings you to this foreign land?",
-    "I'm Wayne, fearless sailor of the seven seas!",
-    "Well that's what I've told everyone anyways.\nI actually just swim a lot.",
-    "I'm sure you've heard of the mysterious cavern\nnear the big lake.",
+    "Oh. Hello ther-",
+    "Oh my goodness...\nIt can't be...",
+    "Is it really you?",
     "...",
-    "You haven't? Huh, I would have thought somebody\nhas told you about this.",
-    "However, It hasn't been open for years,\nno one knows how to get in nor what's inside...",
-    "By the way, what's your name, pirate?",
+    "Wow! I- I don't even know what to say!\nIt's such a relief to see you even alive...",
     "...",
-    "Oh! In that case, have you talked to that old guy?",
-    "He wanted to meet you and tell you something\napparently..."
-], "Traveler - Chard Town\nHe is always outdoors, and loves to raft\nand swim whenever he gets the chance.", function(p, npc) {
-    // var old_man = npcs.searchByName("Old Man")
-    if (oldMan.glasses) {
-        p.questPoint = {
-            x: 130,
-            y: 37
-        }
+    "What, you don't know me?",
+    "...",
+    "Oh my goodness, you were brainwashed too?!\nThis is bad. Really bad.",
+    "...",
+    "Yes, we better get back ASAP. We have to figure this all out.",
+    "Let's go back to the Old Man's house."
+], "Savant - Chard Town\n")
 
-        wayne.clearAction()
-    }
-}, "after")
+wayne.action = function () {
+    Screen.fadeOut(0.05, function () {
+        wayne.x = ctr(3)
+        wayne.y = ctr(1)
+        wayne.map = johnHouse
+        Screen.fadeIn(0.05)
+    })
+    wayne.clearAction()
+}
+wayne.actionLine = "after"
 
 var hector = new NPC(ctr(17), ctr(57), "Hector", mainMap, "U", [
     "Yo, what's up?",
@@ -859,8 +861,7 @@ var nevada = new NPC(ctr(5), b(3), "Nevada", breezwayBuilds, "D", [
 
 var lonzo = new NPC(ctr(222), ctr(11), "Lonzo", mainMap, "D", [
     "HEY! HEY YOU!",
-    "Please help me!\nI fell asleep here and now I'm stuck!",
-    "You see that swirly thing?\nIt will take you to me!"
+    "Please help me!\nI fell asleep here and now I'm stuck!"
 ], "hi")
 
 // Action up to meeting the queen mission
@@ -2918,6 +2919,17 @@ var interactives = [
             y: 26
         },
     ),
+
+    new Toggle(luxosChamber, 8, 22, function () {
+        luxosChamber.changeBlocks([[6, 22], [13, 20]], '2')
+        luxosChamber.changeBlocks([[6, 21], [6, 20], [7, 20], [8, 20], [9,20], [10,20], [11,20], [12, 20], [15, 20], [16,20]], '~')
+    }, function () {
+       // luxosChamber.changeBlocks([[9, 20], [13, 20]], '2')
+        luxosChamber.changeBlock(6, 23, '^')
+        luxosChamber.changeBlocks([[6, 22], [6, 21], [6, 20], [7, 20], [8, 20], [9,20], [10,20], [11,20], [12, 20], [13, 20], [15, 20], [16,20]], '~')
+    }),
+
+    new MultiToggle(luxosChamber, 15, 21, 14, 20, [",", "!", "_", "`"])
 
 
 ]
