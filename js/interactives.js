@@ -541,6 +541,9 @@ class Rock {
                                 p.manualMove(0, perSec(this.pushSpeedPerSec))
                                 this.y += perSec(this.pushSpeedPerSec)
                             }
+                        } else {
+                            this.y ++;
+                            p.manualMove(0, 1); // Cancels out the player continuously moving forward while the rock stays still (this line is necessary to keep the player in place when pushing the rock into a wall)
                         }
                         break
                     case 'D':
@@ -552,6 +555,9 @@ class Rock {
                                 p.manualMove(0, perSec(this.pushSpeedPerSec))
                                 this.y += perSec(this.pushSpeedPerSec)
                             }
+                        } else {
+                            this.y --
+                            p.manualMove(0, - 1); // Cancels out the player continuously moving forward while the rock stays still (this line is necessary to keep the player in place when pushing the rock into a wall)
                         }
                         break
                     case 'L':
@@ -566,6 +572,9 @@ class Rock {
                                 this.rotate ++
                             }
                             
+                        } else {
+                            this.x ++;
+                            p.manualMove(1, 0); // Cancels out the player continuously moving forward while the rock stays still (this line is necessary to keep the player in place when pushing the rock into a wall)
                         }
                         break
                     case 'R':
@@ -579,6 +588,9 @@ class Rock {
                                 this.x += perSec(this.pushSpeedPerSec)
                                 this.rotate ++
                             }
+                        } else {
+                            this.x --;
+                            p.manualMove(-1, 0); // Cancels out the player continuously moving forward while the rock stays still (this line is necessary to keep the player in place when pushing the rock into a wall)
                         }
                         break
                 }

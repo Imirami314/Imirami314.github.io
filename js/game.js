@@ -2881,6 +2881,8 @@ var interactives = [
     }, ctr(22), ctr(2)),
 
     // Luxos Chamber
+
+    // Left section
     new LightGate(luxosChamber, 18, 22, 17, 22, '`'),
     new LightGate(luxosChamber, 22, 18, 22, 17, '`'),
     new LightGate(luxosChamber, 26, 22, 27, 22, '`'),
@@ -2929,7 +2931,56 @@ var interactives = [
         luxosChamber.changeBlocks([[6, 22], [6, 21], [6, 20], [7, 20], [8, 20], [9,20], [10,20], [11,20], [12, 20], [13, 20], [15, 20], [16,20]], '~')
     }),
 
-    new MultiToggle(luxosChamber, 15, 21, 14, 20, [",", "!", "_", "`"])
+    new MultiToggle(luxosChamber, 15, 21, 14, 20, [",", "!", "_", "`"]),
+
+    // Top section
+
+    new MultiToggle(luxosChamber, 19, 15, 19, 17, [",", "`", "~", "!"]),
+
+    new MultiToggle(luxosChamber, 25, 15, 25, 17, [",", "`", "~", "!"]),
+
+    new RockDispenser(luxosChamber, b(22), b(15), ctr(22), ctr(14)),
+
+    new BlockMirror(luxosChamber, 21, 15,
+        {
+            x: 18,
+            y: 16
+        },
+        {
+            x: 19,
+            y: 17
+        },
+        {
+            x: 21,
+            y: 12
+        },
+        {
+            x: 22,
+            y: 13
+        },
+    ),
+
+
+    new BlockMirror(luxosChamber, 23, 15,
+        {
+            x: 25,
+            y: 16
+        },
+        {
+            x: 26,
+            y: 17
+        },
+        {
+            x: 22,
+            y: 12
+        },
+        {
+            x: 23,
+            y: 13
+        },
+    ),
+
+    // Right section
 
 
 ]
@@ -3384,7 +3435,7 @@ function startPos() {
     p.equipped = [items.aquaLung];
     lithosCutsceneDeath.onEnd();
     curMap = luxosChamber;
-    p.goTo(ctr(12), ctr(23));
+    p.goTo(ctr(22), ctr(16));
     addMission(underneathLuminosIsle);
 
     underneathLuminosIsle.setInstructions("You managed to open some sort of door to a deeper area! However,\nEmpress Aurora had some information to share with you.\nShe believes that if a super old dungeon does exist, its creators\nmost likely used Light Gates to keep unwanted visitors out.\nSo, you'll need to ask around Luminos Isle to find Light Containers, which will open the Light Gates!");
