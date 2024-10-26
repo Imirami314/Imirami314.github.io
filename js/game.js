@@ -2980,9 +2980,63 @@ var interactives = [
         },
     ),
 
+    new Toggle(luxosChamber, 19, 10, function () {
+        luxosChamber.changeBlock(20, 12, ')');
+    }, function () {
+        luxosChamber.changeBlock(20, 12, '(');
+    }),
+
+    new RockSwitch(luxosChamber, 19, 8, function() {
+        luxosChamber.changeBlocks([[19, 9], [20, 10]], '`');
+    }, function() {
+        luxosChamber.changeBlocks([[19, 9], [20, 10]], '2');
+    }),
+
+    new Toggle(luxosChamber, 25, 10, function () {
+        luxosChamber.changeBlock(24, 12, ')');
+    }, function () {
+        luxosChamber.changeBlock(24, 12, '(');
+    }),
+
+    new RockSwitch(luxosChamber, 25, 8, function() {
+        luxosChamber.changeBlocks([[25, 9], [24, 10]], '`');
+    }, function() {
+        luxosChamber.changeBlocks([[25, 9], [24, 10]], '2');
+    }),
+
+    new BlockMirror(luxosChamber, 17, 7,
+        {
+            x: 17,
+            y: 3
+        },
+        {
+            x: 17,
+            y: 5
+        },
+        {
+            x: 18,
+            y: 3
+        },
+        {
+            x: 18,
+            y: 5
+        },
+    ),
+
+    new LockToggle(luxosChamber, 17, 1, function() {
+        luxosChamber.changeBlock(22, 3, '(');
+    }),
+    
+    new Toggle(luxosChamber, 22, 1, function () {
+        luxosChamber.changeBlock(22, 30, ')');
+    }, function () {
+        luxosChamber.changeBlock(22, 30, '(');
+    }, ctr(22), ctr(30)),
+
     // Right section
 
 
+    // End interactives
 ]
 
 /*
