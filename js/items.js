@@ -202,7 +202,7 @@ const items = {
         ctx.drawImage(images.confoundedCaveKey, x - 15, y - 15, 35, 15)
     }, function(p) {
 
-        if (p.cords.x == 177 && p.cords.y == 31 && curMap == mainMap) {
+        if (p.on(177, 31) && curMap == mainMap) {
             mainMap.changeBlock(177, 32, '_')
             
             p.removeItem(this);
