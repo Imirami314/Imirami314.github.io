@@ -72,7 +72,7 @@ var alerts = [
 ]
 
 var teleports = [
-    new Teleport(ctr(26), ctr(55), mainMap)
+    new Teleport(26, 55, mainMap)  // Use block coordinates instead of ctr()
 ]
 // Cool riddle to figure out the backwards text on some signs: If text on the signs confuse and confound, it all becomes clearer if you flip it around.
 
@@ -391,6 +391,7 @@ GameAlert.prototype.drawMessage = function () {
                 // ctx.font = "15px serif"
                 // ctx.textAlign = "center"
                 // ctx.fillText("Press space to examine", width / 2, height / 2 + 75)
+                
                 getBlockById(p.blockOn.id).useDesc = "Press space to examine";
                 
             }
@@ -423,23 +424,24 @@ function Teleport(x, y, map) {
 }
 
 Teleport.prototype.draw = function () {
-        ctx.save()
-        ctx.translate(width / 2, height / 2)
-        ctx.scale(mapScale, mapScale) 
-        ctx.translate(width / -2, height / -2)
-        ctx.translate(p.mapPan.x, p.mapPan.y)
-
-        ellipse(this.x, this.y, 50, 50, "rgb(0, 255, 255)");
-        
-        
-        ctx.restore()
+        // Draw the teleport in the same coordinate space as the map and player
+        // Use ctr() to get the center of the block, then apply mapScale
+        ellipse(ctr(this.x) * mapScale, ctr(this.y) * mapScale, 50 * mapScale, 50 * mapScale, "rgb(0, 255, 255)");
         
         if (mouseIsDown) {
+            // Calculate the actual screen coordinates of the teleport
+            let teleportScreenX = ctr(this.x) * mapScale + Math.floor(p.mapPan.x * mapScale) + width / 2
+            let teleportScreenY = ctr(this.y) * mapScale + Math.floor(p.mapPan.y * mapScale) + height / 2
             
-            if (mouseX > this.x * 75 + p.mapPan.x && mouseX < this.x * 75 + (75 * mapScale) && mouseY > this.y * 75 && mouseY < this.y * 75 + (75 * mapScale)) {
-                alert("click specific")
+            // Check if mouse is within the teleport circle (50 * mapScale radius)
+            let distance = Math.hypot(mouseX - teleportScreenX, mouseY - teleportScreenY)
+            let teleportRadius = 25 * mapScale // Half of the 50 pixel diameter
+            
+            if (distance <= teleportRadius) {
+                // Teleport the player to this location
                 p.x = ctr(this.x)
                 p.y = ctr(this.y)
+                p.spaceActioned = true // Prevent multiple teleports
             }
         }
     

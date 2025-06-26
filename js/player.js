@@ -1118,6 +1118,13 @@ Player.prototype.displayMap = function() {
         
     }
     
+    // Draw teleports inside the map coordinate system
+    for (var i in teleports) {
+        if (teleports[i].map == curMap) {
+            teleports[i].draw()
+        }
+    }
+    
     ctx.restore();
 
     ctx.fillStyle = "rgb(0, 0, 0)"
@@ -1131,12 +1138,6 @@ Player.prototype.displayMap = function() {
     ctx.fillText("+", width / 2 - 35, height - 65)
     ctx.fillText("-", width / 2 + 35, height - 65)
 
-    for (var i in teleports) {
-        if (teleports[i].map == curMap) {
-            teleports[i].draw()
-        }
-    }
-    
     if (keys.w && this.mapPan.y < 0) {
         this.mapPan.y += 25 / mapScale
     }
