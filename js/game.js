@@ -1163,10 +1163,10 @@ var creek = new NPC(ctr(226), 87 * 75, "Creek", mainMap, 'U', [
 
 var ronan = new NPC(ctr(254), ctr(81), "Ronan", mainMap, 'L', [
     "Hey there!",
-    "Right now the direct entrance to Dropton City is unfortunately under maitenence\ndue to blockages.",
+    "Right now the direct entrance to Dropton City is unfortunately under maintenance\ndue to blockages.",
     "Temporarily, you can use the southern branch of the lake's northeast channel.",
     "Just make sure you have an Aqua Lung!"
-])
+], "Resident - Dropton Drylands\nThe only thing he loves more than swimming is sunbathing!\nHe also helps people find their way to Dropton City.")
 
 var coral = new NPC(ctr(5), 2 * 75, "Coral", coralsWatercolors, 'D', [
     "Hello, I'm Coral, and welcome to my watercolor shop.",
@@ -1234,7 +1234,7 @@ var walter = new NPC(23 * 75 + 75 / 2, 32 * 75 + 75 / 2, "Walter", droptonCity, 
     "You're here to help? Thank the lord, I've been waiting for\nsomebody to do something about it.",
     "I'd suggest you talk to our president. He's out in Dropton Town\nright now doing some business. I'm sure he'd be very glad to meet you.",
     "Until we meet again!"
-])
+], "Resident - Dropton City\nHe's just a chill guy.")
 
 var marina = new NPC(2 * 75 + 75, ctr(17), "Officer Marina", droptonCity, 'D', [
     "Hey.",
@@ -1245,7 +1245,7 @@ var marina = new NPC(2 * 75 + 75, ctr(17), "Officer Marina", droptonCity, 'D', [
     "So, as a bonus, we are offering a Full Pass to anyone\nwho contributes at least 250 trills!",
     "If you're short on trills, I heard people up in the drylands\nhave some problems going on. Maybe you can help them out!",
     "So, if you need one, this is your chance!",
-], "A Dropton Pass Officer. Unfortunately the Pass Office is closed right now because\nDropton is short on money.", function() {
+], "Officer - Dropton City\nShe is the one in charge of handing out Full Passes\nin Dropton City.", function() {
 
 }, "after")
 
@@ -1350,6 +1350,10 @@ var delta = new NPC(ctr(18), ctr(11), "Delta", droptonTown, 'D', [
     "I'm counting on you!"
 ], "[insert description]", function() {
     p.giveItem(items.deltasKey, true)
+    delta.clearAction();
+    delta.lines = [
+
+    ]
     addMission(deltasLostTreasure)
 }, "after")
 
@@ -2937,103 +2941,23 @@ var interactives = [
 
     // Top section
 
-    new MultiToggle(luxosChamber, 19, 15, 19, 17, [",", "`", "~", "!"]),
+    new MultiToggle(luxosChamber, 17, 14, 17, 13, ["S", "~", "5", "W", ","]),
+    new MultiToggle(luxosChamber, 18, 14, 18, 13, ["S", "~", "5", "W", ","]),
+    new MultiToggle(luxosChamber, 19, 14, 19, 13, ["S", "~", "5", "W", ","]),
+    new MultiToggle(luxosChamber, 20, 14, 20, 13, ["S", "~", "5", "W", ","]),
 
-    new MultiToggle(luxosChamber, 25, 15, 25, 17, [",", "`", "~", "!"]),
-
-    new RockDispenser(luxosChamber, b(22), b(15), ctr(22), ctr(14)),
-
-    new BlockMirror(luxosChamber, 21, 15,
-        {
-            x: 18,
-            y: 16
-        },
-        {
-            x: 19,
-            y: 17
-        },
-        {
-            x: 21,
-            y: 12
-        },
-        {
-            x: 22,
-            y: 13
-        },
-    ),
-
-
-    new BlockMirror(luxosChamber, 23, 15,
-        {
-            x: 25,
-            y: 16
-        },
-        {
-            x: 26,
-            y: 17
-        },
-        {
-            x: 22,
-            y: 12
-        },
-        {
-            x: 23,
-            y: 13
-        },
-    ),
-
-    new Toggle(luxosChamber, 19, 10, function () {
-        luxosChamber.changeBlock(20, 12, ')');
+    new Toggle(luxosChamber, 26, 16, function () {
+        luxosChamber.changeBlock(23, 14, 'W');
+        luxosChamber.changeBlocks([[24, 14], [25, 14], [26, 14], [27, 14]], '5');
     }, function () {
-        luxosChamber.changeBlock(20, 12, '(');
+        luxosChamber.changeBlock(23, 14, '~');
     }),
 
-    new RockSwitch(luxosChamber, 19, 8, function() {
-        luxosChamber.changeBlocks([[19, 9], [20, 10]], '`');
-    }, function() {
-        luxosChamber.changeBlocks([[19, 9], [20, 10]], '2');
-    }),
+    new BlockMirror(luxosChamber, 21, 15, {x: 17, y: 13}, {x: 20, y: 13}, {x: 24, y: 14}, {x: 27, y: 14}),
 
-    new Toggle(luxosChamber, 25, 10, function () {
-        luxosChamber.changeBlock(24, 12, ')');
-    }, function () {
-        luxosChamber.changeBlock(24, 12, '(');
-    }),
+    new RockDispenser(luxosChamber, b(19), b(17), ctr(18), ctr(17)),
 
-    new RockSwitch(luxosChamber, 25, 8, function() {
-        luxosChamber.changeBlocks([[25, 9], [24, 10]], '`');
-    }, function() {
-        luxosChamber.changeBlocks([[25, 9], [24, 10]], '2');
-    }),
-
-    new BlockMirror(luxosChamber, 17, 7,
-        {
-            x: 17,
-            y: 3
-        },
-        {
-            x: 17,
-            y: 5
-        },
-        {
-            x: 18,
-            y: 3
-        },
-        {
-            x: 18,
-            y: 5
-        },
-    ),
-
-    new LockToggle(luxosChamber, 17, 1, function() {
-        luxosChamber.changeBlock(22, 3, '(');
-    }),
-    
-    new Toggle(luxosChamber, 22, 1, function () {
-        luxosChamber.changeBlock(22, 30, ')');
-    }, function () {
-        luxosChamber.changeBlock(22, 30, '(');
-    }, ctr(22), ctr(30)),
+    new RaftDispenser(luxosChamber, b(27), b(11), ctr(27), ctr(12)),
 
     // Right section
 
