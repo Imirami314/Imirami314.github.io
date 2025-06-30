@@ -85,6 +85,7 @@ var keys = {
     b: false,
 	n: false,
 	x: false,
+    m: false,
     space: false,
     shift: false,
     slash: false,

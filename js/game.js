@@ -3896,6 +3896,10 @@ var gameInterval = setInterval(function() {
                     console.log("Could not save as bossfight is set to true")
                 }
             }
+
+            if (keys.m) {
+                curMap = mainMap
+            }
     
             if (SAVE_MENU) {
                 ctx.fillStyle = "rgb(0, 0, 0)"
