@@ -13,6 +13,22 @@ class NPC extends Entity {
      * @param {*} shopMenu Insert shopMenu instance (brings up shop menu when dialogue finishes)
     */
     static all = []
+    
+    // Helper function to make a color slightly darker
+    // I don't know what any of this does but it's too specific for me to figure out
+    getDarkerSkinColor() {
+        // Extract RGB values from the skin color string
+        const match = this.properties.skinColor.match(/rgb\((\d+),\s*(\d+),\s*(\d+)(?:,\s*[\d.]+)?\)/);
+        if (match) {
+            const r = Math.max(0, parseInt(match[1]) - 30);
+            const g = Math.max(0, parseInt(match[2]) - 30);
+            const b = Math.max(0, parseInt(match[3]) - 30);
+            return `rgb(${r}, ${g}, ${b})`;
+        }
+        // Fallback to a default darker color if parsing fails
+        return "rgb(100, 70, 40)";
+    }
+    
     constructor(x, y, name, map, dir, lines, desc, action, actionLine, shopMenu) {
         super(map, x, y)
 
@@ -111,8 +127,13 @@ class NPC extends Entity {
         this.cords.y = Math.floor(this.y / 75) // Same thing as x-cord, but height / 2 is about half of width / 2, so it's 5 instead of 10
         
         ctx.save()
+
+        this.drawFeaturesBehind();
     
         let npcPulsation = Math.sin(elapsed / 15) * 2
+        // Draw head border first
+        ellipse(this.x, this.y, 52 + npcPulsation, 52 + npcPulsation, this.getDarkerSkinColor())
+        // Draw head on top
         ellipse(this.x, this.y, 50 + npcPulsation, 50 + npcPulsation, this.properties.skinColor)
     
         switch (this.dir) {
@@ -128,7 +149,39 @@ class NPC extends Entity {
                 break
         }
 
-        this.drawFeatures();
+        
+        switch (this.dir) {
+            case "D":
+                // Draw arm borders first
+                ellipse(this.x - 26, this.y + 20, 17, 17, this.getDarkerSkinColor())
+                ellipse(this.x + 26, this.y + 20, 17, 17, this.getDarkerSkinColor())
+                // Draw arms on top
+                ellipse(this.x - 26, this.y + 20, 15, 15, this.properties.skinColor)
+                ellipse(this.x + 26, this.y + 20, 15, 15, this.properties.skinColor)
+                break
+            case "R":
+                // Draw arm border first
+                ellipse(this.x + 5, this.y + 26, 17, 17, this.getDarkerSkinColor())
+                // Draw arm on top
+                ellipse(this.x + 5, this.y + 26, 15, 15, this.properties.skinColor)
+                break
+            case "L":
+                // Draw arm border first
+                ellipse(this.x - 5, this.y + 26, 17, 17, this.getDarkerSkinColor())
+                // Draw arm on top
+                ellipse(this.x - 5, this.y + 26, 15, 15, this.properties.skinColor)
+                break
+            case "U": 
+                // Draw arm borders first
+                ellipse(this.x - 26, this.y + 20, 17, 17, this.getDarkerSkinColor())
+                ellipse(this.x + 26, this.y + 20, 17, 17, this.getDarkerSkinColor())
+                // Draw arms on top
+                ellipse(this.x - 26, this.y + 20, 15, 15, this.properties.skinColor)
+                ellipse(this.x + 26, this.y + 20, 15, 15, this.properties.skinColor)
+                break
+        }
+
+        this.drawFeaturesFront();
     
         if (this.name == "Old Man") { // accesories (walking stick, hat, glasses)
             
@@ -162,15 +215,14 @@ class NPC extends Entity {
         }
     }
 
-    drawFeatures() {
+    drawFeaturesFront() {
         switch (this.name) {
             case "Old Man":
-                triangle(this.x - 22, this.y + 10, this.x + 22, this.y + 10, this.x, this.y + 40, "rgb(100, 100, 100)")
+                
                 triangle(this.x - 15, this.y - 20, this.x + 15, this.y - 20, this.x, this.y - 60, "rgb(22, 16, 54)")
                 ctx.fillStyle = "rgb(54, 38, 16)"
                 ctx.fillRect(this.x + 23, this.y + 20, 7, 30)
-                ellipse(this.x + 26, this.y + 20, 15, 15, "rgb(227, 174, 95")
-                ellipse(this.x - 26, this.y + 20, 15, 15, "rgb(227, 174, 95")
+
                 if (this.glasses) {
                     ctx.lineWidth = 1;
                     ctx.strokeStyle = "rgba(100, 100, 100, 0.7)"
@@ -207,7 +259,7 @@ class NPC extends Entity {
                 }
                 this.properties.skinColor = "rgb(125, 88, 40)"
                 break
-            case "Smith the Blacksmith":
+            case "Smith":
                 this.properties.skinColor = "rgb(115, 75, 75)"
                 break
             case "Rocky":
@@ -232,7 +284,7 @@ class NPC extends Entity {
                 this.properties.skinColor = "rgb(245, 0, 245)"
                 this.properties.eyeColor = "rgb(255, 255, 0)"
                 break
-            case "Castle Guard Alfred":
+            case "Alfred":
                 this.properties.skinColor = "rgb(205, 205, 205)"
                 this.properties.eyeColor = "rgb(0, 0, 0)"
                 break
@@ -252,6 +304,15 @@ class NPC extends Entity {
                 break
             case "Empress Aurora":
                 ctx.drawImage(images.empressAurorasCrown, this.x - 25, this.y - 42, 50, 25); // changeme to look better lol
+                break
+        }
+    }
+
+    drawFeaturesBehind() {
+        switch (this.name) {
+            case "Old Man":
+                // beard
+                triangle(this.x - 22, this.y + 10, this.x + 22, this.y + 10, this.x, this.y + 40, "rgb(100, 100, 100)")
                 break
         }
     }

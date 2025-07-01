@@ -720,11 +720,12 @@ var hector = new NPC(ctr(17), ctr(57), "Hector", mainMap, "U", [
     "I see you don't got any wood...\nWell, come back holding some if you're interested.",
 ], "Builder - Chard Town\nThe lead construction worker for Chard Town.\nHe's working on a special project right now,\nbut he needs more funds to make it happen.")
 
-const smith = new NPC(ctr(3), ctr(1), "Smith the Blacksmith", smithHouse, "D", [
+const smith = new NPC(ctr(3), ctr(1), "Smith", smithHouse, "D", [
     "Hey!",
     "Who are you??",
     "...",
     "K. I'm guessin' you're here to get some cool stuff.",
+    "I'm Smith, the top tier blacksmith of Steel Field.",
     "I normally give a little somethin' to people who\ncome here, but I'm gonna need you to get me somethin' too.",
     "Could you fetch me a Heat Handle? I need it if you want me to help you.",
     "See ya!"
@@ -928,8 +929,9 @@ lonzo.action = function () {
 }
 lonzo.actionLine = "after"
 
-var guardAlfred = new NPC(ctr(19), ctr(7), "Castle Guard Alfred", queensCastle, "D", [
+var alfred = new NPC(ctr(19), ctr(7), "Alfred", queensCastle, "D", [
     "Hello. Welcome to the High Floor.",
+    "I'm Castle Guard Alfred.",
     "Are you looking to meet with the Queen?",
     "...",
     "Ah yes. She's been waiting someone.\nShe made a wall around her throne that APPARENTLY\nopens only to this person.",
@@ -1034,7 +1036,7 @@ var muhammadShop = [
     {item: food.apple(), cost: 10, amount: 5},
 ]
 
-var shopkeeperMuhammad = new NPC(58 * 75, ctr(33), "Shopkeeper Muhammad", galeCave, "L", [
+var muhammad = new NPC(58 * 75, ctr(33), "Muhammad", galeCave, "L", [
     "Hello!",
     "Would you like to buy something? I sell food and auras,\nin case you need to deal with extreme temperatures.",
     "You could probably get better prices at some other aura shop, though.",
@@ -1105,14 +1107,15 @@ var lostTraveler = new NPC(ctr(252), ctr(48), "Lost Traveler", mainMap, "D", [
     "...yellow...purple...yellow...purple..."
 ], "Resident - Encompassed Forest\nThe lost spirit of someone who seems to have spent too much\ntime in the Encompassed Forest.")
 
-var captainBora = new NPC(69420 * 75, 42069 * 75, "Captain Bora", mainMap, "D", [
+var bora = new NPC(69420 * 75, 42069 * 75, "Bora", mainMap, "D", [
     "Oh wow, hello!",
+    "I'm Bora, captain of the Glacia Village guard.",
     "I didn't expect to see anyone here.",
     "I don't really know what happened, I was walking through the forest and got lost.",
     "Slowly, I felt like I was drifting off to sleep.\nNext thing I know, I'm awake and you're here!",
     "I don't even know how much time has passed.\nI suppose I should head back to Glacia.",
 ], "Guard - Glacia Village\nA brave captain of the Glacia Village guard.\nWhen she ventured into the Encompassed Forest, she got lost\nand became a drifting spirit. Luckily, you rescued her!", function() {
-    captainBora.curPath = [
+    bora.curPath = [
         [251, 47],
         [251, 43],
         [252, 43],
@@ -1147,7 +1150,7 @@ var drQua = new NPC(69420 * 75, 42069 * 75, "Dr. Qua", mainMap, 'L', [
     }
 }, "after")
 
-var caruk = new NPC(227 * 75, ctr(90), "Caruk the Fisherman", mainMap, 'L', [
+var caruk = new NPC(227 * 75, ctr(90), "Caruk", mainMap, 'L', [
     "I am fisherger!",
 ], "[insert description]", function() {
 
@@ -1236,8 +1239,8 @@ var walter = new NPC(23 * 75 + 75 / 2, 32 * 75 + 75 / 2, "Walter", droptonCity, 
     "Until we meet again!"
 ], "Resident - Dropton City\nHe's just a chill guy.")
 
-var marina = new NPC(2 * 75 + 75, ctr(17), "Officer Marina", droptonCity, 'D', [
-    "Hey.",
+var marina = new NPC(2 * 75 + 75, ctr(17), "Marina", droptonCity, 'D', [
+    "Hey. I'm Marina. Officer Marina to you.",
     "The Pass Office is closed right now. Sorry\nabout the inconvenience.",
     "Dropton is short on money due to all the repairs,\nso we're shut down for the time being.",
     "If you could support to the city of Dropton by buying from shops,\nthat would help a lot!",
@@ -1624,13 +1627,13 @@ var kingJasper = new NPC(ctr(115), ctr(81), "King Jasper", mainMap, 'R', [
     ]
 }, "after")
 
-const pearl = new NPC(ctr(93), ctr(78), "Border Guard Pearl", mainMap, 'R', [
+const pearl = new NPC(ctr(93), ctr(78), "Pearl", mainMap, 'R', [
     "Hello there.",
     "You don't seem like you're from Litholia.\nMy name is Pearl, and I've been assigned to guard this strangle border here.",
     "We don't really know what it is, but I'm here in case it causes something dangerous.",
 ], "[insert description]");
 
-const rangerGunther = new NPC(ctr(74), ctr(70), "Ranger Gunther", mainMap, 'R', [
+const gunther = new NPC(ctr(74), ctr(70), "Gunther", mainMap, 'R', [
     "Oh, hello! It's nice to finally see another person!",
     "I'm Gunther, and I'm the ranger for this grove here.",
     "Unfortunately, this grove is infested with Splints!\nThey love to dig holes and live underground.",
@@ -1642,17 +1645,17 @@ const rangerGunther = new NPC(ctr(74), ctr(70), "Ranger Gunther", mainMap, 'R', 
     "Great! Let me take you to the area in question. Follow me!"
 ], "Ranger - Minera Grove\nThe manager of Minera Grove. Recently, he's\nbeen trying to deal with the Splint infestation there.", function() {
     cameraStart(ctr(45), ctr(69), 50, "NPC", {
-        npcName: rangerGunther,
+        npcName: gunther,
         lineStop: 5
     })
 
-    rangerGunther.action = function(p) {
-        if (rangerGunther.firstInteraction) {
+    gunther.action = function(p) {
+        if (gunther.firstInteraction) {
             addMission(mineraGrovePranksters);
 
-            let path = rangerGunther.pathTo(51, 69);
+            let path = gunther.pathTo(51, 69);
             path.push(function() {
-                rangerGunther.lines = [
+                gunther.lines = [
                     "This is the spot! As you can probably tell,\nthe path was supposed to go past here...",
                     "But these trees are in the way!",
                     "It also looks like there's\ a hole behind those trees...\n...maybe that's how the Splints are able to cross it.",
@@ -1660,8 +1663,8 @@ const rangerGunther = new NPC(ctr(74), ctr(70), "Ranger Gunther", mainMap, 'R', 
                     "Could search for a connecting hole in Minera Grove?\nThen we might be able to cross to Dawn's Landing!"
                 ]
 
-                rangerGunther.action = function() {
-                    rangerGunther.lines = [
+                gunther.action = function() {
+                    gunther.lines = [
                         "Huh?",
                         "...",
                         "Oh, right, I need to let you into the restricted parts of\nthe grove. Otherwise, how would you be able to help me?",
@@ -1672,15 +1675,15 @@ const rangerGunther = new NPC(ctr(74), ctr(70), "Ranger Gunther", mainMap, 'R', 
                 }
             });
 
-            rangerGunther.curPath = path;
-            rangerGunther.lines = [
+            gunther.curPath = path;
+            gunther.lines = [
                 "Let me take you to where the Splints blocked the path.\nFollow me!"
             ]
 
-            rangerGunther.clearAction();
+            gunther.clearAction();
         }
     }
-    rangerGunther.actionLine = "after"
+    gunther.actionLine = "after"
 }, 3)
 
 const astrid = new NPC(ctr(38), ctr(78), "Astrid", mainMap, 'U', [
@@ -1810,7 +1813,7 @@ const apollo = new NPC(b(25), b(39) + 74, "Apollo", luminosIsle, 'D', [
 
 }, "after");
 
-const nora = new NPC(ctr(4), ctr(10), "Guard Nora", luminosIsle, 'D', [
+const nora = new NPC(ctr(4), ctr(10), "Nora", luminosIsle, 'D', [
     "Hey.",
     "How's your day been?",
     "...",
@@ -1821,7 +1824,7 @@ const nora = new NPC(ctr(4), ctr(10), "Guard Nora", luminosIsle, 'D', [
 
 }, "after");
 
-const beacon = new NPC(b(25), b(10), "Guard Beacon", luminosIsle, 'D', [
+const beacon = new NPC(b(25), b(10), "Beacon", luminosIsle, 'D', [
     "Before you say anything...\nyes, my name is actually Beacon.",
     "When people refer to me as Guard Beacon, they always think I'm a literal beacon.\nBut I'm a person!",
     "*sigh",
@@ -1839,7 +1842,7 @@ const beacon = new NPC(b(25), b(10), "Guard Beacon", luminosIsle, 'D', [
     })
 }, 5);
 
-const lucy = new NPC(ctr(45), ctr(10), "Guard Lucy", luminosIsle, 'D', [
+const lucy = new NPC(ctr(45), ctr(10), "Lucy", luminosIsle, 'D', [
     "Good morningternoon...",
     "...sorry, I'm so tired. The Empress wants me to guard this button all day...",
     "...but this place is so bright and I can't get any rest!",
@@ -1889,7 +1892,7 @@ const empressAurora = new NPC(ctr(10000), ctr(10000), "Empress Aurora", luminosI
     ]
 }, "after");
 
-const blaze = new NPC(b(6), b(1) + 74, "Palace Guard Blaze", empressAurorasPalace, 'D', [
+const blaze = new NPC(b(6), b(1) + 74, "Blaze", empressAurorasPalace, 'D', [
     "Hi there sir! Are you the man with the important business?",
     "...",
     "Wow! By the way, I was recently promoted from a normal guard\nto a Palace Guard!",
@@ -1902,7 +1905,7 @@ const blaze = new NPC(b(6), b(1) + 74, "Palace Guard Blaze", empressAurorasPalac
     empressAurorasPalace.changeBlocks([[17, 9], [18, 9]], '(');
 }, 6);
 
-const helia = new NPC(b(30), b(1) + 74, "Palace Guard Helia", empressAurorasPalace, 'D', [
+const helia = new NPC(b(30), b(1) + 74, "Helia", empressAurorasPalace, 'D', [
     "Welcome to Empress Aurora's palace!",
     "Let me guess, you have important business.",
     "...",

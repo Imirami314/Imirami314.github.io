@@ -328,9 +328,9 @@ mineraGrovePranksters.solve = function() {
 
     if (!mineraGrovePranksters.hasPlayerReachedOtherSide) {
         if (p.on(46, 69)) {
-            rangerGunther.goTo(ctr(51), ctr(70));
-            rangerGunther.dir = 'L';
-            rangerGunther.lines = [
+            gunther.goTo(ctr(51), ctr(70));
+            gunther.dir = 'L';
+            gunther.lines = [
                 "Woah! How did you make it over there?",
                 "...",
                 "Really? You found where all those nasty creatures were hiding?",
@@ -340,22 +340,22 @@ mineraGrovePranksters.solve = function() {
                 "Thank you very much. Here's a little gift for you.",
             ];
 
-            rangerGunther.actionLine = "after";
+            gunther.actionLine = "after";
 
-            rangerGunther.action = function() {
+            gunther.action = function() {
                 p.giveItem(new TrillSum(50), true);
 
-                rangerGunther.lines = [
+                gunther.lines = [
                     "Thanks for helping me out! You're welcome to visit me anytime.",
                 ]
 
-                rangerGunther.clearAction();
+                gunther.clearAction();
             }
         }
 
         if (p.on(46, 70)) {
-            rangerGunther.lineNum = 0;
-            rangerGunther.remote = true;
+            gunther.lineNum = 0;
+            gunther.remote = true;
             mineraGrovePranksters.hasPlayerReachedOtherSide = true;
         }
     }
