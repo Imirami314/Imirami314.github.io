@@ -105,6 +105,10 @@ class NPC extends Entity {
         this.shopMenu = shopMenu
         
         NPC.all.push(this)
+
+        this.blinkTimer = Math.random() * 180 + 60; // frames until next blink
+        this.isBlinking = false;
+        this.blinkFrame = 0;
     }
 
     draw() {
@@ -136,20 +140,22 @@ class NPC extends Entity {
         // Draw head on top
         ellipse(this.x, this.y, 50 + npcPulsation, 50 + npcPulsation, this.properties.skinColor)
     
-        switch (this.dir) {
-            case "D":
-                ellipse(this.x - 10, this.y - 10, 10, 10, this.properties.eyeColor)
-                ellipse(this.x + 10, this.y - 10, 10, 10, this.properties.eyeColor)
-                break
-            case "R":
-                ellipse(this.x + 10, this.y - 10, 10, 10, this.properties.eyeColor)
-                break
-            case "L":
-                ellipse(this.x - 10, this.y - 10, 10, 10, this.properties.eyeColor)
-                break
+        // Blinking logic
+        if (this.isBlinking) {
+            this.blinkFrame++;
+            if (this.blinkFrame > 6) { // Blink lasts 6 frames
+                this.isBlinking = false;
+                this.blinkTimer = Math.random() * 180 + 120; // 2-4 seconds at 60fps
+                this.blinkFrame = 0;
+            }
+        } else {
+            this.blinkTimer--;
+            if (this.blinkTimer <= 0) {
+                this.isBlinking = true;
+                this.blinkFrame = 0;
+            }
         }
 
-        
         switch (this.dir) {
             case "D":
                 // Draw arm borders first
@@ -212,6 +218,58 @@ class NPC extends Entity {
             ctx.font = "20px serif"
             ctx.textAlign = 'center'
             ctx.fillText(this.name, this.x, this.y - 40)
+        }
+
+        // Eyes (with blinking)
+        if (this.isBlinking) {
+            switch (this.dir) {
+                case "D":
+                    // Draw closed eyes (lines)
+                    ctx.save();
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = this.properties.eyeColor;
+                    ctx.beginPath();
+                    ctx.moveTo(this.x - 15, this.y - 10);
+                    ctx.lineTo(this.x - 5, this.y - 10);
+                    ctx.moveTo(this.x + 5, this.y - 10);
+                    ctx.lineTo(this.x + 15, this.y - 10);
+                    ctx.stroke();
+                    ctx.restore();
+                    break;
+                case "R":
+                    ctx.save();
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = this.properties.eyeColor;
+                    ctx.beginPath();
+                    ctx.moveTo(this.x + 2, this.y - 10);
+                    ctx.lineTo(this.x + 12, this.y - 10);
+                    ctx.stroke();
+                    ctx.restore();
+                    break;
+                case "L":
+                    ctx.save();
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = this.properties.eyeColor;
+                    ctx.beginPath();
+                    ctx.moveTo(this.x - 12, this.y - 10);
+                    ctx.lineTo(this.x - 2, this.y - 10);
+                    ctx.stroke();
+                    ctx.restore();
+                    break;
+            }
+        } else {
+            switch (this.dir) {
+                case "D":
+                    ellipse(this.x - 10, this.y - 10, 10, 10, this.properties.eyeColor)
+                    ellipse(this.x + 10, this.y - 10, 10, 10, this.properties.eyeColor)
+                    break
+                case "R":
+                    ellipse(this.x + 10, this.y - 10, 10, 10, this.properties.eyeColor)
+                    break
+                case "L":
+                    ellipse(this.x - 10, this.y - 10, 10, 10, this.properties.eyeColor)
+                    break
+            }
         }
     }
 
