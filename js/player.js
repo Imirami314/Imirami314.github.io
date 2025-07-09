@@ -1269,8 +1269,13 @@ Player.prototype.displayInventory = function() {
             var item = this.sortedInventory[i]
             let mouseItemDist = Math.hypot(mouseX - ((i % 8) * 100 + width / 8 + 100), mouseY - (height / 8 + 100 * (Math.floor(i / 8) + 1)))
             if (this.itemsMode == 'ALL') {
-                ellipse((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1), 90, 90, "rgba(0, 0, 255, 0.5)")
-
+                
+                // Highlight held item
+                if (i == this.weaponIndex) {
+                    ellipse((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1), 90, 90, "rgba(0, 242, 255, 0.7)")
+                } else {
+                    ellipse((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1), 90, 90, "rgba(0, 0, 255, 0.5)")
+                }
                 item.draw((i % 8) * 100 + width / 8 + 100, height / 8 + 100 * (Math.floor(i / 8) + 1))
 
                 // Number of item (excluding weapons)
