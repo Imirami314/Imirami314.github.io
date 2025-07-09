@@ -246,12 +246,20 @@ Player.prototype.draw = function() {
 
         switch (this.dir) {
             case "D":
+               
                 // Body
                 ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
 
                 // Eyes
                 ellipse((width / 2) - 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
                 ellipse((width / 2) + 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
+
+                 // Arms (draw borders first)
+                 ellipse(width / 2 - 26, height / 2 + 20, 17, 17, "rgb(210, 151, 92)");
+                 ellipse(width / 2 + 26, height / 2 + 20, 17, 17, "rgb(210, 151, 92)");
+                 // Arms (draw on top)
+                 ellipse(width / 2 - 26, height / 2 + 20, 15, 15, "rgb(240, 181, 122)");
+                 ellipse(width / 2 + 26, height / 2 + 20, 15, 15, "rgb(240, 181, 122)");
 
                 ctx.save()
 
@@ -277,6 +285,12 @@ Player.prototype.draw = function() {
                 // Body
                 ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
 
+                // Arm (draw border first)
+                ellipse(width / 2 + 5, height / 2 + 26, 17, 17, "rgb(210, 151, 92)");
+                // Arm (draw on top)
+                ellipse(width / 2 + 5, height / 2 + 26, 15, 15, "rgb(240, 181, 122)");
+                
+
                 // Eyes
                 ellipse((width / 2) + 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
 
@@ -295,6 +309,13 @@ Player.prototype.draw = function() {
                 ctx.restore()
                 break
             case "L": 
+                // Body
+                ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
+
+                // Arm (draw border first)
+                ellipse(width / 2 - 5, height / 2 + 26, 17, 17, "rgb(210, 151, 92)");
+                // Arm (draw on top)
+                ellipse(width / 2 - 5, height / 2 + 26, 15, 15, "rgb(240, 181, 122)");
                 ctx.save()
                 ctx.translate(width / 2, height / 2)
                 ctx.scale(-1, 1)
@@ -309,13 +330,13 @@ Player.prototype.draw = function() {
                 }
                 ctx.restore()
 
-                // Body
-                ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
+                
 
                 // Eyes
                 ellipse((width / 2) - 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
                 break
             case "U":
+                
                 ctx.save()
                 ctx.translate(width / 2, height / 2)
                 ctx.rotate(- this.weaponAngle)
@@ -335,6 +356,13 @@ Player.prototype.draw = function() {
                 // Body
                 ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
                 // No eyes are shown in the up position
+
+                // Arms (draw borders first)
+                ellipse(width / 2 - 26, height / 2 + 20, 17, 17, "rgb(210, 151, 92)");
+                ellipse(width / 2 + 26, height / 2 + 20, 17, 17, "rgb(210, 151, 92)");
+                // Arms (draw on top)
+                ellipse(width / 2 - 26, height / 2 + 20, 15, 15, "rgb(240, 181, 122)");
+                ellipse(width / 2 + 26, height / 2 + 20, 15, 15, "rgb(240, 181, 122)");
         }
     }
     
