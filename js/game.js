@@ -3080,6 +3080,9 @@ for (var modelType in models) {
 
 const p = new Player(ctr(25), ctr(10), npcs) // default x = width / 2, y = height / 2 helloooh
 
+// Static water particles at coordinates (164, 23)
+const staticGlaciaWaterParticles = new ParticleSystem(ctr(164), ctr(23), 10, 40, 10, 10, 220)
+
 const c121_31 = new Chest(mainMap, 121, 31, [
     items.heatHandle
 ])
@@ -3699,7 +3702,11 @@ var gameInterval = setInterval(function() {
                 }
             }
     
-            
+            // Draw static water particles at coordinates (164, 23)
+            if (curMap == mainMap && !meetingTheQueen.retrievedKey) {
+                staticGlaciaWaterParticles.create()
+                staticGlaciaWaterParticles.draw()
+            }
             
             ctx.restore()
     

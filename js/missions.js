@@ -262,7 +262,7 @@ meetingTheQueen.solve = function () {
     }
 
     if (curMap == mainMap && keys.space && p.on(164, 23) && !p.has(items.castleKey)) {
-
+        meetingTheQueen.retrievedKey = true;
         meetingTheQueen.setInstructions("You successfully retrieved the Castle Key from the pond! Now, where do you use it?\nLonzo remembers the Queen saying to stand 'between red and blue.'");
         p.giveItem(items.castleKey, true)    
         nevada.lines = ["Look at that!\nIt was the key!", "This is great! We must let Lonzo know!", "Go ahead and do the honors.\nI couldn't have done this without you!"];
