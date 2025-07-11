@@ -842,7 +842,7 @@ var piren = new NPC(ctr(192), ctr(33), "Piren", mainMap, 'L', [
     "Anyway, it's nice to be able to talk to someone.",
 ], "Resident - Glacia Village\nA social guy who really hates snow.\nSo much, in fact, that instead of making friends, he spends\nhis day shoveling the snow around his house.")
 
-var nevada = new NPC(ctr(5), b(3), "Nevada", breezwayBuilds, "D", [
+var nevada = new NPC(ctr(5), b(3), "Nevada", breezewayBuilds, "D", [
     "Why hello there!",
     "I've never seen you before!",
     "I'm Nevada, proud new owner of Breezeway Builds!\nThis store has been in the family for three generations!",

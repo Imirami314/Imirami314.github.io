@@ -1688,7 +1688,7 @@ var trailShop = new Landscape([
 	'WWWWWW|WWWWWW'
 ], ctr(6), ctr(7), 165, 16, "Trail Shop")
 
-var breezwayBuilds = new Landscape([
+var breezewayBuilds = new Landscape([
     'SSSSSSSSSSS',
     'S***zzz***S',
     'S*zSzzzSz*S',
