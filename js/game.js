@@ -391,7 +391,7 @@ GameAlert.prototype.drawMessage = function () {
                 // ctx.font = "15px serif"
                 // ctx.textAlign = "center"
                 // ctx.fillText("Press space to examine", width / 2, height / 2 + 75)
-                
+                // TODO
                 getBlockById(p.blockOn.id).useDesc = "Press space to examine";
                 
             }
@@ -4629,6 +4629,7 @@ var gameInterval = setInterval(function() {
             ctx.save()
             
             ctx.translate((-1 * curCX) + (width / 2), (-1 * curCY) + (height / 2))
+            
             curMap.draw(p, "Camera View")
             for (var i in npcs) {
                 if (!!npcs[i].map) {
@@ -4639,12 +4640,24 @@ var gameInterval = setInterval(function() {
                 }
             }
 
+        
+
             for (var i in interactives) {
                 if (curMap == interactives[i].map) {
-                    interactives[i].draw()
+                    if (!interactives[i].drawOnTop) {
+                        interactives[i].draw()
+                    }
+
                     if (!!interactives[i].update) {
                         interactives[i].update()
                     }
+                }
+            }
+
+            for (var i in interactives) { // Draws interactives that belong on a higher layer
+                let inter = interactives[i]
+                if (inter.drawOnTop && curMap == interactives[i].map) {
+                    inter.draw()
                 }
             }
 
@@ -4661,6 +4674,15 @@ var gameInterval = setInterval(function() {
 
             ctx.translate((-1 * curCX) + (width / 2), (-1 * curCY) + (height / 2));
             // curMap.displayLighting(); // changeme to add new lighting system back (once we have figured out how to make it work in camera view)
+            ctx.restore()
+
+            // --- Add this block to draw tree tops/next layer above interactives ---
+            ctx.save();
+            ctx.translate(Math.floor((-1 * curCX) + (width / 2)), Math.floor((-1 * curCY) + (height / 2)));
+            curMap.drawNextLayer(p);
+            ctx.restore();
+            // --- End added block ---
+
             ctx.restore()
 
             // Old lighting system // changeme to add new lighting system back (once we have figured out how to make it work in camera view)
