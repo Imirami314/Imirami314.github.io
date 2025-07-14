@@ -221,7 +221,8 @@ class NPC extends Entity {
         }
 
         // Eyes (with blinking)
-        if (this.isBlinking) {
+        var playerDist = Math.hypot((this.x - p.x), (this.y - p.y))
+        if (this.isBlinking || (p.hitting && playerDist <= 100)) {
             switch (this.dir) {
                 case "D":
                     // Draw closed eyes (lines)

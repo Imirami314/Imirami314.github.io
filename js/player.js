@@ -274,7 +274,7 @@ Player.prototype.draw = function() {
 
                 if (this.inventory.length >= 1) {
                     try {
-                        !!this.weapon ? this.weapon.draw(width / 2 + 30 + this.weaponShift.x, height / 2 + this.weaponShift.y) : 0
+                        !!this.weapon ? this.weapon.draw(width / 2 + 30 + this.weaponShift.x, height / 2 + this.weaponShift.y + 5) : 0
                     } catch(error) {
                         console.log(error)
                     }
@@ -301,7 +301,7 @@ Player.prototype.draw = function() {
                 ctx.translate(- width / 2, - height / 2)
                 if (this.inventory.length >= 1) {
                     try {
-                        !!this.weapon ? this.weapon.draw(width / 2 + 15 + this.weaponShift.x, height / 2 + this.weaponShift.y + 15) : 0
+                        !!this.weapon ? this.weapon.draw(width / 2 + 15 + this.weaponShift.x, height / 2 + this.weaponShift.y + 35) : 0
                     } catch(error) {
                         console.log(error)
                     }
@@ -309,6 +309,24 @@ Player.prototype.draw = function() {
                 ctx.restore()
                 break
             case "L": 
+
+                ctx.save()
+                ctx.translate(width / 2, height / 2)
+                ctx.scale(-1, 1)
+                ctx.rotate(- this.weaponAngle)
+                ctx.translate(- width / 2, - height / 2)
+                
+                
+                // weapon behind body when going left
+                if (this.inventory.length >= 1) {
+                    try {
+                        !!this.weapon ? this.weapon.draw(width / 2 + 15 + this.weaponShift.x, height / 2 + this.weaponShift.y + 20) : 0
+                    } catch(error) {
+                        console.log(error)
+                    }
+                }
+                ctx.restore()
+                
                 // Body
                 ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
 
@@ -316,19 +334,7 @@ Player.prototype.draw = function() {
                 ellipse(width / 2 - 5, height / 2 + 26, 17, 17, "rgb(210, 151, 92)");
                 // Arm (draw on top)
                 ellipse(width / 2 - 5, height / 2 + 26, 15, 15, "rgb(240, 181, 122)");
-                ctx.save()
-                ctx.translate(width / 2, height / 2)
-                ctx.scale(-1, 1)
-                ctx.rotate(- this.weaponAngle)
-                ctx.translate(- width / 2, - height / 2)
-                if (this.inventory.length >= 1) {
-                    try {
-                        !!this.weapon ? this.weapon.draw(width / 2 + 15 + this.weaponShift.x, height / 2 + this.weaponShift.y + 15) : 0
-                    } catch(error) {
-                        console.log(error)
-                    }
-                }
-                ctx.restore()
+                
 
                 
 
@@ -346,7 +352,7 @@ Player.prototype.draw = function() {
                 ctx.translate(- width / 2, - height / 2)
                 if (this.inventory.length >= 1) {
                     try {
-                        !!this.weapon ? this.weapon.draw(width / 2 + 30 + this.weaponShift.x, height / 2 + this.weaponShift.y) : 0
+                        !!this.weapon ? this.weapon.draw(width / 2 + 5 + this.weaponShift.x, height / 2 + this.weaponShift.y + 5) : 0
                     } catch(error) {
                         console.log(error)
                     }
