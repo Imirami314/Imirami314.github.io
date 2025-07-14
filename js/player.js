@@ -82,6 +82,7 @@ function Player(x, y, npcs) {
     this.swordHitting = false
     this.hitting = false
     this.hitCooldown = 0.35
+    this.armShift = 0
 
     this.tracking = []
     this.questPoint = {
@@ -255,10 +256,10 @@ Player.prototype.draw = function() {
                 ellipse((width / 2) + 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
 
                  // Arms (draw borders first)
-                 ellipse(width / 2 - 26, height / 2 + 20, 17, 17, "rgb(210, 151, 92)");
+                 ellipse(width / 2 - 26, height / 2 + 20 + this.armShift, 17, 17, "rgb(210, 151, 92)");
                  ellipse(width / 2 + 26, height / 2 + 20, 17, 17, "rgb(210, 151, 92)");
                  // Arms (draw on top)
-                 ellipse(width / 2 - 26, height / 2 + 20, 15, 15, "rgb(240, 181, 122)");
+                 ellipse(width / 2 - 26, height / 2 + 20 + this.armShift, 15, 15, "rgb(240, 181, 122)");
                  ellipse(width / 2 + 26, height / 2 + 20, 15, 15, "rgb(240, 181, 122)");
 
                 ctx.save()
@@ -286,9 +287,9 @@ Player.prototype.draw = function() {
                 ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
 
                 // Arm (draw border first)
-                ellipse(width / 2 + 5, height / 2 + 26, 17, 17, "rgb(210, 151, 92)");
+                ellipse(width / 2 + 5 + this.armShift, height / 2 + 26, 17, 17, "rgb(210, 151, 92)");
                 // Arm (draw on top)
-                ellipse(width / 2 + 5, height / 2 + 26, 15, 15, "rgb(240, 181, 122)");
+                ellipse(width / 2 + 5 + this.armShift, height / 2 + 26, 15, 15, "rgb(240, 181, 122)");
                 
 
                 // Eyes
@@ -326,6 +327,10 @@ Player.prototype.draw = function() {
                     }
                 }
                 ctx.restore()
+
+                ellipse(width / 2 - 5 - this.armShift, height / 2 + 16, 17, 17, "rgb(210, 151, 92)");
+                // right arm (behind body)
+                ellipse(width / 2 - 5 - this.armShift, height / 2 + 16, 15, 15, "rgb(240, 181, 122)");
                 
                 // Body
                 ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
@@ -365,10 +370,10 @@ Player.prototype.draw = function() {
 
                 // Arms (draw borders first)
                 ellipse(width / 2 - 26, height / 2 + 20, 17, 17, "rgb(210, 151, 92)");
-                ellipse(width / 2 + 26, height / 2 + 20, 17, 17, "rgb(210, 151, 92)");
+                ellipse(width / 2 + 26, height / 2 + 20 - this.armShift, 17, 17, "rgb(210, 151, 92)");
                 // Arms (draw on top)
                 ellipse(width / 2 - 26, height / 2 + 20, 15, 15, "rgb(240, 181, 122)");
-                ellipse(width / 2 + 26, height / 2 + 20, 15, 15, "rgb(240, 181, 122)");
+                ellipse(width / 2 + 26, height / 2 + 20 - this.armShift, 15, 15, "rgb(240, 181, 122)");
         }
     }
     
@@ -1461,16 +1466,19 @@ Player.prototype.spearAttack = function() {
 	
     if (this.spearAttackState == 1) { // Initial jab with the spear
         this.weaponShift.x += 10
+        this.armShift += 10
 		playSound("Spear", false)
         if (this.weaponShift.x >= 50) {
             this.spearAttackState = 2
         }
     } else if (this.spearAttackState == 2) { // Pull back after inital hit
         this.weaponShift.x -= 3
+        this.armShift -= 3
         if (this.weaponShift.x <= 0) { // Reset everything
 			
 		
             this.weaponShift.x = 0
+            this.armShift = 0
             this.spearAttackState = 1
             this.spearHitting = false
         }
