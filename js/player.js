@@ -721,7 +721,7 @@ Player.prototype.collide = function() {
             playSound("Door Open");
             Screen.fadeOut(0.05, function() {
                 // need to use 'p' instead of this due to scope
-                if (curMap == mainMap) {
+                if (curMap == mainMap && (p.region != windyWastelands || p.on(156, 50))) {
                     p.cordSave.x = p.cords.x
                     p.cordSave.y = p.cords.y
                     var areaJoining = areaSearchByCords(p.cords.x, p.cords.y)
