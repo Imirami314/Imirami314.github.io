@@ -118,6 +118,11 @@ function Player(x, y, npcs) {
     this.spaceActioned = false // Has space already been used for an action
 
     this.controlsMenu = false;
+
+    // Blinking properties (similar to NPCs)
+    this.blinkTimer = Math.random() * 180 + 60; // frames until next blink
+    this.isBlinking = false;
+    this.blinkFrame = 0;
 }
 
 Player.prototype = Object.create(Entity.prototype)
@@ -246,15 +251,45 @@ Player.prototype.draw = function() {
             this.stunParticles.draw()
         }
 
+        // Blinking logic (similar to NPCs)
+        if (this.isBlinking) {
+            this.blinkFrame++;
+            if (this.blinkFrame > 6) { // Blink lasts 6 frames
+                this.isBlinking = false;
+                this.blinkTimer = Math.random() * 180 + 120; // 2-4 seconds at 60fps
+                this.blinkFrame = 0;
+            }
+        } else {
+            this.blinkTimer--;
+            if (this.blinkTimer <= 0) {
+                this.isBlinking = true;
+                this.blinkFrame = 0;
+            }
+        }
+
         switch (this.dir) {
             case "D":
                
                 // Body
                 ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
 
-                // Eyes
-                ellipse((width / 2) - 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
-                ellipse((width / 2) + 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
+                // Eyes (with blinking)
+                if (this.isBlinking) {
+                    // Draw closed eyes (lines)
+                    ctx.save();
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = "rgb(0, 0, 0)";
+                    ctx.beginPath();
+                    ctx.moveTo((width / 2) - 15, (height / 2) - 10);
+                    ctx.lineTo((width / 2) - 5, (height / 2) - 10);
+                    ctx.moveTo((width / 2) + 5, (height / 2) - 10);
+                    ctx.lineTo((width / 2) + 15, (height / 2) - 10);
+                    ctx.stroke();
+                    ctx.restore();
+                } else {
+                    ellipse((width / 2) - 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
+                    ellipse((width / 2) + 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
+                }
 
                 // Rotating arms with weapon
                 ctx.save()
@@ -272,6 +307,11 @@ Player.prototype.draw = function() {
 
                 ctx.save()
 
+                // Rotation based on arm movement (walking animation)
+                ctx.translate(width / 2, height / 2)
+                ctx.rotate(this.armAngle)
+                ctx.translate(- width / 2, - height / 2)
+                
                 // Rotation based on weapon angle
                 ctx.translate(width / 2, height / 2)
                 ctx.rotate(- this.weaponAngle)
@@ -306,10 +346,27 @@ Player.prototype.draw = function() {
                 ellipse(width / 2 + 5 + this.armShift, height / 2 + 26, 15, 15, "rgb(240, 181, 122)");
                 ctx.restore()
 
-                // Eyes
-                ellipse((width / 2) + 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
+                // Eyes (with blinking)
+                if (this.isBlinking) {
+                    // Draw closed eye (line)
+                    ctx.save();
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = "rgb(0, 0, 0)";
+                    ctx.beginPath();
+                    ctx.moveTo((width / 2) + 2, (height / 2) - 10);
+                    ctx.lineTo((width / 2) + 18, (height / 2) - 10);
+                    ctx.stroke();
+                    ctx.restore();
+                } else {
+                    ellipse((width / 2) + 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
+                }
 
                 ctx.save()
+                // Rotation based on arm movement (walking animation)
+                ctx.translate(width / 2, height / 2)
+                ctx.rotate(this.armAngle)
+                ctx.translate(- width / 2, - height / 2)
+                
                 // Rotation based on weapon angle
                 ctx.translate(width / 2, height / 2)
                 ctx.rotate(- this.weaponAngle)
@@ -326,6 +383,11 @@ Player.prototype.draw = function() {
             case "L": 
 
                 ctx.save()
+                // Rotation based on arm movement (walking animation)
+                ctx.translate(width / 2, height / 2)
+                ctx.rotate(this.armAngle)
+                ctx.translate(- width / 2, - height / 2)
+                
                 ctx.translate(width / 2, height / 2)
                 ctx.scale(-1, 1)
                 ctx.rotate(- this.weaponAngle)
@@ -371,12 +433,29 @@ Player.prototype.draw = function() {
 
                 
 
-                // Eyes
-                ellipse((width / 2) - 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
+                // Eyes (with blinking)
+                if (this.isBlinking) {
+                    // Draw closed eye (line)
+                    ctx.save();
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = "rgb(0, 0, 0)";
+                    ctx.beginPath();
+                    ctx.moveTo((width / 2) - 18, (height / 2) - 10);
+                    ctx.lineTo((width / 2) - 2, (height / 2) - 10);
+                    ctx.stroke();
+                    ctx.restore();
+                } else {
+                    ellipse((width / 2) - 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
+                }
                 break
             case "U":
                 
                 ctx.save()
+                // Rotation based on arm movement (walking animation)
+                ctx.translate(width / 2, height / 2)
+                ctx.rotate(this.armAngle)
+                ctx.translate(- width / 2, - height / 2)
+                
                 ctx.translate(width / 2, height / 2)
                 ctx.rotate(- this.weaponAngle)
                 ctx.translate(- width / 2, - height / 2)
