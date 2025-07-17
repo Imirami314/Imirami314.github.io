@@ -73,6 +73,7 @@ function Player(x, y, npcs) {
         y: 0
     }
     this.weaponAngle = 0
+    this.armAngle = 0 // New property for arm rotation
     this.throwState = 1
     this.spearAttackState = 1
     this.swordAttackState = 1
@@ -255,12 +256,19 @@ Player.prototype.draw = function() {
                 ellipse((width / 2) - 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
                 ellipse((width / 2) + 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
 
-                 // Arms (draw borders first)
-                 ellipse(width / 2 - 26, height / 2 + 20 + this.armShift, 17, 17, "rgb(210, 151, 92)");
-                 ellipse(width / 2 + 26, height / 2 + 20, 17, 17, "rgb(210, 151, 92)");
-                 // Arms (draw on top)
-                 ellipse(width / 2 - 26, height / 2 + 20 + this.armShift, 15, 15, "rgb(240, 181, 122)");
-                 ellipse(width / 2 + 26, height / 2 + 20, 15, 15, "rgb(240, 181, 122)");
+                // Rotating arms with weapon
+                ctx.save()
+                ctx.translate(width / 2, height / 2)
+                ctx.rotate(this.armAngle)
+                ctx.translate(-width / 2, -height / 2)
+                
+                // Arms (draw borders first)
+                ellipse(width / 2 - 26, height / 2 + 20 + this.armShift, 17, 17, "rgb(210, 151, 92)");
+                ellipse(width / 2 + 26, height / 2 + 20, 17, 17, "rgb(210, 151, 92)");
+                // Arms (draw on top)
+                ellipse(width / 2 - 26, height / 2 + 20 + this.armShift, 15, 15, "rgb(240, 181, 122)");
+                ellipse(width / 2 + 26, height / 2 + 20, 15, 15, "rgb(240, 181, 122)");
+                ctx.restore()
 
                 ctx.save()
 
@@ -286,11 +294,17 @@ Player.prototype.draw = function() {
                 // Body
                 ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
 
+                // Rotating arm with weapon
+                ctx.save()
+                ctx.translate(width / 2, height / 2)
+                ctx.rotate(this.armAngle)
+                ctx.translate(-width / 2, -height / 2)
+                
                 // Arm (draw border first)
                 ellipse(width / 2 + 5 + this.armShift, height / 2 + 26, 17, 17, "rgb(210, 151, 92)");
                 // Arm (draw on top)
                 ellipse(width / 2 + 5 + this.armShift, height / 2 + 26, 15, 15, "rgb(240, 181, 122)");
-                
+                ctx.restore()
 
                 // Eyes
                 ellipse((width / 2) + 10, (height / 2) - 10, 10, 10, "rgb(0, 0, 0)")
@@ -328,17 +342,31 @@ Player.prototype.draw = function() {
                 }
                 ctx.restore()
 
+                // Rotating arm with weapon
+                ctx.save()
+                ctx.translate(width / 2, height / 2)
+                ctx.rotate(this.armAngle)
+                ctx.translate(-width / 2, -height / 2)
+                
                 ellipse(width / 2 - 5 - this.armShift, height / 2 + 16, 17, 17, "rgb(210, 151, 92)");
                 // right arm (behind body)
                 ellipse(width / 2 - 5 - this.armShift, height / 2 + 16, 15, 15, "rgb(240, 181, 122)");
+                ctx.restore()
                 
                 // Body
                 ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
 
+                // Rotating arm with weapon
+                ctx.save()
+                ctx.translate(width / 2, height / 2)
+                ctx.rotate(this.armAngle)
+                ctx.translate(-width / 2, -height / 2)
+                
                 // Arm (draw border first)
                 ellipse(width / 2 - 5, height / 2 + 26, 17, 17, "rgb(210, 151, 92)");
                 // Arm (draw on top)
                 ellipse(width / 2 - 5, height / 2 + 26, 15, 15, "rgb(240, 181, 122)");
+                ctx.restore()
                 
 
                 
@@ -368,12 +396,19 @@ Player.prototype.draw = function() {
                 ellipse(width / 2, height / 2, 50, 50, "rgb(240, 181, 122)")
                 // No eyes are shown in the up position
 
+                // Rotating arms with weapon
+                ctx.save()
+                ctx.translate(width / 2, height / 2)
+                ctx.rotate(this.armAngle)
+                ctx.translate(-width / 2, -height / 2)
+                
                 // Arms (draw borders first)
                 ellipse(width / 2 - 26, height / 2 + 20, 17, 17, "rgb(210, 151, 92)");
                 ellipse(width / 2 + 26, height / 2 + 20 - this.armShift, 17, 17, "rgb(210, 151, 92)");
                 // Arms (draw on top)
                 ellipse(width / 2 - 26, height / 2 + 20, 15, 15, "rgb(240, 181, 122)");
                 ellipse(width / 2 + 26, height / 2 + 20 - this.armShift, 15, 15, "rgb(240, 181, 122)");
+                ctx.restore()
         }
     }
     
@@ -631,6 +666,15 @@ Player.prototype.move = function() {
 
     if (!keys.w && !keys.a && !keys.s && !keys.d) {
         this.moving = false
+        // Gradually return arm to neutral position when not moving
+        if (Math.abs(this.armAngle) > 0.01) {
+            this.armAngle *= 0.9
+        } else {
+            this.armAngle = 0
+        }
+    } else if (this.moving && !this.hitting) {
+        // Natural arm swinging motion while moving
+        this.armAngle = Math.sin(Date.now() * 0.01) * 0.1
     }
 
     // for (var i in bosses) {
@@ -660,13 +704,12 @@ Player.prototype.move = function() {
     // }
     // var bDist = Math.hypot((this.x - b.x), (this.y - b.y))
 
-    var bDist = entityDistance(this, curBoss)
     this.rangeToCheck = 100; // So that it doesn't get range of undefined item
     if (!!this.weapon) {
         this.rangeToCheck = this.weapon.range;
     }
 
-    if (bDist <= this.rangeToCheck && mouseIsDown && !holding && this.hitCooldown <= 0 && curBoss.hittable) {
+    if (this.canHitEnemy(curBoss) && mouseIsDown && !holding && this.hitCooldown <= 0 && curBoss.hittable) {
         if (!!this.weapon) {
             curBoss.health -= this.weapon.damage ?? 1
         } else {
@@ -982,16 +1025,37 @@ Player.prototype.canHitClosestMonster = function () {
     return false
 }
 
+Player.prototype.canHitEnemy = function(enemy) {
+    // Check if enemy is within range
+    let dist = Math.hypot((enemy.x - this.x), (enemy.y - this.y));
+    if (dist > this.rangeToCheck) return false;
+    
+    // Check if enemy is in the direction the player is facing
+    let dx = enemy.x - this.x;
+    let dy = enemy.y - this.y;
+    
+    switch (this.dir) {
+        case "D": // Down
+            return dy > 0 && Math.abs(dx) < dist * 0.7; // Enemy is below player
+        case "U": // Up  
+            return dy < 0 && Math.abs(dx) < dist * 0.7; // Enemy is above player
+        case "R": // Right
+            return dx > 0 && Math.abs(dy) < dist * 0.7; // Enemy is to the right
+        case "L": // Left
+            return dx < 0 && Math.abs(dy) < dist * 0.7; // Enemy is to the left
+    }
+    
+    return false;
+}
+
 Player.prototype.hitEnemies = function() {
     if (this.closestEnemy() != null) { // If a map doesn't have any enemies in it, the code would break without this
         var monsterThatWasHitNum = null;
         let closestEnemy = this.closestEnemy();
 
-        // For monsters
-        var mDist = entityDistance(this, closestEnemy);
         this.mAngle = Math.atan2((closestEnemy.y - this.y), (closestEnemy.x - this.x));
         
-        if (mDist <= this.rangeToCheck && mouseIsDown && !keys.e && this.hitCooldown <= 0 && !closestEnemy.isDead() && this.canHitClosestMonster()) {
+        if (this.canHitEnemy(closestEnemy) && mouseIsDown && !keys.e && this.hitCooldown <= 0 && !closestEnemy.isDead()) {
             this.hitCooldown = 0.35
             if (!!this.weapon) {
                 closestEnemy.health -= this.weapon.damage;
@@ -1445,7 +1509,7 @@ Player.prototype.swordAttack = function() {
                 // Seamlessly start another attack
                 this.swordAttackState = 1
             } else {
-                // Finish attack
+                // Finish attack 
                 setTimeout(() => {
                     this.weaponShift.x = 0
                     this.weaponAngle = 0
