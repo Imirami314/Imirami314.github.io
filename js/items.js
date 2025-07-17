@@ -318,11 +318,17 @@ const items = {
 		if (p.cords.x == 26 && p.cords.y == 55 && curMap == mainMap) {
 			scene = "BEAM UNLOCKED"
 			cutsceneFrame = 0
-            theWanderersRiddles.finish()
+            
             // FINISH LINES
-            theWanderer.lines = ["Wow, what a sight to see. This water is incredible!"]
+            theWanderer.lines = ["Wow, what a sight to see. This water is incredible!",
+                "I'll still be around, don't worry.\nBut I sense that activating this beam has awakened others around.",
+                "Keep looking around for signs.",
+                "For now I'll admire this place for a while.",
+                "Good luck and see you around."
+            ]
             theWanderer.action = function () {
                 alerts.push(new GameAlert(205, 24, ["In this minuscule forest with puddles and trees,\nComplete the pattern and set the next step free."], mainMap, "WANDERER SIGN"))
+                theWanderersRiddles.finish()
                 theWanderer.action = function () {} // clears action   
             }
             theWanderer.actionLine = "after"

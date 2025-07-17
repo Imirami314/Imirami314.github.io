@@ -381,19 +381,6 @@ GameAlert.prototype.drawMessage = function () {
                         }
                     }
                 }
-            } else if (this.type == "EXAMINE" || this.type == "DECIPHER") {
-                
-                    
-                // ctx.fillStyle = "rgb(255, 255, 255)"
-                // ctx.roundRect(width / 2 - 80, height / 2 + 50, 160, 50, 10)
-                // ctx.fill()
-                // ctx.fillStyle = "rgb(0, 0, 0)"
-                // ctx.font = "15px serif"
-                // ctx.textAlign = "center"
-                // ctx.fillText("Press space to examine", width / 2, height / 2 + 75)
-                // TODO
-                getBlockById(p.blockOn.id).useDesc = "Press space to examine";
-                
             }
         }
 
@@ -728,8 +715,18 @@ const smith = new NPC(ctr(3), ctr(1), "Smith", smithHouse, "D", [
     "I'm Smith, the top tier blacksmith of Steel Field.",
     "I normally give a little somethin' to people who\ncome here, but I'm gonna need you to get me somethin' too.",
     "Could you fetch me a Heat Handle? I need it if you want me to help you.",
-    "See ya!"
+    "...",
+    "W-what? How do you give me something?",
+    "Oh. Just hold it in your hand and I'll take it from there.",
+    "`What a weird dude.",
+    "See ya!" 
 ], "Blacksmith - Steel Field\nEveryone's go to blacksmith. He's very handy\nif you want a weapon made quick for a low price.", function() {
+    smith.lines = [
+        "...",
+        "You heard what I said. I need a Heat Handle.",
+        "Just hold it in your hand and I'll take it from there.",
+        "See ya!" 
+    ]
     secretsOfSteelField.setInstructions("Smith the Blacksmith says he'll make you a weapon, but\nhe needs you to bring him a Heat Handle first.\nThey're often found in chests, so maybe you can find one nearby.");
 }, "after");
 
@@ -4552,29 +4549,38 @@ var gameInterval = setInterval(function() {
             ctx.save()
     
             
-            ctx.scale(0.75, 0.75)
-            
-            ctx.translate((-1 * 13.5 * 75), (-1 * 50 * 75))
+            // Use the same approach as the new cutscene system
+            ctx.translate(width / 2, height / 2);
+            ctx.scale(0.75, 0.75);
+            ctx.translate(- width / 2, - height / 2);
+
+            // Center on the beam location (player coordinates)
+            let beamX = p.x;
+            let beamY = p.y;
+            ctx.translate(- beamX + width / 2, - beamY + height / 2);
 
             if (cutsceneFrame > 100) {
                 ctx.translate(Math.random() * 5, Math.random() * 5)
             }
-            curMap.draw(p, "Cutscene View", 13.5 * 75, 50 * 75, 0.75)
 
+            curMap.draw(p, "Cutscene View", beamX * 0.75, beamY * 0.75, 0.75)
 
-            // models.npcs.theWanderer.x = width /2 + 3 * 56 // 56 is ~ 75 * 0.75
-            // models.npcs.theWanderer.y = height /2
-        //     	models.npcs.theWanderer.draw()
-            
-            ctx.restore()
-
-            ctx.save()
-            
-            ctx.save()
-            ctx.translate((-1 * p.x) + (width / 2), (-1 * p.y) + (height / 2))
+            // Draw the wanderer and player properly positioned in the cutscene
             theWanderer.draw()
-            ctx.translate((-1 * p.x) + (width / 2), (-1 * p.y) + (height / 2))
+            
+            p.dir = "D"
+            theWanderer.dir = "L"
+            // Draw player at their world position (not at screen center)
+            ctx.save()
+            ctx.translate(p.x, p.y)
+            ctx.translate(-width/2, -height/2)
+            p.draw()
             ctx.restore()
+            
+            ctx.restore()
+
+            ctx.save()
+            
             for (var i = 0; i < 9; i ++) {
 
                 if (cutsceneFrame == 190 + (i * 10)) {

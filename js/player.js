@@ -1281,8 +1281,16 @@ Player.prototype.displayMap = function() {
     ctx.translate(width / 2, height / 2)
     // ctx.scale(mapScale, mapScale) 
     // ctx.translate(width / -2, height / -2)
+
     
     curMap.draw(p, "Map View");
+
+    for (var i in teleports) {
+        if (teleports[i].map == curMap) {
+            teleports[i].draw()
+        }
+    }
+    
     ellipse(this.x * mapScale, this.y * mapScale, 50 * mapScale, 50 * mapScale, "rgb(255, 0, 0)");
     
     for (var i in this.tracking) {
@@ -1305,11 +1313,7 @@ Player.prototype.displayMap = function() {
     }
     
     // Draw teleports inside the map coordinate system
-    for (var i in teleports) {
-        if (teleports[i].map == curMap) {
-            teleports[i].draw()
-        }
-    }
+   
     
     ctx.restore();
 
@@ -1873,6 +1877,34 @@ Player.prototype.nearSign = function() {
     return false
 }
 
+Player.prototype.onExamineLocation = function() {
+    for (var i in alerts) {
+        if (alerts[i].type == "EXAMINE") {
+           if (alerts[i].map == curMap && 
+            p.cords.x == alerts[i].x &&
+            p.cords.y == alerts[i].y &&
+            !alerts[i].showLines) {
+                return true
+            }
+        }
+    }
+    return false
+}
+
+Player.prototype.onDecipherLocation = function() {
+    for (var i in alerts) {
+        if (alerts[i].type == "DECIPHER") {
+           if (alerts[i].map == curMap && 
+            p.cords.x == alerts[i].x &&
+            p.cords.y == alerts[i].y &&
+            !alerts[i].showLines) {
+                return true
+            }
+        }
+    }
+    return false
+}
+
 Player.prototype.onInteractive = function() { // changeme to use a better conditional for the if statement lol
     for (let inter of interactives) {
         if (curMap == inter.map && (p.on(inter.x, inter.y)/* || p.on(Math.floor(inter.x / 75), Math.floor(inter.y / 75))*/)) {
@@ -1908,6 +1940,20 @@ Player.prototype.drawAlert = function() {
         }
     } else if (this.nearSign()) {
         this.curAlert = "Press space to read"
+        if (this.alertOpacity <= 1) {
+            this.alertOpacity += 0.1
+        }
+    } else if (this.onExamineLocation()) {
+        this.curAlert = "Press space to examine"
+        if (this.alertOpacity <= 1) {
+            this.alertOpacity += 0.1
+        }
+    } else if (this.onDecipherLocation()) {
+        if (this.weapon && this.weapon.name == "Decipherer") {
+            this.curAlert = "Press space to decipher"
+        } else {
+            this.curAlert = "Press space to examine"
+        }
         if (this.alertOpacity <= 1) {
             this.alertOpacity += 0.1
         }
