@@ -1063,6 +1063,10 @@ Player.prototype.hitEnemies = function() {
                 closestEnemy.health --;
             }
 
+            // Set enemy as hit to show damaged enemy
+            closestEnemy.isHit = true;
+            monsterThatWasHitNum = monsters.indexOf(closestEnemy);
+
             closestEnemy.move(Math.cos(this.mAngle) * 25, Math.sin(this.mAngle) * 25, true)
             
             // // Tells monster that it is hit (doesn't work for some monsters idk why)
