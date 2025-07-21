@@ -3883,8 +3883,6 @@ var gameInterval = setInterval(function() {
                 p.move()
                 p.collide()
                 p.hitEnemies()
-
-                p.breakBlock()
             }
             
     

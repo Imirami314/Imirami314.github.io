@@ -499,6 +499,7 @@ Player.prototype.draw = function() {
         } catch(error) {
             
         }
+        this.breakBlock()
     }
 
     for (var i in this.equipped) {
@@ -1168,6 +1169,36 @@ Player.prototype.hitEnemies = function() {
     }
 }
 
+Player.prototype.breakBlock = function() {
+    if (!!this.weapon && this.weapon.damage > 0) {
+        let blockX = this.cords.x;
+        let blockY = this.cords.y;
+        
+        // Calculate target block based on player direction
+        switch (this.dir) {
+            case "D": // Down
+                blockY += 1;
+                break;
+            case "U": // Up
+                blockY -= 1;
+                break;
+            case "R": // Right
+                blockX += 1;
+                break;
+            case "L": // Left
+                blockX -= 1;
+                break;
+        }
+        
+        let block = curMap.getBlock(blockX, blockY);
+        let blockInfo = getBlockById(block);
+        
+         if (block == "X") { // X is breakable block
+             curMap.changeBlock(blockX, blockY, "_");
+         }    
+    }
+} 
+
 Player.prototype.manualMove = function(x, y) {
     if (getBlockInfoByCords(this.x + x, this.y).through) {
         this.x += x
@@ -1636,11 +1667,6 @@ Player.prototype.spearAttack = function() {
     }
 }
 
-Player.prototype.breakBlock = function () {
-    // if (this.weapon.damage > 0 && this.hitting) {
-       
-    // }
-}
 
 // Scroll feature for NPC list
 window.addEventListener("wheel", function(event) {
