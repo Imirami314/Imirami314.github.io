@@ -526,6 +526,9 @@ Player.prototype.HUD = function() {
     ctx.fillStyle = "rgb(255, 255, 255)"
     ctx.font = "20px serif"
     ctx.fillText("Trills: " + this.trills, 90, 25)
+    
+    // Display game time
+    ctx.fillText("Time: " + gameTime.getFormattedTime(), 250, 25)
 
     // Black backdrop for border
     ctx.fillStyle = "rgb(0, 0, 0)"
@@ -1153,6 +1156,8 @@ Player.prototype.hitEnemies = function() {
             if (closestEnemy.isDead()) {
                 try {
                     closestEnemy.onKill()
+                    // Record death for respawn system
+                    gameTime.recordEnemyDeath(closestEnemy);
                 } catch (e) {
                     throw("Monster type is missing onKill method!")
                 }

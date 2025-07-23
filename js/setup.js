@@ -702,3 +702,241 @@ function stopSound(name) {
         }
     }
 }
+
+/**
+ * GameTime System - Manages time-based events in the game
+ */
+class GameTime {
+    constructor() {
+        this.gameTimeElapsed = 0; // Total game time in game seconds
+        this.enemyRespawnTimes = new Map(); // Maps enemy ID to death time
+        this.shopRestockTimes = new Map(); // Maps shop ID to last restock time
+        
+        // Configuration (in game seconds)
+        this.config = {
+            enemyRespawnDelay: 30, // 30 game seconds to respawn enemies
+            shopRestockDelay: 5,  // 60 game seconds to restock shops
+            maxEnemyRespawns: -1,  // -1 for infinite respawns, or set a number
+        };
+        
+        // Track original enemy states for respawning
+        this.originalEnemies = [];
+        this.deadEnemies = [];
+        
+        // Track original shop inventories for restocking
+        this.originalShopInventories = new Map();
+        
+        // Note: initializeShops() will be called later after shops are defined
+    }
+    
+    /**
+     * Updates game time and processes time-based events
+     * Call this every frame from the main game loop
+     */
+    update() {
+        // Advance game time based on actual gameplay (using perSec function)
+        this.gameTimeElapsed += perSec(1); // This advances by 1 second per real second of gameplay
+        
+        this.processEnemyRespawns();
+        this.processShopRestocks();
+    }
+    
+    /**
+     * Records when an enemy dies for respawn tracking
+     */
+    recordEnemyDeath(enemy) {
+        const enemyId = this.getEnemyId(enemy);
+        this.enemyRespawnTimes.set(enemyId, this.gameTimeElapsed);
+        
+        // Store the dead enemy for respawning
+        this.deadEnemies.push({
+            enemy: enemy,
+            deathTime: this.gameTimeElapsed,
+            originalData: this.cloneEnemyData(enemy)
+        });
+        
+        // console.log(`Enemy ${enemy.constructor.name} died at time ${this.gameTimeElapsed.toFixed(1)}s`);
+    }
+    
+    /**
+     * Process enemy respawns
+     */
+    processEnemyRespawns() {
+        const currentTime = this.gameTimeElapsed;
+        
+        // Check dead enemies for respawn
+        for (let i = this.deadEnemies.length - 1; i >= 0; i--) {
+            const deadEnemyData = this.deadEnemies[i];
+            const timeSinceDeath = currentTime - deadEnemyData.deathTime;
+            
+            if (timeSinceDeath >= this.config.enemyRespawnDelay) {
+                this.respawnEnemy(deadEnemyData);
+                this.deadEnemies.splice(i, 1);
+            }
+        }
+    }
+    
+    /**
+     * Respawn an enemy
+     */
+    respawnEnemy(deadEnemyData) {
+        const enemy = deadEnemyData.enemy;
+        const originalData = deadEnemyData.originalData;
+        
+        // Reset enemy to original state
+        enemy.health = originalData.health;
+        enemy.x = originalData.spawnX;
+        enemy.y = originalData.spawnY;
+        enemy.dead = false;
+        enemy.haveTrillsBeenAwarded = false;
+        
+        // Reset any other enemy-specific properties
+        if (enemy.isHit !== undefined) enemy.isHit = false;
+        
+        console.log(`Respawned ${enemy.constructor.name} at ${enemy.x}, ${enemy.y}`);
+    }
+    
+    /**
+     * Initialize shop tracking
+     */
+    initializeShops() {
+        // Store original shop inventories
+        if (typeof shopMenus !== 'undefined') {
+            shopMenus.forEach((shop, index) => {
+                const shopId = `shop_${index}`;
+                const originalInventory = shop.map(item => ({
+                    item: item.item,
+                    cost: item.cost,
+                    amount: item.amount,
+                    originalAmount: item.amount
+                }));
+                this.originalShopInventories.set(shopId, originalInventory);
+                this.shopRestockTimes.set(shopId, this.gameTimeElapsed);
+            });
+        }
+    }
+    
+    /**
+     * Process shop restocks
+     */
+    processShopRestocks() {
+        if (typeof shopMenus === 'undefined') return;
+        
+        const currentTime = this.gameTimeElapsed;
+        
+        shopMenus.forEach((shop, index) => {
+            const shopId = `shop_${index}`;
+            const lastRestockTime = this.shopRestockTimes.get(shopId) || 0;
+            const timeSinceRestock = currentTime - lastRestockTime;
+            
+            if (timeSinceRestock >= this.config.shopRestockDelay) {
+                this.restockShop(shopId, shop);
+                this.shopRestockTimes.set(shopId, currentTime);
+            }
+        });
+    }
+    
+    /**
+     * Restock a shop to its original inventory
+     */
+    restockShop(shopId, shop) {
+        const originalInventory = this.originalShopInventories.get(shopId);
+        if (!originalInventory) return;
+        
+        let itemsRestocked = 0;
+        shop.forEach((currentItem, index) => {
+            const originalItem = originalInventory[index];
+            if (currentItem.amount < originalItem.originalAmount) {
+                currentItem.amount = originalItem.originalAmount;
+                itemsRestocked++;
+            }
+        });
+        
+        if (itemsRestocked > 0) {
+            console.log(`Restocked shop ${shopId}: ${itemsRestocked} items replenished`);
+        }
+    }
+    
+    /**
+     * Get unique ID for an enemy
+     */
+    getEnemyId(enemy) {
+        return `${enemy.constructor.name}_${enemy.spawnX}_${enemy.spawnY}_${enemy.map}`;
+    }
+    
+    /**
+     * Clone enemy data for respawning
+     */
+    cloneEnemyData(enemy) {
+        return {
+            health: enemy.maxHealth || enemy.health,
+            spawnX: enemy.spawnX,
+            spawnY: enemy.spawnY,
+            map: enemy.map
+        };
+    }
+    
+    /**
+     * Get formatted time string
+     */
+    getFormattedTime() {
+        const hours = Math.floor(this.gameTimeElapsed / 3600);
+        const minutes = Math.floor((this.gameTimeElapsed % 3600) / 60);
+        const seconds = Math.floor(this.gameTimeElapsed % 60);
+        
+        if (hours > 0) {
+            return `${hours}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        } else {
+            return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+    }
+    
+    /**
+     * Configure respawn and restock timings
+     */
+    configure(options) {
+        Object.assign(this.config, options);
+    }
+    
+    /**
+     * Get debug information about pending events
+     */
+    getDebugInfo() {
+        const currentTime = this.gameTimeElapsed;
+        
+        const deadEnemiesInfo = this.deadEnemies.map(dead => ({
+            type: dead.enemy.constructor.name,
+            timeUntilRespawn: Math.max(0, this.config.enemyRespawnDelay - (currentTime - dead.deathTime)).toFixed(1)
+        }));
+        
+        const shopRestockInfo = [];
+        this.shopRestockTimes.forEach((lastRestock, shopId) => {
+            const timeUntilRestock = Math.max(0, this.config.shopRestockDelay - (currentTime - lastRestock)).toFixed(1);
+            shopRestockInfo.push({
+                shopId,
+                timeUntilRestock
+            });
+        });
+        
+        return {
+            gameTime: this.getFormattedTime(),
+            deadEnemies: deadEnemiesInfo,
+            shopRestocks: shopRestockInfo
+        };
+    }
+    
+    /**
+     * Print debug info to console
+     */
+    printDebugInfo() {
+        console.log("GameTime Debug Info:", this.getDebugInfo());
+    }
+}
+
+// Create global game time instance
+const gameTime = new GameTime();
+
+// Configuration examples (you can call these to adjust timing):
+// gameTime.configure({ enemyRespawnDelay: 15 }); // Faster enemy respawns (15 seconds)
+// gameTime.configure({ shopRestockDelay: 30 });  // Faster shop restocks (30 seconds)
+// gameTime.configure({ enemyRespawnDelay: 120 }); // Slower enemy respawns (2 minutes)

@@ -2005,6 +2005,9 @@ for (var npc of NPC.all) {
 
 var shopMenus = [sarahShopMenu, frioShop, muhammadShop, mildredShop, coralShop, blakeShop, caspianShop, albaShop];
 
+// Initialize shop tracking for time-based restocking
+gameTime.initializeShops();
+
 npcs.searchByName = function(name) {
     for (var i in this) {
         var npc = this[i]
@@ -3537,6 +3540,10 @@ var gameInterval = setInterval(function() {
         }
         
         elapsed ++
+        
+        // Update game time system
+        gameTime.update();
+        
         ctx.fillStyle = "rgb(0, 0, 0)"
         ctx.fillRect(0, 0, width, height)
     
